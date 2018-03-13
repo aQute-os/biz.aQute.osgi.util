@@ -1,0 +1,25 @@
+#
+# biz.aQute.osgi.configuration.util DEFAULTS
+#
+
+Bundle-Version:					1.0.0.${tstamp}
+Bundle-Description: 				\
+	Implements a Configuration Helper to set the properties in a type \
+	safe way.
+
+Export-Package:  \
+	biz.aQute.osgi.configuration.util
+
+-conditionalpackage: aQute.lib*
+
+-includeresource: {readme.md}
+
+-buildpath:  \
+    biz.aQute.bndlib;version=3.5;packages=*, \
+	osgi.enroute.base.api;version=2.1
+
+-testpath: \
+    org.apache.felix.framework, \
+    biz.aQute.bnd;version=3.5;packages=*, \
+	osgi.enroute.junit.wrapper;version=4.12, \
+	osgi.enroute.hamcrest.wrapper;version=1.3

@@ -1,8 +1,8 @@
 # Compiled class file
 *.class
-/bin/
-/generated/
-/bin_test/
+bin/
+generated/
+bin_test/
 
 # Log file
 *.log
