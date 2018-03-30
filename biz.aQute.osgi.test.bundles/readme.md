@@ -1,8 +1,4 @@
-# biz.aQute.osgi.test.bundles Provider
+# biz.aQute.osgi.test.bundles 
 
-${Bundle-Description}
-
-## Example
-
-## References
+Provides a number of test bundles for the agent.
 
