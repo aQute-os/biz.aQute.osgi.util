@@ -1,0 +1,25 @@
+#
+# biz.aQute.osgi.agent.provider PROVIDER BUNDLE
+#
+
+Bundle-Version:					1.0.0.${tstamp}
+Bundle-Activator:               biz.aQute.osgi.agent.provider.Activator
+
+Bundle-Description: \
+	Implements a simple agent to update/install/uninstall bundles
+
+-conditionalpackage: aQute.lib*
+
+Private-Package: \
+	biz.aQute.osgi.agent.*
+
+-includeresource: {readme.md}
+
+-buildpath: \
+	osgi.enroute.base.api;version=2.1
+
+-testpath: \
+	osgi.enroute.junit.wrapper;version=4.12, \
+	osgi.enroute.hamcrest.wrapper;version=1.3,\
+    org.apache.felix.framework,\
+    biz.aQute.bnd;packages=*

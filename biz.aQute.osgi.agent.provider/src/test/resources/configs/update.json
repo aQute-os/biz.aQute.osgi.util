@@ -1,0 +1,11 @@
+{
+  "configurationHash" : "tc_hash_not_computed_at_tc_creation_time",
+  "repositoryUrl" : "https://repository-int.cloud.qivicon.com/bundles",
+  "bundles" : [
+    {
+        "location": "SLM:one",
+        "digest": "D45430A9BFC5180DA693F1AE2035337735257A3745B6FE3C0B0C80A1B7B15ECF",
+        "path": "file:src/test/resources/repo/D45430A9BFC5180DA693F1AE2035337735257A3745B6FE3C0B0C80A1B7B15ECF"
+    }
+  ]  
+}

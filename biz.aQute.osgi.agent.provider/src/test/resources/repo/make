@@ -1,0 +1,4 @@
+#!/bin/sh -c
+
+mv $0 `bnd digest -a SHA256 $0`
+
