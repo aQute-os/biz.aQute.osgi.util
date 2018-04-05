@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.service.packageadmin.PackageAdmin;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
@@ -184,8 +188,8 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 						phase = Phase.COMMITTED;
 					}
 
-					packageAdmin.refreshPackages(null);
-
+					refresh();
+					
 					state = State.STARTING;
 					list = forEach(actions, BundleAction::start);
 					sync(list); // ensure all bundles are started
@@ -202,6 +206,21 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 			}
 		}
 		return phase;
+	}
+
+	private void refresh() throws InterruptedException {
+		Semaphore s = new Semaphore(0);
+		FrameworkListener listener = e -> {
+			if (e.getType() == FrameworkEvent.PACKAGES_REFRESHED)
+				s.release();
+		};
+		try {
+			context.addFrameworkListener(listener);
+			packageAdmin.refreshPackages(null);
+			s.tryAcquire(300, TimeUnit.SECONDS);
+		} finally {
+			context.removeFrameworkListener(listener);
+		}
 	}
 
 	private List<Void> sync(List<Promise<Void>> list) throws InvocationTargetException, InterruptedException {
