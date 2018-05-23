@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="biz.aQute.statemachine" increment="1527077232298">
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="biz.aQute.statemachine"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="0.0.0" type="Version"/>
+      <attribute name="osgi.wiring.bundle" value="biz.aQute.statemachine"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="0.0.0" type="Version"/>
+      <attribute name="osgi.wiring.host" value="biz.aQute.statemachine"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="8731" type="Long"/>
+      <attribute name="url" value="target/biz.aQute.statemachine.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="0F8098ABBE2F56A2779A5CE20CF0614F16937E59F9B68B32EC88FDBDD48ED66C"/>
+    </capability>
+    <capability namespace="bndtools.workspace">
+      <attribute name="bndtools.workspace" value="file:/Ws/metadata/biz.aQute.osgi.util"/>
+      <attribute name="project.path" value="/biz.aQute.statemachine"/>
+    </capability>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+    </requirement>
+  </resource>
+</repository>

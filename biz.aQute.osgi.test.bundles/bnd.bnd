@@ -10,7 +10,7 @@ Bundle-Description: \
 -includeresource: {readme.md}
 
 -buildpath:  \
-	osgi.enroute.base.api;version=2.1
+	osgi.enroute.base.api;version=2.0
 
 -testpath: \
 	osgi.enroute.junit.wrapper;version=4.12, \

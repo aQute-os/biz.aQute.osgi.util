@@ -16,7 +16,7 @@ Export-Package:  \
 
 -buildpath: \
 	biz.aQute.bndlib;version=3.5;packages=*,\
-	osgi.enroute.base.api;version=2.1,\
+	osgi.enroute.base.api;version=2.0,\
 	org.projectlombok:lombok;version=1.16
 
 -testpath: \

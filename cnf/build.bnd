@@ -2,7 +2,7 @@
 # This file is left open for you to define your macros
 #
 
-src:                    src/main/java
+src:                    src/main/java,src/main/resources
 bin:                    target/classes
 testsrc:                src/test/java
 testbin:                target/test-classes
