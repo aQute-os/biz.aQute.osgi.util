@@ -12,18 +12,17 @@ enum Event {
 }
 
 enum State {
---	ALLOQ		FORBID		ALLOW HIGH	FORBID HIGH
 	DSBL_ALL,	DSBL_FRB,					-- disable
 	IDLE_ALL,	IDLE_FRB,					-- idle
-			SCHD_FRB,			SCHD_FRB_HGH,	-- schedule update when allowed
+			    SCHD_FRB,   SCHD_FRB_HGH,	-- schedule update when allowed
 	UPDT_ALL,	UPDT_FRB,					-- currently updating
 	RSTR_ALL,	RSTR_FRB,	RSTR_ALL_HGH,	RSTR_FRB_HGH,	-- restart update after finishing
-	JOIN_ALL,	JOIN_FRB					-- disable after update is finished
+	JOIN_ALL,	JOIN_FRB		                                 -- disable after update is finished
 }
 
 enum Action {
 	BEGIN,	-- begin update
-	END,	-- end update
+	END,   	-- end update
 	NONE,	-- intermediate
 	RESTART,-- restart update
 	ERROR	-- invalid transition

@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1527841008047" name="biz.aQute.statemachine" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1528106164451" name="biz.aQute.osgi.bndruns.test" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="biz.aQute.statemachine"/>
+      <attribute name="osgi.identity" value="biz.aQute.osgi.bndruns.test"/>
       <attribute name="type" value="osgi.bundle"/>
       <attribute name="version" type="Version" value="0.0.0"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="67c2517eb2bee1fcd86a619ee12d454a8ad0a8f8fe51569725ee44522dbcea90"/>
-      <attribute name="url" value="target/biz.aQute.statemachine.jar"/>
-      <attribute name="size" type="Long" value="8619"/>
+      <attribute name="osgi.content" value="22cd2eb2c5b16452eea93a8bdb222b239b1ec9b0a7765729bc8c369905e8b0a7"/>
+      <attribute name="url" value="target/biz.aQute.osgi.bndruns.test.jar"/>
+      <attribute name="size" type="Long" value="3060"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
-      <attribute name="osgi.wiring.bundle" value="biz.aQute.statemachine"/>
+      <attribute name="osgi.wiring.bundle" value="biz.aQute.osgi.bndruns.test"/>
       <attribute name="bundle-version" type="Version" value="0.0.0"/>
     </capability>
     <capability namespace="osgi.wiring.host">
-      <attribute name="osgi.wiring.host" value="biz.aQute.statemachine"/>
+      <attribute name="osgi.wiring.host" value="biz.aQute.osgi.bndruns.test"/>
       <attribute name="bundle-version" type="Version" value="0.0.0"/>
     </capability>
     <capability namespace="bndtools.workspace">
       <attribute name="bndtools.workspace" value="file:/Ws/metadata/biz.aQute.osgi.util"/>
-      <attribute name="project.path" value="/biz.aQute.statemachine"/>
+      <attribute name="project.path" value="/biz.aQute.osgi.bndruns.test"/>
     </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.junit)(version&gt;=4.12.0)(!(version&gt;=5.0.0)))"/>
+    </requirement>
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
     </requirement>

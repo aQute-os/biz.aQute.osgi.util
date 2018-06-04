@@ -1,0 +1,6 @@
+-classpath '/Ws/aQute/biz.aQute.osgi.util/biz.aQute.osgi.bndruns.test/target/classes:/Users/aqute/.m2/repository/org/osgi/osgi.enroute.hamcrest.wrapper/1.3.0/osgi.enroute.hamcrest.wrapper-1.3.0.jar:/Users/aqute/.m2/repository/org/osgi/osgi.enroute.junit.wrapper/4.12.0/osgi.enroute.junit.wrapper-4.12.0.jar'
+-d '/Ws/aQute/biz.aQute.osgi.util/biz.aQute.osgi.bndruns.test/target/docs/javadoc'
+-doctitle 'biz.aQute.osgi.bndruns.test API'
+-quiet 
+-windowtitle 'biz.aQute.osgi.bndruns.test API'
+'/Ws/aQute/biz.aQute.osgi.util/biz.aQute.osgi.bndruns.test/src/main/java/biz/aQute/osgi/bndruns/test/SomeTest.java'
