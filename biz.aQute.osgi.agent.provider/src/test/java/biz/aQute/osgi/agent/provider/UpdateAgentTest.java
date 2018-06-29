@@ -2,6 +2,7 @@ package biz.aQute.osgi.agent.provider;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -105,7 +106,7 @@ public class UpdateAgentTest {
 		
 	}
 
-	void addResource(Class<?> class1, BundleBuilder b) {
+	void addResource(Class<?> class1, BundleBuilder b) throws IOException {
 		String name = class1.getName();
 		name = name.replace('.', '/') + ".class";
 		b.addResource(name, class1.getResource("/" + name));

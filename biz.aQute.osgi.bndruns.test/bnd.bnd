@@ -1,7 +1,0 @@
-
-
--buildpath: \
-    osgi.enroute.hamcrest.wrapper, \
-    osgi.enroute.junit.wrapper
-Private-Package: biz.aQute.osgi.bndruns.test
-Test-Cases: biz.aQute.osgi.bndruns.test.SomeTest

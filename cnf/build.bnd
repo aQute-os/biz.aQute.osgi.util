@@ -7,3 +7,5 @@ bin:                    target/classes
 testsrc:                src/test/java
 testbin:                target/test-classes
 target-dir:             target
+
+-remoteworkspace: true

@@ -3,6 +3,7 @@
 bin/
 generated/
 bin_test/
+target/
 
 # Log file
 *.log
