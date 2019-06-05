@@ -10,3 +10,8 @@ org.assertj:assertj-core:3.12.1
 org.awaitility:awaitility:3.1.6
 
 org.osgi:osgi.annotation:7.0.0
+org.osgi:osgi.core:5.0.0
+
+org.osgi:osgi.enroute.junit.wrapper:4.12.0
+org.osgi:osgi.enroute.hamcrest.wrapper:1.3.0
+org.osgi:osgi.enroute.base.api:2.1.0

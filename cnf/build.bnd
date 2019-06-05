@@ -8,4 +8,72 @@ testsrc:                src/test/java
 testbin:                target/test-classes
 target-dir:             target
 
+javac.source:           1.8
+javac.target:           1.8
+-runee:                 JavaSE-1.8
+
+test-cases:             ${classes;NAMED;*Test}
+-resolve.effective:     resolve, active
+-releaserepo:           Release
+
 -remoteworkspace: true
+
+copyright.year = ${tstamp;yyyy}
+
+baseline.version:       0.0.0
+base.version:           1.0.0
+
+# To release, remove the -SNAPSHOT
+
+-groupid:               biz.aQute
+-pom:                   version=${base.version}-SNAPSHOT
+
+Bundle-Version:         ${base.version}.${tstamp}
+
+
+Bundle-Copyright:       aQute SARL All Rights Reserved
+Bundle-Vendor:          aQute SARL
+Bundle-License:             http://opensource.org/licenses/apache2.0.php; \
+                            link="http://www.apache.org/licenses/LICENSE-2.0"; \
+                            description="Apache License, Version 2.0"
+Bundle-SCM:             url=https://github.com/aQute-os/biz.aQute.osgi.util, \
+                            connection=scm:git:https://github.com/aQute-os/biz.aQute.osgi.util.git, \
+                            developerConnection=scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git
+Bundle-Developers:      osgi; \
+                            email=info@osgi.org; \
+                            name="Peter Kriens"; \
+                            organization="OSGi Alliance"
+
+Git-Descriptor:         ${system-allow-fail;git describe --dirty --always}
+Git-SHA:                ${system-allow-fail;git rev-list -1 HEAD}
+
+# On Travis, you can set the secret as follows
+# travis encrypt REPOSITORY_USERNAME=<user> REPOSITORY_PASSWORD=<passwd> -a env.secure
+
+pwd = ${env;REPOSITORY_PASSWORD;}
+usr = ${env;REPOSITORY_USERNAME;}
+-connection-settings: ${if;${pwd};server;-dummy};id=https://oss.sonatype.org;username=${usr};password=${pwd}, -bnd
+
+-releaserepo: Nexus
+-baselinerepo: Distro
+
+
+#
+# Configure Repositories
+-plugin.1.central \
+    aQute.bnd.repository.maven.provider.MavenBndRepository;\
+        name="Central";\
+        releaseUrl=https://repo.maven.apache.org/maven2;\
+        index="${.}/central.mvn";\
+        readOnly=true,\
+
+-plugin.8.nexus: \
+    aQute.bnd.repository.maven.provider.MavenBndRepository; \
+        snapshotUrl=https://oss.sonatype.org/content/repositories/snapshots/; \
+        releaseUrl= 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'; \
+        index=${.}/central.maven; \
+        name="Nexus"
+
+-augment.async \
+    org.osgi.service.async; \
+        requirement:='osgi.identity;filter:="(osgi.identity=org.apache.aries.async)"'

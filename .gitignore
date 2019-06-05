@@ -4,6 +4,7 @@ bin/
 generated/
 bin_test/
 target/
+.gradle/
 
 # Log file
 *.log

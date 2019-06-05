@@ -1,7 +1,7 @@
 -buildpath: \
     osgi.enroute.base.api;version=2.0, \
-    biz.aQute.bndlib;packages=*, \
-    osgi.annotation;version=7
+    osgi.annotation;version=7, \
+    aQute.libg
     
     
 -testpath: \

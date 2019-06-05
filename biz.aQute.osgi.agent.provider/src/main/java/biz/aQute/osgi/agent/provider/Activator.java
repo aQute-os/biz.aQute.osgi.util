@@ -16,6 +16,7 @@ import biz.aQute.osgi.agent.api.UpdateAgent;
  * An old fashioned activator that starts the domain objects with all the
  * parameters from the environment it needs.
  */
+@SuppressWarnings("deprecation")
 public class Activator implements BundleActivator {
 	private UpdateAgentImpl													agent;
 	private ServiceTracker<PackageAdmin, ServiceRegistration<UpdateAgent>>	tracker;
