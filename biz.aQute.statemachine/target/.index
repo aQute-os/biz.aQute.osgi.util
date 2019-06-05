@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<repository increment="1527841008047" name="biz.aQute.statemachine" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<?xml version='1.0' encoding='UTF-8'?>
+<repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="biz.aQute.statemachine" increment="1559729115150">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="biz.aQute.statemachine"/>
       <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" type="Version" value="0.0.0"/>
-    </capability>
-    <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="67c2517eb2bee1fcd86a619ee12d454a8ad0a8f8fe51569725ee44522dbcea90"/>
-      <attribute name="url" value="target/biz.aQute.statemachine.jar"/>
-      <attribute name="size" type="Long" value="8619"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="0.0.0" type="Version"/>
       <attribute name="osgi.wiring.bundle" value="biz.aQute.statemachine"/>
-      <attribute name="bundle-version" type="Version" value="0.0.0"/>
     </capability>
     <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="0.0.0" type="Version"/>
       <attribute name="osgi.wiring.host" value="biz.aQute.statemachine"/>
-      <attribute name="bundle-version" type="Version" value="0.0.0"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="8735" type="Long"/>
+      <attribute name="url" value="target/biz.aQute.statemachine.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="D50B6DB0D342A699FA2F5143B80E04BE119343F54377DD85F13F55245292F8B8"/>
     </capability>
     <capability namespace="bndtools.workspace">
       <attribute name="bndtools.workspace" value="file:/Ws/metadata/biz.aQute.osgi.util"/>

@@ -1,5 +1,6 @@
 biz.aQute.bnd:biz.aQute.bnd:4.2.0
 biz.aQute.bnd:biz.aQute.launchpad:4.2.0
+biz.aQute.bnd:aQute.libg:4.2.0
 
 org.apache.felix:org.apache.felix.gogo.shell:1.0.0
 org.apache.felix:org.apache.felix.framework:5.6.10
@@ -8,3 +9,4 @@ org.assertj:assertj-core:3.12.1
 
 org.awaitility:awaitility:3.1.6
 
+org.osgi:osgi.annotation:7.0.0

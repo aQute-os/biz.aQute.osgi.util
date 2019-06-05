@@ -23,22 +23,6 @@
 	osgi.identity;filter:='(osgi.identity=biz.aQute.remote.launcher)'
 
 
-# TODO check if still needed
-
--runproperties.eqnx: 				\
-	org.apache.felix.http.jettyEnabled=true, \
-	org.apache.felix.http.whiteboardEnabled=true,\
-	osgi.console=, \
-	osgi.console.enable.builtin=false
-
--runpath.eqnx: 					osgi.enroute.equinox.log.adapter
--runrequires.eqnx: \
-	osgi.identity;filter:='(osgi.identity=org.apache.felix.log)'
-
-
--runsystempackages.eqnx:		javax.script
--runsystemcapabilities.dflt: 	${native_capability}
-
 debug-bundles: \
 	osgi.identity;filter:='(osgi.identity=osgi.enroute.webconsole.xray.provider)',\
 	osgi.implementation;filter:='(osgi.implementation=osgi.metatype)',\

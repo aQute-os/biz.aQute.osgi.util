@@ -40,7 +40,6 @@ import biz.aQute.osgi.agent.dto.ConfigDTO;
  * <p>
  * This code goes out of its way to get this done using recovery methods.
  */
-@SuppressWarnings("deprecation")
 class UpdateAgentImpl implements UpdateAgent, Runnable {
 
 	private static final long					POLL_TIME	= 30000;

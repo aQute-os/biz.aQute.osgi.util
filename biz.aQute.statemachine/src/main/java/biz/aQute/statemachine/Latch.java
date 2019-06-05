@@ -1,7 +1,7 @@
 package biz.aQute.statemachine;
 
 /**
- * Provides a latch if you need a common decision absed on multiple inputs. This
+ * Provides a latch if you need a common decision based on multiple inputs. This
  * latch can have a number of members that enable or disable the latch. The latch is,
  * however, only really really enabled if all members agree that it should be enabled. 
  */

@@ -1,0 +1,14 @@
+-buildpath: \
+    osgi.enroute.base.api;version=2.0, \
+    biz.aQute.bndlib;packages=*, \
+    osgi.annotation;version=7
+    
+    
+-testpath: \
+    biz.aQute.launchpad, \
+    osgi.enroute.junit.wrapper, \
+    osgi.enroute.hamcrest.wrapper, \
+    org.assertj.core, \
+    org.awaitility
+
+-conditionalpackage: aQute.lib*
