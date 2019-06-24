@@ -38,23 +38,28 @@ import aQute.osgi.conditionaltarget.api.ConditionalTarget;
  * the target filter can match.
  *
  */
-class ConditionalTargetBundleManager extends BundleTracker<Bundle> implements ListenerHook {
-	final static Logger							logger					= LoggerFactory
-			.getLogger(ConditionalTargetBundleManager.class);
-	final static String							CONDITIONAL_TARGET_NAME	= ConditionalTarget.class.getName();
-	final static String[]						SPECIAL					= new String[] { "T", "#" };
+class ConditionalTargetManager extends BundleTracker<Bundle> implements ListenerHook {
+	final static Logger						logger					= LoggerFactory
+			.getLogger(ConditionalTargetManager.class);
+	final static String						CONDITIONAL_TARGET_NAME	= ConditionalTarget.class.getName();
+	final static String[]					SPECIAL					= new String[] { "T", "#" };
 
-	final ServiceComponentRuntime				scr;
-	final Map<String, ConditionalTargetImpl<?>>	targets					= new HashMap<>();
-	final Trigger								trigger					= new Trigger(this::syncSCR, 500);
+	final ServiceComponentRuntime			scr;
+	final Map<String, ReferenceHandler<?>>	targets					= new HashMap<>();
+	final Trigger							trigger					= new Trigger(this::syncSCR, 500);
 
-	ConditionalTargetBundleManager(BundleContext context, ServiceComponentRuntime scr) {
+	ConditionalTargetManager(BundleContext context, ServiceComponentRuntime scr) {
 		super(context, Bundle.ACTIVE + Bundle.STARTING, null);
 		this.scr = scr;
+		trigger.trigger();
+		logger.info("Creating target manager");
 	}
 
-	
+	/**
+	 * Synchronize SCR data with our current view of the set of bundles
+	 */
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	synchronized void syncSCR() {
 		Map<String, Class<?>> newer = new HashMap<>();
 		Set<String> older = targets.keySet();
@@ -67,12 +72,14 @@ class ConditionalTargetBundleManager extends BundleTracker<Bundle> implements Li
 						Type T = getT(cd, r);
 						references.put(r.name, (Class<?>) T);
 					} catch (Exception e) {
-						logger.error("Fail to get the type of the Conditional Target {}",e);
+						logger.error("Fail to get the type of the Conditional Target {}", e);
 					}
 				}
 			}
 			if (references.isEmpty())
 				continue;
+
+			logger.info("References for {}", cd.name);
 
 			for (ComponentConfigurationDTO cc : scr.getComponentConfigurationDTOs(cd)) {
 				for (SatisfiedReferenceDTO r : cc.satisfiedReferences) {
@@ -82,7 +89,7 @@ class ConditionalTargetBundleManager extends BundleTracker<Bundle> implements Li
 				}
 				for (UnsatisfiedReferenceDTO r : cc.unsatisfiedReferences) {
 					Class<?> T = references.get(r.name);
-					if (T != null && r.target != null)
+					if (T != null)
 						newer.put(r.target, T);
 				}
 			}
@@ -96,9 +103,9 @@ class ConditionalTargetBundleManager extends BundleTracker<Bundle> implements Li
 
 		for (String a : toAdd)
 			try {
-				targets.put(a, new ConditionalTargetImpl<Object>(a, newer.get(a), context));
+				targets.put(a, new ReferenceHandler<Object>(a, (Class) newer.get(a), context));
 			} catch (Exception e) {
-				logger.error("Fail to create a ConditionalTargetImpl {} for filter {}",e, a);
+				logger.error("Fail to create a ConditionalTargetImpl {} for filter {}", e, a);
 			}
 
 		for (String d : toDelete) {
@@ -106,16 +113,19 @@ class ConditionalTargetBundleManager extends BundleTracker<Bundle> implements Li
 		}
 	}
 
-
-
 	private Type getT(ComponentDescriptionDTO cd, ReferenceDTO r) throws ClassNotFoundException, NoSuchFieldException {
 		String implementationClass = cd.implementationClass;
 		Bundle b = context.getBundle(cd.bundle.id);
 		Class<?> loadClass = b.loadClass(implementationClass);
 		Field field = loadClass.getDeclaredField(r.name);
-		ParameterizedType genericType = (ParameterizedType) field.getGenericType();
-		Type T = genericType.getActualTypeArguments()[0];
-		return T;
+		if (field.getGenericType() instanceof ParameterizedType) {
+			ParameterizedType genericType = (ParameterizedType) field.getGenericType();
+			Type T = genericType.getActualTypeArguments()[0];
+			return T;
+		} else {
+			logger.error("Use of ConditionalTarget without generic parameter. Component={}, Field is {}", cd.name, r.name);
+			return Object.class;
+		}
 	}
 
 	@Override
@@ -137,6 +147,9 @@ class ConditionalTargetBundleManager extends BundleTracker<Bundle> implements Li
 	}
 
 	private boolean isConditionalTarget(ListenerInfo info) {
+		if (info.getBundleContext().getBundle().getBundleId() == 0L)
+			return false;
+
 		String filter = info.getFilter();
 		return filter != null
 				&& filter.contains("(objectClass=" + ConditionalTarget.class.getName() + ")");
@@ -144,7 +157,7 @@ class ConditionalTargetBundleManager extends BundleTracker<Bundle> implements Li
 
 	@Override
 	public void close() {
-		targets.values().forEach(ConditionalTargetImpl::close);
+		targets.values().forEach(ReferenceHandler::close);
 	}
 
 }

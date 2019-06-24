@@ -1,5 +1,6 @@
 package aQute.osgi.conditionaltarget.provider;
 
+import java.util.Collections;
 import java.util.Set;
 
 import aQute.lib.collections.MultiMap;
@@ -20,6 +21,8 @@ class FilterParser {
 		expect("(", "Expect '('");
 		char c = peek(1);
 		switch (c) {
+		case 0:
+			throw new IllegalArgumentException("Unexpected end of filter");
 		case '|':
 		case '&':
 			subexpression();
@@ -49,6 +52,9 @@ class FilterParser {
 		String op;
 		attr: while (true) {
 			switch (current()) {
+			case 0:
+				throw new IllegalArgumentException("Unexpected end of string");
+				
 			case '=':
 				if (peek(1) == '*') {
 					op = "=*";
@@ -64,7 +70,7 @@ class FilterParser {
 					op = current() + "=";
 					n++;
 				} else {
-					op = "" + current();
+					throw new IllegalArgumentException("The >,<,~ operators must be followed by an '=': " + n);
 				}
 				n++;
 				break attr;
@@ -75,6 +81,9 @@ class FilterParser {
 
 		StringBuilder value = new StringBuilder();
 		while ("()".indexOf(current()) < 0) {
+			if ( current() == 0)
+				throw new IllegalArgumentException("Unexpected end of string");
+			
 			if (current() == '\\') {
 				n++;
 			}
@@ -112,6 +121,9 @@ class FilterParser {
 	}
 
 	public static Set<String> getAttributes(String filter) {
+		if ( filter == null) {
+			return Collections.emptySet();
+		}
 		FilterParser p = new FilterParser(filter);
 		p.filter();
 		return p.map.keySet();

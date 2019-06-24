@@ -74,12 +74,4 @@ enum KeyOption {
 		this.symbol = s;
 
 	}
-
-	static boolean isOptionKey(String key) {
-		for (KeyOption o : values()) {
-			if (key.startsWith(o.symbol) && key.length() > 1)
-				return true;
-		}
-		return false;
-	}
 }

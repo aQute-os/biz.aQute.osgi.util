@@ -15,6 +15,40 @@ public class FilterParserTest {
 		assertThat(FilterParser.getAttributes("(a=*)")).containsExactly("a");
 	}
 
+	@Test(expected=IllegalArgumentException.class)
+	public void testWrongOperator() {
+		FilterParser.getAttributes("(f~a))");
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testEndOfStringAtEndOfSimple() {
+		FilterParser.getAttributes("(f=a");
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testEndOfStringAtOperator() {
+		FilterParser.getAttributes("(f");
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testEndOfStringEmpty() {
+		FilterParser.getAttributes("");
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testEndOfStringParenthesis() {
+		FilterParser.getAttributes("(");
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testEndOfStringUnclosedSubexpr() {
+		FilterParser.getAttributes("(&()");
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testEndOfStringUnclosed() {
+		FilterParser.getAttributes("(&(");
+	}
 
 	@Test
 	public void testEscape() {

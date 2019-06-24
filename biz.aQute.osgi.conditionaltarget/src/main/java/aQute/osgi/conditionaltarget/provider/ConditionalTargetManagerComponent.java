@@ -9,18 +9,21 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 
+/**
+ * The component that facades the actual worker
+ */
 @Component(immediate = true)
-public class ConditionalTargetComponent {
+public class ConditionalTargetManagerComponent {
 
 	@Reference
 	ServiceComponentRuntime						scr;
 
-	private ConditionalTargetBundleManager					handler;
+	private ConditionalTargetManager		handler;
 	private ServiceRegistration<ListenerHook>	registerService;
 
 	@Activate
 	void activate(BundleContext context) {
-		this.handler = new ConditionalTargetBundleManager(context, scr);
+		this.handler = new ConditionalTargetManager(context, scr);
 		this.registerService = context.registerService(ListenerHook.class, this.handler, null);
 	}
 

@@ -1,11 +1,15 @@
 -buildpath: \
-    osgi.enroute.base.api;version=2.0, \
-    osgi.annotation;version=7, \
-    aQute.libg
+	osgi.core;version=7.0.0,\
+	slf4j.api,\
+	org.osgi.service.component,\
+	org.osgi.service.cm,\
+	org.osgi.service.component.annotations,\
+	aQute.libg,\
+	osgi.annotation
     
     
 -testpath: \
-    biz.aQute.launchpad, \
+    jar/biz.aQute.launchpad.jar;version=file, \
     osgi.enroute.junit.wrapper, \
     osgi.enroute.hamcrest.wrapper, \
     org.assertj.core, \

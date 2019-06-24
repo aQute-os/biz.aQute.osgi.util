@@ -1,3 +1,3 @@
 # Conditional Target
 
-A common problem in OSGi is to 
+The whiteboard pattern is quite popular in OSGi. With this pattern  
