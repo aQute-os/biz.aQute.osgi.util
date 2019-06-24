@@ -1,0 +1,9 @@
+-buildpath: \
+    aQute.libg
+    
+-conditionalpackage: *
+-includeresource: ${bin}, @${repo;slf4j.simple}, @${repo;slf4j.api}
+
+Main-Class:                     biz.aQute.to.Main
+JPM-Command:                    to
+    
