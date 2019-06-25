@@ -6,17 +6,19 @@ import java.util.Dictionary;
 import java.util.Map;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
-import aQute.launchpad.Launchpad;
 import aQute.launchpad.LaunchpadBuilder;
 import aQute.launchpad.Service;
+import aQute.launchpad.junit.LaunchpadRunner;
 
+@RunWith(LaunchpadRunner.class)
 public class ConfigHelperTest {
 
-	Launchpad			fw	= new LaunchpadBuilder().runfw("org.apache.felix.framework")
-			.bundles("org.apache.felix.configadmin").create().inject(this);
+	static LaunchpadBuilder			builder	= new LaunchpadBuilder().runfw("org.apache.felix.framework")
+			.bundles("org.apache.felix.configadmin").debug();
 
 	@Service
 	ConfigurationAdmin	cm;

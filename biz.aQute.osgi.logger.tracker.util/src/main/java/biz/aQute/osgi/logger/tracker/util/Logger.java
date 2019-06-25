@@ -7,6 +7,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 import org.slf4j.Marker;
 
+@SuppressWarnings("rawtypes")
 public class Logger implements LogService, org.slf4j.Logger {
 
 	private final String		name;

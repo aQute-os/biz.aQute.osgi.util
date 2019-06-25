@@ -64,6 +64,7 @@ usr = ${env;REPOSITORY_USERNAME;}
     aQute.bnd.repository.maven.provider.MavenBndRepository;\
         name="Central";\
         releaseUrl=https://repo.maven.apache.org/maven2;\
+        snapshotUrl="https://oss.sonatype.org/content/repositories/snapshots/,https://bndtools.jfrog.io/bndtools/update"; \
         index="${.}/central.mvn";\
         readOnly=true,\
 

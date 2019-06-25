@@ -9,7 +9,7 @@
     
     
 -testpath: \
-    jar/biz.aQute.launchpad.jar;version=file, \
+    biz.aQute.launchpad, \
     osgi.enroute.junit.wrapper, \
     osgi.enroute.hamcrest.wrapper, \
     org.assertj.core, \

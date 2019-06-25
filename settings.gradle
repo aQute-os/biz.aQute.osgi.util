@@ -1,5 +1,11 @@
 buildscript {
-	repositories { mavenCentral() }
+	repositories { 
+		mavenCentral()
+	maven {
+      		url uri(bnd_repourl)
+    	}
+ 
+	}
 	dependencies { classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:${bnd_version}" }
 	/* Add bnd gradle plugin to buildscript classpath of rootProject */
 	def bndPlugin = files(configurations.classpath.files)

@@ -7,8 +7,9 @@ Bundle-Description: 				\
 	Implements a Configuration Helper to set the properties in a type \
 	safe way.
 
-Export-Package:  \
-	biz.aQute.osgi.configuration.util
+Export-Package: \
+	biz.aQute.osgi.configuration.util,\
+	org.osgi.service.metatype.annotations
 
 -conditionalpackage: aQute.lib*
 

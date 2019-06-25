@@ -47,7 +47,7 @@ import org.osgi.framework.ServiceReference;
  *            The service type the Conditional Target will be looking for. In
  *            almost all cases this is the T property in the target filter.
  */
-public interface ConditionalTarget<T> extends Iterable<T>{
+public interface ConditionalTarget<T> extends Iterable<T> {
 
 	/**
 	 * Get the tracked services.
@@ -56,7 +56,10 @@ public interface ConditionalTarget<T> extends Iterable<T>{
 	 */
 	List<T> getServices();
 
-	Map<ServiceReference<T>,T> getServiceReferences();
+	/**
+	 * Get all service references
+	 */
+	Map<ServiceReference<T>, T> getServiceReferences();
 
 	/**
 	 * Get the current aggregate properties as calculated form the filters and
