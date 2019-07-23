@@ -40,7 +40,7 @@ public class ConditionalTargetTest {
 					"org.osgi.util.promise, org.osgi.util.function, org.apache.felix.scr,org.apache.felix.log,org.apache.felix.configadmin, slf4j.api, slf4j.simple, org.assertj.core, org.awaitility, osgi.enroute.hamcrest.wrapper")
 			.debug();
 
-	interface Foo {
+	static interface Foo {
 	}
 
 	Semaphore				s	= new Semaphore(0);
@@ -191,7 +191,6 @@ public class ConditionalTargetTest {
 		assertThat(props.get("[max]foo")).isEqualTo(Double.NaN);
 		assertThat(props.get("[unq]foo")).isEqualTo(2L);
 	}
-
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testPropertyCollections() throws Exception {
@@ -239,6 +238,50 @@ public class ConditionalTargetTest {
 		assertThat(props.get("#foo")).isEqualTo(3);
 		assertThat(props.get("[unq]foo")).isEqualTo(3L);
 	}
+
+	@Component(service = ModifiedCallbackTest.class, enabled = false)
+	public static class ModifiedCallbackTest {
+		@Reference(target = "(#>=1)", cardinality = ReferenceCardinality.OPTIONAL, policy = ReferencePolicy.DYNAMIC)
+		volatile ConditionalTarget<Foo> foos;
+		private BundleContext context;
+		
+		@Activate
+		void activate(BundleContext context) {
+			this.context = context;
+			
+		}
+		@Reference(updated = "updatedTarget")
+		void setTarget(ConditionalTarget<?> target) {
+			System.out.println("Set");
+		}
+		void updatedTarget(ConditionalTarget<?> target) {
+			System.out.println("Updated " + target.getAggregateProperties().get("#"));
+			if ( target.getAggregateProperties().get("#").equals(2)) {
+				// register a new service inside the modified call, this will
+				// check the handling of recursive registrations/modifications
+				context.registerService(Foo.class, new Foo() {}, null);
+			}
+		}
+	}
+
+
+	@Test
+	public void testThatRegistrationOfFooInPropertiesUpdateMethodIsProperlyHandled() throws Exception {
+		lp.enable(ModifiedCallbackTest.class);
+		
+		ModifiedCallbackTest service = lp.waitForService(ModifiedCallbackTest.class, 1000).get();
+		
+		// Register #1
+		lp.register(Foo.class, foo1);
+		
+		await().atMost(10, TimeUnit.SECONDS).until(() -> service.foos != null);
+		
+		// Register #1, will cause property update, which registers new Foo
+		lp.register(Foo.class, foo1);
+		
+		assertThat(service.foos.getAggregateProperties().get("#")).isEqualTo(3);
+	}
+
 
 	@Component(service = ConfigTest.class, configurationPolicy = ConfigurationPolicy.REQUIRE, configurationPid = "foo", enabled = false)
 	public static class ConfigTest {

@@ -9,27 +9,33 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 
+import aQute.osgi.conditionaltarget.api.ConditionalTarget;
+
 /**
  * The component that facades the actual worker
  */
 @Component(immediate = true)
-public class ConditionalTargetManagerComponent {
+public class CTServerComponent {
+
+	@Component(enabled=false)
+	public abstract class ConditionalTargetDummy implements ConditionalTarget<Object>{
+	}
 
 	@Reference
 	ServiceComponentRuntime						scr;
 
-	private ConditionalTargetManager		handler;
+	private CTServer		server;
 	private ServiceRegistration<ListenerHook>	registerService;
 
 	@Activate
 	void activate(BundleContext context) {
-		this.handler = new ConditionalTargetManager(context, scr);
-		this.registerService = context.registerService(ListenerHook.class, this.handler, null);
+		this.server = new CTServer(context, scr);
+		this.registerService = context.registerService(ListenerHook.class, this.server, null);
 	}
 
 	@Deactivate
 	synchronized void deactivate() {
 		this.registerService.unregister();
-		this.handler.close();
+		this.server.close();
 	}
 }

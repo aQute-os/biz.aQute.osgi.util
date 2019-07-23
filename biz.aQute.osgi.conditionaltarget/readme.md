@@ -1,15 +1,15 @@
 # Conditional Target
 
-The whiteboard pattern is quite popular in OSGi and for good reasons. However, the pattern is not without its
-drawbacks. Sometimes you, mostly at startup, you want a certain set of services to populate your whiteboard
+The white board pattern is quite popular in OSGi and for good reasons. However, the pattern is not without its
+drawbacks. Sometimes you, mostly at startup, you want a certain set of services to populate your white board
 list. For example, assume you have persistent storage and you need at least 3 remote servers in 2 different
 regions. 
 
 This is hard to model with services because you can only select on a single service. OSGi has no way to define
 a filter over multiple services. The Conditional Target provides this service. It is a generic service where
-the type parameter is the service type, generally the whiteboard type, you're interested in. 
+the type parameter is the service type, generally the white board type, you're interested in. 
 
-If you're using Declarative Services (DS) and your whiteboard service was `Foo`, then it would look like:
+If you're using Declarative Services (DS) and your white board service was `Foo`, then it would look like:
 
     @Reference
     ConditionalTarget<Foo>       strings;
@@ -60,7 +60,7 @@ With DS we can make a reference conditional with the `target` annotation method.
 
 ## Calculated values
 
-Besides calculatiing the aggregate values from the properties of the whiteboard services, the Conditional Target also 
+Besides calculating the aggregate values from the properties of the white board services, the Conditional Target also 
 accepts filters that have _calculated_ fields. For example, if you need at least three services that have a `bar`
 property then you can filter on `#bar`. There are a number of calculated values:
 
@@ -77,7 +77,7 @@ property then you can filter on `#bar`. There are a number of calculated values:
 ## Configuration
 
 This would be interesting but what really makes it very useful is that DS allows the `target` to be overridden
-by configuration. If the configuraiton of this object contains a field `foos.target` (the name of the field followed
+by configuration. If the configuration of this object contains a field `foos.target` (the name of the field followed
 by the word `.target`) then the value is taken as the filter. 
 
 ## Use Case
@@ -101,8 +101,8 @@ Conditional Target. It uses reflection to find the generic type.
 
 It will then:
 
-* Register a Conditional Target, and
-* Track services of the generic type, and
+* Register a Service Factory for a Conditional Target service, and
+* Track services of the target type, and
 * Keep the aggregate properties of the Conditional Target updated.
 
 The services are checked out from the registry via the Bundle Context of the requesting bundle.

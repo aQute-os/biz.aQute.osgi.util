@@ -12,20 +12,21 @@ import org.osgi.framework.ServiceReference;
 import aQute.osgi.conditionaltarget.api.ConditionalTarget;
 
 /**
- * This is the actual service handed out by the {@link ReferenceHandler} via Service
- * Factory
+ * This is the actual service handed out by the {@link CTTargetHandler} via
+ * Service Factory. It is updated from the {@link CTTargetHandler} with the
+ * found references. It checks out the actual services and manages their life cycle.
  *
  * @param <TT>
  *            the type
  */
-class ConditionalTargetImpl<TT> implements ConditionalTarget<TT> {
+class CTBundleInstance<TT> implements ConditionalTarget<TT> {
 
-	final ReferenceHandler<TT>				impl;
+	final CTTargetHandler<TT>			impl;
 	final Map<ServiceReference<TT>, TT>	references	= new HashMap<>();
 	final BundleContext					context;
 	final Object						lock		= new Object();
 
-	ConditionalTargetImpl(BundleContext context, ReferenceHandler<TT> impl) {
+	CTBundleInstance(BundleContext context, CTTargetHandler<TT> impl) {
 		this.context = context;
 		this.impl = impl;
 	}
@@ -54,24 +55,31 @@ class ConditionalTargetImpl<TT> implements ConditionalTarget<TT> {
 		return getServices().iterator();
 	}
 
-	public void close() {
-		synchronized (lock) {
-			references.keySet().forEach(context::ungetService);
-		}
-	}
-
 	void remove(ServiceReference<TT> ref) {
 		synchronized (lock) {
 			references.remove(ref);
-			context.ungetService(ref);
 		}
+		context.ungetService(ref);
 	}
 
 	void add(ServiceReference<TT> ref) {
+		TT service = context.getService(ref);
 		synchronized (lock) {
-			TT service = context.getService(ref);
-			references.put(ref, service);
+			if (service != null) {
+				references.put(ref, service);
+			} else {
+				CTTargetHandler.logger.info("get service returned null : {}",ref);
+			}
 		}
+	}
+
+	void close() {
+		List<ServiceReference<TT>> refs = new ArrayList<>();
+		synchronized (lock) {
+			refs.addAll(references.keySet());
+			references.clear();
+		}
+		refs.forEach( context::ungetService );
 	}
 
 }
