@@ -16,3 +16,5 @@
     org.awaitility
 
 -conditionalpackage: aQute.lib*
+
+-nojunit: true

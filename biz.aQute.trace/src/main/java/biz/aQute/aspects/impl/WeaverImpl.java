@@ -61,6 +61,12 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 			.get("Bundle-Activator");
 
 		try {
+
+			if (wovenClass.getClassName()
+				.equals("org.apache.felix.scr.impl.inject.methods.ActivateMethod")) {
+				doSCR(wovenClass);
+			}
+
 			if (bundleActivator != null) {
 				if (bundleActivator.equals(wovenClass.getClassName())) {
 					doActivator(wovenClass);
@@ -79,6 +85,24 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void doSCR(WovenClass wovenClass) throws Exception {
+		boolean changed = false;
+		final ClassPool cp = getPool();
+
+		ByteArrayInputStream bin = new ByteArrayInputStream(wovenClass.getBytes());
+		DataInputStream din = new DataInputStream(bin);
+		ClassFile cf = new ClassFile(din);
+		CtClass c = cp.makeClass(cf);
+
+		for (CtMethod m : c.getMethods()) {
+			if (m.getName()
+				.equals("doFindMethod")) {
+				weave(wovenClass.getClassName(), m, "DS");
+				save(wovenClass, c);
+			}
 		}
 	}
 
@@ -144,12 +168,16 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 		}
 
 		if (changed) {
-			wovenClass.getDynamicImports()
-				.add(ActivationTracer.class.getPackage()
-					.getName());
-			byte[] bytes = c.toBytecode();
-			wovenClass.setBytes(bytes);
+			save(wovenClass, c);
 		}
+	}
+
+	private void save(WovenClass wovenClass, CtClass c) throws IOException, CannotCompileException {
+		wovenClass.getDynamicImports()
+			.add(ActivationTracer.class.getPackage()
+				.getName());
+		byte[] bytes = c.toBytecode();
+		wovenClass.setBytes(bytes);
 	}
 
 	private void parseXML(Bundle bundle, String componentHeader) throws IOException {
