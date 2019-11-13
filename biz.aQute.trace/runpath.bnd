@@ -1,0 +1,17 @@
+Embedded-Activator: biz.aQute.aspects.impl.Activator
+
+Export-Package: javassist.*, biz.aQute.trace.activate
+
+Import-Package: \
+    com.sun.jdi;resolution:=optional,\
+    com.sun.jdi.connect;resolution:=optional,\
+    com.sun.jdi.event;resolution:=optional,\
+    jdk.internal.module;resolution:=optional,\
+    com.sun.jdi.request;resolution:=optional,\
+    com.sun.tools.attach;resolution:=optional,\
+    *
+    
+-includepackage: biz.aQute.aspects.*
+
+-conditionalpackage: aQute.lib*
+

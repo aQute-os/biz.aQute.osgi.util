@@ -1,0 +1,15 @@
+
+
+-sub: *.bnd
+
+-buildpath: \
+	lib/javassist.jar;version=file,\
+	osgi.core;version=7.0,\
+	org.osgi.service.component.annotations,\
+	org.osgi.service.metatype.annotations,\
+	aQute.libg,\
+	osgi.annotation,\
+	org.apache.felix.gogo.runtime, \
+    org.apache.felix.inventory
+    
+	

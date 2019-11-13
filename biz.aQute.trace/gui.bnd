@@ -1,0 +1,8 @@
+-includepackage: biz.aQute.trace.tester
+
+-conditionalpackage: aQute.lib*
+
+-includepackage: biz.aQute.aspects.gui
+
+-includeresource: \
+    traces.html
