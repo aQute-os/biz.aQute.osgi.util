@@ -2,7 +2,10 @@
 
 -conditionalpackage: aQute.lib*
 
--includepackage: biz.aQute.aspects.gui
+-includepackage: biz.aQute.trace.gui
 
 -includeresource: \
-    traces.html
+    traces.html, \
+    readme.md
+
+    

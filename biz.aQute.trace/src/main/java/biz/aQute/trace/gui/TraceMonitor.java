@@ -1,32 +1,39 @@
-package biz.aQute.aspects.gui;
+package biz.aQute.trace.gui;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
 
 import org.apache.felix.inventory.Format;
 import org.apache.felix.inventory.InventoryPrinter;
 import org.apache.felix.service.command.Descriptor;
-import org.apache.felix.service.command.Parameter;
 import org.osgi.service.component.annotations.Component;
 
 import aQute.lib.exceptions.Exceptions;
 import aQute.lib.io.IO;
 import aQute.lib.json.JSONCodec;
+import aQute.lib.justif.Justif;
 import biz.aQute.trace.activate.ActivationTracer;
 import biz.aQute.trace.activate.ActivationTracer.Event;
 
 @Component(property = {
-	"osgi.command.scope=aspect", "osgi.command.function=clear", //
+	"osgi.command.scope=trace", //
+	"osgi.command.function=clear", //
 	"osgi.command.function=traces", //
-	InventoryPrinter.NAME + "=SCR Monitor", //
-	InventoryPrinter.TITLE + "=SCR Monitor", //
+	"osgi.command.function=trace", //
+	"osgi.command.function=untrace", //
+	"osgi.command.function=debug", //
+	"osgi.command.function=man", //
+	InventoryPrinter.NAME + "=Trace", //
+	InventoryPrinter.TITLE + "=Timing trace", //
 	InventoryPrinter.FORMAT + "=TEXT", //
 	InventoryPrinter.FORMAT + "=HTML", //
 	InventoryPrinter.FORMAT + "=JSON"
 })
-public class SCRMonitorGUI implements InventoryPrinter {
+public class TraceMonitor implements InventoryPrinter {
 
 	@Descriptor("Clear the monitor event queue")
 	public void clear() {
@@ -38,13 +45,21 @@ public class SCRMonitorGUI implements InventoryPrinter {
 		return ActivationTracer.list();
 	}
 
-	public String traces(@Parameter(names = "t", absentValue = "text") String type) throws Exception {
+	@Descriptor("Show the monitor queue in specific format: json html or text (default)")
+	public String traces(String type) throws Exception {
 		switch (type) {
 			case "json" :
 				return toJson();
 
-			default :
+			case "html" :
+				return toHtml();
+
+			case "text" :
 				return toText();
+
+			default :
+				System.out.println("No such format " + type);
+				return null;
 		}
 	}
 
@@ -73,7 +88,6 @@ public class SCRMonitorGUI implements InventoryPrinter {
 			default :
 				throw new IllegalArgumentException("Unsupported format " + format);
 		}
-
 	}
 
 	private String toHtml() {
@@ -101,15 +115,38 @@ public class SCRMonitorGUI implements InventoryPrinter {
 		try (Formatter f = new Formatter()) {
 			f.format("Id;Start(ns);Duration(ns);Bundle;ThreadName;Parent;Children;Method\n");
 
-		ActivationTracer.list()
-			.forEach(e -> {
+			ActivationTracer.list()
+				.forEach(e -> {
 					f.format("%s;%s;%s;%s;%s;%s;%s;%s\n", e.id, e.begin, e.end - e.begin, e.bundle, e.thread, e.prevId,
-						e.next,
-					e.methodName);
-			});
+						e.next, e.methodName);
+				});
 
 			return f.toString();
 		}
 	}
 
+	@Descriptor("Trace a method in a class")
+	public void trace(@Descriptor("<class-fqn>:<method>:<action>") String spec) {
+		ActivationTracer.trace(spec);
+	}
+
+	public Collection<String[]> trace() {
+		return ActivationTracer.extra.values();
+	}
+
+	@Descriptor("Trace a method in a class, format: trace <fqn>:<method>:<action> or trace <fqn>")
+	public void untrace(@Descriptor("<class-fqn>:<method>:<action> or ") String spec) {
+		ActivationTracer.untrace(spec);
+	}
+
+	public boolean debug() {
+		return ActivationTracer.debug = !ActivationTracer.debug;
+	}
+
+	public String man() throws IOException {
+		String s= IO.collect(TraceMonitor.class.getResource("/readme.md"));
+		Justif j = new Justif(120);
+		j.formatter().format("%s", s);
+		return j.wrap();
+	}
 }

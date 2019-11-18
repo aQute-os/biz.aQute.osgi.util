@@ -1,4 +1,4 @@
-package biz.aQute.aspects.impl;
+package biz.aQute.trace.runpath.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -30,6 +30,12 @@ import javassist.CtMethod;
 import javassist.NotFoundException;
 import javassist.bytecode.ClassFile;
 
+/**
+ * The WeavingHook service weaves the Bundle Activators, components lifecycle
+ * methods, and extra methods if so added via
+ * {@link ActivationTracer#trace(String)}. A woven method will report events at
+ * {@link ActivationTracer#event(Object, String, String, String)}.
+ */
 class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 	final static Pattern			IMPLEMENTATION_P	= Pattern
 		.compile("<implementation(\\s|\n|\r)+class\\s*=\\s*\"(?<fqn>.*)\"");
@@ -51,32 +57,34 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 	@Override
 	public void weave(WovenClass wovenClass) {
 
-		Bundle bundle = wovenClass.getBundleWiring()
-			.getBundle();
-
-		if (bundle.getBundleId() == 0L)
-			return;
-
-		String bundleActivator = bundle.getHeaders()
-			.get("Bundle-Activator");
-
 		try {
+			Bundle bundle = wovenClass.getBundleWiring()
+				.getBundle();
 
-			if (wovenClass.getClassName()
-				.equals("org.apache.felix.scr.impl.inject.methods.ActivateMethod")) {
-				doSCR(wovenClass);
+			if (bundle.getBundleId() == 0L)
+				return;
+
+			String bundleActivator = bundle.getHeaders()
+				.get("Bundle-Activator");
+
+			String[] args = ActivationTracer.extra.get(wovenClass.getClassName());
+			if (args != null) {
+				doExtra(wovenClass, args[1], args[2]);
+				return;
 			}
 
 			if (bundleActivator != null) {
 				if (bundleActivator.equals(wovenClass.getClassName())) {
 					doActivator(wovenClass);
 				}
+				return;
 			}
 
 			String componentHeader = bundle.getHeaders()
 				.get("Service-Component");
 
 			if (componentHeader != null) {
+				debug("component %s", componentHeader);
 				List<String> list = getComponentClasses(bundle, componentHeader);
 
 				if (list != null && list.contains(wovenClass.getClassName())) {
@@ -88,7 +96,19 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 		}
 	}
 
-	private void doSCR(WovenClass wovenClass) throws Exception {
+	/**
+	 * Clean up any data from bundles
+	 */
+	@Override
+	public void bundleChanged(BundleEvent event) {
+		if (event.getType() == BundleEvent.RESOLVED || event.getType() == BundleEvent.UNINSTALLED) {
+			synchronized (this) {
+				classes.remove(event.getBundle());
+			}
+		}
+	}
+
+	private void doExtra(WovenClass wovenClass, String method, String action) throws Exception {
 		boolean changed = false;
 		final ClassPool cp = getPool();
 
@@ -99,8 +119,8 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 
 		for (CtMethod m : c.getMethods()) {
 			if (m.getName()
-				.equals("doFindMethod")) {
-				weave(wovenClass.getClassName(), m, "DS");
+				.equals(method)) {
+				weave(wovenClass.getClassName(), m, action);
 				save(wovenClass, c);
 			}
 		}
@@ -181,6 +201,7 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 	}
 
 	private void parseXML(Bundle bundle, String componentHeader) throws IOException {
+		debug("parse %s", componentHeader);
 		for (String path : Strings.split(componentHeader)) {
 			if (path.contains("*")) {
 				int n = path.lastIndexOf("/");
@@ -198,6 +219,7 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 	}
 
 	private void parseXML(Bundle bundle, String componentHeader, URL url) throws IOException {
+		debug("parse %s %s %s", bundle, componentHeader, url);
 		if (url != null) {
 			String xml = IO.collect(url);
 			Matcher matcher = IMPLEMENTATION_P.matcher(xml);
@@ -211,6 +233,7 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 
 	private void weave(String className, CtMethod m, String type) throws CannotCompileException {
 		try {
+			debug("weave %s %s%s %s", className, m.getName(), m.getSignature(), type);
 			m.insertBefore("{ ActivationTracer.event( this,\"" + m.getLongName() + "\",\"" + type + "\", \">\"); }");
 			m.insertAfter("{ ActivationTracer.event(this,\"" + m.getLongName() + "\",\"" + type + "\", \"<\"); }", true,
 				false);
@@ -255,16 +278,12 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 		return cp;
 	}
 
-	/**
-	 * Clean up any
-	 */
-	@Override
-	public void bundleChanged(BundleEvent event) {
-		if (event.getType() == BundleEvent.RESOLVED || event.getType() == BundleEvent.UNINSTALLED) {
-			synchronized (this) {
-				classes.remove(event.getBundle());
+	private void debug(String format, Object... args) {
+		if (ActivationTracer.debug)
+			try {
+				System.out.printf(format + "%n", args);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		}
 	}
-
 }

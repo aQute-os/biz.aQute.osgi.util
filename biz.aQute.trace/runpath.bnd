@@ -1,6 +1,11 @@
-Embedded-Activator: biz.aQute.aspects.impl.Activator
+Bundle-Description: \
+    Weaves DS components and Bundle Activtors to record timing of the start/stop/modify methods. \
+    This JAR is not a proper bundle but must be placed on the -runpath. It uses the Embedded-Launcher \
+    facility of the bnd launchers. The JAR includes Javassist to perform the byte code weaving.
 
-Export-Package: javassist.*, biz.aQute.trace.activate
+Embedded-Activator: biz.aQute.trace.runpath.impl.Activator
+
+Export-Package:  biz.aQute.trace.activate
 
 Import-Package: \
     com.sun.jdi;resolution:=optional,\
@@ -11,7 +16,10 @@ Import-Package: \
     com.sun.tools.attach;resolution:=optional,\
     *
     
--includepackage: biz.aQute.aspects.*
+-includepackage: javassist.*,biz.aQute.trace.runpath.*
 
 -conditionalpackage: aQute.lib*
+
+-includeresource: \
+    readme.md
 

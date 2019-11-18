@@ -71,12 +71,12 @@
         components = components.filter( (d,i,a)=> a.indexOf(d)==i)
         
         var min = d3.min( data.map((d)=>{return d.begin}))
-        var max = d3.max( data.map((d)=>{return d.end+10000}))
+        var max = d3.max( data.map((d)=>{return d.end+100000}))
         var duration = max - min
         
         var xscale = d3.scaleLinear()
-            .domain([0, max-min])
-            .range([labels, width-labels-10]);
+            .domain([min, max])
+            .range([labels, width-labels-50]);
          
         var x_axis = d3.axisTop()
             .scale(xscale);
