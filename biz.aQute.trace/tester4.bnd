@@ -1,0 +1,4 @@
+-includepackage: biz.aQute.trace.tester
+
+-conditionalpackage: aQute.lib*
+

@@ -142,7 +142,6 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 	}
 
 	private void doActivator(WovenClass wovenClass) throws IOException, CannotCompileException {
-		boolean changed = false;
 		final ClassPool cp = getPool();
 
 		ByteArrayInputStream bin = new ByteArrayInputStream(wovenClass.getBytes());
@@ -154,13 +153,17 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 			if (m.getName()
 				.equals("start")
 				&& m.getSignature()
-					.equals("(Lorg.osgi.framework.BundleContext;)V")) {
+					.equals("(Lorg/osgi/framework/BundleContext;)V")) {
 				weave(wovenClass.getClassName(), m, "S");
+				save(wovenClass, c);
+				break;
 			} else if (m.getName()
 				.equals("stop")
 				&& m.getSignature()
-					.equals("(Lorg.osgi.framework.BundleContext;)V")) {
+					.equals("(Lorg/osgi/framework/BundleContext;)V")) {
 				weave(wovenClass.getClassName(), m, "X");
+				save(wovenClass, c);
+				break;
 			}
 		}
 	}

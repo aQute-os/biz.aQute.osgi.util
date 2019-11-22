@@ -19,10 +19,10 @@ public class Activator implements BundleActivator {
 	 * 			spec	::= class ':' method ':' action
 	 * </pre>
 	 */
-	public static String	EXTRA	= "aQute.trace.extra";
-	public static String	DEBUG	= "aQute.trace.debug";
+	public static String		EXTRA		= "aQute.trace.extra";
+	public static String		DEBUG		= "aQute.trace.debug";
 
-	private WeaverImpl		weaver;
+	private WeaverImpl			weaver;
 
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -33,6 +33,11 @@ public class Activator implements BundleActivator {
 		doExtra(context);
 
 		context.registerService(WeavingHook.class, this.weaver, null);
+
+		context.addServiceListener(e -> {
+		});
+		context.addBundleListener(e -> {});
+		context.addFrameworkListener(e -> {});
 	}
 
 	private void doExtra(BundleContext context) {
@@ -47,6 +52,7 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		ActivationTracer.close();
 		this.weaver.close();
 	}
 

@@ -1,10 +1,21 @@
 -runpath.us = target/biz.aQute.trace.runpath.jar;version=file
--runproperties \
-    org.osgi.service.http.port=8082, aQute.trace.debug=true
 
+-runproperties: \
+    org.osgi.service.http.port=8082, \
+    aQute.trace.debug=true, \
+    osgi.console=,\
+    osgi.console.enable.builtin=false, \
+    equinox.start.level.thread.count=-1, \
+    org.eclipse.osgi/debug=true
+    
 x=    aQute.trace.extra= \
         org.apache.felix.scr.impl.inject.methods.ActivateMethod:doFindMethod:DS, \
         
+//-runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runfw \
+    lib/org.eclipse.osgi.jar;version=file
+
+
 -runsystempackages: sun.misc
 
 -runrequires: \
@@ -15,7 +26,6 @@ x=    aQute.trace.extra= \
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\
 	osgi.identity;filter:='(osgi.identity=biz.aQute.trace.tester)',\
 	osgi.identity;filter:='(osgi.identity=biz.aQute.trace.gui)'
--runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
 -runee: JavaSE-1.8
 -runbundles: \
 	org.apache.commons.fileupload;version='[1.3.2,1.3.3)',\
@@ -25,13 +35,19 @@ x=    aQute.trace.extra= \
 	org.apache.servicemix.bundles.commons-io;version='[1.4.0,1.4.1)',\
 	org.apache.felix.http.jetty;version='[4.0.8,4.0.9)',\
 	org.apache.felix.gogo.command;version='[1.1.0,1.1.1)',\
-	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\
-	org.apache.felix.gogo.shell;version='[1.1.2,1.1.3)',\
 	org.apache.felix.scr;version='[2.1.16,2.1.17)',\
 	org.osgi.util.function;version='[1.1.0,1.1.1)',\
 	org.osgi.util.promise;version='[1.1.1,1.1.2)',\
-	biz.aQute.trace.tester;version='[1.0.0,1.0.1)',\
-	biz.aQute.trace.gui;version='[1.0.0,1.0.1)',\
 	org.apache.felix.inventory;version='[1.0.4,1.0.5)',\
 	org.osgi.service.log;version='[1.4.0,1.4.1)',\
-	org.osgi.util.pushstream;version='[1.0.1,1.0.2)'
+	org.osgi.util.pushstream;version='[1.0.1,1.0.2)',\
+	biz.aQute.trace.gui;version='[1.0.0,1.0.1)',\
+	biz.aQute.trace.tester;version='[1.0.0,1.0.1)',\
+    biz.aQute.trace.tester2;version='[1.0.0,1.0.1)',\
+    biz.aQute.trace.tester3;version='[1.0.0,1.0.1)',\
+    biz.aQute.trace.tester4;version='[1.0.0,1.0.1)',\
+    biz.aQute.trace.tester5;version='[1.0.0,1.0.1)',\
+	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\
+	org.apache.felix.gogo.shell;version='[1.1.2,1.1.3)'
+	
+-runtrace true

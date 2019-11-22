@@ -23,6 +23,7 @@ import biz.aQute.trace.activate.ActivationTracer.Event;
 	"osgi.command.scope=trace", //
 	"osgi.command.function=clear", //
 	"osgi.command.function=traces", //
+	"osgi.command.function=dump", //
 	"osgi.command.function=trace", //
 	"osgi.command.function=untrace", //
 	"osgi.command.function=debug", //
@@ -46,7 +47,7 @@ public class TraceMonitor implements InventoryPrinter {
 	}
 
 	@Descriptor("Show the monitor queue in specific format: json html or text (default)")
-	public String traces(String type) throws Exception {
+	public String dump(String type) throws Exception {
 		switch (type) {
 			case "json" :
 				return toJson();

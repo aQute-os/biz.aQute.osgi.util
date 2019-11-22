@@ -1,0 +1,5 @@
+Bundle-Activator:  biz.aQute.trace.tester.Activator
+-includepackage: biz.aQute.trace.tester
+
+-conditionalpackage: aQute.lib*
+
