@@ -63,7 +63,7 @@
         }
         
         var threads = Array.from(new Set(data.map( (d) => { 
-            return d.thread 
+            return d.threadId 
         })))
         var colors = d3.scaleOrdinal(threads,d3.schemeCategory10);
 
@@ -100,10 +100,10 @@
         
         var pt = g.selectAll("g.period").data( className => data.filter( d => d.methodName.startsWith(className))).enter().append("g").attr("transform", "translate("+labels+",-4)")
         
-        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.end)).attr("y1",0).attr("y2",0).attr("style",d => "stroke-width:3px;stroke:" + d3.schemeCategory10[threads.indexOf(d.thread)])
-        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.begin)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.thread)])
-        pt.append("line").attr("x1", d=>xscale(d.end)).attr("x2", d=>xscale(d.end)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.thread)])
-        pt.append("title").text( d => d.type + " " + foo(d.end-d.begin) + " on " + d.thread)
+        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.end)).attr("y1",0).attr("y2",0).attr("style",d => "stroke-width:3px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
+        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.begin)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
+        pt.append("line").attr("x1", d=>xscale(d.end)).attr("x2", d=>xscale(d.end)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
+        pt.append("title").text( d => d.action + " " + foo(d.end-d.begin) + " on thread " + d.threadId + " -> " + d.thread)
       </script>
    </body>
                <!--<g class="thread">  for each thread

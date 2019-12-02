@@ -57,7 +57,7 @@ public class Logger implements LogService, org.slf4j.Logger {
 	}
 
 	@Override
-	public void debug(String msg, Object[] args) {
+	public void debug(String msg, Object... args) {
 		log(LogService.LOG_DEBUG, format(msg, args));
 	}
 
@@ -82,7 +82,7 @@ public class Logger implements LogService, org.slf4j.Logger {
 	}
 
 	@Override
-	public void debug(Marker marker, String msg, Object[] args) {
+	public void debug(Marker marker, String msg, Object... args) {
 		log(LogService.LOG_DEBUG, format(marker + ":" + msg, args));
 	}
 
@@ -110,7 +110,7 @@ public class Logger implements LogService, org.slf4j.Logger {
 	}
 
 	@Override
-	public void error(String msg, Object[] args) {
+	public void error(String msg, Object... args) {
 		log(LogService.LOG_ERROR, format(msg, args));
 	}
 
@@ -135,7 +135,7 @@ public class Logger implements LogService, org.slf4j.Logger {
 	}
 
 	@Override
-	public void error(Marker marker, String msg, Object[] args) {
+	public void error(Marker marker, String msg, Object... args) {
 		log(LogService.LOG_ERROR, format(marker + ":" + msg, args));
 	}
 
@@ -161,7 +161,7 @@ public class Logger implements LogService, org.slf4j.Logger {
     }
 
     @Override
-    public void warn(String msg, Object[] args) {
+    public void warn(String msg, Object ... args) {
         log(LogService.LOG_WARNING, format(msg, args));
     }
 
@@ -186,7 +186,7 @@ public class Logger implements LogService, org.slf4j.Logger {
     }
 
     @Override
-    public void warn(Marker marker, String msg, Object[] args) {
+    public void warn(Marker marker, String msg, Object... args) {
         log(LogService.LOG_WARNING, format(marker + ":" + msg, args));
     }
 
@@ -212,7 +212,7 @@ public class Logger implements LogService, org.slf4j.Logger {
     }
 
     @Override
-    public void info(String msg, Object[] args) {
+    public void info(String msg, Object ... args) {
         log(LogService.LOG_INFO, format(msg, args));
     }
 
@@ -237,7 +237,7 @@ public class Logger implements LogService, org.slf4j.Logger {
     }
 
     @Override
-    public void info(Marker marker, String msg, Object[] args) {
+    public void info(Marker marker, String msg, Object ... args) {
         log(LogService.LOG_INFO, format(marker + ":" + msg, args));
     }
 
@@ -313,7 +313,7 @@ public class Logger implements LogService, org.slf4j.Logger {
     }
 
     @Override
-    public void trace(String msg, Object[] args) {
+    public void trace(String msg, Object ... args) {
         log(LogService.LOG_INFO, format(msg, args));
     }
 
@@ -338,7 +338,7 @@ public class Logger implements LogService, org.slf4j.Logger {
     }
 
     @Override
-    public void trace(Marker marker, String msg, Object[] args) {
+    public void trace(Marker marker, String msg, Object ... args) {
         log(LogService.LOG_INFO, format(marker + ":" + msg, args));
     }
 

@@ -96,7 +96,7 @@ The layout should be clear. At the top there is a timeline form the first measur
 The following bndrun file could be used for the trace tool.
 
     -runproperties: \
-        biz.aQute.trace.debug = ok, \
+        biz.aQute.trace.debug = yes, \
         biz.aQute.trace.extra = \
             "org.apache.felix.scr.impl.inject.methods.ActivateMethod:doFindMethod:DSF, \
             org.apache.felix.scr.impl.inject.methods.ActivateMethod:activate:DSA"

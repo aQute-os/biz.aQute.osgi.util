@@ -8,6 +8,7 @@
 	org.osgi.service.component.annotations,\
 	org.osgi.service.metatype.annotations,\
 	aQute.libg,\
+    biz.aQute.bndlib;packages=*,\
 	osgi.annotation,\
 	org.apache.felix.gogo.runtime, \
     org.apache.felix.inventory

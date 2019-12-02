@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.felix.inventory.Format;
 import org.apache.felix.inventory.InventoryPrinter;
 import org.apache.felix.service.command.Descriptor;
+import org.apache.felix.service.command.annotations.GogoCommand;
 import org.osgi.service.component.annotations.Component;
 
 import aQute.lib.exceptions.Exceptions;
@@ -19,17 +20,12 @@ import aQute.lib.justif.Justif;
 import biz.aQute.trace.activate.ActivationTracer;
 import biz.aQute.trace.activate.ActivationTracer.Event;
 
+@GogoCommand(scope = "trace", function = {
+	"trace", "clear", "traces", "dump", "trace", "untrace", "debug", "man"
+})
 @Component(property = {
-	"osgi.command.scope=trace", //
-	"osgi.command.function=clear", //
-	"osgi.command.function=traces", //
-	"osgi.command.function=dump", //
-	"osgi.command.function=trace", //
-	"osgi.command.function=untrace", //
-	"osgi.command.function=debug", //
-	"osgi.command.function=man", //
-	InventoryPrinter.NAME + "=Trace", //
-	InventoryPrinter.TITLE + "=Timing trace", //
+	InventoryPrinter.NAME + "=biz.aQute.race", //
+	InventoryPrinter.TITLE + "=Tracer", //
 	InventoryPrinter.FORMAT + "=TEXT", //
 	InventoryPrinter.FORMAT + "=HTML", //
 	InventoryPrinter.FORMAT + "=JSON"

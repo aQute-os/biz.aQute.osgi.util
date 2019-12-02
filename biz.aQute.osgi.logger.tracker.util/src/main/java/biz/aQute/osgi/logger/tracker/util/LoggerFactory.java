@@ -11,10 +11,11 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 import org.osgi.util.tracker.ServiceTracker;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 public class LoggerFactory implements Closeable {
 	final BlockingQueue<Consumer<LogService>>	queue		= new LinkedBlockingQueue<>();
 	final BundleContext							context;
-	final ServiceTracker						tracker;
+	final ServiceTracker<?,?>						tracker;
 	final Thread								thread;
 
 	private final LogService					lastResort	= new LogService() {

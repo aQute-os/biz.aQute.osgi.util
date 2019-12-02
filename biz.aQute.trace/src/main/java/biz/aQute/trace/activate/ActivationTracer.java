@@ -30,8 +30,9 @@ public class ActivationTracer {
 	static {
 		clear();
 	}
+
 	/**
-	 * Holds an even
+	 * Holds an event
 	 */
 	public static class Event {
 		public int				id		= idg++;
@@ -41,7 +42,8 @@ public class ActivationTracer {
 		public long				bundle;
 		public int				startLevel;
 		public String			methodName;
-		public long				thread;
+		public long				threadId;
+		public String			thread;
 		public List<Integer>	next	= new ArrayList<>();
 		public int				prevId;
 		Event					prev;
@@ -97,8 +99,10 @@ public class ActivationTracer {
 			if (inOut.equals(">")) {
 				Event event = new Event();
 				event.action = action;
-				event.thread = Thread.currentThread()
+				event.threadId = Thread.currentThread()
 					.getId();
+				event.thread = Thread.currentThread()
+					.getName();
 
 				event.begin = System.nanoTime() - epoch;
 				event.methodName = name;
