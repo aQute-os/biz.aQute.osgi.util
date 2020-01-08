@@ -1,0 +1,38 @@
+-sources:               false
+src:                    src/main/java
+-workingset             base
+-buildpath:             osgi.enroute.base.api; version=1.7
+-privatepackage:        biz.aQute.osgi.templates
+-resourceonly:          true
+-includeresource:       src/main/resources
+
+template-category:      OSGi enRoute
+icondata:               data:image/png;base64,${base64;icon.png}
+
+
+api-template:\
+    org.bndtools.template;\
+        org.bndtools.template=project; \
+        name="API Bundle"; \
+        category=${template-category}; \
+        dir=api/template; \
+        icon="${icondata}"; \
+        help=api/help.xml;\
+        engine=mustache; \
+        metaType=OSGI-INF/metatype/biz.aQute.osgi.templates.api.xml
+
+provider-template:\
+    org.bndtools.template;\
+        org.bndtools.template=project; \
+        name="Provider Bundle"; \
+        category=${template-category}; \
+        dir=provider/template; \
+        icon="${icondata}"; \
+        help=provider/help.xml;\
+        engine=mustache; \
+        metaType=OSGI-INF/metatype/biz.aQute.osgi.templates.provider.xml
+        
+Provide-Capability: \
+    ${api-template}, \
+    ${provider-template}
+

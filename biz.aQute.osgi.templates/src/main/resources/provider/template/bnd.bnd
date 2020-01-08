@@ -1,0 +1,14 @@
+#
+# {{projectName}} PROVIDER BUNDLE
+#
+
+-buildpath:  \
+	osgi.annotation, \
+	org.osgi.service.component.annotations
+	
+
+-testpath: \
+	osgi.enroute.junit.wrapper, \
+	osgi.enroute.hamcrest.wrapper, \
+	org.assertj.core
+

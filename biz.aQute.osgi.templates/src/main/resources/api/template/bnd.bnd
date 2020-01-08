@@ -1,0 +1,6 @@
+#
+# {{projectName}}
+#
+
+-buildpath:  \
+	osgi.annotation
