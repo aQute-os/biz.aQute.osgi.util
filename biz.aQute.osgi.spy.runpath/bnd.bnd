@@ -1,0 +1,4 @@
+
+Embedded-Activator: biz.aQute.osgi.spy.runpath.Spy
+
+-buildpath: osgi.core;version=6.0.0

@@ -1,0 +1,10 @@
+-runpath: biz.aQute.osgi.spy.runpath
+-runrequires: \
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.command)',\
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)'
+-runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runbundles: \
+	org.apache.felix.gogo.command;version='[1.1.0,1.1.1)',\
+	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\
+	org.apache.felix.gogo.shell;version='[1.1.2,1.1.3)'
+-runee: JavaSE-1.8
