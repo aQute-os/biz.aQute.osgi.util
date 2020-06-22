@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.List;
@@ -26,6 +27,7 @@ import javassist.CannotCompileException;
 import javassist.ClassPath;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtMethod;
 import javassist.NotFoundException;
 import javassist.bytecode.ClassFile;
@@ -189,6 +191,13 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 				changed = true;
 			}
 		}
+		for (CtConstructor m : c.getConstructors()) {
+			if (m.hasAnnotation("org.osgi.service.component.annotations.Activate")
+				&& Modifier.isPublic(c.getModifiers())) {
+				weaveCt(wovenClass.getClassName(), m, "C");
+				changed = true;
+			}
+		}
 
 		if (changed) {
 			save(wovenClass, c);
@@ -238,6 +247,18 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 		try {
 			debug("weave %s %s%s %s", className, m.getName(), m.getSignature(), type);
 			m.insertBefore("{ ActivationTracer.event( this,\"" + m.getLongName() + "\",\"" + type + "\", \">\"); }");
+			m.insertAfter("{ ActivationTracer.event(this,\"" + m.getLongName() + "\",\"" + type + "\", \"<\"); }", true,
+				false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void weaveCt(String className, CtConstructor m, String type) throws CannotCompileException {
+		try {
+			debug("weave %s %s%s %s", className, m.getName(), m.getSignature(), type);
+			m.insertBeforeBody(
+				"{ ActivationTracer.event( this,\"" + m.getLongName() + "\",\"" + type + "\", \">\"); }");
 			m.insertAfter("{ ActivationTracer.event(this,\"" + m.getLongName() + "\",\"" + type + "\", \"<\"); }", true,
 				false);
 		} catch (Exception e) {
