@@ -256,10 +256,14 @@ class WeaverImpl implements WeavingHook, SynchronousBundleListener {
 
 	private void weaveCt(String className, CtConstructor m, String type) throws CannotCompileException {
 		try {
-			debug("weave %s %s%s %s", className, m.getName(), m.getSignature(), type);
+			int n = className.lastIndexOf('.');
+			String simpleName = className.substring(n + 1);
+
+			String longName = className + "." + simpleName + "()";
+			debug("weave %s %s%s %s", className, longName, m.getSignature(), type);
 			m.insertBeforeBody(
-				"{ ActivationTracer.event( this,\"" + m.getLongName() + "\",\"" + type + "\", \">\"); }");
-			m.insertAfter("{ ActivationTracer.event(this,\"" + m.getLongName() + "\",\"" + type + "\", \"<\"); }", true,
+				"{ ActivationTracer.event( this,\"" + longName + "\",\"" + type + "\", \">\"); }");
+			m.insertAfter("{ ActivationTracer.event(this,\"" + longName + "\",\"" + type + "\", \"<\"); }", true,
 				false);
 		} catch (Exception e) {
 			e.printStackTrace();

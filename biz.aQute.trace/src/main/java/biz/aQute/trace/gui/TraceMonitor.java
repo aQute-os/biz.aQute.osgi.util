@@ -24,7 +24,7 @@ import biz.aQute.trace.activate.ActivationTracer.Event;
 	"trace", "clear", "traces", "dump", "trace", "untrace", "debug", "man"
 })
 @Component(property = {
-	InventoryPrinter.NAME + "=biz.aQute.trace", //
+	InventoryPrinter.NAME + "=biz-aQute-trace", //
 	InventoryPrinter.TITLE + "=Tracer", //
 	InventoryPrinter.FORMAT + "=TEXT", //
 	InventoryPrinter.FORMAT + "=HTML", //
