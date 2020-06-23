@@ -42,7 +42,8 @@ x=    aQute.trace.extra= \
 	org.osgi.service.log;version='[1.4.0,1.4.1)',\
 	org.osgi.util.pushstream;version='[1.0.1,1.0.2)',\
 	biz.aQute.trace.gui;version='[1.0.0,1.0.1)',\
-	biz.aQute.trace.tester;version='[1.0.0,1.0.1)',\
+    biz.aQute.trace.tester;version='[1.0.0,1.0.1)',\
+    biz.aQute.trace.tester6;version='[1.0.0,1.0.1)',\
     biz.aQute.trace.tester2;version='[1.0.0,1.0.1)',\
     biz.aQute.trace.tester3;version='[1.0.0,1.0.1)',\
     biz.aQute.trace.tester4;version='[1.0.0,1.0.1)',\

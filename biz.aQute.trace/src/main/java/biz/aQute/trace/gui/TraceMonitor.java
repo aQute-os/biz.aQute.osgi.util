@@ -94,8 +94,8 @@ public class TraceMonitor implements InventoryPrinter {
 			String json = toJson();
 
 			StringBuilder sb = new StringBuilder(html);
-			int n = sb.indexOf("$$$");
-			sb.replace(n, n + 3, json);
+			int n = sb.indexOf("\"$$$\"");
+			sb.replace(n, n + 5, json);
 			return sb.toString();
 		} catch (Exception e) {
 			throw Exceptions.duck(e);

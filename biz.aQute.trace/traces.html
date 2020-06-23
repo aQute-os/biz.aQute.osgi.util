@@ -7,17 +7,33 @@
       svg text {
         font-size: 0.8em;
         font-family: sans-serif;
-    }
+      }
       
       </style>
    </head>
 
    <body>
+        
     <svg id="chart" width="100%" height="500">
     </svg>
-      <script>
+     <div>
+         <input class="box" type="file" id="fileSelect">
+     </div>
+     <script>
+        var data = "$$$"
       
-        var data = $$$
+        window.fileSelect.addEventListener( "input", evt=> {
+            var file = evt.target.files[0]
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                        data = JSON.parse(e.target.result)
+                        window.location.hash = ""
+                        display(data)
+                }
+                reader.readAsText(file)
+            }
+        });
 
         var labels  = 120
         var start  = 50
@@ -61,49 +77,55 @@
             
             return Math.round(period) + " h";
         }
-        
-        var threads = Array.from(new Set(data.map( (d) => { 
-            return d.threadId 
-        })))
-        var colors = d3.scaleOrdinal(threads,d3.schemeCategory10);
-
-        var components = data.map( d=> toClassName(d.methodName) )
-        components = components.filter( (d,i,a)=> a.indexOf(d)==i)
-        
-        var min = d3.min( data.map((d)=>{return d.begin}))
-        var max = d3.max( data.map((d)=>{return d.end+100000}))
-        var duration = max - min
-        
-        var xscale = d3.scaleLinear()
-            .domain([min, max])
-            .range([labels, width-labels-50]);
-         
-        var x_axis = d3.axisTop()
-            .scale(xscale);
-   
-   
-        var height  = start + line*d3.keys(components).length + line
-        
-        var svg = d3.select("svg").attr("width", width).attr("height", height)
-        svg.append("g").attr("transform", "translate("+labels+","+line+")").call(x_axis)
-        
-        var g = svg.selectAll( "g.component")
-            .data(components)
-            .enter()
-                .append("g")
-                    .attr("class","component")
-                    .attr("transform", (d,i) => "translate(0,"+(i*line+start)+")")
-        
-        g.append("rect").attr("width", width).attr("height", 22).attr("y", -12).attr("style", (d,i) => "fill:" + (i%2 ?  "#FFFFFF" : "#F0F0F0") )
-        g.append("text").attr("x", 20).text( d => toShortName(d)).append("title").text( d => d)
-        g.append("text").text( d => d.bundle).attr("x", 20)
-        
-        var pt = g.selectAll("g.period").data( className => data.filter( d => d.methodName.startsWith(className))).enter().append("g").attr("transform", "translate("+labels+",-4)")
-        
-        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.end)).attr("y1",0).attr("y2",0).attr("style",d => "stroke-width:3px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
-        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.begin)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
-        pt.append("line").attr("x1", d=>xscale(d.end)).attr("x2", d=>xscale(d.end)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
-        pt.append("title").text( d => d.action + " " + foo(d.end-d.begin) + " on thread " + d.threadId + " -> " + d.thread)
+        function display(data) {
+            d3.select("svg").selectAll("*").remove();
+	        var threads = Array.from(new Set(data.map( (d) => { 
+	            return d.threadId 
+	        })))
+	        var colors = d3.scaleOrdinal(threads,d3.schemeCategory10);
+	
+	        var components = data.map( d=> toClassName(d.methodName) )
+	        components = components.filter( (d,i,a)=> a.indexOf(d)==i)
+	        
+	        var min = d3.min( data.map((d)=>{return d.begin}))
+	        var max = d3.max( data.map((d)=>{return d.end+100000}))
+	        var duration = max - min
+	        
+	        var xscale = d3.scaleLinear()
+	            .domain([min, max])
+	            .range([labels, width-labels-50]);
+	         
+	        var x_axis = d3.axisTop()
+	            .scale(xscale);
+	   
+	   
+	        var height  = start + line*d3.keys(components).length + line
+	        
+	        var svg = d3.select("svg").attr("width", width).attr("height", height)
+	        svg.append("g").attr("transform", "translate("+labels+","+line+")").call(x_axis)
+	        
+	        var g = svg.selectAll( "g.component")
+	            .data(components)
+	            .enter()
+	                .append("g")
+	                    .attr("class","component")
+	                    .attr("transform", (d,i) => "translate(0,"+(i*line+start)+")")
+	        
+	        g.append("rect").attr("width", width).attr("height", 22).attr("y", -12).attr("style", (d,i) => "fill:" + (i%2 ?  "#FFFFFF" : "#F0F0F0") )
+	        g.append("text").attr("x", 20).text( d => toShortName(d)).append("title").text( d => d)
+	        g.append("text").text( d => d.bundle).attr("x", 20)
+	        
+	        var pt = g.selectAll("g.period").data( className => data.filter( d => d.methodName.startsWith(className))).enter().append("g").attr("transform", "translate("+labels+",-4)")
+	        
+	        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.end)).attr("y1",0).attr("y2",0).attr("style",d => "stroke-width:3px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
+	        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.begin)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
+	        pt.append("line").attr("x1", d=>xscale(d.end)).attr("x2", d=>xscale(d.end)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
+	        pt.append("title").text( d => d.action + " " + foo(d.end-d.begin) + " on thread " + d.threadId + " -> " + d.thread)
+	    }
+	    
+	    if ( data != "$$$" )
+	       display(data)
+	       
       </script>
    </body>
                <!--<g class="thread">  for each thread
