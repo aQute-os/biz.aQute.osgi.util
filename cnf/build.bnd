@@ -26,7 +26,9 @@ base.version:           1.0.0
 # To release, remove the -SNAPSHOT
 
 -groupid:               biz.aQute
--pom:                   version=${base.version}-SNAPSHOT
+-pom:                   version=${base.version}
+
+#-SNAPSHOT
 
 Bundle-Version:         ${base.version}.${tstamp}
 
@@ -43,6 +45,8 @@ Bundle-Developers:      osgi; \
                             email=info@osgi.org; \
                             name="Peter Kriens"; \
                             organization="OSGi Alliance"
+Bundle-DocURL:          https://aQute.biz
+
 
 Git-Descriptor:         ${system-allow-fail;git describe --dirty --always}
 Git-SHA:                ${system-allow-fail;git rev-list -1 HEAD}
