@@ -27,6 +27,7 @@ import aQute.launchpad.Service;
  *
  */
 
+@SuppressWarnings("deprecation")
 public class UpdateAgentTest {
 	private final Executor	executor	= Executors.newWorkStealingPool(4);
 
