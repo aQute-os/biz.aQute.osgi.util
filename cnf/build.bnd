@@ -20,15 +20,13 @@ test-cases:             ${classes;NAMED;*Test}
 
 copyright.year = ${tstamp;yyyy}
 
-baseline.version:       0.0.0
-base.version:           1.0.0
+baseline.version:       1.0.0
+base.version:           1.1.0
 
 # To release, remove the -SNAPSHOT
 
 -groupid:               biz.aQute
--pom:                   version=${base.version}
-
-#-SNAPSHOT
+-pom:                   version=${base.version}-SNAPSHOT
 
 Bundle-Version:         ${base.version}.${tstamp}
 
