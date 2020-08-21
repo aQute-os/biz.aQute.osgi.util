@@ -1,3 +1,13 @@
+com.google.protobuf:protoc:exe:linux-aarch_64:4.0.0-rc-2
+com.google.protobuf:protoc:exe:linux-ppcle_64:4.0.0-rc-2
+com.google.protobuf:protoc:exe:linux-s390x:4.0.0-rc-2
+com.google.protobuf:protoc:exe:linux-x86_32:4.0.0-rc-2
+com.google.protobuf:protoc:exe:linux-x86_64:4.0.0-rc-2
+com.google.protobuf:protoc:exe:osx-x86_64:4.0.0-rc-2
+com.google.protobuf:protoc:exe:windows-x86_32:4.0.0-rc-2
+com.google.protobuf:protoc:exe:windows-x86_64:4.0.0-rc-2
+
+
 # OSGi R7
 
 org.osgi:osgi.annotation:7.0.0

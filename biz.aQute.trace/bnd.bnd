@@ -4,13 +4,14 @@
 
 -buildpath: \
 	lib/javassist.jar;version=file,\
-	osgi.core;version=@6.0,\
+	osgi.core;version='@6.0',\
 	org.osgi.service.component.annotations,\
 	org.osgi.service.metatype.annotations,\
 	aQute.libg,\
-    biz.aQute.bndlib;packages=*,\
+	biz.aQute.bndlib;packages='*',\
 	osgi.annotation,\
-	org.apache.felix.gogo.runtime, \
-    org.apache.felix.inventory
+	org.apache.felix.gogo.runtime,\
+	org.apache.felix.inventory,\
+	org.apache.felix.gogo.shell
     
 	

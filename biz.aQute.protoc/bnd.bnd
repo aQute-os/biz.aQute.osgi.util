@@ -1,0 +1,18 @@
+
+-includepackage biz.aQute.protoc
+
+-includeresource: \
+    exe/protoc-osx-x86_64=${repo;com.google.protobuf:protoc:exe:osx-x86_64}, \
+    exe/protoc-windows-x86_64=${repo;com.google.protobuf:protoc:exe:windows-x86_64}, \
+    exe/protoc-linux-x86_64=${repo;com.google.protobuf:protoc:exe:linux-x86_64}
+    
+
+-buildpath: \
+    aQute.libg, \
+    slf4j.api, \
+    slf4j.simple
+    
+Main-Class biz.aQute.protoc.Protoc
+JPM-Command protoc
+
+-conditionalpackage: aQute*, org.slf*
