@@ -6,9 +6,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.EnumSet;
-import java.util.jar.Manifest;
 
 import aQute.lib.io.IO;
+import aQute.lib.strings.Strings;
 import aQute.libg.command.Command;
 
 public class Protoc {
@@ -30,12 +30,12 @@ public class Protoc {
 
 			URL resource = Protoc.class.getResource(name);
 			if (resource == null) {
-				throw new IllegalArgumentException("Corrupt jar, not found resource " + name);
+				throw new IllegalArgumentException("Corrupt jar, not found " + name);
 			}
 			IO.copy(resource, f);
 			f.setLastModified(modified);
 			Files.setPosixFilePermissions(f.toPath(),
-					EnumSet.of(PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.OWNER_READ));
+					EnumSet.of(PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE));
 		}
 		Command cmd = new Command();
 		cmd.add(f.getAbsolutePath());
@@ -46,11 +46,11 @@ public class Protoc {
 	}
 
 	private static long getModified() throws NumberFormatException, IOException {
-		return Long.parseLong( getManifest().getMainAttributes().getValue("Bnd-LastModified"));
-	}
-
-	private static Manifest getManifest() throws IOException {
-		URL url = Protoc.class.getResource("/META-INF/MANIFEST.MF");
-		return new Manifest(url.openStream());
+		String timestamp = IO.collect(Protoc.class.getResource("timestamp.txt"));
+		if ( timestamp == null) {
+			return 0L;
+		}
+		
+		return Long.parseLong(Strings.trim(timestamp));
 	}
 }
