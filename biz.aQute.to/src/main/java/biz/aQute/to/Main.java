@@ -63,17 +63,17 @@ public class Main {
 				local.setProperty("args", Strings.join(args._arguments()));
 				List<String> arguments = args._arguments();
 
+				if (args.list() || arguments.isEmpty()) {
+					doList(local);
+					return;
+				}
+
 				for (int i = 0; i < Math.max(10, arguments.size()); i++) {
 					if (i < arguments.size()) {
 						local.setProperty("" + i, arguments.get(i));
 					} else {
 						local.setProperty("" + i, "");
 					}
-				}
-
-				if (args.list()) {
-					doList(local);
-					return;
 				}
 
 				if (arguments.isEmpty()) {
@@ -183,14 +183,6 @@ public class Main {
 
 		To main = new To();
 		CommandLine cmd = new CommandLine(main);
-		if (args.length == 0) {
-			Justif f = new Justif();
-			cmd.help(f.formatter(), main, "run");
-
-			String wrap = f.wrap();
-			System.err.println(wrap);
-			return;
-		}
 
 		String execute = cmd.execute(main, "run", Arrays.asList(args));
 		if (execute != null)
