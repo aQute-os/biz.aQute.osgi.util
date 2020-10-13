@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import aQute.lib.io.IO;
@@ -16,6 +17,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 
 public class PlantUMLTest {
+	@Ignore
 	@Test
 	public void testSimple() throws IOException {
 		String source = "@startuml\n";
@@ -31,6 +33,7 @@ public class PlantUMLTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testStyled() throws IOException, FontFormatException {
 		File file = IO.getFile("/Users/aqute/Desktop/Dropbox/alloy-book/fonts/PRODOBookcItalic.ttf");

@@ -58,25 +58,27 @@ usr = ${env;REPOSITORY_USERNAME;}
 
 -releaserepo: Nexus
 -baselinerepo: Distro
-
+-buildrepo: M2
 
 #
 # Configure Repositories
--plugin.1.central \
+-plugin  \
     aQute.bnd.repository.maven.provider.MavenBndRepository;\
         name="Central";\
         releaseUrl=https://repo.maven.apache.org/maven2;\
         snapshotUrl="https://oss.sonatype.org/content/repositories/snapshots/,https://bndtools.jfrog.io/bndtools/update"; \
         index="${.}/central.mvn";\
         readOnly=true,\
-
--plugin.8.nexus: \
+    aQute.bnd.repository.maven.provider.MavenBndRepository; \
+        name=M2, \
     aQute.bnd.repository.maven.provider.MavenBndRepository; \
         snapshotUrl=https://oss.sonatype.org/content/repositories/snapshots/; \
         releaseUrl= 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'; \
         index=${.}/central.maven; \
         name="Nexus"
+   
 
+    
 -augment.async \
     org.osgi.service.async; \
         requirement:='osgi.identity;filter:="(osgi.identity=org.apache.aries.async)"'
