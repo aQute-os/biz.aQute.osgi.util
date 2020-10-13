@@ -1,0 +1,61 @@
+-buildpath: \
+	aQute.libg,\
+	org.osgi.service.component.annotations,\
+	org.osgi.service.metatype.annotations;version='1.4.0',\
+	org.osgi.service.log;version='1.4.0',\
+	org.osgi.dto;version='1.1.0',\
+	org.osgi.framework;version='1.8.0'
+
+-testpath: \
+    osgi.enroute.junit.wrapper;version='4.12.0',\
+    osgi.enroute.hamcrest.wrapper,\
+	org.elasticsearch.client:elasticsearch-rest-high-level-client;version='7.9.2',\
+	org.elasticsearch.client:elasticsearch-rest-client;version='7.9.2',\
+	org.apache.httpcomponents:httpasyncclient;version='4.1.4',\
+	org.apache.httpcomponents:httpcore-nio;version='4.4.13',\
+	org.apache.httpcomponents:httpclient;version='4.5.13',\
+	org.apache.httpcomponents:httpcore;version='4.4.13',\
+	osgi.enroute.junit.wrapper;version='4.12.0',\
+	osgi.enroute.hamcrest.wrapper,\
+	commons-logging:commons-logging,\
+	org.apache.commons.codec
+
+ 
+-conditionalpackage: \
+    aQute.lib*, \
+    org.apache.http.*, \
+    org.elasticsearch.*
+
+-runkeep: true
+	
+-runrequires: \
+	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)',\
+	osgi.identity;filter:='(osgi.identity=biz.aQute.kibana)',\
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.command)',\
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole.plugins.ds)',\
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.http.jetty)',\
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)'
+-runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runee: JavaSE-1.8
+-runbundles: \
+	biz.aQute.gogo.commands.provider;version=snapshot,\
+	biz.aQute.kibana;version=snapshot,\
+	org.apache.felix.configadmin;version='[1.9.12,1.9.13)',\
+	org.apache.felix.gogo.command;version='[1.1.0,1.1.1)',\
+	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\
+	org.apache.felix.gogo.shell;version='[1.1.2,1.1.3)',\
+	org.apache.felix.log;version='[1.2.0,1.2.1)',\
+	org.apache.felix.scr;version='[2.1.16,2.1.17)',\
+	org.osgi.service.log;version='[1.4.0,1.4.1)',\
+	org.osgi.util.function;version='[1.1.0,1.1.1)',\
+	org.osgi.util.promise;version='[1.1.1,1.1.2)',\
+	org.osgi.util.pushstream;version='[1.0.1,1.0.2)',\
+	org.apache.commons.fileupload;version='[1.3.2,1.3.3)',\
+	org.apache.commons.io;version='[2.5.0,2.5.1)',\
+	org.apache.felix.http.servlet-api;version='[1.1.2,1.1.3)',\
+	org.apache.felix.inventory;version='[1.0.4,1.0.5)',\
+	org.apache.felix.webconsole;version='[4.3.8,4.3.9)',\
+	org.apache.felix.webconsole.plugins.ds;version='[2.1.0,2.1.1)',\
+	org.apache.felix.http.jetty;version='[4.0.8,4.0.9)',\
+	org.apache.felix.metatype;version='[1.2.2,1.2.3)'
