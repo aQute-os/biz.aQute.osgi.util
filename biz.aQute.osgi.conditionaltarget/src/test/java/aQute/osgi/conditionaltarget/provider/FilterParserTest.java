@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import aQute.osgi.conditionaltarget.provider.FilterParser;
-
 public class FilterParserTest {
 
 	@Test

@@ -7,7 +7,7 @@ bin:                    target/classes
 testsrc:                src/test/java
 testbin:                target/test-classes
 target-dir:             target
-
+-noimportjava           true
 javac.source:           1.8
 javac.target:           1.8
 -runee:                 JavaSE-1.8

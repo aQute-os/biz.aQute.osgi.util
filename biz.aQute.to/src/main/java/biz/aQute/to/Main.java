@@ -13,7 +13,6 @@ import aQute.lib.getopt.CommandLine;
 import aQute.lib.getopt.Description;
 import aQute.lib.getopt.Options;
 import aQute.lib.io.IO;
-import aQute.lib.justif.Justif;
 import aQute.lib.strings.Strings;
 import aQute.libg.command.Command;
 

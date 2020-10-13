@@ -1,0 +1,22 @@
+@startuml
+skinparam useBetaStyle true
+<style>
+    sequenceDiagram {
+    }
+     actor {
+       FontColor #100001
+     }
+    arrow {
+       FontColor #200002
+    }
+    sequenceDiagram {
+    
+    }
+    wbsDiagram {
+    }
+}
+</style>
+
+actor Bob
+actor Sally
+@enduml

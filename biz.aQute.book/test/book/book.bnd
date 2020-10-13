@@ -1,0 +1,20 @@
+
+-template book.html
+
+-chapters \
+    chapter-1.md, \
+    chapter-2.md
+
+-scripts \
+    assets/script.js
+ 
+-styles \
+    assets/style.css, \
+    assets/style.scss
+
+-toc \
+    h1, h2
+
+-index \
+    index
+    

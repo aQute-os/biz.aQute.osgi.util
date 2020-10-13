@@ -7,8 +7,6 @@ import java.util.concurrent.Semaphore;
 
 import org.junit.Test;
 
-import aQute.osgi.conditionaltarget.provider.Trigger;
-
 public class TriggerTest {
 
 	@Test

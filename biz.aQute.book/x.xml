@@ -1,0 +1,2055 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	contentScriptType="application/ecmascript" contentStyleType="text/css"
+	height="5493px" preserveAspectRatio="none"
+	style="width:338px;height:5493px;" version="1.1" viewBox="0 0 338 5493"
+	width="338px" zoomAndPan="magnify">
+	<defs />
+	<g>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="0" x="17" y="21.3125" />
+		<text fill="#000000" font-family="sans-serif" font-size="16"
+			font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="125"
+			x="17" y="20.4688">Fonts available:</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="0" x="9" y="35.4453" />
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="121" x="5" y="49.5781">.AppleSystemUIFont
+			:</text>
+		<text fill="#000000" font-family=".AppleSystemUIFont"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="79"
+			x="130" y="49.5781">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="5" y="63.7109">.SF NS Mono :
+		</text>
+		<text fill="#000000" font-family=".SF NS Mono" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="87" y="63.7109">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="196" x="5" y="77.8438">Abadi MT
+			Condensed Extra Bold :</text>
+		<text fill="#000000" font-family="Abadi MT Condensed Extra Bold"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61"
+			x="205" y="77.0469">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="164" x="5" y="91.9766">Abadi MT
+			Condensed Light :</text>
+		<text fill="#000000" font-family="Abadi MT Condensed Light"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="51"
+			x="173" y="91.1797">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="144" x="5" y="106.1797">Academy
+			Engraved LET :</text>
+		<text fill="#000000" font-family="Academy Engraved LET"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61"
+			x="153" y="102.7109">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="111" x="5" y="120.5797">Adobe Caslon
+			Pro :</text>
+		<text fill="#000000" font-family="Adobe Caslon Pro"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="59"
+			x="120" y="119.9309">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="126" x="5" y="144.5797">Adobe
+			Fangsong Std :</text>
+		<text fill="#000000" font-family="Adobe Fangsong Std"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="135" y="145.6709">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="134" x="5" y="158.9797">Adobe
+			Garamond Pro :</text>
+		<text fill="#000000" font-family="Adobe Garamond Pro"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="59"
+			x="143" y="158.2109">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="5" y="182.9797">Adobe Heiti
+			Std :</text>
+		<text fill="#000000" font-family="Adobe Heiti Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="107" y="184.0709">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="97" x="5" y="206.9797">Adobe Kaiti
+			Std :</text>
+		<text fill="#000000" font-family="Adobe Kaiti Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="106" y="208.0709">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="230.9797">Adobe Ming
+			Std :</text>
+		<text fill="#000000" font-family="Adobe Ming Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="108" y="232.0709">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="120" x="5" y="254.9797">Adobe
+			Myungjo Std :</text>
+		<text fill="#000000" font-family="Adobe Myungjo Std"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="75"
+			x="129" y="256.0709">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="278.9797">Adobe Song
+			Std :</text>
+		<text fill="#000000" font-family="Adobe Song Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="108" y="280.0709">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="57" x="5" y="296.9797">Al Bayan :
+		</text>
+		<text fill="#000000" font-family="Al Bayan" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="66" y="293.4029">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="45" x="5" y="313.3597">Al Nile :
+		</text>
+		<text fill="#000000" font-family="Al Nile" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="54" y="309.4709">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="60" x="5" y="327.4925">Al Tarikh :
+		</text>
+		<text fill="#000000" font-family="Al Tarikh" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="69" y="324.6741">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="128" x="5" y="341.6253">American
+			Typewriter :</text>
+		<text fill="#000000" font-family="American Typewriter"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="74"
+			x="137" y="341.1566">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="83" x="5" y="355.7581">Andale Mono :
+		</text>
+		<text fill="#000000" font-family="Andale Mono" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="92" y="355.6761">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="81" x="5" y="369.8909">Apple Braille
+			:</text>
+		<text fill="#000000" font-family="Apple Braille" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="89" x="90" y="369.4222">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="388.8812">Apple
+			Chancery :</text>
+		<text fill="#000000" font-family="Apple Chancery" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="108" y="385.8343">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="112" x="5" y="404.6312">Apple Color
+			Emoji :</text>
+		<text fill="#000000" font-family="Apple Color Emoji"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="113"
+			x="121" y="403.4124">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="128" x="5" y="419.0312">Apple SD
+			Gothic Neo :</text>
+		<text fill="#000000" font-family="Apple SD Gothic Neo"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="63"
+			x="137" y="417.9624">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="93" x="5" y="433.164">Apple Symbols
+			:</text>
+		<text fill="#000000" font-family="Apple Symbols" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="102" y="432.6952">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="5" y="447.756">AppleGothic :
+		</text>
+		<text fill="#000000" font-family="AppleGothic" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="87" y="446.3872">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="90" x="5" y="462.0038">AppleMyungjo
+			:</text>
+		<text fill="#000000" font-family="AppleMyungjo" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="99" y="460.7185">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="34" x="5" y="476.1366">Arial :
+		</text>
+		<text fill="#000000" font-family="Arial" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="43" y="476.1249">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="5" y="493.0585">Arial Black :
+		</text>
+		<text fill="#000000" font-family="Arial Black" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="77" y="491.8749">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="83" x="5" y="507.1913">Arial Hebrew
+			:</text>
+		<text fill="#000000" font-family="Arial Hebrew" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="92" y="505.7025">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="128" x="5" y="521.3241">Arial Hebrew
+			Scholar :</text>
+		<text fill="#000000" font-family="Arial Hebrew Scholar"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="137" y="519.8354">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="5" y="535.4569">Arial Narrow
+			:</text>
+		<text fill="#000000" font-family="Arial Narrow" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="55" x="89" y="535.4452">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="141" x="5" y="549.5897">Arial
+			Rounded MT Bold :</text>
+		<text fill="#000000" font-family="Arial Rounded MT Bold"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="73"
+			x="150" y="549.5897">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="104" x="5" y="565.6679">Arial
+			Unicode MS :</text>
+		<text fill="#000000" font-family="Arial Unicode MS"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67"
+			x="113" y="564.9471">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="44" x="5" y="582.0599">Avenir :
+		</text>
+		<text fill="#000000" font-family="Avenir" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="65" x="53" y="580.1991">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="5" y="598.4519">Avenir Next :
+		</text>
+		<text fill="#000000" font-family="Avenir Next" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="65" x="84" y="596.5911">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="144" x="5" y="614.8439">Avenir Next
+			Condensed :</text>
+		<text fill="#000000" font-family="Avenir Next Condensed"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="50"
+			x="153" y="612.9831">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="60" x="5" y="631.501">Ayuthaya :
+		</text>
+		<text fill="#000000" font-family="Ayuthaya" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="69" y="630.1808">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="5" y="647.8721">Baghdad :
+		</text>
+		<text fill="#000000" font-family="Baghdad" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="68" y="645.0479">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="5" y="669.8254">Bangla MN :
+		</text>
+		<text fill="#000000" font-family="Bangla MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="79" x="78" y="663.0367">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="118" x="5" y="685.4817">Bangla
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Bangla Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="127" y="683.5129">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="5" y="699.6145">Bank Gothic :
+		</text>
+		<text fill="#000000" font-family="Bank Gothic" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="85" y="699.3137">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="5" y="713.7473">Baskerville :
+		</text>
+		<text fill="#000000" font-family="Baskerville" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="78" y="713.3254">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="123" x="5" y="727.8801">Baskerville
+			Old Face :</text>
+		<text fill="#000000" font-family="Baskerville Old Face"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="57"
+			x="132" y="727.4114">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="47" x="5" y="742.0129">Batang :
+		</text>
+		<text fill="#000000" font-family="Batang" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="74" x="56" y="742.845">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="5" y="756.1457">Bauhaus :
+		</text>
+		<text fill="#000000" font-family="Bauhaus" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="65" y="755.941">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="5" y="773.6711">Bauhaus 93 :
+		</text>
+		<text fill="#000000" font-family="Bauhaus 93" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="85" y="773.4075">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="41" x="5" y="787.8039">Beirut :
+		</text>
+		<text fill="#000000" font-family="Beirut" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="50" y="787.0364">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="90" x="5" y="802.2039">Bell Gothic
+			Std :</text>
+		<text fill="#000000" font-family="Bell Gothic Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="99" y="801.7112">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="50" x="5" y="816.3368">Bell MT :
+		</text>
+		<text fill="#000000" font-family="Bell MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="59" y="815.6219">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="145" x="5" y="830.5868">Bernard MT
+			Condensed :</text>
+		<text fill="#000000" font-family="Bernard MT Condensed"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="56"
+			x="154" y="830.5047">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="845.0948">Big Caslon :
+		</text>
+		<text fill="#000000" font-family="Big Caslon" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="76" y="844.542">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="5" y="859.4948">Birch Std :
+		</text>
+		<text fill="#000000" font-family="Birch Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="34" x="67" y="859.026">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="93" x="5" y="874.6647">Blackmoor LET
+			:</text>
+		<text fill="#000000" font-family="Blackmoor LET" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="54" x="102" y="871.1959">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="81" x="5" y="889.0647">Blackoak Std
+			:</text>
+		<text fill="#000000" font-family="Blackoak Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="179" x="90" y="888.5959">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="90" x="5" y="903.4647">BlairMdITC TT
+			:</text>
+		<text fill="#000000" font-family="BlairMdITC TT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="109" x="99" y="903.1639">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="917.8887">Bodoni 72 :
+		</text>
+		<text fill="#000000" font-family="Bodoni 72" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="76" y="917.2279">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="117" x="5" y="932.3127">Bodoni 72
+			Oldstyle :</text>
+		<text fill="#000000" font-family="Bodoni 72 Oldstyle"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="53"
+			x="126" y="931.6519">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="128" x="5" y="946.6887">Bodoni 72
+			Smallcaps :</text>
+		<text fill="#000000" font-family="Bodoni 72 Smallcaps"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="57"
+			x="137" y="946.0759">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="114" x="5" y="960.8215">Bodoni
+			Ornaments :</text>
+		<text fill="#000000" font-family="Bodoni Ornaments"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="156"
+			x="123" y="961.0607">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="5" y="975.2883">Book Antiqua
+			:</text>
+		<text fill="#000000" font-family="Book Antiqua" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="93" y="974.4328">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="115" x="5" y="989.4211">Bookman Old
+			Style :</text>
+		<text fill="#000000" font-family="Bookman Old Style"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="76"
+			x="124" y="989.1691">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="161" x="5" y="1003.5539">Bordeaux
+			Roman Bold LET :</text>
+		<text fill="#000000" font-family="Bordeaux Roman Bold LET"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="28"
+			x="170" y="1000.0852">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="86" x="5" y="1018.5419">Bradley Hand
+			:</text>
+		<text fill="#000000" font-family="Bradley Hand" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="95" y="1016.2852">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="79" x="5" y="1032.6747">Braggadocio :
+		</text>
+		<text fill="#000000" font-family="Braggadocio" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="100" x="88" y="1033.372">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="86" x="5" y="1046.8075">Britannic
+			Bold :</text>
+		<text fill="#000000" font-family="Britannic Bold" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="95" y="1047.3407">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="5" y="1061.5263">Brush Script
+			MT :</text>
+		<text fill="#000000" font-family="Brush Script MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="107" y="1060.0028">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="5" y="1075.9263">Brush Script
+			Std :</text>
+		<text fill="#000000" font-family="Brush Script Std"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61"
+			x="107" y="1074.6535">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="5" y="1090.0591">Calisto MT :
+		</text>
+		<text fill="#000000" font-family="Calisto MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="77" y="1089.8364">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="54" x="5" y="1106.061">Capitals :
+		</text>
+		<text fill="#000000" font-family="Capitals" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="88" x="63" y="1105.5923">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="46" x="5" y="1120.1939">Casual :
+		</text>
+		<text fill="#000000" font-family="Casual" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="74" x="55" y="1120.0971">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="52" x="5" y="1134.6196">Century :
+		</text>
+		<text fill="#000000" font-family="Century" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="61" y="1134.5552">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="92" x="5" y="1149.3325">Century
+			Gothic :</text>
+		<text fill="#000000" font-family="Century Gothic" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="101" y="1149.2212">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="121" x="5" y="1163.7583">Century
+			Schoolbook :</text>
+		<text fill="#000000" font-family="Century Schoolbook"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="73"
+			x="130" y="1163.6939">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="5" y="1179.0732">Chalkboard :
+		</text>
+		<text fill="#000000" font-family="Chalkboard" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="84" y="1178.21">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="92" x="5" y="1196.2047">Chalkboard SE
+			:</text>
+		<text fill="#000000" font-family="Chalkboard SE" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="101" y="1195.3415">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="5" y="1211.5196">Chalkduster :
+		</text>
+		<text fill="#000000" font-family="Chalkduster" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="87" x="86" y="1210.6564">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="88" x="5" y="1225.9196">Chaparral Pro
+			:</text>
+		<text fill="#000000" font-family="Chaparral Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="97" y="1225.3309">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="106" x="5" y="1240.3196">Charlemagne
+			Std :</text>
+		<text fill="#000000" font-family="Charlemagne Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="96" x="115" y="1239.2989">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="51" x="5" y="1254.9622">Charter :
+		</text>
+		<text fill="#000000" font-family="Charter" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="60" y="1254.6107">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="46" x="5" y="1269.095">Cochin :
+		</text>
+		<text fill="#000000" font-family="Cochin" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="55" y="1268.6263">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="5" y="1283.2278">Colonna MT :
+		</text>
+		<text fill="#000000" font-family="Colonna MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="85" y="1281.6282">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="93" x="5" y="1299.9505">Comic Sans MS
+			:</text>
+		<text fill="#000000" font-family="Comic Sans MS" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="102" y="1298.9837">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="5" y="1314.0833">Cooper Black
+			:</text>
+		<text fill="#000000" font-family="Cooper Black" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="93" y="1313.8665">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="5" y="1328.4833">Cooper Std :
+		</text>
+		<text fill="#000000" font-family="Cooper Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="81" y="1327.4266">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="5" y="1342.6161">Copperplate :
+		</text>
+		<text fill="#000000" font-family="Copperplate" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="82" x="89" y="1342.1714">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="149" x="5" y="1356.7489">Copperplate
+			Gothic Bold :</text>
+		<text fill="#000000" font-family="Copperplate Gothic Bold"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="83"
+			x="158" y="1356.5556">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="151" x="5" y="1370.8817">Copperplate
+			Gothic Light :</text>
+		<text fill="#000000" font-family="Copperplate Gothic Light"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="80"
+			x="160" y="1370.6884">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="1385.0146">Corsiva
+			Hebrew :</text>
+		<text fill="#000000" font-family="Corsiva Hebrew" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="108" y="1383.8544">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="50" x="5" y="1399.1474">Courier :
+		</text>
+		<text fill="#000000" font-family="Courier" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="59" y="1398.7255">This is a test
+		</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="79" x="5" y="1413.2802">Courier New :
+		</text>
+		<text fill="#000000" font-family="Courier New" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="88" y="1412.2079">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="5" y="1427.413">Cracked :
+		</text>
+		<text fill="#000000" font-family="Cracked" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="46" x="65" y="1427.8082">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="60" x="5" y="1443.3329">Curlz MT :
+		</text>
+		<text fill="#000000" font-family="Curlz MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="69" y="1442.2665">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="1457.4657">Damascus :
+		</text>
+		<text fill="#000000" font-family="Damascus" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="76" y="1454.9579">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="52" x="5" y="1472.5977">Dax OT :
+		</text>
+		<text fill="#000000" font-family="Dax OT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="61" y="1472.189">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="106" x="5" y="1494.3693">DecoType
+			Naskh :</text>
+		<text fill="#000000" font-family="DecoType Naskh" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="115" y="1489.2319">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="115" x="5" y="1508.5021">DejaVu Sans
+			Mono :</text>
+		<text fill="#000000" font-family="DejaVu Sans Mono"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="98"
+			x="124" y="1508.2033">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="5" y="1522.6349">Desdemona :
+		</text>
+		<text fill="#000000" font-family="Desdemona" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="86" y="1522.8224">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="95" x="5" y="1541.9299">Devanagari MT
+			:</text>
+		<text fill="#000000" font-family="Devanagari MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="104" y="1536.2697">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="145" x="5" y="1559.8244">Devanagari
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Devanagari Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="154" y="1557.2345">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="44" x="5" y="1573.9572">Dialog :
+		</text>
+		<text fill="#000000" font-family="Dialog" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="53" y="1573.9572">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="5" y="1588.09">DialogInput :
+		</text>
+		<text fill="#000000" font-family="DialogInput" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="82" y="1588.09">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="39" x="5" y="1603.258">Didot :
+		</text>
+		<text fill="#000000" font-family="Didot" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="48" y="1602.2013">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="85" x="5" y="1617.3908">DIN Alternate
+			:</text>
+		<text fill="#000000" font-family="DIN Alternate" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="94" y="1617.2092">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="5" y="1631.7908">DIN Condensed
+			:</text>
+		<text fill="#000000" font-family="DIN Condensed" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="43" x="107" y="1630.8661">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="5" y="1654.3494">Diwan Kufi :
+		</text>
+		<text fill="#000000" font-family="Diwan Kufi" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="78" y="1651.0213">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="90" x="5" y="1674.9158">Diwan Thuluth
+			:</text>
+		<text fill="#000000" font-family="Diwan Thuluth" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="99" y="1669.0154">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="81" x="5" y="1689.3158">Eccentric Std
+			:</text>
+		<text fill="#000000" font-family="Eccentric Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="49" x="90" y="1688.3431">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="128" x="5" y="1703.4604">Edwardian
+			Script ITC :</text>
+		<text fill="#000000" font-family="Edwardian Script ITC"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="38"
+			x="137" y="1702.0541">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="87" x="5" y="1717.5932">Engravers MT
+			:</text>
+		<text fill="#000000" font-family="Engravers MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="117" x="96" y="1717.3998">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="1733.9232">Euphemia UCAS
+			:</text>
+		<text fill="#000000" font-family="Euphemia UCAS" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="108" y="1733.724">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="57" x="5" y="1748.0561">Eurostile :
+		</text>
+		<text fill="#000000" font-family="Eurostile" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="66" y="1748.185">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="40" x="5" y="1762.1889">Farah :
+		</text>
+		<text fill="#000000" font-family="Farah" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="49" y="1761.7729">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="38" x="5" y="1787.1674">Farisi :
+		</text>
+		<text fill="#000000" font-family="Farisi" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="47" y="1777.9799">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="109" x="5" y="1801.3002">Footlight MT
+			Light :</text>
+		<text fill="#000000" font-family="Footlight MT Light"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="57"
+			x="118" y="1801.1479">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="44" x="5" y="1817.2377">Futura :
+		</text>
+		<text fill="#000000" font-family="Futura" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="53" y="1816.6518">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="40" x="5" y="1831.3705">Galvji :
+		</text>
+		<text fill="#000000" font-family="Galvji" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="49" y="1831.3705">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="108" x="5" y="1846.3705">GB18030
+			Bitmap :</text>
+		<text fill="#000000" font-family="GB18030 Bitmap" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="113" x="117"
+			y="1847.4018">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="5" y="1862.7105">Geeza Pro :
+		</text>
+		<text fill="#000000" font-family="Geeza Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="77" y="1861.2707">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="51" x="5" y="1878.7124">Geneva :
+		</text>
+		<text fill="#000000" font-family="Geneva" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="60" y="1878.2437">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="5" y="1892.8452">Georgia :
+		</text>
+		<text fill="#000000" font-family="Georgia" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="62" y="1892.7456">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="79" x="5" y="1907.2452">Giddyup Std :
+		</text>
+		<text fill="#000000" font-family="Giddyup Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="45" x="88" y="1905.7325">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="5" y="1921.3781">Gill Sans :
+		</text>
+		<text fill="#000000" font-family="Gill Sans" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="65" y="1921.1437">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="116" x="5" y="1936.3312">Gill Sans
+			Ultra Bold :</text>
+		<text fill="#000000" font-family="Gill Sans Ultra Bold"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="91"
+			x="125" y="1935.839">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="194" x="5" y="1950.464">Gloucester
+			MT Extra Condensed :</text>
+		<text fill="#000000" font-family="Gloucester MT Extra Condensed"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="40"
+			x="203" y="1950.382">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="1964.8663">Goudy Old
+			Style :</text>
+		<text fill="#000000" font-family="Goudy Old Style" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="51" x="108" y="1964.5499">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="5" y="1983.3527">Gujarati MT :
+		</text>
+		<text fill="#000000" font-family="Gujarati MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="65" x="85" y="1978.296">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="126" x="5" y="2001.3527">Gujarati
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Gujarati Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="76"
+			x="135" y="1999.6846">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="41" x="5" y="2015.4855">Gulim :
+		</text>
+		<text fill="#000000" font-family="Gulim" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="50" y="2016.3175">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="87" x="5" y="2033.3449">Gurmukhi MN :
+		</text>
+		<text fill="#000000" font-family="Gurmukhi MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="96" y="2032.9347">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="86" x="5" y="2048.9894">Gurmukhi MT :
+		</text>
+		<text fill="#000000" font-family="Gurmukhi MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="95" y="2046.2472">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="136" x="5" y="2064.5636">Gurmukhi
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Gurmukhi Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="145" y="2063.5031">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="106" x="5" y="2078.6964">Haettenschweiler
+			:</text>
+		<text fill="#000000" font-family="Haettenschweiler"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="46"
+			x="115" y="2079.7877">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="133" x="5" y="2096.6484">Handwriting
+			- Dakota :</text>
+		<text fill="#000000" font-family="Handwriting - Dakota"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="82"
+			x="142" y="2093.9717">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="5" y="2110.7812">Harrington :
+		</text>
+		<text fill="#000000" font-family="Harrington" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="78" y="2110.5469">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="52" x="5" y="2124.914">Heiti SC :
+		</text>
+		<text fill="#000000" font-family="Heiti SC" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="61" y="2125.7653">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="54" x="5" y="2139.0469">Heiti TC :
+		</text>
+		<text fill="#000000" font-family="Heiti TC" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="63" y="2139.8981">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="60" x="5" y="2153.1797">Helvetica :
+		</text>
+		<text fill="#000000" font-family="Helvetica" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="69" y="2152.9511">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="94" x="5" y="2167.4957">Helvetica
+			Neue :</text>
+		<text fill="#000000" font-family="Helvetica Neue" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="103" y="2167.4709">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="5" y="2181.6285">Herculanum :
+		</text>
+		<text fill="#000000" font-family="Herculanum" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="86" y="2181.6997">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="161" x="5" y="2199.6285">Hiragino
+			Maru Gothic ProN :</text>
+		<text fill="#000000" font-family="Hiragino Maru Gothic ProN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="75"
+			x="170" y="2200.7197">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="132" x="5" y="2217.6285">Hiragino
+			Mincho ProN :</text>
+		<text fill="#000000" font-family="Hiragino Mincho ProN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="71"
+			x="141" y="2218.7197">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="86" x="5" y="2235.6285">Hiragino Sans
+			:</text>
+		<text fill="#000000" font-family="Hiragino Sans" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="95" y="2236.7197">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="106" x="5" y="2253.6285">Hiragino
+			Sans GB :</text>
+		<text fill="#000000" font-family="Hiragino Sans GB"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="75"
+			x="115" y="2254.7197">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="5" y="2268.0285">Hobo Std :
+		</text>
+		<text fill="#000000" font-family="Hobo Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="70" y="2268.7957">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="5" y="2282.1613">Hoefler Text
+			:</text>
+		<text fill="#000000" font-family="Hoefler Text" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="65" x="89" y="2281.3445">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="47" x="5" y="2296.798">Impact :
+		</text>
+		<text fill="#000000" font-family="Impact" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="56" y="2296.798">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="119" x="5" y="2310.9367">Imprint MT
+			Shadow :</text>
+		<text fill="#000000" font-family="Imprint MT Shadow"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="128" y="2310.4796">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="5" y="2325.9367">InaiMathi :
+		</text>
+		<text fill="#000000" font-family="InaiMathi" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="68" y="2323.6679">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="5" y="2340.0695">Inconsolata :
+		</text>
+		<text fill="#000000" font-family="Inconsolata" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="81" y="2340.3207">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="5" y="2354.4695">Input Mono :
+		</text>
+		<text fill="#000000" font-family="Input Mono" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="112" x="81" y="2353.728">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="149" x="5" y="2368.8695">Input Mono
+			Compressed :</text>
+		<text fill="#000000" font-family="Input Mono Compressed"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="84"
+			x="158" y="2368.128">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="141" x="5" y="2383.2695">Input Mono
+			Condensed :</text>
+		<text fill="#000000" font-family="Input Mono Condensed"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="98"
+			x="150" y="2382.528">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="118" x="5" y="2397.6695">Input Mono
+			Narrow :</text>
+		<text fill="#000000" font-family="Input Mono Narrow"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="98"
+			x="127" y="2396.928">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="94" x="5" y="2415.6695">ITF
+			Devanagari :</text>
+		<text fill="#000000" font-family="ITF Devanagari" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="103" y="2414.0007">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="141" x="5" y="2433.6695">ITF
+			Devanagari Marathi :</text>
+		<text fill="#000000" font-family="ITF Devanagari Marathi"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="59"
+			x="150" y="2432.0007">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="5" y="2447.8726">Jazz LET :
+		</text>
+		<text fill="#000000" font-family="Jazz LET" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="82" x="67" y="2444.4039">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="49" x="5" y="2463.3988">Kailasa :
+		</text>
+		<text fill="#000000" font-family="Kailasa" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="58" y="2460.5346">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="82" x="5" y="2477.971">Kannada MN :
+		</text>
+		<text fill="#000000" font-family="Kannada MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="91" y="2477.1331">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="131" x="5" y="2497.5003">Kannada
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Kannada Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="140" y="2496.2464">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="34" x="5" y="2511.6331">Kefa :</text>
+		<text fill="#000000" font-family="Kefa" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="43" y="2511.4691">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="5" y="2533.389">Khmer MN :
+		</text>
+		<text fill="#000000" font-family="Khmer MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="78" y="2526.0003">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="118" x="5" y="2557.2191">Khmer Sangam
+			MN :</text>
+		<text fill="#000000" font-family="Khmer Sangam MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="127" y="2551.5882">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="55" x="5" y="2571.3519">Kino MT :
+		</text>
+		<text fill="#000000" font-family="Kino MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="64" y="2571.0355">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="101" x="5" y="2589.3519">Kohinoor
+			Bangla :</text>
+		<text fill="#000000" font-family="Kohinoor Bangla" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="110" y="2587.6831">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="128" x="5" y="2607.3519">Kohinoor
+			Devanagari :</text>
+		<text fill="#000000" font-family="Kohinoor Devanagari"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="137" y="2605.6831">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="109" x="5" y="2625.3519">Kohinoor
+			Gujarati :</text>
+		<text fill="#000000" font-family="Kohinoor Gujarati"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="118" y="2622.4831">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="102" x="5" y="2643.3519">Kohinoor
+			Telugu :</text>
+		<text fill="#000000" font-family="Kohinoor Telugu" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="111" y="2641.6831">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="5" y="2663.438">Kokonor :
+		</text>
+		<text fill="#000000" font-family="Kokonor" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="65" x="65" y="2658.6031">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="114" x="5" y="2687.438">Kozuka
+			Gothic Pro :</text>
+		<text fill="#000000" font-family="Kozuka Gothic Pro"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="63"
+			x="123" y="2688.5293">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="118" x="5" y="2711.438">Kozuka
+			Mincho Pro :</text>
+		<text fill="#000000" font-family="Kozuka Mincho Pro"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="127" y="2712.5293">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="2725.5709">Kreative
+			Square :</text>
+		<text fill="#000000" font-family="Kreative Square" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="168" x="108"
+			y="2725.4354">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="5" y="2740.8474">Krungthep :
+		</text>
+		<text fill="#000000" font-family="Krungthep" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="77" y="2740.2287">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="2757.7693">KufiStandardGK
+			:</text>
+		<text fill="#000000" font-family="KufiStandardGK" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="108" y="2754.699">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="51" x="5" y="2774.2459">Lao MN :
+		</text>
+		<text fill="#000000" font-family="Lao MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="60" y="2771.5037">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="100" x="5" y="2790.0545">Lao Sangam
+			MN :</text>
+		<text fill="#000000" font-family="Lao Sangam MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="109" y="2788.8005">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="103" x="5" y="2804.4545">Letter
+			Gothic Std :</text>
+		<text fill="#000000" font-family="Letter Gothic Std"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="98"
+			x="112" y="2803.8897">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="5" y="2818.5873">LiHei Pro :
+		</text>
+		<text fill="#000000" font-family="LiHei Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="68" y="2819.4385">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="5" y="2832.9873">Lithos Pro :
+		</text>
+		<text fill="#000000" font-family="Lithos Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="85" x="73" y="2832.2425">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="109" x="5" y="2848.2451">Lucida
+			Blackletter :</text>
+		<text fill="#000000" font-family="Lucida Blackletter"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="69"
+			x="118" y="2848.1689">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="82" x="5" y="2862.3779">Lucida Bright
+			:</text>
+		<text fill="#000000" font-family="Lucida Bright" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="91" y="2862.3486">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="113" x="5" y="2878.7138">Lucida
+			Calligraphy :</text>
+		<text fill="#000000" font-family="Lucida Calligraphy"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="78"
+			x="122" y="2877.3427">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="5" y="2892.8466">Lucida Fax :
+		</text>
+		<text fill="#000000" font-family="Lucida Fax" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="78" y="2892.8466">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="92" x="5" y="2906.9795">Lucida Grande
+			:</text>
+		<text fill="#000000" font-family="Lucida Grande" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="101" y="2906.9795">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="118" x="5" y="2923.5322">Lucida
+			Handwriting :</text>
+		<text fill="#000000" font-family="Lucida Handwriting"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="80"
+			x="127" y="2921.8037">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="5" y="2937.665">Lucida Sans :
+		</text>
+		<text fill="#000000" font-family="Lucida Sans" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="84" y="2937.6357">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="141" x="5" y="2951.7978">Lucida Sans
+			Typewriter :</text>
+		<text fill="#000000" font-family="Lucida Sans Typewriter"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="98"
+			x="150" y="2951.7685">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="57" x="5" y="2967.8658">Luminari :
+		</text>
+		<text fill="#000000" font-family="Luminari" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="74" x="66" y="2966.1251">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="92" x="5" y="2984.9576">Malayalam MN
+			:</text>
+		<text fill="#000000" font-family="Malayalam MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="101" y="2984.5475">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="141" x="5" y="3000.6139">Malayalam
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Malayalam Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="150" y="2998.6451">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="5" y="3014.7467">Marker Felt :
+		</text>
+		<text fill="#000000" font-family="Marker Felt" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="82" y="3014.6619">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="156" x="5" y="3030.7135">Matura MT
+			Script Capitals :</text>
+		<text fill="#000000" font-family="Matura MT Script Capitals"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="74"
+			x="165" y="3027.5611">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="42" x="5" y="3044.8463">Menlo :
+		</text>
+		<text fill="#000000" font-family="Menlo" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="51" y="3044.5475">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="82" x="5" y="3059.2463">Mesquite Std
+			:</text>
+		<text fill="#000000" font-family="Mesquite Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="38" x="91" y="3058.8735">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="119" x="5" y="3073.3791">Microsoft
+			Sans Serif :</text>
+		<text fill="#000000" font-family="Microsoft Sans Serif"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67"
+			x="128" y="3073.3908">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="5" y="3087.7791">Minion Pro :
+		</text>
+		<text fill="#000000" font-family="Minion Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="77" y="3087.0343">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="48" x="5" y="3105.1404">Mishafi :
+		</text>
+		<text fill="#000000" font-family="Mishafi" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="57" y="3099.7264">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="79" x="5" y="3122.5018">Mishafi Gold
+			:</text>
+		<text fill="#000000" font-family="Mishafi Gold" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="88" y="3117.0877">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="96" x="5" y="3136.6346">Modern No. 20
+			:</text>
+		<text fill="#000000" font-family="Modern No. 20" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="105" y="3136.6578">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="139" x="5" y="3150.8786">Mona Lisa
+			Solid ITC TT :</text>
+		<text fill="#000000" font-family="Mona Lisa Solid ITC TT"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="45"
+			x="148" y="3150.6138">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="52" x="5" y="3166.8805">Monaco :
+		</text>
+		<text fill="#000000" font-family="Monaco" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="61" y="3166.4118">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="81" x="5" y="3181.0133">Monospaced :
+		</text>
+		<text fill="#000000" font-family="monospace" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="90" y="3180.7145">This is a test
+		</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="110" x="5" y="3195.1461">Monotype
+			Corsiva :</text>
+		<text fill="#000000" font-family="Monotype Corsiva"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="55"
+			x="119" y="3194.0446">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="96" x="5" y="3209.279">Monotype
+			Sorts :</text>
+		<text fill="#000000" font-family="Monotype Sorts" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="117" x="105" y="3209.402">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="5" y="3223.4118">MS Gothic :
+		</text>
+		<text fill="#000000" font-family="MS Gothic" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="73" y="3224.2555">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="5" y="3237.5446">MS Mincho :
+		</text>
+		<text fill="#000000" font-family="MS Mincho" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="77" y="3238.3883">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="71" x="5" y="3251.6774">MS PGothic :
+		</text>
+		<text fill="#000000" font-family="MS PGothic" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="80" y="3252.5211">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="5" y="3265.8102">MS PMincho :
+		</text>
+		<text fill="#000000" font-family="MS PMincho" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="84" y="3266.654">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="5" y="3279.943">Mshtakan :
+		</text>
+		<text fill="#000000" font-family="Mshtakan" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="72" y="3279.8786">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="60" x="5" y="3295.519">MT Extra :
+		</text>
+		<text fill="#000000" font-family="MT Extra" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="69" y="3292.0503">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="85" x="5" y="3315.463">Mukta Mahee :
+		</text>
+		<text fill="#000000" font-family="Mukta Mahee" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="94" y="3311.6103">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="39" x="5" y="3329.5958">Muna :</text>
+		<text fill="#000000" font-family="Muna" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="48" y="3328.1075">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="5" y="3346.588">Myanmar MN :
+		</text>
+		<text fill="#000000" font-family="Myanmar MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="93" y="3343.8458">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="133" x="5" y="3362.9474">Myanmar
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Myanmar Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="142" y="3357.7267">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="5" y="3377.3474">Myriad Pro :
+		</text>
+		<text fill="#000000" font-family="Myriad Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="79" y="3376.8786">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="3391.4802">Myriad Web
+			Pro :</text>
+		<text fill="#000000" font-family="Myriad Web Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="108" y="3390.9815">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="57" x="5" y="3407.9333">Nadeem :
+		</text>
+		<text fill="#000000" font-family="Nadeem" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="66" y="3405.0271">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="104" x="5" y="3422.0661">New Peninim
+			MT :</text>
+		<text fill="#000000" font-family="New Peninim MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="113" y="3421.0408">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="101" x="5" y="3436.574">News Gothic
+			MT :</text>
+		<text fill="#000000" font-family="News Gothic MT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="110" y="3436.3923">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="5" y="3455.954">Noteworthy :
+		</text>
+		<text fill="#000000" font-family="Noteworthy" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="82" y="3454.6452">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="5" y="3472.3309">Noticia Text
+			:</text>
+		<text fill="#000000" font-family="Noticia Text" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="86" y="3471.3875">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="118" x="5" y="3502.3309">Noto
+			Nastaliq Urdu :</text>
+		<text fill="#000000" font-family="Noto Nastaliq Urdu"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67"
+			x="127" y="3497.7102">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="120" x="5" y="3526.7629">Noto Sans
+			Javanese :</text>
+		<text fill="#000000" font-family="Noto Sans Javanese"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="129" y="3518.3022">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="120" x="5" y="3542.9509">Noto Sans
+			Kannada :</text>
+		<text fill="#000000" font-family="Noto Sans Kannada"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="129" y="3539.0022">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="122" x="5" y="3569.1589">Noto Sans
+			Myanmar :</text>
+		<text fill="#000000" font-family="Noto Sans Myanmar"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="131" y="3561.3702">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="3585.9636">Noto Sans
+			Oriya :</text>
+		<text fill="#000000" font-family="Noto Sans Oriya" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="76" x="108" y="3582.6941">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="121" x="5" y="3615.9516">Noto Serif
+			Myanmar :</text>
+		<text fill="#000000" font-family="Noto Serif Myanmar"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="62"
+			x="130" y="3603.3628">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="5" y="3630.3516">Nueva Std :
+		</text>
+		<text fill="#000000" font-family="Nueva Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="75" y="3629.0428">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="3644.7516">OCR A Std :
+		</text>
+		<text fill="#000000" font-family="OCR A Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="126" x="76" y="3644.6188">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="37" x="5" y="3658.8844">Onyx :</text>
+		<text fill="#000000" font-family="Onyx" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="39" x="46" y="3659.236">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="50" x="5" y="3673.4284">Optima :
+		</text>
+		<text fill="#000000" font-family="Optima" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="59" y="3672.7437">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="3687.8284">Orator Std :
+		</text>
+		<text fill="#000000" font-family="Orator Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="76" y="3686.3637">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="5" y="3702.4007">Oriya MN :
+		</text>
+		<text fill="#000000" font-family="Oriya MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="70" y="3701.5628">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="110" x="5" y="3720.3972">Oriya Sangam
+			MN :</text>
+		<text fill="#000000" font-family="Oriya Sangam MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="119" y="3718.7316">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="5" y="3734.5301">Palatino :
+		</text>
+		<text fill="#000000" font-family="Palatino" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="62" y="3733.7332">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="54" x="5" y="3753.0457">Papyrus :
+		</text>
+		<text fill="#000000" font-family="Papyrus" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="63" y="3748.3406">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="5" y="3767.1785">Party LET :
+		</text>
+		<text fill="#000000" font-family="Party LET" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="38" x="71" y="3763.7097">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="121" x="5" y="3781.3758">Perpetua
+			Titling MT :</text>
+		<text fill="#000000" font-family="Perpetua Titling MT"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="85"
+			x="130" y="3780.907">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="5" y="3796.3758">Phosphate :
+		</text>
+		<text fill="#000000" font-family="Phosphate" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="68" x="77" y="3795.787">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="5" y="3813.1758">PingFang HK :
+		</text>
+		<text fill="#000000" font-family="PingFang HK" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="89" y="3811.627">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="5" y="3829.9758">PingFang SC :
+		</text>
+		<text fill="#000000" font-family="PingFang SC" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="86" y="3828.427">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="79" x="5" y="3846.7758">PingFang TC :
+		</text>
+		<text fill="#000000" font-family="PingFang TC" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="88" y="3845.227">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="134" x="5" y="3860.9086">Plantagenet
+			Cherokee :</text>
+		<text fill="#000000" font-family="Plantagenet Cherokee"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="65"
+			x="143" y="3860.0198">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="48" x="5" y="3875.0414">Playbill :
+		</text>
+		<text fill="#000000" font-family="Playbill" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="42" x="57" y="3875.516">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="5" y="3889.432">PMingLiU :
+		</text>
+		<text fill="#000000" font-family="PMingLiU" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="68" y="3889.5726">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="3903.832">Poplar Std :
+		</text>
+		<text fill="#000000" font-family="Poplar Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="46" x="76" y="3903.5433">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="91" x="5" y="3918.484">PortagoITC TT
+			:</text>
+		<text fill="#000000" font-family="PortagoITC TT" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="48" x="100" y="3918.1353">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="104" x="5" y="3932.884">Prestige
+			Elite Std :</text>
+		<text fill="#000000" font-family="Prestige Elite Std"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="98"
+			x="113" y="3931.2873">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="95" x="5" y="3947.0168">Princetown
+			LET :</text>
+		<text fill="#000000" font-family="Princetown LET" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="85" x="104" y="3947.1457">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="90" x="5" y="3962.4848">ProductusBold
+			:</text>
+		<text fill="#000000" font-family="ProductusBold" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="99" y="3961.3681">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="93" x="5" y="3977.1008">ProductusBook
+			:</text>
+		<text fill="#000000" font-family="ProductusBook" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="52" x="102" y="3976.1041">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="126" x="5" y="3991.6568">ProductusOSGiBookc
+			:</text>
+		<text fill="#000000" font-family="ProductusOSGiBookc"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="51"
+			x="135" y="3990.6721">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="152" x="5" y="4006.1768">ProductusOSGiBookcItalic
+			:</text>
+		<text fill="#000000" font-family="ProductusOSGiBookcItalic"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="52"
+			x="161" y="4005.2401">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="129" x="5" y="4020.3096">ProductusOSGiMonoc
+			:</text>
+		<text fill="#000000" font-family="ProductusOSGiMonoc"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="84"
+			x="138" y="4020.0809">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="118" x="5" y="4035.3936">ProductusSemibold
+			:</text>
+		<text fill="#000000" font-family="ProductusSemibold"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="55"
+			x="127" y="4034.3369">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="144" x="5" y="4050.4896">ProductusSemiboldItalic
+			:</text>
+		<text fill="#000000" font-family="ProductusSemiboldItalic"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="55"
+			x="153" y="4049.4449">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="96" x="5" y="4065.4176">Proforma-Book
+			:</text>
+		<text fill="#000000" font-family="Proforma-Book" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="105" y="4064.8409">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="122" x="5" y="4080.4296">Proforma-BookItalic
+			:</text>
+		<text fill="#000000" font-family="Proforma-BookItalic"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="53"
+			x="131" y="4079.9609">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="121" x="5" y="4095.3816">Proforma-Semibold
+			:</text>
+		<text fill="#000000" font-family="Proforma-Semibold"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="63"
+			x="130" y="4094.3849">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="147" x="5" y="4109.9616">Proforma-SemiboldItalic
+			:</text>
+		<text fill="#000000" font-family="Proforma-SemiboldItalic"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="59"
+			x="156" y="4109.4449">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="161" x="5" y="4124.6136">Proforma-SemiboldItalicSC
+			:</text>
+		<text fill="#000000" font-family="Proforma-SemiboldItalicSC"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="170" y="4124.1089">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="135" x="5" y="4139.6496">Proforma-SemiboldSC
+			:</text>
+		<text fill="#000000" font-family="Proforma-SemiboldSC"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67"
+			x="144" y="4138.6529">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="122" x="5" y="4153.9176">Proforma-UltraLight
+			:</text>
+		<text fill="#000000" font-family="Proforma-UltraLight"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="56"
+			x="131" y="4153.3649">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="148" x="5" y="4168.3416">Proforma-UltraLightItalic
+			:</text>
+		<text fill="#000000" font-family="Proforma-UltraLightItalic"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="53"
+			x="157" y="4167.8729">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="162" x="5" y="4182.6696">Proforma-UltraLightItalicSC
+			:</text>
+		<text fill="#000000" font-family="Proforma-UltraLightItalicSC"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="58"
+			x="171" y="4182.2009">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="136" x="5" y="4196.8024">Proforma-UltraLightSC
+			:</text>
+		<text fill="#000000" font-family="Proforma-UltraLightSC"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="58"
+			x="145" y="4196.3337">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="5" y="4210.9353">PT Mono :
+		</text>
+		<text fill="#000000" font-family="PT Mono" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="67" y="4210.6465">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="5" y="4226.4753">PT Sans :
+		</text>
+		<text fill="#000000" font-family="PT Sans" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="62" y="4225.6945">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="101" x="5" y="4242.0153">PT Sans
+			Caption :</text>
+		<text fill="#000000" font-family="PT Sans Caption" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="74" x="110" y="4241.2345">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="4257.5553">PT Sans
+			Narrow :</text>
+		<text fill="#000000" font-family="PT Sans Narrow" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="53" x="108" y="4256.7745">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="52" x="5" y="4273.0833">PT Serif :
+		</text>
+		<text fill="#000000" font-family="PT Serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="61" y="4272.3025">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="100" x="5" y="4288.6112">PT Serif
+			Caption :</text>
+		<text fill="#000000" font-family="PT Serif Caption"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="75"
+			x="109" y="4287.8305">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="5" y="4302.7441">Raanana :
+		</text>
+		<text fill="#000000" font-family="Raanana" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="67" y="4301.8652">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="5" y="4316.8769">Rockwell :
+		</text>
+		<text fill="#000000" font-family="Rockwell" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="67" y="4316.6659">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="121" x="5" y="4331.0097">Rockwell
+			Extra Bold :</text>
+		<text fill="#000000" font-family="Rockwell Extra Bold"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="86"
+			x="130" y="4330.7987">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="89" x="5" y="4345.4097">Rosewood Std
+			:</text>
+		<text fill="#000000" font-family="Rosewood Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="98" y="4343.7169">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="35" x="5" y="4359.5425">Sana :</text>
+		<text fill="#000000" font-family="Sana" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="44" y="4359.0269">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="5" y="4373.6753">SansSerif :
+		</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="73" x="68" y="4373.6753">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="81" x="5" y="4387.8081">Santa Fe LET
+			:</text>
+		<text fill="#000000" font-family="Santa Fe LET" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="46" x="90" y="4384.3394">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="39" x="5" y="4402.4549">Sathu :
+		</text>
+		<text fill="#000000" font-family="Sathu" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="48" y="4401.1808">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="72" x="5" y="4416.7166">Savoye LET :
+		</text>
+		<text fill="#000000" font-family="Savoye LET" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="40" x="81" y="4413.2479">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="137" x="5" y="4431.3651">SchoolHouse
+			Cursive B :</text>
+		<text fill="#000000" font-family="SchoolHouse Cursive B"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="91"
+			x="146" y="4429.2088">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="137" x="5" y="4446.3065">SchoolHouse
+			Printed A :</text>
+		<text fill="#000000" font-family="SchoolHouse Printed A"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="47"
+			x="146" y="4444.1502">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="33" x="5" y="4460.4393">Serif :
+		</text>
+		<text fill="#000000" font-family="Serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="42" y="4459.9705">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="137" x="5" y="4478.2529">Shree
+			Devanagari 714 :</text>
+		<text fill="#000000" font-family="Shree Devanagari 714"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="72"
+			x="146" y="4475.6562">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="71" x="5" y="4492.3858">SignPainter :
+		</text>
+		<text fill="#000000" font-family="SignPainter" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="50" x="80" y="4492.517">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="38" x="5" y="4507.6858">Silom :
+		</text>
+		<text fill="#000000" font-family="Silom" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="47" y="4506.425">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="48" x="5" y="4521.8186">SimSun :
+		</text>
+		<text fill="#000000" font-family="SimSun" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="84" x="57" y="4522.6623">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="71" x="5" y="4535.9514">Sinhala MN :
+		</text>
+		<text fill="#000000" font-family="Sinhala MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="80" y="4535.1135">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="120" x="5" y="4553.5705">Sinhala
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Sinhala Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+			x="129" y="4552.3166">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="31" x="5" y="4567.7033">Skia :</text>
+		<text fill="#000000" font-family="Skia" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="40" y="4567.5569">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="104" x="5" y="4582.3193">Snell
+			Roundhand :</text>
+		<text fill="#000000" font-family="Snell Roundhand" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="113" y="4580.9626">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="60" x="5" y="4599.1193">Songti SC :
+		</text>
+		<text fill="#000000" font-family="Songti SC" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="69" y="4597.5706">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="5" y="4615.9193">Songti TC :
+		</text>
+		<text fill="#000000" font-family="Songti TC" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="71" y="4614.3706">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="5" y="4630.0521">stamPete :
+		</text>
+		<text fill="#000000" font-family="stamPete" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="70" y="4631.6354">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="5" y="4644.4521">Stencil Std :
+		</text>
+		<text fill="#000000" font-family="Stencil Std" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="96" x="75" y="4643.9594">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="48" x="5" y="4658.585">STHeiti :
+		</text>
+		<text fill="#000000" font-family="STHeiti" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="57" y="4659.4362">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="5" y="4676.705">STIXGeneral :
+		</text>
+		<text fill="#000000" font-family="STIXGeneral" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="87" y="4673.7762">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="91" x="5" y="4708.301">STIXIntegralsD
+			:</text>
+		<text fill="#000000" font-family="STIXIntegralsD" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="100" y="4705.4202">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="99" x="5" y="4726.421">STIXIntegralsSm
+			:</text>
+		<text fill="#000000" font-family="STIXIntegralsSm" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="108" y="4723.4922">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="5" y="4744.541">STIXIntegralsUp
+			:</text>
+		<text fill="#000000" font-family="STIXIntegralsUp" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="107" y="4741.6122">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="107" x="5" y="4776.137">STIXIntegralsUpD
+			:</text>
+		<text fill="#000000" font-family="STIXIntegralsUpD"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="116" y="4773.2562">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="115" x="5" y="4794.257">STIXIntegralsUpSm
+			:</text>
+		<text fill="#000000" font-family="STIXIntegralsUpSm"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="124" y="4791.3282">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="102" x="5" y="4818.281">STIXNonUnicode
+			:</text>
+		<text fill="#000000" font-family="STIXNonUnicode" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="111" y="4814.1882">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="101" x="5" y="4835.249">STIXSizeFiveSym
+			:</text>
+		<text fill="#000000" font-family="STIXSizeFiveSym" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="110" y="4832.3322">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="104" x="5" y="4872.617">STIXSizeFourSym
+			:</text>
+		<text fill="#000000" font-family="STIXSizeFourSym" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="113" y="4869.0282">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="102" x="5" y="4896.0289">STIXSizeOneSym
+			:</text>
+		<text fill="#000000" font-family="STIXSizeOneSym" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="111" y="4894.2042">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="113" x="5" y="4933.3969">STIXSizeThreeSym
+			:</text>
+		<text fill="#000000" font-family="STIXSizeThreeSym"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="122" y="4929.8082">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="103" x="5" y="4963.3849">STIXSizeTwoSym
+			:</text>
+		<text fill="#000000" font-family="STIXSizeTwoSym" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="112" y="4961.0682">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="5" y="4981.5049">STIXVariants
+			:</text>
+		<text fill="#000000" font-family="STIXVariants" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="89" y="4978.5762">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="112" x="5" y="4996.5289">Stone Sans
+			ITC TT :</text>
+		<text fill="#000000" font-family="Stone Sans ITC TT"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="71"
+			x="121" y="4995.9522">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="140" x="5" y="5011.1929">Stone Sans
+			Sem ITC TT :</text>
+		<text fill="#000000" font-family="Stone Sans Sem ITC TT"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="71"
+			x="149" y="5010.7122">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="49" x="5" y="5025.3258">STSong :
+		</text>
+		<text fill="#000000" font-family="STSong" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="58" y="5026.177">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="87" x="5" y="5044.3698">Sukhumvit Set
+			:</text>
+		<text fill="#000000" font-family="Sukhumvit Set" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="96" y="5041.213">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="54" x="5" y="5058.5026">SunSans :
+		</text>
+		<text fill="#000000" font-family="SunSans" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="62" x="63" y="5058.7178">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="119" x="5" y="5072.6354">SunSansCondensed
+			:</text>
+		<text fill="#000000" font-family="SunSansCondensed"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="51"
+			x="128" y="5072.8506">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="49" x="5" y="5086.7682">Symbol :
+		</text>
+		<text fill="#000000" font-family="Symbol" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="58" y="5085.7135">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="77" x="5" y="5101.9967">Synchro LET :
+		</text>
+		<text fill="#000000" font-family="Synchro LET" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="80" x="86" y="5101.7916">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="55" x="5" y="5116.4811">Tahoma :
+		</text>
+		<text fill="#000000" font-family="Tahoma" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="64" y="5116.5338">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="63" x="5" y="5131.0534">Tamil MN :
+		</text>
+		<text fill="#000000" font-family="Tamil MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="72" y="5130.2155">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="112" x="5" y="5145.1862">Tamil Sangam
+			MN :</text>
+		<text fill="#000000" font-family="Tamil Sangam MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="121" y="5143.5162">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="71" x="5" y="5159.5862">Tekton Pro :
+		</text>
+		<text fill="#000000" font-family="Tekton Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="61" x="80" y="5158.2774">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="5" y="5174.1584">Telugu MN :
+		</text>
+		<text fill="#000000" font-family="Telugu MN" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="79" y="5173.3205">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="119" x="5" y="5193.6047">Telugu
+			Sangam MN :</text>
+		<text fill="#000000" font-family="Telugu Sangam MN"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+			x="128" y="5188.696">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="60" x="5" y="5210.1235">Thonburi :
+		</text>
+		<text fill="#000000" font-family="Thonburi" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="69" y="5209.9172">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="43" x="5" y="5224.2563">Times :
+		</text>
+		<text fill="#000000" font-family="Times" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="52" y="5223.7876">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="116" x="5" y="5238.3891">Times New
+			Roman :</text>
+		<text fill="#000000" font-family="Times New Roman" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="125" y="5238.3247">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="69" x="5" y="5252.7891">Trajan Pro :
+		</text>
+		<text fill="#000000" font-family="Trajan Pro" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="86" x="78" y="5252.3204">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="5274.5331">Trattatello :
+		</text>
+		<text fill="#000000" font-family="Trattatello" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="51" x="76" y="5269.1204">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="87" x="5" y="5288.6659">Trebuchet MS
+			:</text>
+		<text fill="#000000" font-family="Trebuchet MS" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="96" y="5288.5312">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="183" x="5" y="5302.7987">Type
+			Embellishments One LET :</text>
+		<text fill="#000000" font-family="Type Embellishments One LET"
+			font-size="12" lengthAdjust="spacingAndGlyphs" textLength="144"
+			x="192" y="5299.33">This is a test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="58" x="5" y="5317.1987">Upgrade :
+		</text>
+		<text fill="#000000" font-family="Upgrade" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="59" x="67" y="5316.106">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="57" x="5" y="5331.7827">Verdana :
+		</text>
+		<text fill="#000000" font-family="Verdana" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="75" x="66" y="5331.7944">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="56" x="5" y="5349.1148">Waseem :
+		</text>
+		<text fill="#000000" font-family="Waseem" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="65" y="5345.0191">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="64" x="5" y="5363.2476">Webdings :
+		</text>
+		<text fill="#000000" font-family="Webdings" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="150" x="73" y="5363.3765">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="67" x="5" y="5377.3804">Wide Latin :
+		</text>
+		<text fill="#000000" font-family="Wide Latin" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="126" x="76" y="5377.3804">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="66" x="5" y="5391.5132">Wingdings :
+		</text>
+		<text fill="#000000" font-family="Wingdings" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="135" x="75" y="5391.5132">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="5" y="5405.646">Wingdings 2 :
+		</text>
+		<text fill="#000000" font-family="Wingdings 2" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="160" x="87" y="5405.646">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="78" x="5" y="5419.7788">Wingdings 3 :
+		</text>
+		<text fill="#000000" font-family="Wingdings 3" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="148" x="87" y="5419.7788">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="89" x="5" y="5433.9116">Zapf Dingbats
+			:</text>
+		<text fill="#000000" font-family="Zapf Dingbats" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="70" x="98" y="5434.3218">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="51" x="5" y="5474.4416">Zapfino :
+		</text>
+		<text fill="#000000" font-family="Zapfino" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="90" x="60" y="5458.9429">This is a
+			test</text>
+		<text fill="#000000" font-family="sans-serif" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="30" x="5" y="5490.2696">Zed :</text>
+		<text fill="#000000" font-family="Zed" font-size="12"
+			lengthAdjust="spacingAndGlyphs" textLength="98" x="39" y="5488.0129">This is a
+			test</text><!--MD5=[e92336a0056f9cf3f87f33e0f8cb023f] @startuml listfonts 
+			@enduml PlantUML version 1.2020.18(Wed Sep 30 21:40:44 CEST 2020) (GPL source 
+			distribution) Java Runtime: Java(TM) SE Runtime Environment JVM: Java HotSpot(TM) 
+			64-Bit Server VM Default Encoding: UTF-8 Language: en Country: US -->
+	</g>
+</svg>

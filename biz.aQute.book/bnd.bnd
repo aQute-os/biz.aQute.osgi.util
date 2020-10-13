@@ -1,0 +1,21 @@
+-buildpath: \
+    aQute.libg, \
+    com.vladsch.flexmark.osgi;version=0.62.2, \
+    biz.aQute.bndlib, \
+    io.bit3:jsass;version=5.3.0, \
+    slf4j.api, \
+    slf4j.simple, \
+    org.apache.commons.io, \
+    net.sourceforge.plantuml:plantuml
+    
+-conditionalpackage: *
+-includeresource: ${bin}, @${repo;slf4j.simple}, @${repo;slf4j.api}, @${repo;io.bit3:jsass;5.3.0}
+
+Main-Class:                     biz.aQute.book.Main
+JPM-Command:                    book
+    
+-testpath: \
+	osgi.enroute.junit.wrapper;version='4.12.0',\
+	osgi.enroute.hamcrest.wrapper,\
+	org.assertj.core;version='3.12.1'
+	
