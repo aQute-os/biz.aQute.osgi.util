@@ -10,6 +10,7 @@ import org.osgi.service.log.LogService;
 @Component(service=GogoCommands.class)
 public class GogoCommands {
 
+
 	@Reference LogService log;
 
 	@SuppressWarnings("deprecation")

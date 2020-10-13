@@ -7,7 +7,7 @@ import biz.aQute.osgi.logger.forwarder.LogForwarder;
 
 public class StaticLoggerBinder implements LoggerFactoryBinder {
 
-	public /* final */ static String		REQUESTED_API_VERSION	= "1.7.26";
+	public /* final */ static String		REQUESTED_API_VERSION	= "1.7.30";
 	private static final StaticLoggerBinder	SINGLETON;
 
 	static {

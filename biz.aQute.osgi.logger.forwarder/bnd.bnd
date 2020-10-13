@@ -1,11 +1,13 @@
 
-Embedded-Activator              biz.aQute.osgi.logger.forwarder.provider.Activator
+Embedded-Activator              biz.aQute.osgi.logger.forwarder.Activator
 
+Export-Package: org.osgi.service.log
 
 -exportcontents: \
     org.slf4j, \
     org.slf4j.event, \
-    org.slf4j.helpers
+    org.slf4j.helpers, \
+    org.slf4j.spi
 
 -includepackage: \
     biz.aQute.osgi.logger.*, \
@@ -13,17 +15,18 @@ Embedded-Activator              biz.aQute.osgi.logger.forwarder.provider.Activat
 
 
 -buildpath: \
-	slf4j.api,\
+	slf4j.api;version=1.7.30,\
 	osgi.annotation,\
 	org.osgi.framework,\
 	org.osgi.service.log,\
 	org.osgi.util.tracker
 	
+-testpath: \
+    org.json;version='1.0.0',\
+    osgi.enroute.junit.wrapper, \
+    osgi.enroute.hamcrest.wrapper, \
+    org.assertj.core, \
+    org.mockito.mockito-all
+
 -fixupmessages: \
     Export org.slf4j,  has 1,  private references
--testpath: \
-	org.json;version='1.0.0',\
-	osgi.enroute.junit.wrapper, \
-    osgi.enroute.hamcrest.wrapper, \
-	org.assertj.core, \
-	org.mockito.mockito-all

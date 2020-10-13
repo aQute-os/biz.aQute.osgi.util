@@ -1,12 +1,9 @@
 package biz.aQute.osgi.logger.forwarder;
 
-import static org.osgi.framework.Constants.BUNDLE_ACTIVATOR;
-
 import java.util.logging.Handler;
 import java.util.logging.LogManager;
 import java.util.logging.LogRecord;
 
-import org.osgi.annotation.bundle.Header;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -24,7 +21,6 @@ import org.osgi.util.tracker.ServiceTracker;
  * reference cannot be satisfied and this service component will either not
  * activate, or if already active, will deactivate.
  */
-@Header(name = BUNDLE_ACTIVATOR, value = "${@class}")
 public final class Activator implements BundleActivator {
 
 	private ServiceTracker<LogService, LogService>	tracker;
