@@ -1,8 +1,0 @@
-src = ${^src},src-gen
-
--generate \
-    proto; \
-        output = src-gen; \
-        generate = "biz.aQute.protoc.Protoc -I=proto --java_out=src-gen proto/adddressbook.proto 2>errors"
-         
--buildpath: com.google.protobuf;version='4.0.0'
