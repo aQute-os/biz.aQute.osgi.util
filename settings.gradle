@@ -1,15 +1,13 @@
-buildscript {
-	repositories { 
-		mavenCentral()
-	maven {
-      		url uri(bnd_repourl)
-    	}
- 
-	}
-	dependencies { classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:${bnd_version}" }
-	/* Add bnd gradle plugin to buildscript classpath of rootProject */
-	def bndPlugin = files(configurations.classpath.files)
-	gradle.rootProject { buildscript { dependencies { classpath bndPlugin } } }
+pluginManagement {
+  plugins {
+    id 'biz.aQute.bnd.workspace' version bnd_version
+  }
+  repositories {
+    maven { url bnd_snapshots }
+    mavenCentral()
+    gradlePluginPortal()
+  }
 }
-
-apply plugin: 'biz.aQute.bnd.workspace'
+plugins {
+  id 'biz.aQute.bnd.workspace'
+}

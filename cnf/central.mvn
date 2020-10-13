@@ -90,6 +90,7 @@ org.elasticsearch.client:elasticsearch-rest-client:7.9.2
 org.elasticsearch.client:elasticsearch-rest-high-level-client:7.9.2
 org.mockito:mockito-all:1.10.19
 org.osgi:org.knopflerfish.bundle.useradmin:4.1.1
+org.osgi:org.osgi.annotation.bundle:1.0.0
 org.osgi:org.osgi.dto:1.1.0
 org.osgi:org.osgi.framework:1.8.0
 org.osgi:org.osgi.jmx:1.1.0
