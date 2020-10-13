@@ -17,16 +17,15 @@ public class DiagramRenderTest {
 	@Test
 	public void testRender() throws IOException {
 		BNFToGrammar bnfToGrammar = new BNFToGrammar();
-		Grammar grammar = bnfToGrammar.convert(new StringReader("H2_SELECT = \n"
-				+ "'SELECT' [ 'TOP' term ] "));	
-		
+		Grammar grammar = bnfToGrammar.convert(new StringReader("H2_SELECT = \n" + "'SELECT' [ 'TOP' term ] "));
+
 		GrammarToRRDiagram grammarToRRDiagram = new GrammarToRRDiagram();
-		for(Rule rule: grammar.getRules()) {
-		  RRDiagram rrDiagram = grammarToRRDiagram.convert(rule);
-		  RRDiagramToSVG rrDiagramToSVG = new RRDiagramToSVG();
-		  String svg = rrDiagramToSVG.convert(rrDiagram);
-		  System.out.println(svg);
+		for (Rule rule : grammar.getRules()) {
+			RRDiagram rrDiagram = grammarToRRDiagram.convert(rule);
+			RRDiagramToSVG rrDiagramToSVG = new RRDiagramToSVG();
+			String svg = rrDiagramToSVG.convert(rrDiagram);
+			System.out.println(svg);
 		}
-		
+
 	}
 }

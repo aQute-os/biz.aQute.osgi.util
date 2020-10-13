@@ -12,7 +12,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * Extends the {@link ConfigHelper} to support also factories.
- * 
+ *
  * @param <T> the type of the configuration (annotation) interface
  */
 public class FactoryConfigHelper<T> extends ConfigHelper<T> {
@@ -21,7 +21,7 @@ public class FactoryConfigHelper<T> extends ConfigHelper<T> {
 
 	/**
 	 * Create a configuration helper for a factory PID.
-	 * 
+	 *
 	 * @param type the configuration type
 	 * @param cm the config admin
 	 * @param factoryPid the factory pid
@@ -33,7 +33,7 @@ public class FactoryConfigHelper<T> extends ConfigHelper<T> {
 
 	/**
 	 * Create a new configuration for the given factory Pid
-	 * 
+	 *
 	 * @return this
 	 */
 	public FactoryConfigHelper<T> create() throws IOException {
@@ -45,14 +45,14 @@ public class FactoryConfigHelper<T> extends ConfigHelper<T> {
 
 	/**
 	 * Answer a list of instances (well the PIDs).
-	 * 
+	 *
 	 * @return a list of PIDs that are instances of this factory
 	 */
 	public Set<String> getInstances() throws IOException, InvalidSyntaxException {
 		Configuration[] listConfigurations = cm.listConfigurations("(service.factoryPid="+factoryPid+")");
 		if ( listConfigurations == null)
 			return Collections.emptySet();
-		
+
 		return Stream.of(listConfigurations).map( c -> c.getPid()).collect( Collectors.toSet());
 	}
 }

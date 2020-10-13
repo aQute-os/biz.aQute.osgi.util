@@ -37,7 +37,7 @@ public class ConfigHelper<T> {
 
 	/**
 	 * Create a Config Helper for simple configurations.
-	 * 
+	 *
 	 * @param type
 	 *            the type of the configuration interface
 	 * @param cm
@@ -77,7 +77,7 @@ public class ConfigHelper<T> {
 	 * <p>
 	 * The proxy methods will return the live value of the corresponding
 	 * property.
-	 * 
+	 *
 	 * @return the proxy
 	 */
 	public T d() {
@@ -87,14 +87,14 @@ public class ConfigHelper<T> {
 	/**
 	 * Set the value based on the last invocation. This method is supposed to be
 	 * used like:
-	 * 
+	 *
 	 * <pre>
 	 * ch.set(ch.d().port(), 10000);
 	 * </pre>
-	 * 
+	 *
 	 * The last invocation on the proxy is remembered and used in the set method
 	 * to get the name and return type of the property.
-	 * 
+	 *
 	 * @param older
 	 *            ignored
 	 * @param newer
@@ -113,7 +113,7 @@ public class ConfigHelper<T> {
 
 	/**
 	 * Get the properties
-	 * 
+	 *
 	 * @return the properties
 	 */
 	public Map<String, Object> getProperties() {
@@ -122,7 +122,7 @@ public class ConfigHelper<T> {
 
 	/**
 	 * Read a configuration
-	 * 
+	 *
 	 * @param pid
 	 *            a non-null pid
 	 * @return the properties read or empty if did not exist
@@ -146,7 +146,7 @@ public class ConfigHelper<T> {
 	/**
 	 * Update the current configuration. This requires a {@link #read(String)}
 	 * to set the proper PID.
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	public void update() throws IOException {
@@ -154,7 +154,7 @@ public class ConfigHelper<T> {
 		Configuration configuration = cm.getConfiguration(pid, "?");
 		configuration.update(properties);
 	}
-	
+
 	/**
 	 * Clear the properties
 	 */

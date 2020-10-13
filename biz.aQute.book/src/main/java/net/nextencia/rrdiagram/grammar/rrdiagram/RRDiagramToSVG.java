@@ -16,224 +16,224 @@ import java.awt.Insets;
  */
 public class RRDiagramToSVG {
 
-  public String convert(RRDiagram rrDiagram) {
-    return rrDiagram.toSVG(this);
-  }
+	public String convert(RRDiagram rrDiagram) {
+		return rrDiagram.toSVG(this);
+	}
 
-  private Color connectorColor = new Color(34, 34, 34);
+	private Color connectorColor = new Color(34, 34, 34);
 
-  public void setConnectorColor(Color connectorColor) {
-    this.connectorColor = connectorColor;
-  }
+	public void setConnectorColor(Color connectorColor) {
+		this.connectorColor = connectorColor;
+	}
 
-  public Color getConnectorColor() {
-    return connectorColor;
-  }
+	public Color getConnectorColor() {
+		return connectorColor;
+	}
 
-  private Font loopFont = new Font("Verdana", Font.PLAIN, 10);
+	private Font loopFont = new Font("Verdana", Font.PLAIN, 10);
 
-  public void setLoopFont(Font loopFont) {
-    this.loopFont = loopFont;
-  }
+	public void setLoopFont(Font loopFont) {
+		this.loopFont = loopFont;
+	}
 
-  public Font getLoopFont() {
-    return loopFont;
-  }
+	public Font getLoopFont() {
+		return loopFont;
+	}
 
-  private Color loopTextColor = Color.BLACK;
+	private Color loopTextColor = Color.BLACK;
 
-  public void setLoopTextColor(Color loopTextColor) {
-    this.loopTextColor = loopTextColor;
-  }
+	public void setLoopTextColor(Color loopTextColor) {
+		this.loopTextColor = loopTextColor;
+	}
 
-  public Color getLoopTextColor() {
-    return loopTextColor;
-  }
+	public Color getLoopTextColor() {
+		return loopTextColor;
+	}
 
-  public static enum BoxShape {
-    RECTANGLE,
-    ROUNDED_RECTANGLE,
-    HEXAGON
-  }
+	public enum BoxShape {
+		RECTANGLE,
+		ROUNDED_RECTANGLE,
+		HEXAGON
+	}
 
-  private Insets ruleInsets = new Insets(5, 10, 5, 10);
+	private Insets ruleInsets = new Insets(5, 10, 5, 10);
 
-  public void setRuleInsets(Insets ruleInsets) {
-    this.ruleInsets = ruleInsets;
-  }
+	public void setRuleInsets(Insets ruleInsets) {
+		this.ruleInsets = ruleInsets;
+	}
 
-   public Insets getRuleInsets() {
-    return ruleInsets;
-  }
+	public Insets getRuleInsets() {
+		return ruleInsets;
+	}
 
-  private Font ruleFont = new Font("Verdana", Font.PLAIN, 12);
+	private Font ruleFont = new Font("Verdana", Font.PLAIN, 12);
 
-  public void setRuleFont(Font ruleFont) {
-    this.ruleFont = ruleFont;
-  }
+	public void setRuleFont(Font ruleFont) {
+		this.ruleFont = ruleFont;
+	}
 
-  public Font getRuleFont() {
-    return ruleFont;
-  }
+	public Font getRuleFont() {
+		return ruleFont;
+	}
 
-  private Color ruleTextColor = Color.BLACK;
+	private Color ruleTextColor = Color.BLACK;
 
-  public void setRuleTextColor(Color ruleTextColor) {
-    this.ruleTextColor = ruleTextColor;
-  }
+	public void setRuleTextColor(Color ruleTextColor) {
+		this.ruleTextColor = ruleTextColor;
+	}
 
-  public Color getRuleTextColor() {
-    return ruleTextColor;
-  }
+	public Color getRuleTextColor() {
+		return ruleTextColor;
+	}
 
-  private BoxShape ruleShape = BoxShape.RECTANGLE;
+	private BoxShape ruleShape = BoxShape.RECTANGLE;
 
-  public void setRuleShape(BoxShape ruleShape) {
-    this.ruleShape = ruleShape;
-  }
+	public void setRuleShape(BoxShape ruleShape) {
+		this.ruleShape = ruleShape;
+	}
 
-  public BoxShape getRuleShape() {
-    return ruleShape;
-  }
+	public BoxShape getRuleShape() {
+		return ruleShape;
+	}
 
-  private Color ruleBorderColor = connectorColor;
+	private Color ruleBorderColor = connectorColor;
 
-  public void setRuleBorderColor(Color ruleBorderColor) {
-    this.ruleBorderColor = ruleBorderColor;
-  }
+	public void setRuleBorderColor(Color ruleBorderColor) {
+		this.ruleBorderColor = ruleBorderColor;
+	}
 
-  public Color getRuleBorderColor() {
-    return ruleBorderColor;
-  }
+	public Color getRuleBorderColor() {
+		return ruleBorderColor;
+	}
 
-  private Color ruleFillColor = new Color(211, 240, 255);
+	private Color ruleFillColor = new Color(211, 240, 255);
 
-  public void setRuleFillColor(Color ruleFillColor) {
-    this.ruleFillColor = ruleFillColor;
-  }
+	public void setRuleFillColor(Color ruleFillColor) {
+		this.ruleFillColor = ruleFillColor;
+	}
 
-  public Color getRuleFillColor() {
-    return ruleFillColor;
-  }
+	public Color getRuleFillColor() {
+		return ruleFillColor;
+	}
 
-  private Insets literalInsets = new Insets(5, 10, 5, 10);
+	private Insets literalInsets = new Insets(5, 10, 5, 10);
 
-  public void setLiteralInsets(Insets literalInsets) {
-    this.literalInsets = literalInsets;
-  }
+	public void setLiteralInsets(Insets literalInsets) {
+		this.literalInsets = literalInsets;
+	}
 
-   public Insets getLiteralInsets() {
-    return literalInsets;
-  }
+	public Insets getLiteralInsets() {
+		return literalInsets;
+	}
 
-  private Font literalFont = new Font("Verdana", Font.PLAIN, 12);
+	private Font literalFont = new Font("Verdana", Font.PLAIN, 12);
 
-  public void setLiteralFont(Font literalFont) {
-    this.literalFont = literalFont;
-  }
+	public void setLiteralFont(Font literalFont) {
+		this.literalFont = literalFont;
+	}
 
-  public Font getLiteralFont() {
-    return literalFont;
-  }
+	public Font getLiteralFont() {
+		return literalFont;
+	}
 
-  private Color literalTextColor = Color.BLACK;
+	private Color literalTextColor = Color.BLACK;
 
-  public void setLiteralTextColor(Color literalTextColor) {
-    this.literalTextColor = literalTextColor;
-  }
+	public void setLiteralTextColor(Color literalTextColor) {
+		this.literalTextColor = literalTextColor;
+	}
 
-  public Color getLiteralTextColor() {
-    return literalTextColor;
-  }
+	public Color getLiteralTextColor() {
+		return literalTextColor;
+	}
 
-  private BoxShape literalShape = BoxShape.ROUNDED_RECTANGLE;
+	private BoxShape literalShape = BoxShape.ROUNDED_RECTANGLE;
 
-  public void setLiteralShape(BoxShape literalShape) {
-    this.literalShape = literalShape;
-  }
+	public void setLiteralShape(BoxShape literalShape) {
+		this.literalShape = literalShape;
+	}
 
-  public BoxShape getLiteralShape() {
-    return literalShape;
-  }
+	public BoxShape getLiteralShape() {
+		return literalShape;
+	}
 
-  private Color literalBorderColor = connectorColor;
+	private Color literalBorderColor = connectorColor;
 
-  public void setLiteralBorderColor(Color literalBorderColor) {
-    this.literalBorderColor = literalBorderColor;
-  }
+	public void setLiteralBorderColor(Color literalBorderColor) {
+		this.literalBorderColor = literalBorderColor;
+	}
 
-  public Color getLiteralBorderColor() {
-    return literalBorderColor;
-  }
+	public Color getLiteralBorderColor() {
+		return literalBorderColor;
+	}
 
-  private Color literalFillColor = new Color(144, 217, 255);
+	private Color literalFillColor = new Color(144, 217, 255);
 
-  public void setLiteralFillColor(Color literalFillColor) {
-    this.literalFillColor = literalFillColor;
-  }
+	public void setLiteralFillColor(Color literalFillColor) {
+		this.literalFillColor = literalFillColor;
+	}
 
-  public Color getLiteralFillColor() {
-    return literalFillColor;
-  }
+	public Color getLiteralFillColor() {
+		return literalFillColor;
+	}
 
-  private Insets specialSequenceInsets = new Insets(5, 10, 5, 10);
+	private Insets specialSequenceInsets = new Insets(5, 10, 5, 10);
 
-  public void setSpecialSequenceInsets(Insets specialSequenceInsets) {
-    this.specialSequenceInsets = specialSequenceInsets;
-  }
+	public void setSpecialSequenceInsets(Insets specialSequenceInsets) {
+		this.specialSequenceInsets = specialSequenceInsets;
+	}
 
-   public Insets getSpecialSequenceInsets() {
-    return specialSequenceInsets;
-  }
+	public Insets getSpecialSequenceInsets() {
+		return specialSequenceInsets;
+	}
 
-  private Font specialSequenceFont = new Font("Verdana", Font.PLAIN, 12);
+	private Font specialSequenceFont = new Font("Verdana", Font.PLAIN, 12);
 
-  public void setSpecialSequenceFont(Font specialSequenceFont) {
-    this.specialSequenceFont = specialSequenceFont;
-  }
+	public void setSpecialSequenceFont(Font specialSequenceFont) {
+		this.specialSequenceFont = specialSequenceFont;
+	}
 
-  public Font getSpecialSequenceFont() {
-    return specialSequenceFont;
-  }
+	public Font getSpecialSequenceFont() {
+		return specialSequenceFont;
+	}
 
-  private Color specialSequenceTextColor = Color.BLACK;
+	private Color specialSequenceTextColor = Color.BLACK;
 
-  public void setSpecialSequenceTextColor(Color specialSequenceTextColor) {
-    this.specialSequenceTextColor = specialSequenceTextColor;
-  }
+	public void setSpecialSequenceTextColor(Color specialSequenceTextColor) {
+		this.specialSequenceTextColor = specialSequenceTextColor;
+	}
 
-  public Color getSpecialSequenceTextColor() {
-    return specialSequenceTextColor;
-  }
+	public Color getSpecialSequenceTextColor() {
+		return specialSequenceTextColor;
+	}
 
-  private BoxShape specialSequenceShape = BoxShape.HEXAGON;
+	private BoxShape specialSequenceShape = BoxShape.HEXAGON;
 
-  public void setSpecialSequenceShape(BoxShape specialSequenceShape) {
-    this.specialSequenceShape = specialSequenceShape;
-  }
+	public void setSpecialSequenceShape(BoxShape specialSequenceShape) {
+		this.specialSequenceShape = specialSequenceShape;
+	}
 
-  public BoxShape getSpecialSequenceShape() {
-    return specialSequenceShape;
-  }
+	public BoxShape getSpecialSequenceShape() {
+		return specialSequenceShape;
+	}
 
-  private Color specialSequenceBorderColor = connectorColor;
+	private Color specialSequenceBorderColor = connectorColor;
 
-  public void setSpecialSequenceBorderColor(Color specialSequenceBorderColor) {
-    this.specialSequenceBorderColor = specialSequenceBorderColor;
-  }
+	public void setSpecialSequenceBorderColor(Color specialSequenceBorderColor) {
+		this.specialSequenceBorderColor = specialSequenceBorderColor;
+	}
 
-  public Color getSpecialSequenceBorderColor() {
-    return specialSequenceBorderColor;
-  }
+	public Color getSpecialSequenceBorderColor() {
+		return specialSequenceBorderColor;
+	}
 
-  private Color specialSequenceFillColor = new Color(228, 244, 255);
+	private Color specialSequenceFillColor = new Color(228, 244, 255);
 
-  public void setSpecialSequenceFillColor(Color specialSequenceFillColor) {
-    this.specialSequenceFillColor = specialSequenceFillColor;
-  }
+	public void setSpecialSequenceFillColor(Color specialSequenceFillColor) {
+		this.specialSequenceFillColor = specialSequenceFillColor;
+	}
 
-  public Color getSpecialSequenceFillColor() {
-    return specialSequenceFillColor;
-  }
+	public Color getSpecialSequenceFillColor() {
+		return specialSequenceFillColor;
+	}
 
 }

@@ -42,7 +42,7 @@ public class TransactionStore<T> {
 	/**
 	 * Create a transactional store that keeps a number generations of files
 	 * that contain a JSON encoded DTO.
-	 * 
+	 *
 	 * @param dir
 	 * @param generations
 	 * @param type
@@ -93,7 +93,7 @@ public class TransactionStore<T> {
 	/**
 	 * Will update the object to a new file. Will attempt to retry if the write
 	 * fails.
-	 * 
+	 *
 	 * @param dto the dto to update
 	 * @throws InterruptedException when interrupted while sleeping during a recover
 	 */
@@ -121,7 +121,7 @@ public class TransactionStore<T> {
 	/**
 	 * Will go out of its way to return an object. First tries to read the previous
 	 * files, then reads the fallback url, then returns a new instance.
-	 * 
+	 *
 	 * @throws InterruptedException when interrupted while sleeping during a recover
 	 */
 	public T read() throws InterruptedException {

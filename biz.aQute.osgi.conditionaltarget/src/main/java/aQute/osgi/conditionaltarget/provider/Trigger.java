@@ -24,7 +24,7 @@ public class Trigger implements Closeable {
 
 	/**
 	 * Create a trigger with a callback and an idleperiod
-	 * 
+	 *
 	 * @param r
 	 *            the callback executed idlePeriod ms after last trigger
 	 * @param idlePeriod
@@ -79,7 +79,7 @@ public class Trigger implements Closeable {
 			trigger.run();
 		} while (repeated.decrementAndGet() > 0);
 	}
-	
+
 	@Override
 	public synchronized void close() throws IOException {
 		scheduler.shutdownNow();

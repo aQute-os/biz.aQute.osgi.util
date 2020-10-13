@@ -35,7 +35,7 @@ public class FSM<State extends Enum<?>, Event extends Enum<?>, Action> {
 
 	/**
 	 * Create an FSM by specifying the state and even enum classes explicitly
-	 * 
+	 *
 	 * @param sclass
 	 *            the Enum class used for the states
 	 * @param eclass
@@ -57,7 +57,7 @@ public class FSM<State extends Enum<?>, Event extends Enum<?>, Action> {
 	/**
 	 * Create an FSM by creating an inner class. The super class will then hold
 	 * the event and state class as type parameters.
-	 * 
+	 *
 	 * @param initial
 	 *            the initial state
 	 */
@@ -79,7 +79,7 @@ public class FSM<State extends Enum<?>, Event extends Enum<?>, Action> {
 	/**
 	 * Add a new transition with an action. The action will be returned when
 	 * event is called.
-	 * 
+	 *
 	 * @param state
 	 *            the from state
 	 * @param event
@@ -103,7 +103,7 @@ public class FSM<State extends Enum<?>, Event extends Enum<?>, Action> {
 
 	/**
 	 * Add a new transition without an action.
-	 * 
+	 *
 	 * @param from
 	 *            the from state
 	 * @param event
@@ -121,7 +121,7 @@ public class FSM<State extends Enum<?>, Event extends Enum<?>, Action> {
 	 * the current <state,event> pair then the transition is executed. The
 	 * return of this method is the defined parameter when the transition was
 	 * added.
-	 * 
+	 *
 	 * @param event
 	 *            The event that happened
 	 * @return the optional action
@@ -144,7 +144,7 @@ public class FSM<State extends Enum<?>, Event extends Enum<?>, Action> {
 	 * happened before you call state should have been processed. Clearly the
 	 * return value represents a snapshot, when inspecting the state machine
 	 * could already have moved on.
-	 * 
+	 *
 	 * @return snapshot of the current state
 	 */
 	public State state() {
@@ -156,7 +156,7 @@ public class FSM<State extends Enum<?>, Event extends Enum<?>, Action> {
 	/**
 	 * Set a new state. This clearly bypasses the transitions planned and should
 	 * therefore only be used in testing or very extraordinary cases.
-	 * 
+	 *
 	 * @param state
 	 *            the new state
 	 * @return the previous state

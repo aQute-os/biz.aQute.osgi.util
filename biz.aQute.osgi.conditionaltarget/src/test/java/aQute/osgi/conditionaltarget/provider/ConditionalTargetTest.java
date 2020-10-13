@@ -40,7 +40,7 @@ public class ConditionalTargetTest {
 					"org.osgi.util.promise, org.osgi.util.function, org.apache.felix.scr,org.apache.felix.log,org.apache.felix.configadmin, slf4j.api, slf4j.simple, org.assertj.core, org.awaitility, osgi.enroute.hamcrest.wrapper")
 			.debug();
 
-	static interface Foo {
+	interface Foo {
 	}
 
 	Semaphore				s	= new Semaphore(0);
@@ -174,12 +174,12 @@ public class ConditionalTargetTest {
 	@Test
 	public void testPropertyBytesArrays() throws Exception {
 		lp.enable(PropertiesTest.class);
-		
+
 		PropertiesTest service = lp.waitForService(PropertiesTest.class, 1000).get();
 
 		lp.register(Foo.class, foo1, "foo", new byte[] {1,2});
 		lp.register(Foo.class, foo1, "foo", new byte[] {3,4});
-		
+
 		await().atMost(10, TimeUnit.SECONDS).until(() -> service.foos != null);
 
 		Map<String, Object> props = service.foos.getAggregateProperties();
@@ -195,7 +195,7 @@ public class ConditionalTargetTest {
 	@Test
 	public void testPropertyCollections() throws Exception {
 		lp.enable(PropertiesTest.class);
-		
+
 		PropertiesTest service = lp.waitForService(PropertiesTest.class, 1000).get();
 
 		lp.register(Foo.class, foo1, "foo", Arrays.asList(1,2,3));
@@ -204,7 +204,7 @@ public class ConditionalTargetTest {
 		v.add(5);
 		v.add(6);
 		lp.register(Foo.class, foo1, "foo", v);
-		
+
 		await().atMost(10, TimeUnit.SECONDS).until(() -> service.foos != null);
 
 		Map<String, Object> props = service.foos.getAggregateProperties();
@@ -244,11 +244,11 @@ public class ConditionalTargetTest {
 		@Reference(target = "(#>=1)", cardinality = ReferenceCardinality.OPTIONAL, policy = ReferencePolicy.DYNAMIC)
 		volatile ConditionalTarget<Foo> foos;
 		private BundleContext context;
-		
+
 		@Activate
 		void activate(BundleContext context) {
 			this.context = context;
-			
+
 		}
 		@Reference(updated = "updatedTarget")
 		void setTarget(ConditionalTarget<?> target) {
@@ -268,17 +268,17 @@ public class ConditionalTargetTest {
 	@Test
 	public void testThatRegistrationOfFooInPropertiesUpdateMethodIsProperlyHandled() throws Exception {
 		lp.enable(ModifiedCallbackTest.class);
-		
+
 		ModifiedCallbackTest service = lp.waitForService(ModifiedCallbackTest.class, 1000).get();
-		
+
 		// Register #1
 		lp.register(Foo.class, foo1);
-		
+
 		await().atMost(10, TimeUnit.SECONDS).until(() -> service.foos != null);
-		
+
 		// Register #1, will cause property update, which registers new Foo
 		lp.register(Foo.class, foo1);
-		
+
 		assertThat(service.foos.getAggregateProperties().get("#")).isEqualTo(3);
 	}
 
@@ -313,15 +313,15 @@ public class ConditionalTargetTest {
 		await().until(() -> lp.waitForService(ConditionalTarget.class, 100).isPresent() == false);
 
 		assertThat(fromFramework.getAggregateProperties()).isEmpty();
-		
+
 		configuration = cm.createFactoryConfiguration("foo", "?");
 		ht = new Hashtable<>();
 		ht.put("foos.target", "(&(#=2)([avg]foo>=1.5))");
 		configuration.update(ht);
 
-		
+
 		Thread.sleep(500);
-		
+
 		assertThat(lp.waitForService(ConfigTest.class, 100)).isNotPresent();
 
 		lp.register(Foo.class, foo1, "foo", 3);
@@ -364,13 +364,13 @@ public class ConditionalTargetTest {
 		ConditionalTarget<Foo> service = lp.getService(ConditionalTarget.class).get();
 
 		// Test iterable
-		
+
 		int n = 0;
 		for ( @SuppressWarnings("unused") Foo sr : service) {
 			n++;
 		}
 		assertThat(n).isEqualTo(4);
-		
+
 		Map<ServiceReference<Foo>, Foo> refs = service.getServiceReferences();
 		assertThat(refs).hasSize(4);
 
@@ -402,21 +402,21 @@ public class ConditionalTargetTest {
 
 		lp.waitForServiceReference(ConditionalTarget.class, 1000).get();
 	}
-	
+
 	@Component(service=InvalidField.class, enabled=false)
 	public static class InvalidField {
-		
+
 		@SuppressWarnings("rawtypes")
 		@Reference
 		private ConditionalTarget foos;
-		
+
 	}
-	
+
 	@Test
 	public void testInvalidField() {
 		lp.enable(InvalidField.class);
-		
+
 		assertThat( lp.waitForService(InvalidField.class, 1000)).isPresent();
-		
+
 	}
 }

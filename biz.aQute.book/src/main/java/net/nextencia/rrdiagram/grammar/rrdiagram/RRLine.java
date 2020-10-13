@@ -14,13 +14,12 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRDiagram.SvgContent;
  */
 public class RRLine extends RRElement {
 
-  @Override
-  protected void computeLayoutInfo(RRDiagramToSVG rrDiagramToSVG) {
-    setLayoutInfo(new LayoutInfo(0, 10, 5));
-  }
+	@Override
+	protected void computeLayoutInfo(RRDiagramToSVG rrDiagramToSVG) {
+		setLayoutInfo(new LayoutInfo(0, 10, 5));
+	}
 
-  @Override
-  protected void toSVG(RRDiagramToSVG rrDiagramToSVG, int xOffset, int yOffset, SvgContent svgContent) {
-  }
+	@Override
+	protected void toSVG(RRDiagramToSVG rrDiagramToSVG, int xOffset, int yOffset, SvgContent svgContent) {}
 
 }

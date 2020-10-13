@@ -5,8 +5,7 @@ import com.vladsch.flexmark.util.data.MutableDataHolder;
 
 public class RailroadDiagramExtension implements HtmlRenderer.HtmlRendererExtension {
 	@Override
-	public void rendererOptions(MutableDataHolder options) {
-	}
+	public void rendererOptions(MutableDataHolder options) {}
 
 	@Override
 	public void extend(HtmlRenderer.Builder htmlRendererBuilder, String rendererType) {

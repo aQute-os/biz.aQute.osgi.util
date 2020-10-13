@@ -12,69 +12,69 @@ package net.nextencia.rrdiagram.grammar.model;
  */
 public class GrammarToBNF {
 
-  public static enum RuleDefinitionSign {
-    EQUAL,
-    COLON_EQUAL,
-    COLON_COLON_EQUAL,
-  }
+	public enum RuleDefinitionSign {
+		EQUAL,
+		COLON_EQUAL,
+		COLON_COLON_EQUAL,
+	}
 
-  private RuleDefinitionSign ruleDefinitionSign = RuleDefinitionSign.EQUAL;
+	private RuleDefinitionSign ruleDefinitionSign = RuleDefinitionSign.EQUAL;
 
-  public RuleDefinitionSign getRuleDefinitionSign() {
-    return ruleDefinitionSign;
-  }
+	public RuleDefinitionSign getRuleDefinitionSign() {
+		return ruleDefinitionSign;
+	}
 
-  public void setRuleDefinitionSign(RuleDefinitionSign ruleDefinitionSign) {
-    this.ruleDefinitionSign = ruleDefinitionSign;
-  }
+	public void setRuleDefinitionSign(RuleDefinitionSign ruleDefinitionSign) {
+		this.ruleDefinitionSign = ruleDefinitionSign;
+	}
 
-  public static enum LiteralDefinitionSign {
-    QUOTE,
-    DOUBLE_QUOTE,
-  }
+	public enum LiteralDefinitionSign {
+		QUOTE,
+		DOUBLE_QUOTE,
+	}
 
-  private LiteralDefinitionSign literalDefinitionSign = LiteralDefinitionSign.QUOTE;
+	private LiteralDefinitionSign literalDefinitionSign = LiteralDefinitionSign.QUOTE;
 
-  public LiteralDefinitionSign getLiteralDefinitionSign() {
-    return literalDefinitionSign;
-  }
+	public LiteralDefinitionSign getLiteralDefinitionSign() {
+		return literalDefinitionSign;
+	}
 
-  public void setLiteralDefinitionSign(LiteralDefinitionSign literalDefinitionSign) {
-    this.literalDefinitionSign = literalDefinitionSign;
-  }
+	public void setLiteralDefinitionSign(LiteralDefinitionSign literalDefinitionSign) {
+		this.literalDefinitionSign = literalDefinitionSign;
+	}
 
-  private boolean isCommaSeparator;
+	private boolean isCommaSeparator;
 
-  public void setCommaSeparator(boolean isCommaSeparator) {
-    this.isCommaSeparator = isCommaSeparator;
-  }
+	public void setCommaSeparator(boolean isCommaSeparator) {
+		this.isCommaSeparator = isCommaSeparator;
+	}
 
-  public boolean isCommaSeparator() {
-    return isCommaSeparator;
-  }
+	public boolean isCommaSeparator() {
+		return isCommaSeparator;
+	}
 
-  private boolean isUsingMultiplicationTokens;
+	private boolean isUsingMultiplicationTokens;
 
-  public void setUsingMultiplicationTokens(boolean isUsingMultiplicationTokens) {
-    this.isUsingMultiplicationTokens = isUsingMultiplicationTokens;
-  }
+	public void setUsingMultiplicationTokens(boolean isUsingMultiplicationTokens) {
+		this.isUsingMultiplicationTokens = isUsingMultiplicationTokens;
+	}
 
-  public boolean isUsingMultiplicationTokens() {
-    return isUsingMultiplicationTokens;
-  }
+	public boolean isUsingMultiplicationTokens() {
+		return isUsingMultiplicationTokens;
+	}
 
-  private String ruleConsideredAsLineBreak;
+	private String ruleConsideredAsLineBreak;
 
-  public void setRuleConsideredAsLineBreak(String ruleConsideredAsLineBreak) {
-    this.ruleConsideredAsLineBreak = ruleConsideredAsLineBreak;
-  }
+	public void setRuleConsideredAsLineBreak(String ruleConsideredAsLineBreak) {
+		this.ruleConsideredAsLineBreak = ruleConsideredAsLineBreak;
+	}
 
-  public String getRuleConsideredAsLineBreak() {
-    return ruleConsideredAsLineBreak;
-  }
+	public String getRuleConsideredAsLineBreak() {
+		return ruleConsideredAsLineBreak;
+	}
 
-  public String convert(Grammar grammar) {
-    return grammar.toBNF(this);
-  }
+	public String convert(Grammar grammar) {
+		return grammar.toBNF(this);
+	}
 
 }

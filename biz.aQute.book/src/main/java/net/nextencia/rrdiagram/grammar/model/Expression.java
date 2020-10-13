@@ -14,14 +14,14 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRElement;
  */
 public abstract class Expression {
 
-  protected abstract RRElement toRRElement(GrammarToRRDiagram grammarToRRDiagram);
+	protected abstract RRElement toRRElement(GrammarToRRDiagram grammarToRRDiagram);
 
-  protected abstract void toBNF(GrammarToBNF grammarToBNF, StringBuilder sb, boolean isNested);
+	protected abstract void toBNF(GrammarToBNF grammarToBNF, StringBuilder sb, boolean isNested);
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    toBNF(new GrammarToBNF(), sb, false);
-    return sb.toString();
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		toBNF(new GrammarToBNF(), sb, false);
+		return sb.toString();
+	}
 }

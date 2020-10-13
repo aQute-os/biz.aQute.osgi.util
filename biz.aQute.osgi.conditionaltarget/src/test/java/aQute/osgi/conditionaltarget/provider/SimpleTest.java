@@ -61,12 +61,12 @@ public class SimpleTest {
 
 		Optional<ConditionalTarget> s = lp.waitForService(ConditionalTarget.class, 100);
 		assertThat(s.isPresent()).isFalse();
-		
+
 		ServiceRegistration<String> register = lp.register(String.class, "B'");
 
 		s = lp.waitForService(ConditionalTarget.class, 1000);
 		assertThat(s.isPresent()).isTrue();
-		
+
 		register.unregister();
 
 	}

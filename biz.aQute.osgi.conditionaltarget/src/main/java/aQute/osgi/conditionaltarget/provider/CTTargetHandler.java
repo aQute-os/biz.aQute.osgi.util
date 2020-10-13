@@ -30,7 +30,7 @@ import aQute.osgi.conditionaltarget.api.ConditionalTarget;
 /**
  * This class handles a single target from a bundle. That usually maps to a
  * single @Reference to a ConditionalTarget service.
- * 
+ *
  * @param <TT>
  *            the type of the ConditionalTarget
  */
@@ -38,7 +38,7 @@ class CTTargetHandler<TT> {
 	final static Logger																logger	= LoggerFactory
 			.getLogger(ConditionalTarget.class);
 	final static String[]															SPECIAL	= new String[] { "T", "#" };
-	
+
 	final String																	filter;
 	final ServiceTracker<TT, ServiceReference<TT>>									targetTypeTracker;
 	final MultiMap<String, BiFunction<Map<String, Object>, List<Object>, Object>>	activeKeys;
@@ -123,7 +123,7 @@ class CTTargetHandler<TT> {
 		synchronized Map<String, Object> properties() {
 			if ( open)
 				return lastProperties;
-			
+
 			return Collections.emptyMap();
 		}
 
@@ -217,7 +217,7 @@ class CTTargetHandler<TT> {
 		this.context = context;
 		this.type = type;
 		this.activeKeys = calculateKeyHandlers(FilterParser.getAttributes(filter));
-		
+
 		Filter f = createFilter(type);
 		logger.info("Tracking services {}", f);
 		this.locked.registration(register());
@@ -234,11 +234,13 @@ class CTTargetHandler<TT> {
 	private ServiceTracker<TT, ServiceReference<TT>> createTracker(Filter f) {
 		return new ServiceTracker<TT, ServiceReference<TT>>(context, f, null) {
 
+			@Override
 			public ServiceReference<TT> addingService(ServiceReference<TT> reference) {
 				locked.addService(reference);
 				return reference;
 			}
 
+			@Override
 			public void removedService(ServiceReference<TT> reference,
 					ServiceReference<TT> service) {
 				locked.removeService(service);
@@ -259,7 +261,7 @@ class CTTargetHandler<TT> {
 					@Override
 					public ConditionalTarget<TT> getService(Bundle bundle,
 							ServiceRegistration<ConditionalTarget<TT>> registration) {
-						CTBundleInstance<TT> instance = new CTBundleInstance<TT>(bundle.getBundleContext(),
+						CTBundleInstance<TT> instance = new CTBundleInstance<>(bundle.getBundleContext(),
 								CTTargetHandler.this);
 
 						locked.addInstance(registration, instance);

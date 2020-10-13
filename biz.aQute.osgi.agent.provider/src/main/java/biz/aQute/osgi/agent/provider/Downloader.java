@@ -35,7 +35,7 @@ public class Downloader {
 	 * <li>byte[]
 	 * <li>a DTO – Converted from JSON
 	 * </ul>
-	 * 
+	 *
 	 * @param path
 	 *            The URI to download
 	 * @param type

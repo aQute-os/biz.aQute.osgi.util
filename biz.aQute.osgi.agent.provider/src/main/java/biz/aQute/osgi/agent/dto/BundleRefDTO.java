@@ -9,7 +9,7 @@ public class BundleRefDTO extends DTO {
 	public String location;
 	public URI path;
 	public byte[] digest;
-	
+
 	public String bsn;
 	public String version;
 	public Map<String,byte[]> bundleHashes;

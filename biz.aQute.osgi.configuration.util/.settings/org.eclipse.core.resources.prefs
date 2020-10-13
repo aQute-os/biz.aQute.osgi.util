@@ -1,6 +1,2 @@
 eclipse.preferences.version=1
-encoding//src/main/java/biz/aQute/osgi/configuration/util/ConfigHelper.java=UTF-8
-encoding//src/main/java/biz/aQute/osgi/configuration/util/package-info.java=UTF-8
-encoding//src/test/.gitignore=UTF-8
-encoding/bnd.bnd=UTF-8
-encoding/readme.md=UTF-8
+encoding/<project>=UTF-8

@@ -14,37 +14,32 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRDiagram;
  */
 public class GrammarToRRDiagram {
 
-  public static interface RuleLinkProvider {
-    public String getLink(String ruleName);
-  }
+	public interface RuleLinkProvider {
+		String getLink(String ruleName);
+	}
 
-  private RuleLinkProvider ruleLinkProvider = new RuleLinkProvider() {
-    @Override
-    public String getLink(String ruleName) {
-      return "#" + ruleName;
-    }
-  };
+	private RuleLinkProvider ruleLinkProvider = ruleName -> "#" + ruleName;
 
-  public void setRuleLinkProvider(RuleLinkProvider ruleLinkProvider) {
-    this.ruleLinkProvider = ruleLinkProvider;
-  }
+	public void setRuleLinkProvider(RuleLinkProvider ruleLinkProvider) {
+		this.ruleLinkProvider = ruleLinkProvider;
+	}
 
-  public RuleLinkProvider getRuleLinkProvider() {
-    return ruleLinkProvider;
-  }
+	public RuleLinkProvider getRuleLinkProvider() {
+		return ruleLinkProvider;
+	}
 
-  private String ruleConsideredAsLineBreak;
+	private String ruleConsideredAsLineBreak;
 
-  public void setRuleConsideredAsLineBreak(String ruleConsideredAsLineBreak) {
-    this.ruleConsideredAsLineBreak = ruleConsideredAsLineBreak;
-  }
+	public void setRuleConsideredAsLineBreak(String ruleConsideredAsLineBreak) {
+		this.ruleConsideredAsLineBreak = ruleConsideredAsLineBreak;
+	}
 
-  public String getRuleConsideredAsLineBreak() {
-    return ruleConsideredAsLineBreak;
-  }
+	public String getRuleConsideredAsLineBreak() {
+		return ruleConsideredAsLineBreak;
+	}
 
-  public RRDiagram convert(Rule rule) {
-    return rule.toRRDiagram(this);
-  }
+	public RRDiagram convert(Rule rule) {
+		return rule.toRRDiagram(this);
+	}
 
 }

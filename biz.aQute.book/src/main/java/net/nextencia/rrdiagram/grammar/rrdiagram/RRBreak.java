@@ -14,14 +14,16 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRDiagram.SvgContent;
  */
 public class RRBreak extends RRElement {
 
-  @Override
-  protected void computeLayoutInfo(RRDiagramToSVG rrDiagramToSVG) {
-    throw new IllegalStateException("This element must not be nested and should have been processed before entering generation.");
-  }
+	@Override
+	protected void computeLayoutInfo(RRDiagramToSVG rrDiagramToSVG) {
+		throw new IllegalStateException(
+			"This element must not be nested and should have been processed before entering generation.");
+	}
 
-  @Override
-  protected void toSVG(RRDiagramToSVG rrDiagramToSVG, int xOffset, int yOffset, SvgContent svgContent) {
-    throw new IllegalStateException("This element must not be nested and should have been processed before entering generation.");
-  }
+	@Override
+	protected void toSVG(RRDiagramToSVG rrDiagramToSVG, int xOffset, int yOffset, SvgContent svgContent) {
+		throw new IllegalStateException(
+			"This element must not be nested and should have been processed before entering generation.");
+	}
 
 }

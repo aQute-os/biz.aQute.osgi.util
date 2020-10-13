@@ -17,31 +17,48 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRText.Type;
  */
 public class Literal extends Expression {
 
-  private String text;
+	private String text;
 
-  public Literal(String text) {
-    this.text = text;
-  }
+	public Literal(String text) {
+		this.text = text;
+	}
 
-  @Override
-  protected RRElement toRRElement(GrammarToRRDiagram grammarToRRDiagram) {
-    return new RRText(Type.LITERAL, text, null);
-  }
+	@Override
+	protected RRElement toRRElement(GrammarToRRDiagram grammarToRRDiagram) {
+		return new RRText(Type.LITERAL, text, null);
+	}
 
-  @Override
-  protected void toBNF(GrammarToBNF grammarToBNF, StringBuilder sb, boolean isNested) {
-    char c = grammarToBNF.getLiteralDefinitionSign() == LiteralDefinitionSign.DOUBLE_QUOTE? '"': '\'';
-    sb.append(c);
-    sb.append(text);
-    sb.append(c);
-  }
+	@Override
+	protected void toBNF(GrammarToBNF grammarToBNF, StringBuilder sb, boolean isNested) {
+		char c = grammarToBNF.getLiteralDefinitionSign() == LiteralDefinitionSign.DOUBLE_QUOTE ? '"' : '\'';
+		sb.append(c);
+		sb.append(text);
+		sb.append(c);
+	}
 
-  @Override
-  public boolean equals(Object o) {
-    if(!(o instanceof Literal)) {
-      return false;
-    }
-    return text.equals(((Literal)o).text);
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Literal other = (Literal) obj;
+		if (text == null) {
+			if (other.text != null)
+				return false;
+		} else if (!text.equals(other.text))
+			return false;
+		return true;
+	}
 
 }

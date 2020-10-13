@@ -20,85 +20,106 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRSequence;
  */
 public class Sequence extends Expression {
 
-  private Expression[] expressions;
+	private Expression[] expressions;
 
-  public Sequence(Expression... expressions) {
-    this.expressions = expressions;
-  }
+	public Sequence(Expression... expressions) {
+		this.expressions = expressions;
+	}
 
-  public Expression[] getExpressions() {
-    return expressions;
-  }
+	public Expression[] getExpressions() {
+		return expressions;
+	}
 
-  @Override
-  protected RRElement toRRElement(GrammarToRRDiagram grammarToRRDiagram) {
-    List<RRElement> rrElementList = new ArrayList<RRElement>();
-    for(int i=0; i<expressions.length; i++) {
-      Expression expression = expressions[i];
-      RRElement rrElement = expression.toRRElement(grammarToRRDiagram);
-      // Treat special case of: "a (',' a)*" and "a (a)*"
-      if(i < expressions.length - 1 && expressions[i + 1] instanceof Repetition) {
-        Repetition repetition = (Repetition)expressions[i + 1];
-        Expression repetitionExpression = repetition.getExpression();
-        if(repetitionExpression instanceof Sequence) {
-          // Treat special case of: "expr (',' expr)*"
-          Expression[] subExpressions = ((Sequence)repetitionExpression).getExpressions();
-          if(subExpressions.length == 2 && subExpressions[0] instanceof Literal) {
-            if(expression.equals(subExpressions[1])) {
-              Integer maxRepetitionCount = repetition.getMaxRepetitionCount();
-              if(maxRepetitionCount == null || maxRepetitionCount > 1) {
-                rrElement = new RRLoop(expression.toRRElement(grammarToRRDiagram), subExpressions[0].toRRElement(grammarToRRDiagram), repetition.getMinRepetitionCount(), (maxRepetitionCount == null? null: maxRepetitionCount));
-                i++;
-              }
-            }
-          }
-        } else if(expression instanceof RuleReference) {
-          RuleReference ruleLink = (RuleReference)expression;
-          // Treat special case of: a (a)*
-          if(repetitionExpression instanceof RuleReference && ((RuleReference)repetitionExpression).getRuleName().equals(ruleLink.getRuleName())) {
-            Integer maxRepetitionCount = repetition.getMaxRepetitionCount();
-            if(maxRepetitionCount == null || maxRepetitionCount > 1) {
-              rrElement = new RRLoop(ruleLink.toRRElement(grammarToRRDiagram), null, repetition.getMinRepetitionCount(), (maxRepetitionCount == null? null: maxRepetitionCount));
-              i++;
-            }
-          }
-        }
-      }
-      rrElementList.add(rrElement);
-    }
-    return new RRSequence(rrElementList.toArray(new RRElement[0]));
-  }
+	@Override
+	protected RRElement toRRElement(GrammarToRRDiagram grammarToRRDiagram) {
+		List<RRElement> rrElementList = new ArrayList<>();
+		for (int i = 0; i < expressions.length; i++) {
+			Expression expression = expressions[i];
+			RRElement rrElement = expression.toRRElement(grammarToRRDiagram);
+			// Treat special case of: "a (',' a)*" and "a (a)*"
+			if (i < expressions.length - 1 && expressions[i + 1] instanceof Repetition) {
+				Repetition repetition = (Repetition) expressions[i + 1];
+				Expression repetitionExpression = repetition.getExpression();
+				if (repetitionExpression instanceof Sequence) {
+					// Treat special case of: "expr (',' expr)*"
+					Expression[] subExpressions = ((Sequence) repetitionExpression).getExpressions();
+					if (subExpressions.length == 2 && subExpressions[0] instanceof Literal) {
+						if (expression.equals(subExpressions[1])) {
+							Integer maxRepetitionCount = repetition.getMaxRepetitionCount();
+							if (maxRepetitionCount == null || maxRepetitionCount > 1) {
+								rrElement = new RRLoop(expression.toRRElement(grammarToRRDiagram),
+									subExpressions[0].toRRElement(grammarToRRDiagram),
+									repetition.getMinRepetitionCount(),
+									(maxRepetitionCount == null ? null : maxRepetitionCount));
+								i++;
+							}
+						}
+					}
+				} else if (expression instanceof RuleReference) {
+					RuleReference ruleLink = (RuleReference) expression;
+					// Treat special case of: a (a)*
+					if (repetitionExpression instanceof RuleReference
+						&& ((RuleReference) repetitionExpression).getRuleName()
+							.equals(ruleLink.getRuleName())) {
+						Integer maxRepetitionCount = repetition.getMaxRepetitionCount();
+						if (maxRepetitionCount == null || maxRepetitionCount > 1) {
+							rrElement = new RRLoop(ruleLink.toRRElement(grammarToRRDiagram), null,
+								repetition.getMinRepetitionCount(),
+								(maxRepetitionCount == null ? null : maxRepetitionCount));
+							i++;
+						}
+					}
+				}
+			}
+			rrElementList.add(rrElement);
+		}
+		return new RRSequence(rrElementList.toArray(new RRElement[0]));
+	}
 
-  @Override
-  protected void toBNF(GrammarToBNF grammarToBNF, StringBuilder sb, boolean isNested) {
-    if(expressions.length == 0) {
-      sb.append("( )");
-      return;
-    }
-    if(isNested && expressions.length > 1) {
-      sb.append("( ");
-    }
-    boolean isCommaSeparator = grammarToBNF.isCommaSeparator();
-    for(int i=0; i<expressions.length; i++) {
-      if(i > 0) {
-        if(isCommaSeparator) {
-          sb.append(" ,");
-        }
-        sb.append(" ");
-      }
-      expressions[i].toBNF(grammarToBNF, sb, expressions.length == 1 && isNested || !isCommaSeparator);
-    }
-    if(isNested && expressions.length > 1) {
-      sb.append(" )");
-    }
-  }
+	@Override
+	protected void toBNF(GrammarToBNF grammarToBNF, StringBuilder sb, boolean isNested) {
+		if (expressions.length == 0) {
+			sb.append("( )");
+			return;
+		}
+		if (isNested && expressions.length > 1) {
+			sb.append("( ");
+		}
+		boolean isCommaSeparator = grammarToBNF.isCommaSeparator();
+		for (int i = 0; i < expressions.length; i++) {
+			if (i > 0) {
+				if (isCommaSeparator) {
+					sb.append(" ,");
+				}
+				sb.append(" ");
+			}
+			expressions[i].toBNF(grammarToBNF, sb, expressions.length == 1 && isNested || !isCommaSeparator);
+		}
+		if (isNested && expressions.length > 1) {
+			sb.append(" )");
+		}
+	}
 
-  @Override
-  public boolean equals(Object o) {
-    if(!(o instanceof Sequence)) {
-      return false;
-    }
-    return Arrays.equals(expressions, ((Sequence)o).expressions);
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(expressions);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sequence other = (Sequence) obj;
+		if (!Arrays.equals(expressions, other.expressions))
+			return false;
+		return true;
+	}
 
 }

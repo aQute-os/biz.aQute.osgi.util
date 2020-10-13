@@ -35,7 +35,7 @@ public class TriggerTest {
 
 			Thread.sleep(100);
 			assertThat(s.availablePermits()).isEqualTo(2);
-			
+
 			trigger.trigger(); // check close
 		}
 		Thread.sleep(100);

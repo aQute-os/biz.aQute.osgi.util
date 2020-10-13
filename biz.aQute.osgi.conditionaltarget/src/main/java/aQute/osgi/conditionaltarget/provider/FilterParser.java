@@ -12,11 +12,11 @@ class FilterParser {
 	final MultiMap<String, String>	map	= new MultiMap<>();
 	final String					filter;
 	int								n;
-	
+
 	FilterParser(String filter) {
 		this.filter = filter;
 	}
-	
+
 	void filter() {
 		expect("(", "Expect '('");
 		char c = peek(1);
@@ -54,7 +54,7 @@ class FilterParser {
 			switch (current()) {
 			case 0:
 				throw new IllegalArgumentException("Unexpected end of string");
-				
+
 			case '=':
 				if (peek(1) == '*') {
 					op = "=*";
@@ -83,7 +83,7 @@ class FilterParser {
 		while ("()".indexOf(current()) < 0) {
 			if ( current() == 0)
 				throw new IllegalArgumentException("Unexpected end of string");
-			
+
 			if (current() == '\\') {
 				n++;
 			}
@@ -127,7 +127,7 @@ class FilterParser {
 		FilterParser p = new FilterParser(filter);
 		p.filter();
 		return p.map.keySet();
-		
+
 	}
 
 }

@@ -13,10 +13,10 @@ public class LogForwarderTest {
 	@Test
 	public void testSimple() {
 		Logger l = LoggerFactory.getLogger(LogForwarderTest.class);
-		
+
 		l.debug("Hello world");
 		assertThat(LogForwarder.SINGLETON.queue).isNotEmpty();
-		
+
 		LogService mock = Mockito.mock(LogService.class);
 		org.osgi.service.log.Logger mlogger = Mockito.mock(org.osgi.service.log.Logger.class);
 		Mockito.when(mock.getLogger(LogForwarderTest.class.getName())).thenReturn(mlogger);

@@ -35,7 +35,7 @@ public class UpdateAgentTest {
 
 	@Service
 	PackageAdmin padmin;
-	
+
 	@Test
 	public void zeroBundles() throws Exception {
 		UpdateAgentImpl agent = init();
@@ -105,10 +105,10 @@ public class UpdateAgentTest {
 		int n = fw.getBundleContext().getBundles().length;
 		agent.update();
 		assertEquals(n,fw.getBundleContext().getBundles().length);
-		
+
 		assertFalse( getBundleByLocation("SLM:ok").isPresent());
 		assertFalse( getBundleByLocation("SLM:exception").isPresent());
-		
+
 	}
 
 	void addResource(Class<?> class1, BundleBuilder b) throws IOException {

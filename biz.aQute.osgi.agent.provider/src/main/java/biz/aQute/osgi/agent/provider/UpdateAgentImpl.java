@@ -106,6 +106,7 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 		return state;
 	}
 
+	@Override
 	public void run() {
 		open.set(true);
 
@@ -189,7 +190,7 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 					}
 
 					refresh();
-					
+
 					state = State.STARTING;
 					list = forEach(actions, BundleAction::start);
 					sync(list); // ensure all bundles are started
@@ -382,6 +383,7 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 			this.bundle = bundle;
 		}
 
+		@Override
 		Promise<Void> stop() {
 			return background(this.bundle::stop);
 		}
@@ -400,10 +402,12 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 			this.bundle = bundle;
 		}
 
+		@Override
 		Promise<Void> stop() {
 			return background(() -> bundle.stop());
 		}
 
+		@Override
 		public void commit() throws BundleException {
 			assert (bundle.getState() & (Bundle.RESOLVED + Bundle.INSTALLED)) != 0;
 			bundle.uninstall();

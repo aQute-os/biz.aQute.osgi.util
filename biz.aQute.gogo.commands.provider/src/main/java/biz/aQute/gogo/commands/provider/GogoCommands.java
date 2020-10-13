@@ -9,7 +9,7 @@ import org.osgi.service.log.LogService;
 @GogoCommand(scope = "aqute", function = { "lentry" })
 @Component(service=GogoCommands.class)
 public class GogoCommands {
-	
+
 	@Reference LogService log;
 
 	@SuppressWarnings("deprecation")

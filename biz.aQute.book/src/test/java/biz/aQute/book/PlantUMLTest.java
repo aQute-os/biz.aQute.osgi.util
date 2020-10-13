@@ -35,10 +35,9 @@ public class PlantUMLTest {
 	public void testStyled() throws IOException, FontFormatException {
 		File file = IO.getFile("/Users/aqute/Desktop/Dropbox/alloy-book/fonts/PRODOBookcItalic.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, file);
-		GraphicsEnvironment ge = 
-		         GraphicsEnvironment.getLocalGraphicsEnvironment();
-		     ge.registerFont(font);
-		     
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		ge.registerFont(font);
+
 		String source = IO.collect("test/plantuml/fonts.uml");
 
 		SourceStringReader reader = new SourceStringReader(source);

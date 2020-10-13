@@ -114,7 +114,7 @@ public class Main {
 			if ( execute != 0) {
 				return "<could not execute command " + string + " : "+execute+"> ";
 			}
-				
+
 			return Strings.trim(out.toString());
 		}
 

@@ -21,7 +21,7 @@ public class Main extends Env {
 
 		@Description("The output file, default console")
 		String output();
-		
+
 		@Description("Dump expansion of docs")
 		boolean xpansion();
 	}
@@ -61,7 +61,7 @@ public class Main extends Env {
 
 		if (isOk()) {
 			Generator g = new Generator(this);
-			if ( args.xpansion())
+			if (args.xpansion())
 				g.xpansion();
 			String generated = g.generate();
 			String out = args.output();
@@ -69,8 +69,9 @@ public class Main extends Env {
 				System.out.println(generated);
 			else {
 				File o = getFile(out);
-				o.getParentFile().mkdirs();
-				IO.store(generated, o);				
+				o.getParentFile()
+					.mkdirs();
+				IO.store(generated, o);
 			}
 			getInfo(g);
 		}

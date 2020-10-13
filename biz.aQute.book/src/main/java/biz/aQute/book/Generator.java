@@ -41,8 +41,9 @@ import io.bit3.jsass.Output;
 public class Generator extends Env {
 	final static Pattern	UNICODEREF	= Pattern.compile("(?<!\\\\)\\\\u(?<nr>[\\dabcdefABCDEF]{4,4})");
 	final static Pattern	HEADER		= Pattern.compile("---\r?\n(?<body>(.*\r?\n)*)---\r?\n", Pattern.MULTILINE);
-	final static String[]	TABS		= new String[] { "", " ", "  ", "   ", "    ", "     ", "      ", "       ",
-			"        " };
+	final static String[]	TABS		= new String[] {
+		"", " ", "  ", "   ", "    ", "     ", "      ", "       ", "        "
+	};
 	final List<Doc>			docs		= new ArrayList<>();
 	Document				document;
 	Parser					parser;
@@ -61,7 +62,9 @@ public class Generator extends Env {
 			setProperty("seq", n + "");
 			setProperty("path", f.getAbsolutePath());
 			setProperty("name", f.getName());
-			setProperty("dir", f.getParentFile().getAbsoluteFile().getAbsolutePath());
+			setProperty("dir", f.getParentFile()
+				.getAbsoluteFile()
+				.getAbsolutePath());
 			String basename = Strings.first(f.getName(), '.')[0];
 			this.id = getProperty("id", basename);
 			String s = IO.collect(f);
@@ -72,7 +75,8 @@ public class Generator extends Env {
 				StringReader sr = new StringReader(props);
 				p.load(sr);
 				getProperties().putAll(p);
-				Generator.this.getProperties().putAll(p);
+				Generator.this.getProperties()
+					.putAll(p);
 				content = tab(s.substring(matcher.end()));
 			} else {
 				content = tab(s);
@@ -129,28 +133,28 @@ public class Generator extends Env {
 
 		MutableDataSet options = new MutableDataSet();
 		options.set(Parser.EXTENSIONS, Arrays.asList( //
-				AttributesExtension.create(), //
-				TablesExtension.create(), //
-				TaskListExtension.create(),
-				StrikethroughExtension.create(),
-				RailroadDiagramExtension.create()));
+			AttributesExtension.create(), //
+			TablesExtension.create(), //
+			TaskListExtension.create(), StrikethroughExtension.create(), RailroadDiagramExtension.create()));
 
 		options.set(Parser.REFERENCES_KEEP, KeepType.LAST);
 
 		// Set GFM table parsing options
 		options.set(TablesExtension.COLUMN_SPANS, false)
-				.set(TablesExtension.MIN_HEADER_ROWS, 1)
-				.set(TablesExtension.MAX_HEADER_ROWS, 1)
-				.set(TablesExtension.APPEND_MISSING_COLUMNS, true)
-				.set(TablesExtension.DISCARD_EXTRA_COLUMNS, true)
-				.set(TablesExtension.WITH_CAPTION, false)
-				.set(TablesExtension.HEADER_SEPARATOR_COLUMN_MATCH, true);
+			.set(TablesExtension.MIN_HEADER_ROWS, 1)
+			.set(TablesExtension.MAX_HEADER_ROWS, 1)
+			.set(TablesExtension.APPEND_MISSING_COLUMNS, true)
+			.set(TablesExtension.DISCARD_EXTRA_COLUMNS, true)
+			.set(TablesExtension.WITH_CAPTION, false)
+			.set(TablesExtension.HEADER_SEPARATOR_COLUMN_MATCH, true);
 
 		// Setup List Options for GitHub profile which is kramdown for documents
 		options.setFrom(ParserEmulationProfile.GITHUB_DOC);
 
-		parser = Parser.builder(options).build();
-		renderer = HtmlRenderer.builder(options).build();
+		parser = Parser.builder(options)
+			.build();
+		renderer = HtmlRenderer.builder(options)
+			.build();
 
 		String s = replacer.process(template);
 		getInfo(replacer);
@@ -182,14 +186,15 @@ public class Generator extends Env {
 				m.appendReplacement(sw, "");
 				int nr = Integer.parseInt(m.group("nr"), 16);
 				switch (nr) {
-				case '$':
-					sw.append('\\'); // needs escaping since bnd will process it
+					case '$' :
+						sw.append('\\'); // needs escaping since bnd will
+											// process it
 
-					// FALL THROUGH
+						// FALL THROUGH
 
-				default:
-					sw.append((char) nr);
-					break;
+					default :
+						sw.append((char) nr);
+						break;
 				}
 			}
 			m.appendTail(sw);
@@ -211,12 +216,17 @@ public class Generator extends Env {
 			File f = getFile(e.getKey());
 			if (!f.isFile()) {
 				error("No such script file %s", f);
-				sw.append("<!-- missing ").append(f.getAbsolutePath()).append(" -->\n");
+				sw.append("<!-- missing ")
+					.append(f.getAbsolutePath())
+					.append(" -->\n");
 				continue;
 			}
-			String name = f.getName().toLowerCase();
+			String name = f.getName()
+				.toLowerCase();
 			if (name.endsWith(".css")) {
-				sw.append("<link rel='stylesheet' href='").append(relative(f)).append("' type='text/css'/>\n");
+				sw.append("<link rel='stylesheet' href='")
+					.append(relative(f))
+					.append("' type='text/css'/>\n");
 			} else if (name.endsWith(".scss")) {
 				URI inputFile = f.toURI();
 				URI outputFile = new File(getBase(), "somefile.html").toURI();
@@ -239,9 +249,14 @@ public class Generator extends Env {
 	}
 
 	private String relative(File f) {
-		URI to = f.getAbsoluteFile().toURI().normalize();
-		URI base = getBase().getAbsoluteFile().toURI().normalize();
-		return base.relativize(to).toString();
+		URI to = f.getAbsoluteFile()
+			.toURI()
+			.normalize();
+		URI base = getBase().getAbsoluteFile()
+			.toURI()
+			.normalize();
+		return base.relativize(to)
+			.toString();
 	}
 
 	public String _SCRIPTS(String args[]) throws FileNotFoundException, IOException {
@@ -252,10 +267,14 @@ public class Generator extends Env {
 			File f = getFile(e.getKey());
 			if (!f.isFile()) {
 				error("No such script file %s", f);
-				sw.append("<!-- missing ").append(f.getAbsolutePath()).append(" -->\n");
+				sw.append("<!-- missing ")
+					.append(f.getAbsolutePath())
+					.append(" -->\n");
 				continue;
 			}
-			sw.append("<script  src='").append(relative(f)).append("' type='application/javascript' defer ></script>\n");
+			sw.append("<script  src='")
+				.append(relative(f))
+				.append("' type='application/javascript' defer ></script>\n");
 		}
 
 		return sw.toString();
@@ -271,19 +290,19 @@ public class Generator extends Env {
 		for (int i = 0; i < sb.length(); i++) {
 			char c = sb.charAt(i);
 			switch (c) {
-			case '\n':
-			case '\r':
-				x = 0;
-				break;
+				case '\n' :
+				case '\r' :
+					x = 0;
+					break;
 
-			case '\t':
-				int r = tabwidth - (x % tabwidth);
-				sb.replace(i, i + 1, TABS[r]);
-				i += r;
-				break;
-			default:
-				x++;
-				break;
+				case '\t' :
+					int r = tabwidth - (x % tabwidth);
+					sb.replace(i, i + 1, TABS[r]);
+					i += r;
+					break;
+				default :
+					x++;
+					break;
 			}
 
 		}

@@ -61,7 +61,7 @@ class CTServer implements ListenerHook {
 	final AtomicBoolean						closed					= new AtomicBoolean(false);
 
 	/*
-	 * 
+	 *
 	 */
 	CTServer(BundleContext context, ServiceComponentRuntime scr) {
 		this.context = context;

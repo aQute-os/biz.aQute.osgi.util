@@ -27,18 +27,17 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRDiagramToSVG;
 class RailroadDiagramRenderer implements NodeRenderer {
 	final static Pattern RAILROAD = Pattern.compile("(\\s*\r?\n)*```railroad\r?\n(?<code>(.*\r?\n)*)```");
 
-	public RailroadDiagramRenderer(DataHolder options) {
-	}
+	public RailroadDiagramRenderer(DataHolder options) {}
 
 	@Override
 	public Set<NodeRenderingHandler<?>> getNodeRenderingHandlers() {
-		return new HashSet<>(Arrays.asList(
-				new NodeRenderingHandler<>(FencedCodeBlock.class, this::render)));
+		return new HashSet<>(Arrays.asList(new NodeRenderingHandler<>(FencedCodeBlock.class, this::render)));
 	}
 
 	private void render(FencedCodeBlock node, NodeRendererContext context, HtmlWriter html) {
 		try {
-			String s = node.getChars().toString();
+			String s = node.getChars()
+				.toString();
 			Matcher m = RAILROAD.matcher(s);
 			if (m.lookingAt()) {
 				html.line();
@@ -63,9 +62,13 @@ class RailroadDiagramRenderer implements NodeRenderer {
 			RRDiagram rrDiagram = grammarToRRDiagram.convert(rule);
 			RRDiagramToSVG rrDiagramToSVG = new RRDiagramToSVG();
 			String svg = rrDiagramToSVG.convert(rrDiagram);
-			sw.append("    ").append(svg).append("\n");
+			sw.append("    ")
+				.append(svg)
+				.append("\n");
 			if (rule.getName() != null) {
-				sw.append("<figcaption>").append(rule.getName()).append("<figccaption>");
+				sw.append("<figcaption>")
+					.append(rule.getName())
+					.append("<figccaption>");
 			}
 		}
 		sw.append("</div>\n");

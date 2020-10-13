@@ -32,7 +32,7 @@ public class FilterParserTest {
 	public void testEndOfStringEmpty() {
 		FilterParser.getAttributes("");
 	}
-	
+
 	@Test(expected=IllegalArgumentException.class)
 	public void testEndOfStringParenthesis() {
 		FilterParser.getAttributes("(");
@@ -42,7 +42,7 @@ public class FilterParserTest {
 	public void testEndOfStringUnclosedSubexpr() {
 		FilterParser.getAttributes("(&()");
 	}
-	
+
 	@Test(expected=IllegalArgumentException.class)
 	public void testEndOfStringUnclosed() {
 		FilterParser.getAttributes("(&(");

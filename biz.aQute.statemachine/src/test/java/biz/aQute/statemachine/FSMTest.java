@@ -12,11 +12,11 @@ public class FSMTest {
 
 	enum State {
 		A, B, C
-	};
+	}
 
 	enum Event {
 		E1, E2, E3, E4, E5, E6
-	};
+	}
 
 	FSM<State, Event, Runnable> fsm = new FSM<State, Event, Runnable>(State.A) {
 	};

@@ -227,66 +227,66 @@ public class LargeFSMTest {
 	@Test
 	public void testTrace() {
 		FSM<State, Event, Action> fsm = largeTest();
-		assertEquals(DSBL_FRB, fsm.state());		
+		assertEquals(DSBL_FRB, fsm.state());
 		assertEquals(NONE, fsm.event(ALLOW).get());
-		
-		assertEquals(DSBL_ALL, fsm.state());		
+
+		assertEquals(DSBL_ALL, fsm.state());
 		assertEquals(NONE, fsm.event(ENABLE).get());
-		
-		assertEquals(IDLE_ALL, fsm.state());		
+
+		assertEquals(IDLE_ALL, fsm.state());
 		assertEquals(BEGIN, fsm.event(FORCE).get());
 
-		assertEquals(UPDT_ALL, fsm.state());		
+		assertEquals(UPDT_ALL, fsm.state());
 		assertEquals(NONE, fsm.event(DISABLE).get());
-		
-		assertEquals(JOIN_ALL, fsm.state());		
+
+		assertEquals(JOIN_ALL, fsm.state());
 		assertEquals(END, fsm.event(FINISH).get());
-		
-		assertEquals(DSBL_ALL, fsm.state());		
+
+		assertEquals(DSBL_ALL, fsm.state());
 		assertEquals(END, fsm.event(FINISH).get());
-		
-		assertEquals(DSBL_ALL, fsm.state());		
+
+		assertEquals(DSBL_ALL, fsm.state());
 		assertEquals(NONE, fsm.event(ENABLE).get());
 
-		assertEquals(IDLE_ALL, fsm.state());		
+		assertEquals(IDLE_ALL, fsm.state());
 		assertEquals(NONE, fsm.event(FORBID).get());
 
-		assertEquals(IDLE_FRB, fsm.state());		
+		assertEquals(IDLE_FRB, fsm.state());
 		assertEquals(BEGIN, fsm.event(FORCE).get());
-		
-		assertEquals(UPDT_FRB, fsm.state());		
+
+		assertEquals(UPDT_FRB, fsm.state());
 		assertEquals(NONE, fsm.event(ALLOW).get());
-		
-		assertEquals(UPDT_ALL, fsm.state());		
+
+		assertEquals(UPDT_ALL, fsm.state());
 		assertEquals(END, fsm.event(FINISH).get());
-		
-		assertEquals(IDLE_ALL, fsm.state());		
+
+		assertEquals(IDLE_ALL, fsm.state());
 		assertEquals(BEGIN, fsm.event(FORCE).get());
-		
-		assertEquals(UPDT_ALL, fsm.state());		
+
+		assertEquals(UPDT_ALL, fsm.state());
 		assertEquals(END, fsm.event(FINISH).get());
-		
-		assertEquals(IDLE_ALL, fsm.state());		
+
+		assertEquals(IDLE_ALL, fsm.state());
 		assertEquals(BEGIN, fsm.event(FORCE).get());
-		
-		assertEquals(UPDT_ALL, fsm.state());		
+
+		assertEquals(UPDT_ALL, fsm.state());
 		assertEquals(NONE, fsm.event(FORBID).get());
-		
-		assertEquals(UPDT_FRB, fsm.state());		
+
+		assertEquals(UPDT_FRB, fsm.state());
 		assertEquals(NONE, fsm.event(ALLOW).get());
-		
-		assertEquals(UPDT_ALL, fsm.state());		
+
+		assertEquals(UPDT_ALL, fsm.state());
 		assertEquals(END, fsm.event(FINISH).get());
-		
-		assertEquals(IDLE_ALL, fsm.state());		
+
+		assertEquals(IDLE_ALL, fsm.state());
 		assertEquals(NONE, fsm.event(FORBID).get());
-		
-		assertEquals(IDLE_FRB, fsm.state());		
+
+		assertEquals(IDLE_FRB, fsm.state());
 		assertEquals(BEGIN, fsm.event(FORCE).get());
-		
-		assertEquals(UPDT_FRB, fsm.state());		
+
+		assertEquals(UPDT_FRB, fsm.state());
 		assertEquals(NONE, fsm.event(FORCE).get());
-		
+
 	}
 
 }

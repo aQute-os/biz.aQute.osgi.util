@@ -14,48 +14,48 @@ import net.nextencia.rrdiagram.grammar.rrdiagram.RRDiagram.SvgContent;
  */
 public abstract class RRElement {
 
-  protected static class LayoutInfo {
+	protected static class LayoutInfo {
 
-    private int width;
-    private int height;
-    private int connectorOffset;
+		private int	width;
+		private int	height;
+		private int	connectorOffset;
 
-    public LayoutInfo(int width, int height, int connectorOffset) {
-      this.width = width;
-      this.height = height;
-      this.connectorOffset = connectorOffset;
-    }
+		public LayoutInfo(int width, int height, int connectorOffset) {
+			this.width = width;
+			this.height = height;
+			this.connectorOffset = connectorOffset;
+		}
 
-    public int getWidth() {
-      return width;
-    }
+		public int getWidth() {
+			return width;
+		}
 
-    public int getHeight() {
-      return height;
-    }
+		public int getHeight() {
+			return height;
+		}
 
-    public int getConnectorOffset() {
-      return connectorOffset;
-    }
+		public int getConnectorOffset() {
+			return connectorOffset;
+		}
 
-	public void setWidth(int width) {
-		this.width=width;
+		public void setWidth(int width) {
+			this.width = width;
+		}
+
 	}
 
-  }
+	private LayoutInfo layoutInfo;
 
-  private LayoutInfo layoutInfo;
+	public void setLayoutInfo(LayoutInfo layoutInfo) {
+		this.layoutInfo = layoutInfo;
+	}
 
-  public void setLayoutInfo(LayoutInfo layoutInfo) {
-    this.layoutInfo = layoutInfo;
-  }
+	public LayoutInfo getLayoutInfo() {
+		return layoutInfo;
+	}
 
-  public LayoutInfo getLayoutInfo() {
-    return layoutInfo;
-  }
+	protected abstract void computeLayoutInfo(RRDiagramToSVG rrDiagramToSVG);
 
-  protected abstract void computeLayoutInfo(RRDiagramToSVG rrDiagramToSVG);
-
-  protected abstract void toSVG(RRDiagramToSVG rrDiagramToSVG, int xOffset, int yOffset, SvgContent svgContent);
+	protected abstract void toSVG(RRDiagramToSVG rrDiagramToSVG, int xOffset, int yOffset, SvgContent svgContent);
 
 }

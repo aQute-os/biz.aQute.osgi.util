@@ -37,12 +37,12 @@ import org.osgi.framework.ServiceReference;
  * rootkey in the filter.
  * <p>
  * For example:
- * 
+ *
  * <pre>
  * &#64;Reference(target = "(&([avg]bar>=4)(T=com.example.foo.Bar)")
  * ConditionalTarget&lt;Bar&gt; bars;
  * </pre>
- * 
+ *
  * @param <T>
  *            The service type the Conditional Target will be looking for. In
  *            almost all cases this is the T property in the target filter.
@@ -51,7 +51,7 @@ public interface ConditionalTarget<T> extends Iterable<T> {
 
 	/**
 	 * Get the tracked services.
-	 * 
+	 *
 	 * @return the tracked services
 	 */
 	List<T> getServices();
@@ -64,7 +64,7 @@ public interface ConditionalTarget<T> extends Iterable<T> {
 	/**
 	 * Get the current aggregate properties as calculated form the filters and
 	 * the services in scope.
-	 * 
+	 *
 	 * @return the map with the aggregate properties
 	 */
 	Map<String, Object> getAggregateProperties();

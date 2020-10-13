@@ -52,7 +52,7 @@ public class Activator implements BundleActivator {
 				try {
 					PackageAdmin pa = context.getService(reference);
 					agent = new UpdateAgentImpl(context, executor,pa, new Downloader(executor), new DigestVerifier());
-					return (ServiceRegistration<UpdateAgent>) context.registerService(UpdateAgent.class, agent, null);
+					return context.registerService(UpdateAgent.class, agent, null);
 				} catch (Exception e) {
 					e.printStackTrace();
 					return null;

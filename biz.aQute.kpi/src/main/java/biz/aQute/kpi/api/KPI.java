@@ -15,10 +15,10 @@ public interface KPI<T extends DTO> {
 	 * Reset any counters and time based values
 	 */
 	void reset();
-	
+
 	/**
 	 * Return a snapshot
-	 * 
+	 *
 	 * @return a snapshot of the KPI values
 	 */
 	T snapshot();

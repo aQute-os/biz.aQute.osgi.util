@@ -8,8 +8,8 @@ public interface UpdateAgent {
 	boolean disable();
 
 	boolean enable();
-	
-	
+
+
 	boolean trigger();
 
 	State getState();

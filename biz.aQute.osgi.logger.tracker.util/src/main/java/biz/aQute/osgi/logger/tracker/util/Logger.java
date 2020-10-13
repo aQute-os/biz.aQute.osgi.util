@@ -17,7 +17,7 @@ public class Logger implements LogService, org.slf4j.Logger {
 		this.loggerFactory = loggerFactory;
 		this.name = name;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -47,8 +47,8 @@ public class Logger implements LogService, org.slf4j.Logger {
 	public void debug(String msg) {
 		log(LogService.LOG_DEBUG, msg);
 	}
-	
-	
+
+
 
 	@Override
 	public void debug(String msg, Object arg1) {
@@ -100,8 +100,8 @@ public class Logger implements LogService, org.slf4j.Logger {
 	public void error(String msg) {
 		log(LogService.LOG_ERROR, msg);
 	}
-	
-	
+
+
 
 	@Override
 	public void error(String msg, Object arg1) {
@@ -354,11 +354,11 @@ public class Logger implements LogService, org.slf4j.Logger {
 
 
     static Pattern LOGMSG_P = Pattern.compile("\\{(\\d+)\\}");
-    
+
 	private String format(String msg, Object... args) {
 		if ( args==null || args.length==0)
 			return msg;
-		
+
 		StringBuffer sb = new StringBuffer();
 		Matcher m = LOGMSG_P.matcher(msg);
 		while(m.find()) {

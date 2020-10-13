@@ -40,7 +40,7 @@ public class StaticMarkerBinder implements MarkerFactoryBinder {
 
 	/**
 	 * Return the singleton of this class.
-	 * 
+	 *
 	 * @return the StaticMarkerBinder singleton
 	 * @since 1.7.14
 	 */

@@ -7,12 +7,10 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
-import org.elasticsearch.client.RestClientBuilder.HttpClientConfigCallback;
 import org.junit.Before;
 import org.junit.Test;
 import org.osgi.service.component.annotations.Component;
@@ -30,21 +28,15 @@ public class LogUploader {
 		String[] hosts();
 		String password();
 	}
-	
+
 	CredentialsProvider credentialsProvider =
 		    new BasicCredentialsProvider();
-		
-		
+
+
 	RestClientBuilder builder = RestClient.builder(
 		    new HttpHost("16457eb61dd34826b6463db0c8aae5f8.us-east-1.aws.found.io", 9243, "https"))
-			.setHttpClientConfigCallback(new HttpClientConfigCallback() {
-		        @Override
-		        public HttpAsyncClientBuilder customizeHttpClient(
-		                HttpAsyncClientBuilder httpClientBuilder) {
-		            return httpClientBuilder
-		                .setDefaultCredentialsProvider(credentialsProvider);
-		        }
-		    });
+			.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
+			    .setDefaultCredentialsProvider(credentialsProvider));
 
 	RestClient client;
 
@@ -62,7 +54,7 @@ public class LogUploader {
 		Response response = client.performRequest(request);
 		System.out.println(response);
 	}
-	
+
 	@Test
 	public void bulk() throws IOException {
 		Request request = new Request( "POST", "/logs-foo/_bulk");
@@ -74,7 +66,7 @@ public class LogUploader {
 		Response response = client.performRequest(request);
 		System.out.println(response);
 	}
-	
+
 
 	@Test
 	public void get() throws IOException {
