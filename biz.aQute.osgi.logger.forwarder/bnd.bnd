@@ -23,8 +23,8 @@ Export-Package: org.osgi.service.log
 	
 -testpath: \
     org.json;version='1.0.0',\
-    osgi.enroute.junit.wrapper, \
-    osgi.enroute.hamcrest.wrapper, \
+    biz.aQute.wrapper.junit, \
+    biz.aQute.wrapper.hamcrest, \
     org.assertj.core, \
     org.mockito.mockito-all
 

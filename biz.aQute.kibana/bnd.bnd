@@ -7,16 +7,16 @@
 	org.osgi.framework;version='1.8.0'
 
 -testpath: \
-    osgi.enroute.junit.wrapper;version='4.12.0',\
-    osgi.enroute.hamcrest.wrapper,\
+    biz.aQute.wrapper.junit,\
+    biz.aQute.wrapper.hamcrest,\
 	org.elasticsearch.client:elasticsearch-rest-high-level-client;version='7.9.2',\
 	org.elasticsearch.client:elasticsearch-rest-client;version='7.9.2',\
 	org.apache.httpcomponents:httpasyncclient;version='4.1.4',\
 	org.apache.httpcomponents:httpcore-nio;version='4.4.13',\
 	org.apache.httpcomponents:httpclient;version='4.5.13',\
 	org.apache.httpcomponents:httpcore;version='4.4.13',\
-	osgi.enroute.junit.wrapper;version='4.12.0',\
-	osgi.enroute.hamcrest.wrapper,\
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
 	commons-logging:commons-logging,\
 	org.apache.commons.codec
 

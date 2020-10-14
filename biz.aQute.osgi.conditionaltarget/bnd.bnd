@@ -10,8 +10,8 @@
     
 -testpath: \
     biz.aQute.launchpad, \
-    osgi.enroute.junit.wrapper, \
-    osgi.enroute.hamcrest.wrapper, \
+    biz.aQute.wrapper.junit, \
+    biz.aQute.wrapper.hamcrest, \
     org.assertj.core, \
     org.awaitility
 

@@ -1,0 +1,12 @@
+#
+# biz.aQute.wrapper PROVIDER BUNDLE
+#
+
+-buildpath:  \
+	osgi.annotation, \
+	org.osgi.service.component.annotations
+	
+
+-testpath:
+
+-sub: *.bnd

@@ -1,6 +1,9 @@
-#
-# This file is left open for you to define your macros
-#
+baseline.version:       1.2.0
+base.version:           1.3.0
+
+# To release, remove the -SNAPSHOT
+-pom:                   version=${base.version}-SNAPSHOT
+-groupid:               biz.aQute
 
 src:                    src/main/java,src/main/resources
 bin:                    target/classes
@@ -19,14 +22,6 @@ test-cases:             ${classes;NAMED;*Test}
 -remoteworkspace: true
 
 copyright.year = ${tstamp;yyyy}
-
-baseline.version:       1.0.0
-base.version:           1.3.0
-
-# To release, remove the -SNAPSHOT
-
--groupid:               biz.aQute
--pom:                   version=${base.version}-SNAPSHOT
 
 Bundle-Version:         ${base.version}.${tstamp}
 
@@ -62,21 +57,22 @@ usr = ${env;REPOSITORY_USERNAME;}
 
 #
 # Configure Repositories
--plugin  \
-    aQute.bnd.repository.maven.provider.MavenBndRepository;\
-        name="Central";\
-        releaseUrl=https://repo.maven.apache.org/maven2;\
-        snapshotUrl="https://oss.sonatype.org/content/repositories/snapshots/,https://bndtools.jfrog.io/bndtools/update"; \
-        index="${.}/central.mvn";\
-        readOnly=true,\
-    aQute.bnd.repository.maven.provider.MavenBndRepository; \
-        name=M2, \
-    aQute.bnd.repository.maven.provider.MavenBndRepository; \
-        snapshotUrl=https://oss.sonatype.org/content/repositories/snapshots/; \
-        releaseUrl= 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'; \
-        index=${.}/central.maven; \
-        name="Nexus"
-   
+-plugin: \
+	aQute.bnd.repository.maven.provider.MavenBndRepository;\
+		name                =Central;\
+		releaseUrl          ='https://repo.maven.apache.org/maven2';\
+		snapshotUrl         ='https://oss.sonatype.org/content/repositories/snapshots/,https://bndtools.jfrog.io/bndtools/update';\
+		index               ='${.}/central.mvn';\
+		readOnly            =true,\
+	aQute.bnd.repository.maven.provider.MavenBndRepository;\
+		name                =M2; \
+		redeploy            =true; \
+		noupdateOnRelease   =true,\
+	aQute.bnd.repository.maven.provider.MavenBndRepository;\
+		snapshotUrl         ='https://oss.sonatype.org/content/repositories/snapshots/';\
+		releaseUrl          ='https://oss.sonatype.org/service/local/staging/deploy/maven2/';\
+		index               ='${.}/central.maven';\
+		name                =Nexus   
 
     
 -augment.async \

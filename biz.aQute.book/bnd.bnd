@@ -15,7 +15,7 @@ Main-Class:                     biz.aQute.book.Main
 JPM-Command:                    book
     
 -testpath: \
-	osgi.enroute.junit.wrapper;version='4.12.0',\
-	osgi.enroute.hamcrest.wrapper,\
-	org.assertj.core;version='3.12.1'
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core
 	

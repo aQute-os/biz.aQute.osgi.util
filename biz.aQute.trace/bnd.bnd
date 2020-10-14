@@ -12,6 +12,6 @@
 	org.apache.felix.gogo.runtime,\
 	org.apache.felix.inventory,\
 	org.apache.felix.gogo.shell,\
-	org.osgi.framework;version='1.8.0'
+	org.osgi.framework
     
 	
