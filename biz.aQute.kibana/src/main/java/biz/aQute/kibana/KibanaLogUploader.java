@@ -55,6 +55,11 @@ public class KibanaLogUploader extends Thread {
 	}
 
 	public static class LogDTO extends DTO {
+
+		// Kibana insists on a `@timestamp` property. This is not
+		// supported by JSONCodec, so we use an Ethiopic unicode char
+		// and replace it later with `@`
+
 		public long		\u1234timestamp;
 		public long		sequence;
 		public long		bundleId;
