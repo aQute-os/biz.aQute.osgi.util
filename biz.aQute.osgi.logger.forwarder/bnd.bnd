@@ -30,3 +30,6 @@ Export-Package: org.osgi.service.log
 
 -fixupmessages: \
     Export org.slf4j,  has 1,  private references
+
+
+
