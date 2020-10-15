@@ -27,17 +27,18 @@ configuration record. The form you see should make the parameters clear.
 * User id – The user id of the account, this was `elastic` for me.
 * Delay – Number of seconds to wait before pushing a log record. Logs are aggregated so this is more efficient if you make it longer.
 * Index – The name of the log. This is normally a gateway specific name. The Kibaba convention is to start with `logs-`. I suggest then
-  the name of the gateway, and then `osgi`. I.e. `logs-GW5124232-osgi`.
+  the name of the gateway, and then `osgi`. E.g. `logs-GW5124232-osgi`.
   
 You can create multiple Kibaba Log Forwarders.
 
 ## Configuration
 
 * The PID is `biz.aQute.kibana`. 
-* Configuration is defined in [biz.aQute.kibana.KibanaLogUploader$Configuration](src/main/java/biz/aQute/kibana/KibanaLogUploader#Configuration)
+* Configuration is defined in [biz.aQute.kibana.KibanaLogUploader$Configuration][5]
 
 
 [1]: https://www.elastic.co/beats/
 [2]: https://www.elastic.co/guide/en/kibana/current/logstash-page.html
 [3]: https://www.elastic.co/downloads/
 [4]: https://cloud.elastic.co/home
+[5]: https://github.com/aQute-os/biz.aQute.osgi.util/blob/master/biz.aQute.kibana/src/main/java/biz/aQute/kibana/KibanaLogUploader.java
