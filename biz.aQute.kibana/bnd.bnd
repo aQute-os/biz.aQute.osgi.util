@@ -1,3 +1,5 @@
+
+
 -buildpath: \
 	aQute.libg,\
 	org.osgi.service.component.annotations,\
@@ -27,6 +29,7 @@
     org.elasticsearch.*
 
 -runkeep: true
+-runpath: biz.aQute.osgi.logger.forwarder
 	
 -runrequires: \
 	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)',\

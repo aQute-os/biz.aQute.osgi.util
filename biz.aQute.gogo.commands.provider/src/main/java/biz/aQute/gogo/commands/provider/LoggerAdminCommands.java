@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 	"slf4jdebug", "slf4jinfo", "slf4jwarn", "slf4jerror", //
 	"tail"
 })
-@Component(service = LoggerAdminCommands.class)
+@Component(service = LoggerAdminCommands.class, immediate = true)
 public class LoggerAdminCommands {
 
 	final BundleContext					context;

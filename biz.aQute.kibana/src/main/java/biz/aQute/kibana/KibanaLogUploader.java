@@ -193,7 +193,7 @@ public class KibanaLogUploader extends Thread {
 		try {
 			StringBuilder sb = new StringBuilder();
 			for (LogDTO dto : dtos) {
-				sb.append("{ \"index\": {}}\n");
+				sb.append("{ \"create\": { \"_index\": \"" + index + "\" }}\n");
 				codec.enc().to(sb).put(dto).close();
 				sb.append("\n");
 			}
@@ -205,7 +205,7 @@ public class KibanaLogUploader extends Thread {
 			byte[] payload = sb.toString().getBytes(StandardCharsets.UTF_8);
 
 			for (URI uri : uris) {
-				if (post(uri, payload))
+				if (post(uri, payload, "application/x-ndjson"))
 					return true;
 			}
 			error("Could not send the payload to any of: %s", uris);
@@ -215,7 +215,7 @@ public class KibanaLogUploader extends Thread {
 		return false;
 	}
 
-	private boolean post(URI uri, byte[] jsonpayload) {
+	private boolean post(URI uri, byte[] payload, String contenttype) {
 		try {
 			URL url = uri.resolve("/" + index + "/_bulk").toURL();
 
@@ -224,9 +224,9 @@ public class KibanaLogUploader extends Thread {
 			con.addRequestProperty("Authorization", authorizationHeader);
 			con.setDoOutput(true);
 			con.setRequestMethod("POST");
-			con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-			con.setRequestProperty("Content-Length", Integer.toString(jsonpayload.length));
-			IO.copy(jsonpayload, con.getOutputStream());
+			con.setRequestProperty("Content-Type", contenttype);
+			con.setRequestProperty("Content-Length", Integer.toString(payload.length));
+			IO.copy(payload, con.getOutputStream());
 			con.connect();
 			int responseCode = con.getResponseCode();
 			if (responseCode == 201 || responseCode == 200)
