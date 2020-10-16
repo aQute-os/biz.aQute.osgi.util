@@ -30,7 +30,9 @@
 
 -runkeep: true
 -runpath: biz.aQute.osgi.logger.forwarder
-	
+-runproperties: \
+    org.osgi.framework.storage="target/fw"
+    
 -runrequires: \
 	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)',\
 	osgi.identity;filter:='(osgi.identity=biz.aQute.kibana)',\
