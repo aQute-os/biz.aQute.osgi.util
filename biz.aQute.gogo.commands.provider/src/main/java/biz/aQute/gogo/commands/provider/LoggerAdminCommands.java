@@ -49,7 +49,9 @@ public class LoggerAdminCommands {
 			.forEach(LogTail::close);
 	}
 
-	public void tail(CommandSession s, LogLevel level) throws IOException {
+	@Descriptor("Continuously show the log messages")
+	public void tail(CommandSession s, @Descriptor("The minimum log level (DEBUG,INFO,WARN,ERROR)") LogLevel level)
+		throws IOException {
 		LogTail lt = sessions.get(s);
 		if (lt == null) {
 			sessions.put(s, new LogTail(s, log, level));
@@ -59,29 +61,38 @@ public class LoggerAdminCommands {
 		}
 	}
 
-	@Descriptor("Add a log level to the given bundle")
-	public Map<String, LogLevel> addlevel(Bundle b, String name, LogLevel level) {
+	@Descriptor("Continuously show all the log messages")
+	public void tail(CommandSession s) throws IOException {
+		tail(s, LogLevel.DEBUG);
+	}
+
+	@Descriptor("Add a logger prefix to the context of the given bundle")
+	public Map<String, LogLevel> addlevel(@Descriptor("The logger context bundle") Bundle b,
+		@Descriptor("The name of the logger prefix or ROOT for all") String name,
+		@Descriptor("The log level to set (DEBUG,INFO,WARN,ERROR)") LogLevel level) {
 		return add(b.getSymbolicName(), name, level);
 	}
 
 	@Descriptor("Remove a log level from the given bundle")
-	public Map<String, LogLevel> rmlevel(Bundle b, String name) {
+	public Map<String, LogLevel> rmlevel(@Descriptor("The logger context bundle") Bundle b,
+		@Descriptor("The name of the logger prefix or ROOT for all") String name) {
 		return rm(b.getSymbolicName(), name);
 
 	}
 
-	@Descriptor("Add a log level")
-	public Map<String, LogLevel> addlevel(String name, LogLevel level) {
+	@Descriptor("Add a log name prefix to the root logger")
+	public Map<String, LogLevel> addlevel(@Descriptor("The logger name prefix") String name,
+		@Descriptor("The log level to set (DEBUG,INFO,WARN,ERROR)") LogLevel level) {
 		return add(ROOT_LOGGER_NAME, name, level);
 	}
 
-	@Descriptor("Remove a log level")
+	@Descriptor("Remove a log level from the root context")
 	public Map<String, LogLevel> rmlevel(String name) {
 		return rm(ROOT_LOGGER_NAME, name);
 	}
 
 	@Descriptor("Show the levels for a given bundle")
-	public Map<String, LogLevel> levels(Bundle b) {
+	public Map<String, LogLevel> levels(@Descriptor("The logger context bundle") Bundle b) {
 		LoggerContext loggerContext = admin.getLoggerContext(b.getSymbolicName());
 		if (loggerContext.isEmpty())
 			loggerContext = admin.getLoggerContext(null);
@@ -118,7 +129,7 @@ public class LoggerAdminCommands {
 	}
 
 	@Descriptor("Set the default level")
-	public String defaultlevel(LogLevel level) {
+	public String defaultlevel(@Descriptor("The log level to set (DEBUG,INFO,WARN,ERROR)") LogLevel level) {
 		Map<String, LogLevel> map = new HashMap<>();
 		map.put(Logger.ROOT_LOGGER_NAME, level);
 		admin.getLoggerContext(null)
@@ -142,27 +153,28 @@ public class LoggerAdminCommands {
 		return loggerContext.getLogLevels();
 	}
 
-	@Descriptor("Create an SLF4J debug entry")
-	public void slf4jdebug(String message) {
+	@Descriptor("Create an SLF4J debug entry (for testing)")
+	public void slf4jdebug(@Descriptor("The message to log") String message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
 		logger.debug(message);
 	}
 
 	@Descriptor("Create an SLF4J warn entry")
-	public void slf4jwarn(String message) {
+	public void slf4jwarn(@Descriptor("The message to log") String message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
 		logger.warn(message);
 	}
 
 	@Descriptor("Create an SLF4J info entry")
-	public void slf4jinfo(String message) {
+	public void slf4jinfo(@Descriptor("The message to log") String message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
 		logger.info(message);
 	}
 
 	@Descriptor("Create an SLF4J error entry")
-	public void slf4jerror(String message) {
+	public void slf4jerror(@Descriptor("The message to log") String message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
 		logger.error(message);
 	}
+
 }
