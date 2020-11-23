@@ -14,9 +14,7 @@
 -testpath: \
 	biz.aQute.wrapper.junit, \
 	biz.aQute.wrapper.hamcrest, \
-	org.assertj.core, \
-	com.github.purejavacomm:purejavacomm, \
-	com.sun.jna
+	org.assertj.core
 
 
 -conditionalpackage: aQute.lib*, biz.aQute.result
