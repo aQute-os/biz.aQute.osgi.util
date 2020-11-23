@@ -1,0 +1,6 @@
+#
+# biz.aQute.result
+#
+
+-buildpath:  \
+	osgi.annotation
