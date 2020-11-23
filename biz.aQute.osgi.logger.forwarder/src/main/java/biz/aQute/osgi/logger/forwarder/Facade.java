@@ -1,5 +1,8 @@
 package biz.aQute.osgi.logger.forwarder;
 
+import java.lang.reflect.Array;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
@@ -41,7 +44,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void debug(String format, Object... arguments) {
-		if (checkIfArgumentsNullOrEmpty(arguments)) {
+		if (fixupArguments(arguments)) {
 			delegate.debug(format);
 		} else {
 			delegate.debug(format, arguments);
@@ -70,7 +73,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void error(String format, Object... arguments) {
-		if (checkIfArgumentsNullOrEmpty(arguments)) {
+		if (fixupArguments(arguments)) {
 			delegate.error(format);
 		} else {
 			delegate.error(format, arguments);
@@ -99,7 +102,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void info(String format, Object... arguments) {
-		if (checkIfArgumentsNullOrEmpty(arguments)) {
+		if (fixupArguments(arguments)) {
 			delegate.info(format);
 		} else {
 			delegate.info(format, arguments);
@@ -128,7 +131,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void warn(String format, Object... arguments) {
-		if (checkIfArgumentsNullOrEmpty(arguments)) {
+		if (fixupArguments(arguments)) {
 			delegate.warn(format);
 		} else {
 			delegate.warn(format, arguments);
@@ -157,7 +160,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void trace(String format, Object... arguments) {
-		if (checkIfArgumentsNullOrEmpty(arguments)) {
+		if (fixupArguments(arguments)) {
 			delegate.trace(format);
 		} else {
 			delegate.trace(format, arguments);
@@ -209,16 +212,49 @@ final class Facade extends MarkerIgnoringBase {
 		return delegate.isWarnEnabled();
 	}
 
-	/*
-	 * Checks whether the specified varargs is empty or null. This is primarily
-	 * used as a hack to avoid NPE in special cases.
-	 * @param arguments the arguments to check
-	 * @return {@code true} if {@code null} or empty, otherwise {@code false}
-	 * @see "https://issues.apache.org/jira/browse/FELIX-6088"
-	 */
-	private boolean checkIfArgumentsNullOrEmpty(Object... arguments) {
-		return arguments == null || arguments.length == 0;
+	private boolean fixupArguments(Object... arguments) {
+		if (arguments == null || arguments.length == 0)
+			return true;
+
+		HashSet<Object> visited = new HashSet<>();
+		for (int i = 0; i < arguments.length; i++) {
+			visited.clear();
+			arguments[i] = print(arguments[i], visited);
+		}
+		return false;
 	}
+
+	static Object print(Object object, Set<Object> visited) {
+		if (object == null)
+			return null;
+
+		if (!visited.add(object))
+			return "cycle : " + object;
+
+		if (object.getClass()
+			.isArray()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("[");
+			String del = "";
+			for (int i = 0; i < Array.getLength(object); i++) {
+				if (sb.length() > 1000) {
+					sb.append(" ...");
+					return sb.toString();
+				}
+				sb.append(del)
+					.append(print(Array.get(object, i), visited));
+				del = ",";
+				if (sb.length() > 1000) {
+					sb.append(" ...");
+					return sb.toString();
+				}
+			}
+			sb.append("]");
+			return sb;
+		}
+		return object;
+	}
+
 
 	void publish(LogRecord record) {
 		try {
