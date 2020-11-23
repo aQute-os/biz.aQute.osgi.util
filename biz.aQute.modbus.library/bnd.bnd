@@ -1,0 +1,23 @@
+#
+# biz.aQute.modbus.library PROVIDER BUNDLE
+#
+
+-buildpath: \
+    biz.aQute.result,\
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	slf4j.api;version='1.7.30',\
+	org.osgi.dto;version='1.1.0',\
+	aQute.libg;version='5.0.0'
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core, \
+	com.github.purejavacomm:purejavacomm, \
+	com.sun.jna
+
+
+-conditionalpackage: aQute.lib*, biz.aQute.result
+-buildrepo: M2

@@ -1,0 +1,57 @@
+{
+    "samplingGroups": [
+        {
+            "samplingGroup": 1,
+            "groupblocks": [
+                {
+                    "groupName": "C001",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "string",
+                                "offset": 0,
+                                "metaScalefactor": 1.0,
+                                "mapping": "",
+                                "defNan": 0,
+                                "size": 8
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40036,
+                            "metaName": "Parameter.Nameplate.Model"
+                        },
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "string",
+                                "offset": 0,
+                                "metaScalefactor": 1.0,
+                                "mapping": "",
+                                "defNan": 0,
+                                "size": 8
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40044,
+                            "metaName": "Parameter.Nameplate.PkgRev"
+                        },
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "string",
+                                "offset": 0,
+                                "metaScalefactor": 1.0,
+                                "mapping": "",
+                                "defNan": 0,
+                                "size": 16
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40052,
+                            "metaName": "Parameter.Nameplate.SerNum"
+                        }
+                    ]
+                }           
+            ]
+        }
+    ],
+    "endianess": "big"
+}

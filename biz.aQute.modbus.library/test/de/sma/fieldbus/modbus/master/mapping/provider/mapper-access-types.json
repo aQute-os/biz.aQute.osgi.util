@@ -1,0 +1,240 @@
+{
+    "samplingGroups": [
+        {
+            "samplingGroup": 1,
+            "groupblocks": [
+                {
+                    "groupName": "string",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "string",
+                                "size": 8
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40036,
+                            "metaName": "string"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "ipv6addr",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "ipv6addr",
+                                "size": 8
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40044,
+                            "metaName": "ipv6addr"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "ipaddr32",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "ipaddr32",
+                                "size": 2
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40065,
+                            "metaName": "ipaddr32"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "int16",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "int16",
+                                "size": 1
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40052,
+                            "metaName": "int16"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "uint16",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "uint16",
+                                "size": 1
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40053,
+                            "metaName": "uint16"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "enum16",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "enum16",
+                                "size": 1
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40054,
+                            "metaName": "acc16"
+                        },
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "bitfield16",
+                                "size": 1
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40055,
+                            "metaName": "bitfield16"
+                        },
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "uint16",
+                                "size": 1
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40056,
+                            "metaName": "uint16"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "int32",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "int32",
+                                "size": 2
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40057,
+                            "metaName": "int32"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "32",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "acc32",
+                                "size": 2
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40059,
+                            "metaName": "acc32"
+                        },
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "enum32",
+                                "size": 2
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40061,
+                            "metaName": "enum32"
+                        },
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "bitfield32",
+                                "size": 2
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40063,
+                            "metaName": "enum32"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "uint32",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "uint32",
+                                "size": 2
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40067,
+                            "metaName": "uint32"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "int64",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "int64",
+                                "size": 4
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40069,
+                            "metaName": "int64"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "64",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "acc64",
+                                "size": 4
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40073,
+                            "metaName": "acc64"
+                        },
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "uint64",
+                                "size": 4
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40077,
+                            "metaName": "uint64"
+                        }
+                    ]
+				},
+                {
+                    "groupName": "float",
+                    "items": [
+                        {
+                            "devClass": "PV",
+                            "modbusMappingType": {
+                                "modbusType": "float32",
+                                "size": 4
+                            },
+                            "modbusAccess": "R",
+                            "modbusReg": 40081,
+                            "metaName": "float32"
+                        }
+                    ]
+                }           
+            ]
+        }
+    ],
+    "endianess": "big"
+}

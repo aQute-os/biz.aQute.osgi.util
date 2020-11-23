@@ -1,0 +1,18 @@
+Unit = 01
+
+# Request holding registers 4000 and 4001, answer 1 and 2 
+# the request goes into the modbus tcp and this waits for the response
+# which is then routed
+
+simple.request = \
+	0;\
+		request  =  *   * 00 00 00 06 ${Unit} 03 40 00 00 02; \
+		response = ^0  ^1 00 00 00 07 ${Unit} 03 04 00 01 00 02
+
+# The payload of the package should then be routed
+		
+simple.routed = \
+	0;\
+		request  = 03 04 00 01 00 02
+
+

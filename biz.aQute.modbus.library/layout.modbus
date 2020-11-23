@@ -1,0 +1,1239 @@
+{
+  "_type": "MODBUS",
+  "key": "fronius_inverter",
+  "name": "Fronius Inverter Primo 5",
+  "reads": [
+    {
+      "key": "id",
+      "name": "ID",
+      "register": 40069,
+      "size": 1,
+      "unit": "",
+      "transform": "touint16(x1)"
+    },
+    {
+      "key": "a",
+      "name": "A",
+      "register": 40071,
+      "size": 2,
+      "unit": "A",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "apha",
+      "name": "AphA",
+      "register": 40073,
+      "size": 2,
+      "unit": "A",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "aphb",
+      "name": "AphB",
+      "register": 40075,
+      "size": 2,
+      "unit": "A",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "aphc",
+      "name": "AphC",
+      "register": 40077,
+      "size": 2,
+      "unit": "A",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "ppvphab",
+      "name": "PPVphAB",
+      "register": 40079,
+      "size": 2,
+      "unit": "V",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "ppvphbc",
+      "name": "PPVphBC",
+      "register": 40081,
+      "size": 2,
+      "unit": "V",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "ppvphca",
+      "name": "PPVphCA",
+      "register": 40083,
+      "size": 2,
+      "unit": "V",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "phvpha",
+      "name": "Line-Line Voltage",
+      "register": 40085,
+      "size": 2,
+      "unit": "V",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "phvphb",
+      "name": "PhVphB",
+      "register": 40087,
+      "size": 2,
+      "unit": "V",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "phvphc",
+      "name": "PhVphC",
+      "register": 40089,
+      "size": 2,
+      "unit": "V",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "w",
+      "name": "AC Power",
+      "register": 40091,
+      "size": 2,
+      "unit": "W",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "hz",
+      "name": "Grid frequency",
+      "register": 40093,
+      "size": 2,
+      "unit": "Hz",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "va",
+      "name": "VA",
+      "register": 40095,
+      "size": 2,
+      "unit": "VA",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "var",
+      "name": "Reactive Power",
+      "register": 40097,
+      "size": 2,
+      "unit": "VAr",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "pf",
+      "name": "PF",
+      "register": 40099,
+      "size": 2,
+      "unit": "%",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "wh",
+      "name": "WH",
+      "register": 40101,
+      "size": 2,
+      "unit": "Wh",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "dca",
+      "name": "Total DC Current",
+      "register": 40103,
+      "size": 2,
+      "unit": "A",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "dcv",
+      "name": "Average DC Voltage",
+      "register": 40105,
+      "size": 2,
+      "unit": "V",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "dcw",
+      "name": "Total DC Power",
+      "register": 40107,
+      "size": 2,
+      "unit": "W",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "tmpcab",
+      "name": "TmpCab",
+      "register": 40109,
+      "size": 2,
+      "unit": "\u00b0 C",
+      "transform": "combinetofloat(x1,x2)"
+    },
+    {
+      "key": "st",
+      "name": "St",
+      "register": 40116,
+      "size": 1,
+      "unit": "Enumerated",
+      "transform": "x1"
+    },
+    {
+      "key": "stvnd",
+      "name": "StVnd",
+      "register": 40117,
+      "size": 1,
+      "unit": "Enumerated",
+      "transform": "x1"
+    },
+    {
+      "key": "evt1",
+      "name": "Evt1",
+      "register": 40119,
+      "size": 2,
+      "unit": "Bitfield",
+      "transform": "combinetouint32(x1,x2)"
+    },
+    {
+      "key": "evt2",
+      "name": "Evt2",
+      "register": 40121,
+      "size": 2,
+      "unit": "Bitfield",
+      "transform": "combinetouint32(x1,x2)"
+    },
+    {
+      "key": "evtvnd1",
+      "name": "EvtVnd1",
+      "register": 40123,
+      "size": 2,
+      "unit": "Bitfield",
+      "transform": "combinetouint32(x1,x2)"
+    },
+    {
+      "key": "evtvnd2",
+      "name": "EvtVnd2",
+      "register": 40125,
+      "size": 2,
+      "unit": "Bitfield",
+      "transform": "combinetouint32(x1,x2)"
+    },
+    {
+      "key": "evtvnd3",
+      "name": "EvtVnd3",
+      "register": 40127,
+      "size": 2,
+      "unit": "Bitfield",
+      "transform": "combinetouint32(x1,x2)"
+    },
+    {
+      "key": "evtvnd4",
+      "name": "EvtVnd4",
+      "register": 40129,
+      "size": 2,
+      "unit": "Bitfield",
+      "transform": "combinetouint32(x1,x2)"
+    },
+    {
+      "key": "wrtg_sf",
+      "name": "WRtg_SF",
+      "register": 40135,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "vartg_sf",
+      "name": "VARtg_SF",
+      "register": 40137,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "varrtg_sf",
+      "name": "VArRtg_SF",
+      "register": 40142,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "artg_sf",
+      "name": "ARtg_SF",
+      "register": 40144,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "pfrtg_sf",
+      "name": "PFRtg_SF",
+      "register": 40149,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "whrtg_sf",
+      "name": "WHRtg_SF",
+      "register": 40151,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "ahrrtg_sf",
+      "name": "AhrRtg_SF",
+      "register": 40153,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "maxchar_te_sf",
+      "name": "MaxChaRte_SF",
+      "register": 40155,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "maxdischar_te_sf",
+      "name": "MaxDisChaRte_SF",
+      "register": 40157,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "vref",
+      "name": "VRef",
+      "register": 40162,
+      "size": 1,
+      "unit": "V",
+      "transform": "touint16(x1)",
+      "dynamicscale": "vref_sf"
+    },
+    {
+      "key": "vamax",
+      "name": "VAMax",
+      "register": 40166,
+      "size": 1,
+      "unit": "VA",
+      "transform": "x1",
+      "dynamicscale": "vamax_sf"
+    },
+    {
+      "key": "wmax_sf",
+      "name": "WMax_SF",
+      "register": 40181,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "vref_sf",
+      "name": "VRef_SF",
+      "register": 40182,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "vrefofs_sf",
+      "name": "VRefOfs_SF",
+      "register": 40183,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "vminmax_sf",
+      "name": "VMinMax_SF",
+      "register": 40184,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "vamax_sf",
+      "name": "VAMax_SF",
+      "register": 40185,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "varmax_sf",
+      "name": "VARMax_SF",
+      "register": 40186,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "wgra_sf",
+      "name": "WGra_SF",
+      "register": 40187,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "pfmin_sf",
+      "name": "PFMin_SF",
+      "register": 40188,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "maxrmpr_te_sf",
+      "name": "MaxRmpRte_SF",
+      "register": 40189,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "ecpnomh_z_sf",
+      "name": "ECPNomHz_SF",
+      "register": 40190,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "pvconn",
+      "name": "PVConn",
+      "register": 40193,
+      "size": 1,
+      "unit": "",
+      "transform": "x1"
+    },
+    {
+      "key": "storconn",
+      "name": "StorConn",
+      "register": 40194,
+      "size": 1,
+      "unit": "",
+      "transform": "x1"
+    },
+    {
+      "key": "ecpconn",
+      "name": "ECPConn",
+      "register": 40195,
+      "size": 1,
+      "unit": "",
+      "transform": "x1"
+    },
+    {
+      "key": "varaval_sf",
+      "name": "VArAval_SF",
+      "register": 40221,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "waval_sf",
+      "name": "WAval_SF",
+      "register": 40223,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "stactctl",
+      "name": "StActCtl",
+      "register": 40227,
+      "size": 2,
+      "unit": "",
+      "transform": "combinetouint32(x1,x2)"
+    },
+    {
+      "key": "riso_sf",
+      "name": "Riso_SF",
+      "register": 40236,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "conn",
+      "name": "Conn",
+      "register": 40241,
+      "size": 1,
+      "unit": "",
+      "transform": "x1"
+    },
+    {
+      "key": "wmaxlimpct",
+      "name": "WMaxLimPct",
+      "register": 40242,
+      "size": 1,
+      "unit": "% WMax",
+      "transform": "touint16(x1)",
+      "dynamicscale": "wmaxlimpct_sf"
+    },
+    {
+      "key": "wmaxlim_ena",
+      "name": "WMaxLim_Ena",
+      "register": 40246,
+      "size": 1,
+      "unit": "",
+      "transform": "x1"
+    },
+    {
+      "key": "varmaxpct",
+      "name": "VArMaxPct",
+      "register": 40253,
+      "size": 1,
+      "unit": "% VArMax",
+      "transform": "tosint16(x1)",
+      "dynamicscale": "varpct_sf"
+    },
+    {
+      "key": "varpct_ena",
+      "name": "VArPct_Ena",
+      "register": 40259,
+      "size": 1,
+      "unit": "",
+      "transform": "x1"
+    },
+    {
+      "key": "wmaxlimpct_sf",
+      "name": "WMaxLimPct_SF",
+      "register": 40260,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "outpfset_sf",
+      "name": "OutPFSet_SF",
+      "register": 40261,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "varpct_sf",
+      "name": "VArPct_SF",
+      "register": 40262,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "dca_sf",
+      "name": "DCA_SF",
+      "register": 40265,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "dcv_sf",
+      "name": "DCV_SF",
+      "register": 40266,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "dcw_sf",
+      "name": "DCW_SF",
+      "register": 40267,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "dcwh_sf",
+      "name": "DCWH_SF",
+      "register": 40268,
+      "size": 1,
+      "unit": "",
+      "transform": "tosint16(x1)"
+    },
+    {
+      "key": "1_dca",
+      "name": "1_DCA",
+      "register": 40282,
+      "size": 1,
+      "unit": "A",
+      "transform": "touint16(x1)",
+      "dynamicscale": "dca_sf"
+    },
+    {
+      "key": "1_dcv",
+      "name": "1_DCV",
+      "register": 40283,
+      "size": 1,
+      "unit": "V",
+      "transform": "touint16(x1)",
+      "dynamicscale": "dcv_sf"
+    },
+    {
+      "key": "1_dcw",
+      "name": "1_DCW",
+      "register": 40284,
+      "size": 1,
+      "unit": "W",
+      "transform": "touint16(x1)",
+      "dynamicscale": "dcw_sf"
+    },
+    {
+      "key": "1_dcwh",
+      "name": "1_DCWH",
+      "register": 40286,
+      "size": 2,
+      "unit": "Wh",
+      "transform": "combinetouint32(x1,x2)",
+      "dynamicscale": "dcwh_sf"
+    },
+    {
+      "key": "2_dca",
+      "name": "2_DCA",
+      "register": 40302,
+      "size": 1,
+      "unit": "A",
+      "transform": "touint16(x1)",
+      "dynamicscale": "dca_sf"
+    },
+    {
+      "key": "2_dcv",
+      "name": "2_DCV",
+      "register": 40303,
+      "size": 1,
+      "unit": "V",
+      "transform": "touint16(x1)",
+      "dynamicscale": "dcv_sf"
+    },
+    {
+      "key": "2_dcw",
+      "name": "2_DCW",
+      "register": 40304,
+      "size": 1,
+      "unit": "W",
+      "transform": "touint16(x1)",
+      "dynamicscale": "dcw_sf"
+    },
+    {
+      "key": "2_dcwh",
+      "name": "2_DCWH",
+      "register": 40306,
+      "size": 2,
+      "unit": "Wh",
+      "transform": "combinetouint32(x1,x2)",
+      "dynamicscale": "dcwh_sf"
+    }
+  ],
+  "writes": [
+    {
+      "key": "vref",
+      "name": "VRef",
+      "register": 40162,
+      "size": 1,
+      "forceMultiple": false
+    },
+    {
+      "key": "conn",
+      "name": "Conn",
+      "register": 40241,
+      "size": 1,
+      "forceMultiple": false
+    },
+    {
+      "key": "wmaxlimpct",
+      "name": "WMaxLimPct",
+      "register": 40242,
+      "size": 1,
+      "forceMultiple": false
+    },
+    {
+      "key": "wmaxlim_ena",
+      "name": "WMaxLim_Ena",
+      "register": 40246,
+      "size": 1,
+      "forceMultiple": false
+    },
+    {
+      "key": "varmaxpct",
+      "name": "VArMaxPct",
+      "register": 40253,
+      "size": 1,
+      "forceMultiple": false
+    },
+    {
+      "key": "varpct_ena",
+      "name": "VArPct_Ena",
+      "register": 40259,
+      "size": 1,
+      "forceMultiple": false
+    }
+  ],
+  "bitmaps": [
+    {
+      "parameterkey": "evt1",
+      "bitmap": {
+        "0": {
+          "description": "Ground fault",
+          "name": "I_EVENT_GROUND_FAULT",
+          "type": "Fault"
+        },
+        "1": {
+          "description": "DC over voltage",
+          "name": "I_EVENT_DC_OVER_VOLT",
+          "type": "Fault"
+        },
+        "2": {
+          "description": "AC disconnect open",
+          "name": "I_EVENT_AC_DISCONNECT",
+          "type": "Fault"
+        },
+        "3": {
+          "description": "DC disconnect open",
+          "name": "I_EVENT_DC_DISCONNECT",
+          "type": "Fault"
+        },
+        "4": {
+          "description": "Grid shutdown",
+          "name": "I_EVENT_GRID_DISCONNECT",
+          "type": "Fault"
+        },
+        "5": {
+          "description": "Cabinet open",
+          "name": "I_EVENT_CABINET_OPEN",
+          "type": "Fault"
+        },
+        "6": {
+          "description": "Manual shutdown",
+          "name": "I_EVENT_MANUAL_SHUTDOWN",
+          "type": "Fault"
+        },
+        "7": {
+          "description": "Over temperature",
+          "name": "I_EVENT_OVER_TEMP",
+          "type": "Fault"
+        },
+        "8": {
+          "description": "Frequency above limit",
+          "name": "I_EVENT_OVER_FREQUENCY",
+          "type": "Fault"
+        },
+        "9": {
+          "description": "Frequency under limit",
+          "name": "I_EVENT_UNDER_FREQUENCY",
+          "type": "Fault"
+        },
+        "10": {
+          "description": "AC voltage above limit",
+          "name": "I_EVENT_AC_OVER_VOLT",
+          "type": "Fault"
+        },
+        "11": {
+          "description": "AC voltage under limit",
+          "name": "I_EVENT_AC_UNDER_VOLT",
+          "type": "Fault"
+        },
+        "12": {
+          "description": "Blown string fuse",
+          "name": "I_EVENT_BLOWN_STRING_FUSE",
+          "type": "Fault"
+        },
+        "13": {
+          "description": "Under temperature",
+          "name": "I_EVENT_UNDER_TEMP",
+          "type": "Fault"
+        },
+        "14": {
+          "description": "Generic Memory or Communication error (internal)",
+          "name": "I_EVENT_MEMORY_LOSS",
+          "type": "Fault"
+        },
+        "15": {
+          "description": "Hardware test failure",
+          "name": "I_EVENT_HW_TEST_FAILURE",
+          "type": "Fault"
+        }
+      }
+    },
+    {
+      "parameterkey": "evtvnd1",
+      "bitmap": {
+        "0": {
+          "description": "DC Insulation fault",
+          "name": "INSULATION_FAULT",
+          "type": "Fault"
+        },
+        "1": {
+          "description": "Grid error",
+          "name": "GRID_ERROR",
+          "type": "Fault"
+        },
+        "2": {
+          "description": "Overcurrent AC",
+          "name": "AC_OVERCURRENT",
+          "type": "Fault"
+        },
+        "3": {
+          "description": "Overcurrent DC",
+          "name": "DC_OVERCURRENT",
+          "type": "Fault"
+        },
+        "4": {
+          "description": "Over-temperature",
+          "name": "OVER_TEMP",
+          "type": "Fault"
+        },
+        "5": {
+          "description": "Power low",
+          "name": "POWER_LOW",
+          "type": "Fault"
+        },
+        "6": {
+          "description": "DC low",
+          "name": "DC_LOW",
+          "type": "Fault"
+        },
+        "7": {
+          "description": "Intermediate circuit error",
+          "name": "INTERMEDIATE_FAULT",
+          "type": "Fault"
+        },
+        "8": {
+          "description": "AC frequency too high",
+          "name": "FREQUENCY_HIGH",
+          "type": "Fault"
+        },
+        "9": {
+          "description": "AC frequency too low",
+          "name": "FREQUENCY_LOW",
+          "type": "Fault"
+        },
+        "10": {
+          "description": "AC voltage too high",
+          "name": "AC_VOLTAGE_HIGH",
+          "type": "Fault"
+        },
+        "11": {
+          "description": "AC voltage too low",
+          "name": "AC_VOLTAGE_LOW",
+          "type": "Fault"
+        },
+        "12": {
+          "description": "Direct current feed in",
+          "name": "DIRECT_CURRENT",
+          "type": "Fault"
+        },
+        "13": {
+          "description": "Relay problem",
+          "name": "RELAY_FAULT",
+          "type": "Fault"
+        },
+        "14": {
+          "description": "Internal power stage error",
+          "name": "POWER_STAGE_FAULT",
+          "type": "Fault"
+        },
+        "15": {
+          "description": "Control problems",
+          "name": "CONTROL_FAULT",
+          "type": "Fault"
+        },
+        "16": {
+          "description": "Guard Controller - AC voltage error",
+          "name": "GC_GRID_VOLT_ERR",
+          "type": "Fault"
+        },
+        "17": {
+          "description": "Guard Controller - AC Frequency Error",
+          "name": "GC_GRID_FREQU_ERR",
+          "type": "Fault"
+        },
+        "18": {
+          "description": "Energy transfer not possible",
+          "name": "ENERGY_TRANSFER_FAULT",
+          "type": "Fault"
+        },
+        "19": {
+          "description": "Reference power source AC outside tolerances",
+          "name": "REF_POWER_SOURCE_AC",
+          "type": "Fault"
+        },
+        "20": {
+          "description": "Error during anti islanding test",
+          "name": "ANTI_ISLANDING_FAULT",
+          "type": "Fault"
+        },
+        "21": {
+          "description": "Fixed voltage lower than current MPP voltage",
+          "name": "FIXED_VOLTAGE_FAULT",
+          "type": "Fault"
+        },
+        "22": {
+          "description": "Memory fault",
+          "name": "MEMORY_FAULT",
+          "type": "Fault"
+        },
+        "23": {
+          "description": "Display",
+          "name": "DISPLAY_FAULT",
+          "type": "Fault"
+        },
+        "24": {
+          "description": "Internal communication error",
+          "name": "COMMUNICATION_FAULT",
+          "type": "Fault"
+        },
+        "25": {
+          "description": "Temperature sensors defective",
+          "name": "TEMP_SENSORS_FAULT",
+          "type": "Fault"
+        },
+        "26": {
+          "description": "DC or AC board fault",
+          "name": "DC_AC_BOARD_FAULT",
+          "type": "Fault"
+        },
+        "27": {
+          "description": "ENS error",
+          "name": "ENS_FAULT",
+          "type": "Fault"
+        },
+        "28": {
+          "description": "Fan error",
+          "name": "FAN_FAULT",
+          "type": "Fault"
+        },
+        "29": {
+          "description": "Defective fuse",
+          "name": "DEFECTIVE_FUSE",
+          "type": "Fault"
+        },
+        "30": {
+          "description": "Output choke connected to wrong poles",
+          "name": "OUTPUT_CHOKE_FAULT",
+          "type": "Fault"
+        },
+        "31": {
+          "description": "The buck converter relay does not open at high DC voltage",
+          "name": "CONVERTER_RELAY_FAULT",
+          "type": "Fault"
+        }
+      }
+    },
+    {
+      "parameterkey": "evtvnd2",
+      "bitmap": {
+        "0": {
+          "description": "No SolarNet communication",
+          "name": "NO_SOLARNET_COMM",
+          "type": "Fault"
+        },
+        "1": {
+          "description": "Inverter address incorrect",
+          "name": "INV_ADDRESS_FAULT",
+          "type": "Fault"
+        },
+        "2": {
+          "description": "24h no feed in",
+          "name": "NO_FEED_IN_24H",
+          "type": "Fault"
+        },
+        "3": {
+          "description": "No communication with filter",
+          "name": "FILTER_COMM_FAULT",
+          "type": "Fault"
+        },
+        "4": {
+          "description": "Incorrect phase allocation",
+          "name": "PHASE_ALLOC_FAULT",
+          "type": "Fault"
+        },
+        "5": {
+          "description": "Grid conductor open or supply phase has failed",
+          "name": "GRID_CONDUCTOR_OPEN",
+          "type": "Fault"
+        },
+        "6": {
+          "description": "Incompatible or old software",
+          "name": "SOFTWARE_ISSUE",
+          "type": "Fault"
+        },
+        "7": {
+          "description": "Power Derating Due To Overtemperature",
+          "name": "POWER_DERATING",
+          "type": "Fault"
+        },
+        "8": {
+          "description": "Jumper set incorrectly",
+          "name": "JUMPER_INCORRECT",
+          "type": "Fault"
+        },
+        "9": {
+          "description": "Incompatible feature",
+          "name": "INCOMPATIBLE_FEATURE",
+          "type": "Fault"
+        },
+        "10": {
+          "description": "Defective ventilator/air vents blocked",
+          "name": "VENTS_BLOCKED",
+          "type": "Fault"
+        },
+        "11": {
+          "description": "Power reduction on error",
+          "name": "POWER_REDUCTION_ERROR",
+          "type": "Fault"
+        },
+        "12": {
+          "description": "Arc Detected",
+          "name": "ARC_DETECTED",
+          "type": "Fault"
+        },
+        "13": {
+          "description": "AFCI Self Test Failed",
+          "name": "AFCI_SELF_TEST_FAILED",
+          "type": "Fault"
+        },
+        "14": {
+          "description": "Current Sensor Error",
+          "name": "CURRENT_SENSOR_ERROR",
+          "type": "Fault"
+        },
+        "15": {
+          "description": "DC switch fault",
+          "name": "DC_SWITCH_FAULT",
+          "type": "Fault"
+        },
+        "16": {
+          "description": "AFCI Defective",
+          "name": "AFCI_DEFECTIVE",
+          "type": "Fault"
+        },
+        "17": {
+          "description": "AFCI Manual Test Successful",
+          "name": "AFCI_MANUAL_TEST_OK",
+          "type": "Fault"
+        },
+        "18": {
+          "description": "Power Stack Supply Missing",
+          "name": "PS_PWR_SUPPLY_ISSUE",
+          "type": "Fault"
+        },
+        "19": {
+          "description": "AFCI Communication Stopped",
+          "name": "AFCI_NO_COMM",
+          "type": "Fault"
+        },
+        "20": {
+          "description": "AFCI Manual Test Failed",
+          "name": "AFCI_MANUAL_TEST_FAILED",
+          "type": "Fault"
+        },
+        "21": {
+          "description": "AC polarity reversed",
+          "name": "AC_POLARITY_REVERSED",
+          "type": "Fault"
+        },
+        "22": {
+          "description": "AC measurement device fault",
+          "name": "FAULTY_AC_DEVICE",
+          "type": "Fault"
+        },
+        "23": {
+          "description": "Flash fault",
+          "name": "FLASH_FAULT",
+          "type": "Fault"
+        },
+        "24": {
+          "description": "General error",
+          "name": "GENERAL_ERROR",
+          "type": "Fault"
+        },
+        "25": {
+          "description": "Grounding fault",
+          "name": "GROUNDING_ISSUE",
+          "type": "Fault"
+        },
+        "26": {
+          "description": "Power limitation fault",
+          "name": "LIMITATION_FAULT",
+          "type": "Fault"
+        },
+        "27": {
+          "description": "External NO contact open",
+          "name": "OPEN_CONTACT",
+          "type": "Fault"
+        },
+        "28": {
+          "description": "External overvoltage protection has tripped",
+          "name": "OVERVOLTAGE_PROTECTION",
+          "type": "Fault"
+        },
+        "29": {
+          "description": "Internal processor program status",
+          "name": "PROGRAM_STATUS",
+          "type": "Fault"
+        },
+        "30": {
+          "description": "SolarNet issue",
+          "name": "SOLARNET_ISSUE",
+          "type": "Fault"
+        },
+        "31": {
+          "description": "Supply voltage fault",
+          "name": "SUPPLY_VOLTAGE_FAULT",
+          "type": "Fault"
+        }
+      }
+    },
+    {
+      "parameterkey": "evtvnd3",
+      "bitmap": {
+        "0": {
+          "description": "Time error",
+          "name": "TIME_FAULT",
+          "type": "Fault"
+        },
+        "1": {
+          "description": "USB error",
+          "name": "USB_FAULT",
+          "type": "Fault"
+        },
+        "2": {
+          "description": "DC high",
+          "name": "DC_HIGH",
+          "type": "Fault"
+        },
+        "3": {
+          "description": "Init error",
+          "name": "INIT_ERROR",
+          "type": "Fault"
+        }
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "parameterkey": "st",
+      "enummap": {
+        "1": {
+          "description": "Off",
+          "name": "I_STATUS_OFF",
+          "type": "Info"
+        },
+        "2": {
+          "description": "Sleeping (auto-shutdown)",
+          "name": "I_STATUS_SLEEPING",
+          "type": "Info"
+        },
+        "3": {
+          "description": "Starting up",
+          "name": "I_STATUS_STARTING",
+          "type": "Info"
+        },
+        "4": {
+          "description": "Tracking power point",
+          "name": "I_STATUS_MPPT",
+          "type": "Info"
+        },
+        "5": {
+          "description": "Forced power reduction",
+          "name": "I_STATUS_THROTTLED",
+          "type": "Info"
+        },
+        "6": {
+          "description": "Shutting down",
+          "name": "I_STATUS_SHUTTING_DOWN",
+          "type": "Info"
+        },
+        "7": {
+          "description": "One or more faults exist",
+          "name": "I_STATUS_FAULT",
+          "type": "Fault"
+        },
+        "8": {
+          "description": "Standby (service on unit)*might be in Events",
+          "name": "I_STATUS_STANDBY",
+          "type": "Info"
+        }
+      }
+    },
+    {
+      "parameterkey": "stvnd",
+      "enummap": {
+        "1": {
+          "description": "Off",
+          "name": "I_STATUS_OFF",
+          "type": "Info"
+        },
+        "2": {
+          "description": "Sleeping (auto-shutdown)",
+          "name": "I_STATUS_SLEEPING",
+          "type": "Info"
+        },
+        "3": {
+          "description": "Starting up",
+          "name": "I_STATUS_STARTING",
+          "type": "Info"
+        },
+        "4": {
+          "description": "Tracking power point",
+          "name": "I_STATUS_MPPT",
+          "type": "Info"
+        },
+        "5": {
+          "description": "Forced power reduction",
+          "name": "I_STATUS_THROTTLED",
+          "type": "Info"
+        },
+        "6": {
+          "description": "Shutting down",
+          "name": "I_STATUS_SHUTTING_DOWN",
+          "type": "Info"
+        },
+        "7": {
+          "description": "One or more faults exist",
+          "name": "I_STATUS_FAULT",
+          "type": "Fault"
+        },
+        "8": {
+          "description": "Standby (service on unit)*might be in Events",
+          "name": "I_STATUS_STANDBY",
+          "type": "Info"
+        },
+        "9": {
+          "description": "No SolarNet communication",
+          "name": "I_STATUS_NO_BUSINIT",
+          "type": "Fault"
+        },
+        "10": {
+          "description": "No communication with inverter",
+          "name": "I_STATUS_NO_COMM_INV",
+          "type": "Fault"
+        },
+        "11": {
+          "description": "Overcurrent on SolarNet plug detected",
+          "name": "I_STATUS_SN_OVERCURRENT",
+          "type": "Fault"
+        },
+        "12": {
+          "description": "Inverter is being updated",
+          "name": "I_STATUS_BOOTLOAD",
+          "type": "Fault"
+        },
+        "13": {
+          "description": "AFCI Event",
+          "name": "I_STATUS_AFCI",
+          "type": "Fault"
+        }
+      }
+    }
+  ],
+  "standardizedAssets": []
+}

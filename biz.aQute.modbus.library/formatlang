@@ -1,0 +1,32 @@
+
+TYPES \
+    transaction;    type:=u16,   \ 
+    protocol;       type:=u16,   \
+    length;         type:=u16.   \
+    unit;           type:=u8,    \
+    function;       type:=u8;   enum:= READ_COILS(1) | READ_DI(2) | WRITE_COILS(15) | READ_RECORD(20), \
+    start;          type:=u16,  \
+    qcoils;         type:=u16;  range:=0..2000, \
+    qdi;            type:=u16;  range:=0..2000, \
+    event;          type:=u8,   \
+    filenumber;     type:=u16;  range:=1..0x1_0000,   \
+    recordnumber;   type:=u16;  range:=0..0x2710, \
+    recordlength;   type:=u16,
+    filelength;     type:=u16
+    
+
+
+MBAP_REQ                        transaction protocol length < 10 ; >= 0 EXACT[ length, unit ADU_RQ ]
+MBAP_RSP                        transaction protocol length EXACT[ length, unit ADU_RSP ] 
+ADU_RQ                          function request[function]
+ADU_RSP                         $function response[function] | exception
+
+request[READ_COILS]:            start qcoils
+request[READ_DI]:               start qdi
+request[WRITE_COILS]:           start qcoils n EXACT[ n, BITS[qcoils] ]
+
+response[COMM_EVENT_LOG]:       n EXACT[ n, status event_count message_count REPEAT[event_count, event ] ]
+
+request[READ_RECORD]:           n EXACT[ n, REPEAT[n/7, 0x06 filenumber recordnumber recordlength ]]
+response[READ_RECORD]:          n EXACT[ n, REPEAT[*, filelength 0x06 REPEAT[ n, u16 ] ]]
+
