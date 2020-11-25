@@ -1,0 +1,6 @@
+#
+# biz.aQute.api
+#
+
+-buildpath:  \
+	osgi.annotation
