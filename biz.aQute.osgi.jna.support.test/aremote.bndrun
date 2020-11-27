@@ -1,0 +1,15 @@
+-include ${.}/bnd.bnd
+
+ip.m =  192.168.67.138
+ip.w =  192.168.67.154
+ip.r =  192.168.67.110
+
+-runremote: \
+    remote; \
+	    shell=-1; \
+	    jdb=1044; \
+	    host=${ip.r}
+
+
+ -runpath biz.aQute.remote.launcher
+     

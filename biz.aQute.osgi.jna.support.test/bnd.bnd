@@ -1,0 +1,33 @@
+-sub: *.bnd
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	com.sun.jna;version=latest,\
+	slf4j.api;version='1.7.30',\
+	org.apache.felix.framework,\
+	aQute.libg;version='5.0.0', \
+	biz.aQute.osgi.jna.support.provider
+	
+
+-testpath: \
+    slf4j.simple;version='1.7.30',\
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	biz.aQute.launchpad
+
+-runsystemcapabilities: ${native_capability}
+-runrequires: \
+	osgi.identity;filter:='(osgi.identity=biz.aQute.osgi.jna.support.test.a)',\
+
+-runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+
+-runproperties: \
+        jna.debug_load=true, \
+        jna.debug_load.jna=true, \
+        soft=false
+-runbundles: \
+	biz.aQute.osgi.jna.support.provider;version=snapshot,\
+	biz.aQute.osgi.jna.support.test.a;version=snapshot,\
+	com.sun.jna;version='[5.6.0,5.6.1)'

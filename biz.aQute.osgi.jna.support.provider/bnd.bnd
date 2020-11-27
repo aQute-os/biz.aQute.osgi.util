@@ -1,0 +1,18 @@
+#
+# biz.aQute.osgi.jna.support.provider PROVIDER BUNDLE
+#
+    
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.osgi.framework;version='1.8.0',\
+	com.sun.jna;version=4,\
+	aQute.libg;version='5.0.0'
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+
+-conditionalpackage: aQute.lib*
