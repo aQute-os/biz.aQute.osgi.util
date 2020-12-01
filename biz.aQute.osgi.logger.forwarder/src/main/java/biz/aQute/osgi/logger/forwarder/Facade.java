@@ -57,8 +57,8 @@ final class Facade extends MarkerIgnoringBase {
 	}
 
 	@Override
-	public void debug(String format, Object arguments) {
-		delegate.debug(format, arguments);
+	public void debug(String format, Object argument) {
+		delegate.debug(format, fixup(argument));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void debug(String format, Object a, Object b) {
-		delegate.debug(format, a, b);
+		delegate.debug(format, fixup(a), fixup(b));
 	}
 
 	@Override
@@ -86,8 +86,8 @@ final class Facade extends MarkerIgnoringBase {
 	}
 
 	@Override
-	public void error(String format, Object arguments) {
-		delegate.error(format, arguments);
+	public void error(String format, Object argument) {
+		delegate.error(format, fixup(argument));
 	}
 
 	@Override
@@ -97,7 +97,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void error(String format, Object a, Object b) {
-		delegate.error(format, a, b);
+		delegate.error(format, fixup(a), fixup(b));
 	}
 
 	@Override
@@ -115,8 +115,8 @@ final class Facade extends MarkerIgnoringBase {
 	}
 
 	@Override
-	public void info(String format, Object arguments) {
-		delegate.info(format, arguments);
+	public void info(String format, Object argument) {
+		delegate.info(format, fixup(argument));
 	}
 
 	@Override
@@ -126,7 +126,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void info(String format, Object a, Object b) {
-		delegate.info(format, a, b);
+		delegate.info(format, fixup(a), fixup(b));
 	}
 
 	@Override
@@ -144,8 +144,8 @@ final class Facade extends MarkerIgnoringBase {
 	}
 
 	@Override
-	public void warn(String format, Object arguments) {
-		delegate.warn(format, arguments);
+	public void warn(String format, Object argument) {
+		delegate.warn(format, fixup(argument));
 	}
 
 	@Override
@@ -155,7 +155,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void warn(String format, Object a, Object b) {
-		delegate.warn(format, a, b);
+		delegate.warn(format, fixup(a), fixup(b));
 	}
 
 	@Override
@@ -173,8 +173,8 @@ final class Facade extends MarkerIgnoringBase {
 	}
 
 	@Override
-	public void trace(String format, Object arguments) {
-		delegate.trace(format, arguments);
+	public void trace(String format, Object argument) {
+		delegate.trace(format, fixup(argument));
 	}
 
 	@Override
@@ -184,7 +184,7 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void trace(String format, Object a, Object b) {
-		delegate.trace(format, a, b);
+		delegate.trace(format, fixup(a), fixup(b));
 	}
 
 	@Override
@@ -222,6 +222,18 @@ final class Facade extends MarkerIgnoringBase {
 			arguments[i] = print(arguments[i], visited);
 		}
 		return false;
+	}
+
+	private Object fixup(Object in) {
+		if (in == null)
+			return in;
+
+		if (!in.getClass()
+			.isArray())
+			return in;
+
+		HashSet<Object> visited = new HashSet<>();
+		return print(in, visited);
 	}
 
 	static Object print(Object object, Set<Object> visited) {

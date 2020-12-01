@@ -154,27 +154,26 @@ public class LoggerAdminCommands {
 	}
 
 	@Descriptor("Create an SLF4J debug entry (for testing)")
-	public void slf4jdebug(@Descriptor("The message to log") String message) {
+	public void slf4jdebug(@Descriptor("The message to log") Object message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
-		logger.debug(message);
+		logger.debug("{}", message);
 	}
 
 	@Descriptor("Create an SLF4J warn entry")
-	public void slf4jwarn(@Descriptor("The message to log") String message) {
+	public void slf4jwarn(@Descriptor("The message to log") Object message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
-		logger.warn(message);
+		logger.warn("{}", message);
 	}
 
 	@Descriptor("Create an SLF4J info entry")
-	public void slf4jinfo(@Descriptor("The message to log") String message) {
+	public void slf4jinfo(@Descriptor("The message to log") Object message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
-		logger.info(message);
+		logger.info("{}", message);
 	}
 
 	@Descriptor("Create an SLF4J error entry")
-	public void slf4jerror(@Descriptor("The message to log") String message) {
+	public void slf4jerror(@Descriptor("The message to log") Object message) {
 		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
-		logger.error(message);
+		logger.error("{}", message);
 	}
-
 }

@@ -36,9 +36,11 @@ public class LogForwarderTest {
 				1, 2, 3, 4
 			}, new float[] {
 				3.14f, 4567890
+			}, new String[] {
+				"a", "b"
 			}
 		}, visited).toString();
-		assertThat(s).isEqualTo("[[1,2,3,4],[3.14,4567890.0]]");
+		assertThat(s).isEqualTo("[[1,2,3,4],[3.14,4567890.0],[a,b]]");
 	}
 
 	@Test
