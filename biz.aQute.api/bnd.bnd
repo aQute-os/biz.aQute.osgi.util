@@ -2,5 +2,6 @@
 # biz.aQute.api
 #
 
--buildpath:  \
-	osgi.annotation
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.util.promise;version='1.1.1'
