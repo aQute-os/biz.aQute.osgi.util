@@ -1,3 +1,0 @@
-#!/bin/sh
-pasm -b PRUClock.p
-gcc PRUClock.c -o pruclock -lpthread -lprussdrv

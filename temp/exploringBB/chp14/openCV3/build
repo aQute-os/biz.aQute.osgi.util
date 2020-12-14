@@ -1,3 +1,0 @@
-#!/bin/bash
-g++ -O2 `pkg-config --cflags --libs opencv` edge.cpp -o edge
-

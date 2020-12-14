@@ -1,3 +1,0 @@
-#!/bin/sh
-pasm -b blinkLED.p
-gcc blinkLED.c -o blinkLED -lpthread -lprussdrv

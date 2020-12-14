@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "Please do not try to install Doxygen or LaTeX on the BeagleBone itself"
-doxygen ExploringBB.Doxyfile

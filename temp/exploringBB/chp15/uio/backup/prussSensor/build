@@ -1,3 +1,0 @@
-#!/bin/sh
-pasm -b sensorTest.p
-gcc sensorTest.c -o sensorTest -lpthread -lprussdrv

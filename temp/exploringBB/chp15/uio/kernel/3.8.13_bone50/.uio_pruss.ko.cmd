@@ -1,1 +1,0 @@
-cmd_/root/exploringBB/chp13/kernel/3.8.13/uio_pruss.ko := ld -EL -r  -T /usr/src/linux-headers-3.8.13-bone50/scripts/module-common.lds --build-id  -o /root/exploringBB/chp13/kernel/3.8.13/uio_pruss.ko /root/exploringBB/chp13/kernel/3.8.13/uio_pruss.o /root/exploringBB/chp13/kernel/3.8.13/uio_pruss.mod.o

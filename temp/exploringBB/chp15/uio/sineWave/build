@@ -1,3 +1,0 @@
-#!/bin/sh
-pasm -b pwm.p
-gcc pwm.c -o pwm -lpthread -lprussdrv -lm

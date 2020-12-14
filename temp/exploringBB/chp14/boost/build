@@ -1,2 +1,0 @@
-#!/bin/bash
-g++ testBoost.cpp -o testBoost
