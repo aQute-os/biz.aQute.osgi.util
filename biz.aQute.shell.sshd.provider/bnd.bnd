@@ -1,0 +1,26 @@
+#
+# biz.aQute.shell.sshd.provider PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.apache.sshd.osgi;version='2.5.1',\
+	slf4j.api,\
+	slf4j.simple,\
+	aQute.libg;version='5.0.0',\
+	org.apache.felix.gogo.runtime,\
+	org.osgi.service.metatype.annotations;version='1.4.0'
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+
+-conditionalpackage: org.apache.sshd.*, aQute.lib*
+
+Import-Package: \
+    net.i2p.crypto.*;resolution:=optional, \
+    org.bouncycastle.*;resolution:=optional, \
+    *
