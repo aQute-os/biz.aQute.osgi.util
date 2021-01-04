@@ -1,0 +1,23 @@
+#
+# biz.aQute.authenticator.useradmin.provider PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.osgi.service.metatype.annotations,\
+	org.osgi.namespace.implementation,\
+	biz.aQute.api.authentication,\
+	org.apache.felix.gogo.runtime,\
+	org.osgi.service.useradmin,\
+	slf4j.api,\
+	osgi.core,\
+	aQute.libg
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+
+-conditionalpackage: aQute.lib*
