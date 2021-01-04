@@ -34,10 +34,10 @@ Bundle-License:             http://opensource.org/licenses/apache2.0.php; \
 Bundle-SCM:             url=https://github.com/aQute-os/biz.aQute.osgi.util, \
                             connection=scm:git:https://github.com/aQute-os/biz.aQute.osgi.util.git, \
                             developerConnection=scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git
-Bundle-Developers:      osgi; \
-                            email=info@osgi.org; \
+Bundle-Developers:      aQute; \
+                            email=info@aQute.biz; \
                             name="Peter Kriens"; \
-                            organization="OSGi Alliance"
+                            organization="aQute SARL"
 Bundle-DocURL:          https://aQute.biz
 
 
