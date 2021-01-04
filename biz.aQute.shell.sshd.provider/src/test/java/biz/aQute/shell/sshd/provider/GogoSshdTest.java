@@ -56,8 +56,6 @@ public class GogoSshdTest {
 			lp.register(Authenticator.class, auth);
 			
 			GogoSshd g = new GogoSshd(lp.getBundleContext(), cp, config);
-			
-			Thread.sleep(100000);
 			login();
 			g.deactivate();
 			assertThat(authenticated.get()).isTrue();
