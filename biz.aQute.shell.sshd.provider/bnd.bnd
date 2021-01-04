@@ -2,6 +2,16 @@
 # biz.aQute.shell.sshd.provider PROVIDER BUNDLE
 #
 
+Bundle-Description: \
+    An SSH daemon that interacts with Gogo. Since many Linux distributions have \
+    removed telnet, there is a need to interact with Gogo using ssh, which is still \
+    approved. This ssh provider can be used without authentication when registered \
+    only on localhost. Otherwise the user should register an biz.aQute.authentication.api.Authenticator \
+    service. The configuration by default requires this optional service to be there.
+    
+
+
+
 -buildpath: \
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
@@ -10,15 +20,25 @@
 	slf4j.simple,\
 	aQute.libg;version='5.0.0',\
 	org.apache.felix.gogo.runtime,\
-	org.osgi.service.metatype.annotations;version='1.4.0'
+	org.osgi.service.metatype.annotations,\
+	biz.aQute.api.authentication,\
+	org.osgi.framework
 	
 
 -testpath: \
-	biz.aQute.wrapper.junit, \
-	biz.aQute.wrapper.hamcrest, \
-	org.assertj.core
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	biz.aQute.launchpad,\
+	org.apache.felix.framework,\
+	org.osgi.service.cm,\
+	org.mockito.mockito-all
 
 -conditionalpackage: org.apache.sshd.*, aQute.lib*
+
+DynamicImport-Package: \
+    biz.aQute.authentication.api;version='[1,2)'
+
 
 Import-Package: \
     net.i2p.crypto.*;resolution:=optional, \
