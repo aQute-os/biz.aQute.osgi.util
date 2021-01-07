@@ -27,4 +27,3 @@ jobs:
         with:
           name: test-reports
           path: '*/target/test-reports/'
-          if-no-files-found: ignore
