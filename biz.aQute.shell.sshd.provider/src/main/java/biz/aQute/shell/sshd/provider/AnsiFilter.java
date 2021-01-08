@@ -1,10 +1,11 @@
 package biz.aQute.shell.sshd.provider;
 
+import java.io.BufferedReader;
 import java.io.EOFException;
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -15,37 +16,57 @@ import aQute.lib.io.IO;
 import aQute.libg.glob.Glob;
 
 public class AnsiFilter {
+	final static byte[]		crlf	= new byte[] { 10, 13 };
 
-	static final int	BS		= 0x08;
-	final static char	ESCAPE	= 0x1B;
-	final static char	DEL		= 0x7F;
-	final InputStream	in;
-	final OutputStream	out;
-	final Writer		writer;
-	final Reader		reader;
-	final Charset		charset;
-	final int			w;
-	final int			h;
-	final String		type;
-	final List<String>	history	= new ArrayList<>();
-	int					where	= 0;
-	StringBuilder		buffer;
-	int					cursor	= 0;
-	int					start	= 0;
-	String				current	= "";
+	static final int		BS		= 0x08;
+	final static char		ESCAPE	= 0x1B;
+	final static char		DEL		= 0x7F;
+	final InputStream		in;
+	final OutputStream		out;
+	final Writer			writer;
+	final BufferedReader	reader;
+	final Charset			charset;
+	final int				w;
+	final int				h;
+	final String			term;
+	final List<String>		history	= new ArrayList<>();
+	final boolean			ansi;
+	int						where	= 0;
+	StringBuilder			buffer;
+	int						cursor	= 0;
+	int						start	= 0;
+	String					current	= "";
 
-	public AnsiFilter(int w, int h, InputStream in, OutputStream out, String type, Charset charset) {
+	public AnsiFilter(int w, int h, InputStream in, OutputStream out, String term, Charset charset) {
 		this.w = w;
 		this.h = h;
 		this.in = in;
-		this.out = out;
-		this.type = type;
+		this.term = term;
+		this.ansi = "ansi".equalsIgnoreCase(term);
+
+		OutputStream tout = out;
+		if (ansi) {
+			tout = new FilterOutputStream(out) {
+				public void write(int b) throws IOException {
+					if (b == '\n') {
+						out.write(crlf);
+						out.flush();
+					} else {
+						out.write(b);
+					}
+				}
+			};
+		}
+		this.out = tout;
 		this.charset = charset;
-		this.reader = IO.reader(in, charset);
-		this.writer = IO.writer(out, charset);
+		this.reader = IO.reader(this.in, charset);
+		this.writer = IO.writer(this.out, charset);
 	}
 
 	public String readline(String prompt) throws IOException {
+		if (!ansi)
+			return reader.readLine();
+
 		outer: while (true) {
 			writer.write(prompt);
 			writer.flush();

@@ -10,8 +10,6 @@ Bundle-Description: \
     service. The configuration by default requires this optional service to be there.
     
 
-
-
 -buildpath: \
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
@@ -21,7 +19,8 @@ Bundle-Description: \
 	aQute.libg;version='5.0.0',\
 	org.apache.felix.gogo.runtime,\
 	org.osgi.service.metatype.annotations,\
-	biz.aQute.api.authentication,\
+    biz.aQute.api.authentication,\
+    biz.aQute.api.authorization,\
 	org.osgi.framework
 	
 
@@ -32,15 +31,18 @@ Bundle-Description: \
 	biz.aQute.launchpad,\
 	org.apache.felix.framework,\
 	org.osgi.service.cm,\
-	org.mockito.mockito-all
+	org.mockito.mockito-all,\
+	org.awaitility
 
 -conditionalpackage: org.apache.sshd.*, aQute.lib*
 
 DynamicImport-Package: \
-    biz.aQute.authentication.api;version='[1,2)'
+    biz.aQute.authentication.api,\
+    biz.aQute.authorization.api
 
 
 Import-Package: \
     net.i2p.crypto.*;resolution:=optional, \
     org.bouncycastle.*;resolution:=optional, \
+    ${template;DynamicImport-Package;${@};resolution:=optional}, \
     *
