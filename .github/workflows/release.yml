@@ -23,3 +23,8 @@ jobs:
       - name: Build
         shell: bash
         run: ./gradlew --parallel release
+      - name: save-tests
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: '*/target/test-reports/'
