@@ -7,7 +7,7 @@ public interface AuthorizationConstants {
 	/**
 	 * Name
 	 */
-	String	AUTHORIZATION_SPECIFICATION_NAME	= "osgi.enroute.authorization";
+	String	AUTHORIZATION_SPECIFICATION_NAME	= "biz.aQute.authorization";
 	/**
 	 * Version
 	 */
