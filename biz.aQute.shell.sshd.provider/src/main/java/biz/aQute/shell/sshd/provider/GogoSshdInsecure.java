@@ -13,14 +13,13 @@ import org.apache.sshd.server.channel.ChannelSession;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
 import biz.aQute.shell.sshd.config.SshdConfigInsecure;
 
 @Designate(ocd = SshdConfigInsecure.class, factory = true)
-@Component(configurationPolicy = ConfigurationPolicy.REQUIRE, configurationPid = SshdConfigInsecure.PID)
+@Component
 public class GogoSshdInsecure extends AbstractGogoSshd {
 
 	@Activate

@@ -5,7 +5,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 /**
  * Configuration for the Gogo SSH interface.
  */
-@ObjectClassDefinition
+@ObjectClassDefinition(factoryPid = SshdConfig.PID)
 public @interface SshdConfig  {
 	String	PID				= "biz.aQute.shell.sshd";
 

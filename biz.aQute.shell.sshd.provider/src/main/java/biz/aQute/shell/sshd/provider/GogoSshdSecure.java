@@ -18,7 +18,6 @@ import org.apache.sshd.server.session.ServerSession;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
@@ -29,7 +28,7 @@ import biz.aQute.authorization.api.AuthorityAdmin;
 import biz.aQute.shell.sshd.config.SshdConfig;
 
 @Designate(ocd = SshdConfig.class, factory=true)
-@Component(configurationPolicy = ConfigurationPolicy.REQUIRE, configurationPid = SshdConfig.PID)
+@Component
 public class GogoSshdSecure extends AbstractGogoSshd {
 
 	final Authenticator					authenticator;
