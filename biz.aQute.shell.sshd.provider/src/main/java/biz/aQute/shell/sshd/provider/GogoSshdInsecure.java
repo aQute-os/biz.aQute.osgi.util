@@ -17,10 +17,9 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
-import biz.aQute.shell.sshd.config.SshdConfig;
 import biz.aQute.shell.sshd.config.SshdConfigInsecure;
 
-@Designate(ocd = SshdConfig.class, factory = true)
+@Designate(ocd = SshdConfigInsecure.class, factory = true)
 @Component(configurationPolicy = ConfigurationPolicy.REQUIRE, configurationPid = SshdConfigInsecure.PID)
 public class GogoSshdInsecure extends AbstractGogoSshd {
 
