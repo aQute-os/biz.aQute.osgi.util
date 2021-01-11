@@ -6,7 +6,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 /**
  * Configuration for the Gogo SSH interface in an insecure mode.
  */
-@ObjectClassDefinition(factoryPid = SshdConfigInsecure.PID, description = "Configuration for the Gogo SSH interface in an insecure mode.")
+@ObjectClassDefinition(description = "Configuration for the Gogo SSH interface in an insecure mode.")
 public @interface SshdConfigInsecure {
 	String PID = "biz.aQute.shell.sshd.insecure";
 

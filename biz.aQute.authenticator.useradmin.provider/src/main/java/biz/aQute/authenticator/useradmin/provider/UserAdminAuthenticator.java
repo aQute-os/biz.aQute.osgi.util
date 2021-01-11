@@ -17,6 +17,7 @@ import org.osgi.namespace.implementation.ImplementationNamespace;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.useradmin.Role;
 import org.osgi.service.useradmin.User;
 import org.osgi.service.useradmin.UserAdmin;
@@ -34,6 +35,7 @@ import biz.aQute.authenticator.useradmin.provider.Config.Algorithm;
 		"hash", "passwd", "adduser", "rmrole", "role", "user"
 })
 @Component
+@Designate(ocd = Config.class)
 public class UserAdminAuthenticator implements Authenticator {
 	private static Logger			log				= LoggerFactory.getLogger(UserAdminAuthenticator.class);
 	private static final Pattern	AUTHORIZATION_P	= Pattern.compile("Basic\\s+(?<base64>[A-Za-z0-9+/]{3,}={0,2})");

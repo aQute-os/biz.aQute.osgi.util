@@ -6,7 +6,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 /**
  * Configuration for the Gogo SSH interface.
  */
-@ObjectClassDefinition(factoryPid = SshdConfig.PID, description = "Configuration for the Gogo SSH interface.")
+@ObjectClassDefinition( description = "Configuration for the Gogo SSH interface.")
 public @interface SshdConfig {
 	String PID = "biz.aQute.shell.sshd";
 

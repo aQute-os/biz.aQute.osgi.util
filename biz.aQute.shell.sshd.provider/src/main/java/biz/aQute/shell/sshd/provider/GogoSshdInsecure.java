@@ -20,7 +20,7 @@ import org.osgi.service.metatype.annotations.Designate;
 import biz.aQute.shell.sshd.config.SshdConfigInsecure;
 
 @Designate(ocd = SshdConfigInsecure.class, factory = true)
-@Component
+@Component(configurationPid = SshdConfigInsecure.PID )
 public class GogoSshdInsecure extends AbstractGogoSshd {
 
 	@Activate
