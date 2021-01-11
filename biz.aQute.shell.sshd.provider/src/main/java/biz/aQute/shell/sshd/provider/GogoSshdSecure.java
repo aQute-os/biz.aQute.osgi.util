@@ -112,9 +112,4 @@ public class GogoSshdSecure extends AbstractGogoSshd {
 		return true;
 	}
 
-	@Deactivate
-	void deactivate() throws IOException {
-		super.deactivate();
-	}
-
 }

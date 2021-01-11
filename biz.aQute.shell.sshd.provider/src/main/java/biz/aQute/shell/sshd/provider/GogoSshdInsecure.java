@@ -41,9 +41,4 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 		return new CommandSessionHandler(context, channel, env, in, out, err, processor, callback);
 	}
 
-	@Deactivate
-	void deactivate() throws IOException {
-		super.deactivate();
-	}
-
 }
