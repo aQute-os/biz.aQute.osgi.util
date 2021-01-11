@@ -13,6 +13,7 @@ import org.apache.sshd.server.channel.ChannelSession;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
@@ -25,7 +26,7 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 	@Activate
 	public GogoSshdInsecure(BundleContext context, @Reference CommandProcessor processor, SshdConfigInsecure config)
 			throws IOException {
-		super(context,processor, config.hostkey(), "localhost", config.port());
+		super(context, processor, config.hostkey(), "localhost", config.port());
 		logger.warn("starting insecure ssh server on port localhost:{}", config.port());
 
 		sshd.setPasswordAuthenticator(AcceptAllPasswordAuthenticator.INSTANCE);
@@ -34,8 +35,15 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 	}
 
 	@Override
-	protected CommandSessionHandler getCommandSessionHandler(BundleContext context, ChannelSession channel, Environment env, InputStream in,
-			OutputStream out, OutputStream err, CommandProcessor processor, ExitCallback callback) throws Exception {
-		return new CommandSessionHandler(context,channel, env, in, out, err, processor, callback);
+	protected CommandSessionHandler getCommandSessionHandler(BundleContext context, ChannelSession channel,
+			Environment env, InputStream in, OutputStream out, OutputStream err, CommandProcessor processor,
+			ExitCallback callback) throws Exception {
+		return new CommandSessionHandler(context, channel, env, in, out, err, processor, callback);
 	}
+
+	@Deactivate
+	void deactivate() throws IOException {
+		super.deactivate();
+	}
+
 }

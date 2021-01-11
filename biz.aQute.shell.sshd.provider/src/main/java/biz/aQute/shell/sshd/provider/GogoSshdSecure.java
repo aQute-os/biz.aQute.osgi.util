@@ -18,6 +18,7 @@ import org.apache.sshd.server.session.ServerSession;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
@@ -27,21 +28,21 @@ import biz.aQute.authorization.api.Authority;
 import biz.aQute.authorization.api.AuthorityAdmin;
 import biz.aQute.shell.sshd.config.SshdConfig;
 
-@Designate(ocd = SshdConfig.class, factory=true)
+@Designate(ocd = SshdConfig.class, factory = true)
 @Component
 public class GogoSshdSecure extends AbstractGogoSshd {
 
-	final Authenticator					authenticator;
-	final Authority						authority;
-	final AuthorityAdmin				admin;
-	final Map<ServerSession, String>	users	= Collections
-			.synchronizedMap(new IdentityHashMap<ServerSession, String>());
-	final String						permission;
+	final Authenticator authenticator;
+	final Authority authority;
+	final AuthorityAdmin admin;
+	final Map<ServerSession, String> users = Collections.synchronizedMap(new IdentityHashMap<ServerSession, String>());
+	final String permission;
 
 	@Activate
-	public GogoSshdSecure(BundleContext context, @Reference CommandProcessor processor, @Reference Authenticator authenticator,
-			@Reference Authority authority, @Reference AuthorityAdmin admin, SshdConfig config) throws IOException {
-		super(context,processor, config.hostkey(), config.address(), config.port());
+	public GogoSshdSecure(BundleContext context, @Reference CommandProcessor processor,
+			@Reference Authenticator authenticator, @Reference Authority authority, @Reference AuthorityAdmin admin,
+			SshdConfig config) throws IOException {
+		super(context, processor, config.hostkey(), config.address(), config.port());
 		this.authenticator = authenticator;
 		this.authority = authority;
 		this.admin = admin;
@@ -54,8 +55,9 @@ public class GogoSshdSecure extends AbstractGogoSshd {
 	}
 
 	@Override
-	protected CommandSessionHandler getCommandSessionHandler(BundleContext context, ChannelSession channel, Environment env, InputStream in,
-			OutputStream out, OutputStream err, CommandProcessor processor2, ExitCallback callback) throws Exception {
+	protected CommandSessionHandler getCommandSessionHandler(BundleContext context, ChannelSession channel,
+			Environment env, InputStream in, OutputStream out, OutputStream err, CommandProcessor processor2,
+			ExitCallback callback) throws Exception {
 
 		String user = users.get(channel.getServerSession());
 
@@ -91,7 +93,7 @@ public class GogoSshdSecure extends AbstractGogoSshd {
 		Map<String, Object> map = new HashMap<>();
 		map.put(Authenticator.BASIC_SOURCE_USERID, username);
 		map.put(Authenticator.BASIC_SOURCE_PASSWORD, password);
-		
+
 		String authenticate = authenticator.authenticate(map, Authenticator.BASIC_SOURCE);
 		if (authenticate == null)
 			return false;
@@ -108,6 +110,11 @@ public class GogoSshdSecure extends AbstractGogoSshd {
 			return false;
 		users.put(serverSession, authenticate);
 		return true;
+	}
+
+	@Deactivate
+	void deactivate() throws IOException {
+		super.deactivate();
 	}
 
 }
