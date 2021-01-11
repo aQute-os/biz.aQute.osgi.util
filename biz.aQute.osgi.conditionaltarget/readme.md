@@ -1,109 +1,152 @@
-# Conditional Target
+# biz.aQute.osgi.conditionaltarget
 
-The white board pattern is quite popular in OSGi and for good reasons. However, the pattern is not without its
-drawbacks. Sometimes you, mostly at startup, you want a certain set of services to populate your white board
-list. For example, assume you have persistent storage and you need at least 3 remote servers in 2 different
-regions. 
+## Links
 
-This is hard to model with services because you can only select on a single service. OSGi has no way to define
-a filter over multiple services. The Conditional Target provides this service. It is a generic service where
-the type parameter is the service type, generally the white board type, you're interested in. 
+* [Documentation](https://aQute.biz)
+* [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-If you're using Declarative Services (DS) and your white board service was `Foo`, then it would look like:
+## Coordinates
 
-    @Reference
-    ConditionalTarget<Foo>       strings;
+### Maven
 
-The Conditional Target provider detects that you're looking for Foo services and it will create a Conditional Target
-service that provides access to all listed Foo services visible to you. It also provides access to the 
-_aggregate_ properties. This is the API:
+```xml
+<dependency>
+    <groupId>biz.aQute</groupId>
+    <artifactId>biz.aQute.osgi.conditionaltarget</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
 
-	public interface ConditionalTarget<T> extends Iterable<T>{
-	
-		/**
-		 * Get the tracked services.
-		 * 
-		 * @return the tracked services
-		 */
-		List<T> getServices();
+### OSGi
 
-        /**
-         * Get all service references
-         */
-		Map<ServiceReference<T>,T> getServiceReferences();
-	
-		/**
-		 * Get the current aggregate properties as calculated form the filters and
-		 * the services in scope.
-		 * 
-		 * @return the map with the aggregate properties
-		 */
-		Map<String, Object> getAggregateProperties();
-	}
+```
+Bundle Symbolic Name: biz.aQute.osgi.conditionaltarget
+Version             : 1.3.0.202101071841
+```
 
-## Aggregate Properties
+### Feature-Coordinate
 
-The aggregate properties are the _aggregate_ of the Foo service properties. For example, a Foo⁰, Foo¹, and Foo² 
-are registered.  Each service has a `bar` property that is set to 0, 1, 2 respectively. The aggregate property `bar` is
-then a collection of [0,1,2]. Arrays and collections are merged except for `byte[]`.
+```
+"bundles": [
+   {
+    "id": "biz.aQute:biz.aQute.osgi.conditionaltarget:1.3.0-SNAPSHOT"
+   }
+]
+```
 
-Since the Conditional Target service has the aggregate properties of all Foo services, we can now select across
-the services using a standard filter. For example, we want to have at least `bar=0 and bar=1` registered or 
-`bar=1 and bar=2`. 
+## Components
 
-## Target Filter
+### aQute.osgi.conditionaltarget.provider.CTServerComponent$ConditionalTargetDummy - *state = not enabled, activation = delayed*
 
-With DS we can make a reference conditional with the `target` annotation method. This is a filter.
+#### Description
 
-    @Reference(target="(|(&((bar=0)(bar=1)))(&((bar=1)(bar=0))))")
-    ConditionalTarget<Foo>      foos;
+#### Services - *scope = singleton*
 
-## Calculated values
+|Interface name |
+|--- |
+|aQute.osgi.conditionaltarget.api.ConditionalTarget |
 
-Besides calculating the aggregate values from the properties of the white board services, the Conditional Target also 
-accepts filters that have _calculated_ fields. For example, if you need at least three services that have a `bar`
-property then you can filter on `#bar`. There are a number of calculated values:
+#### Properties
 
-* `#key`     – Calculates the number of `key` properties
-* `[avg]key` – Calculates the average of all `key` properties
-* `[min]key` – Calculates the minimum of all `key` properties
-* `[max]key` – Calculates the maximum of all `key` properties
-* `[sum]key` – Calculates the sum of  all `key` properties
-* `[unq]key` – Calculates the number of unique `key` properties
+No properties.
 
-    @Reference(target="([sum]bar>=3)")
-    ConditionalTarget<Foo>      foos;
+#### Configuration - *policy = optional*
 
-## Configuration
+##### Pid: `aQute.osgi.conditionaltarget.provider.CTServerComponent$ConditionalTargetDummy`
 
-This would be interesting but what really makes it very useful is that DS allows the `target` to be overridden
-by configuration. If the configuration of this object contains a field `foos.target` (the name of the field followed
-by the word `.target`) then the value is taken as the filter. 
+No information available.
 
-## Use Case
+#### Reference bindings
 
-Assume we have a service R that represents a link to a remote service. For performance and reliability reasons we 
-require at least 3 of those services to be present before we can start. Additionally, these services must come from
-at least 2 different regions.
+No bindings.
 
-For this reason, we define a property `region` that can take the values `south`, `east`, `north`, and `west`. 
+#### OSGi-Configurator
 
-The reference to the Conditional Target can now be defined as:
 
-    @Reference(target="(&(#>=3)([unq]region>=2))")
-    ConditionalTarget<R>      foos;
+```
+/*
+ * Component: aQute.osgi.conditionaltarget.provider.CTServerComponent$ConditionalTargetDummy
+ * policy:    optional
+ */
+"aQute.osgi.conditionaltarget.provider.CTServerComponent$ConditionalTargetDummy":{
+        //# Component properties
+        // none
 
-## How it Works
+        //# Reference bindings
+        // none
 
-The Conditional Target provider uses the framework Hooks to detect the interest in Conditional Target services. It
-then uses the Service Component Runtime service to find the Component Configuration DTO that is looking for the
-Conditional Target. It uses reflection to find the generic type.
+        //# ObjectClassDefinition - Attributes
+        // (No PidOcd available.)
+}
+```
 
-It will then:
+---
 
-* Register a Service Factory for a Conditional Target service, and
-* Track services of the target type, and
-* Keep the aggregate properties of the Conditional Target updated.
+### aQute.osgi.conditionaltarget.provider.CTServerComponent - *state = enabled, activation = immediate*
 
-The services are checked out from the registry via the Bundle Context of the requesting bundle.
+#### Description
 
+#### Services
+
+No services.
+
+#### Properties
+
+No properties.
+
+#### Configuration - *policy = optional*
+
+##### Pid: `aQute.osgi.conditionaltarget.provider.CTServerComponent`
+
+No information available.
+
+#### Reference bindings
+
+|Attribute |Value |
+|--- |--- |
+|name |scr |
+|interfaceName |org.osgi.service.component.runtime.ServiceComponentRuntime |
+|target | |
+|cardinality |1..1 |
+|policy |static |
+|policyOption |reluctant |
+|scope |bundle |
+
+#### OSGi-Configurator
+
+
+```
+/*
+ * Component: aQute.osgi.conditionaltarget.provider.CTServerComponent
+ * policy:    optional
+ */
+"aQute.osgi.conditionaltarget.provider.CTServerComponent":{
+        //# Component properties
+        // none
+
+        //# Reference bindings
+        // "scr.target": "(component.pid=*)"
+
+
+        //# ObjectClassDefinition - Attributes
+        // (No PidOcd available.)
+}
+```
+
+## Developers
+
+* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+
+## Licenses
+
+**http://opensource.org/licenses/apache2.0.php**
+  > Apache License, Version 2.0
+  >
+  > For more information see [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Copyright
+
+aQute SARL All Rights Reserved
+
+---
+aQute SARL

@@ -1,4 +1,4 @@
-# biz.aQute.trace
+# biz.aQute.osgi.spy.runpath
 
 ## Links
 

@@ -1,37 +1,55 @@
-
 # biz.aQute.osgi.configuration.util
 
-This project contains a helper to configure Configuration Admin in a type
-safe way. It allows you create and update configurations without ever using
-property keys as strings.
+Implements a Configuration Helper to set the properties in a type safe way.
 
-## Example
+## Links
 
-    @interface FooConfig {
-        int port() default 10;
+* [Documentation](https://aQute.biz)
+* [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-        String host() default "localhost";
-    }
+## Coordinates
 
-    @Test
-    public void testSimple() throws Exception {
-        ConfigHelper<FooConfig> ch = new ConfigHelper<>(FooConfig.class, cm);
-        Map<String, Object> read = ch.read("foo.bar");
-        assertEquals(0, read.size());
-        
-        assertEquals( 10, ch.d().port());
-        assertEquals( "localhost", ch.d().host());
-        
-        ch.set( ch.d().port(), 3400);
-        ch.set( ch.d().host(), "example.com");
-        ch.update();
+### Maven
 
-        Configuration c = cm.getConfiguration("foo.bar");
-        Dictionary<String,Object> properties = c.getProperties();
-        assertEquals( 3400, properties.get("port"));
-        assertEquals( "example.com", properties.get("host"));
-        
-    }
-    
-## References
+```xml
+<dependency>
+    <groupId>biz.aQute</groupId>
+    <artifactId>biz.aQute.osgi.configuration.util</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
 
+### OSGi
+
+```
+Bundle Symbolic Name: biz.aQute.osgi.configuration.util
+Version             : 1.0.0.202101071841
+```
+
+### Feature-Coordinate
+
+```
+"bundles": [
+   {
+    "id": "biz.aQute:biz.aQute.osgi.configuration.util:1.3.0-SNAPSHOT"
+   }
+]
+```
+
+## Developers
+
+* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+
+## Licenses
+
+**http://opensource.org/licenses/apache2.0.php**
+  > Apache License, Version 2.0
+  >
+  > For more information see [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Copyright
+
+aQute SARL All Rights Reserved
+
+---
+aQute SARL

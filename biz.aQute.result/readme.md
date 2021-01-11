@@ -1,4 +1,4 @@
-# biz.aQute.osgi.logger.forwarder
+# biz.aQute.result
 
 ## Links
 
@@ -12,7 +12,7 @@
 ```xml
 <dependency>
     <groupId>biz.aQute</groupId>
-    <artifactId>biz.aQute.osgi.logger.forwarder</artifactId>
+    <artifactId>biz.aQute.result</artifactId>
     <version>1.3.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -20,8 +20,8 @@
 ### OSGi
 
 ```
-Bundle Symbolic Name: biz.aQute.osgi.logger.forwarder
-Version             : 1.3.0.202101071841
+Bundle Symbolic Name: biz.aQute.result
+Version             : 1.3.0.202101071840
 ```
 
 ### Feature-Coordinate
@@ -29,7 +29,7 @@ Version             : 1.3.0.202101071841
 ```
 "bundles": [
    {
-    "id": "biz.aQute:biz.aQute.osgi.logger.forwarder:1.3.0-SNAPSHOT"
+    "id": "biz.aQute:biz.aQute.result:1.3.0-SNAPSHOT"
    }
 ]
 ```

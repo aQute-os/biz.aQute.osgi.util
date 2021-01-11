@@ -1,28 +1,53 @@
-[native] JNA Support
+# biz.aQute.osgi.jna.support.test.a
 
-These two projects provide support for using
-JNA in OSGi. 
+## Links
 
-The native native code in Java is _JNI_. However, this is hard to so the JNA library that uses reflective 
-access is very popular.
+* [Documentation](https://aQute.biz)
+* [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-However, this makes it hard to understand what  happens. With JNI, the Java VM is in charge but JNA has its own 
-dlopen/dlclose calls. Using the simple name of a library to open it will make that name permanent. 
+## Coordinates
 
-The trick is to use the long path of where the dl resides. In OSGi, there is good support for 
-storing the libraries in a bundle and the Bundle-NativeCode header to describe it.
-However, JNA bypasses this. 
+### Maven
 
-This project will provide a DynamicLibrary
-class that will use the OSGi support to find
-the library path. (This will make the 
-framework extract it.) It will then load the
-library by its path, not its simple name. If
-it is closed, it will then also call
-dlclose.
+```xml
+<dependency>
+    <groupId>biz.aQute</groupId>
+    <artifactId>biz.aQute.osgi.jna.support.test.a</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
 
-The test project shows how this should be used.
-This project has native code in Git but there
-are scripts to build the native code in docker
-using dock cross, except for the mac. The
-scripts are made for the mac. On another platform you need to comment out the 
+### OSGi
+
+```
+Bundle Symbolic Name: biz.aQute.osgi.jna.support.test.a
+Version             : 1.3.0.202101071841
+```
+
+### Feature-Coordinate
+
+```
+"bundles": [
+   {
+    "id": "biz.aQute:biz.aQute.osgi.jna.support.test.a:1.3.0-SNAPSHOT"
+   }
+]
+```
+
+## Developers
+
+* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+
+## Licenses
+
+**http://opensource.org/licenses/apache2.0.php**
+  > Apache License, Version 2.0
+  >
+  > For more information see [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Copyright
+
+aQute SARL All Rights Reserved
+
+---
+aQute SARL
