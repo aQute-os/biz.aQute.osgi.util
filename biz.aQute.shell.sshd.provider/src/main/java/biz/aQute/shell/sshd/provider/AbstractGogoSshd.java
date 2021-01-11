@@ -20,15 +20,16 @@ import org.slf4j.LoggerFactory;
 import aQute.lib.io.IO;
 
 abstract class AbstractGogoSshd {
-	final static Logger		logger	= LoggerFactory.getLogger("GogoSshd");
+	final static Logger logger = LoggerFactory.getLogger("GogoSshd");
 
-	final SshServer			sshd;
-	final CommandProcessor	processor;
-	final BundleContext		context;
-	
-	volatile int			port;
+	final SshServer sshd;
+	final CommandProcessor processor;
+	final BundleContext context;
 
-	AbstractGogoSshd(BundleContext context, CommandProcessor processor, String keypath, String host, int port) throws IOException {
+	volatile int port;
+
+	AbstractGogoSshd(BundleContext context, CommandProcessor processor, String keypath, String host, int port)
+			throws IOException {
 		this.context = context;
 		this.processor = processor;
 		this.sshd = SshServer.setUpDefaultServer();
@@ -47,27 +48,23 @@ abstract class AbstractGogoSshd {
 	void open() throws IOException {
 		sshd.start();
 		port = sshd.getPort();
-		System.out.println(sshd);
-	}
-
-	void close() throws IOException {
-		sshd.stop(true);
+		logger.info("SshServer opened: %s", sshd.toString());
 	}
 
 	private Command getCommand(CommandProcessor processor) {
 
 		return new Command() {
 
-			OutputStream			out;
-			OutputStream			err;
-			InputStream				in;
-			ExitCallback			callback;
-			CommandSessionHandler	session;
+			OutputStream out;
+			OutputStream err;
+			InputStream in;
+			ExitCallback callback;
+			CommandSessionHandler session;
 
 			@Override
 			public void start(ChannelSession channel, Environment env) throws IOException {
 				try {
-					session = getCommandSessionHandler(context, channel,env, in, out, err, processor, callback);
+					session = getCommandSessionHandler(context, channel, env, in, out, err, processor, callback);
 				} catch (Exception e) {
 					logger.error("failed to create a session {}", e, e);
 					throw new RuntimeException(e);
@@ -102,13 +99,14 @@ abstract class AbstractGogoSshd {
 		};
 	}
 
-	@Deactivate
+
 	void deactivate() throws IOException {
-		sshd.stop();
+		sshd.stop(true);
 		sshd.close();
 	}
 
-	protected abstract CommandSessionHandler getCommandSessionHandler(BundleContext context, ChannelSession channel, Environment env,
-			InputStream in, OutputStream out, OutputStream err, CommandProcessor processor2, ExitCallback callback) throws Exception;
+	protected abstract CommandSessionHandler getCommandSessionHandler(BundleContext context, ChannelSession channel,
+			Environment env, InputStream in, OutputStream out, OutputStream err, CommandProcessor processor2,
+			ExitCallback callback) throws Exception;
 
 }
