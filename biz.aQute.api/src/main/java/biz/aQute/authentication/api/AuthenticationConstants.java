@@ -7,7 +7,7 @@ public interface AuthenticationConstants {
 	/**
 	 * Name
 	 */
-	String	AUTHENTICATION_SPECIFICATION_NAME		= "osgi.enroute.authenticator";
+	String	AUTHENTICATION_SPECIFICATION_NAME		= "biz.aQute.authenticator";
 	/**
 	 * Version
 	 */

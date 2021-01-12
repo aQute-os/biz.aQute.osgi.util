@@ -29,7 +29,7 @@ import biz.aQute.authorization.api.AuthorityAdmin;
 import biz.aQute.shell.sshd.config.SshdConfig;
 
 @Designate(ocd = SshdConfig.class, factory = true)
-@Component
+@Component(configurationPid = SshdConfig.PID )
 public class GogoSshdSecure extends AbstractGogoSshd {
 
 	final Authenticator authenticator;
@@ -110,11 +110,6 @@ public class GogoSshdSecure extends AbstractGogoSshd {
 			return false;
 		users.put(serverSession, authenticate);
 		return true;
-	}
-
-	@Deactivate
-	void deactivate() throws IOException {
-		super.deactivate();
 	}
 
 }

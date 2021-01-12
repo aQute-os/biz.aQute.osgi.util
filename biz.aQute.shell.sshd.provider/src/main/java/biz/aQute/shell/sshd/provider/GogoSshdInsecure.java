@@ -20,7 +20,7 @@ import org.osgi.service.metatype.annotations.Designate;
 import biz.aQute.shell.sshd.config.SshdConfigInsecure;
 
 @Designate(ocd = SshdConfigInsecure.class, factory = true)
-@Component
+@Component(configurationPid = SshdConfigInsecure.PID )
 public class GogoSshdInsecure extends AbstractGogoSshd {
 
 	@Activate
@@ -39,11 +39,6 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 			Environment env, InputStream in, OutputStream out, OutputStream err, CommandProcessor processor,
 			ExitCallback callback) throws Exception {
 		return new CommandSessionHandler(context, channel, env, in, out, err, processor, callback);
-	}
-
-	@Deactivate
-	void deactivate() throws IOException {
-		super.deactivate();
 	}
 
 }

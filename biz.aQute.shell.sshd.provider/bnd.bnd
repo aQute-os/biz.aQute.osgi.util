@@ -34,6 +34,8 @@ Bundle-Description: \
 	org.mockito.mockito-all,\
 	org.awaitility
 
+-dsannotations-options: inherit
+
 -conditionalpackage: org.apache.sshd.*, aQute.lib*
 
 DynamicImport-Package: \

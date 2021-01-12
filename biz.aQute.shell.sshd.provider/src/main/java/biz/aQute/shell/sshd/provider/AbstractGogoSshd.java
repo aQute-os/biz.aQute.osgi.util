@@ -99,7 +99,7 @@ abstract class AbstractGogoSshd {
 		};
 	}
 
-
+	@Deactivate
 	void deactivate() throws IOException {
 		sshd.stop(true);
 		sshd.close();
