@@ -23,7 +23,7 @@ Implements a simple agent to update/install/uninstall bundles
 
 ```
 Bundle Symbolic Name: biz.aQute.osgi.agent.provider
-Version             : 1.0.0.202101071841
+Version             : 1.0.0.202101120015
 ```
 
 ### Feature-Coordinate
@@ -38,7 +38,7 @@ Version             : 1.0.0.202101071841
 
 ## Developers
 
-* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
 
 ## Licenses
 

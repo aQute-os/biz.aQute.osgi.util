@@ -23,7 +23,7 @@ Hamcrest 1.3. Matchers that can be combined to create flexible expressions of in
 
 ```
 Bundle Symbolic Name: biz.aQute.wrapper.hamcrest
-Version             : 1.3.0.202101071840
+Version             : 1.3.0.202101120015
 ```
 
 ### Feature-Coordinate
@@ -38,7 +38,7 @@ Version             : 1.3.0.202101071840
 
 ## Developers
 
-* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
 
 ## Licenses
 

@@ -1,9 +1,38 @@
-# biz.aQute.api
+# biz.aQute.api.authentication
 
 ## Links
 
 * [Documentation](https://aQute.biz)
 * [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
+
+## Coordinates
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>biz.aQute</groupId>
+    <artifactId>biz.aQute.api.authentication</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
+
+### OSGi
+
+```
+Bundle Symbolic Name: biz.aQute.api.authentication
+Version             : 1.3.0.202101120015
+```
+
+### Feature-Coordinate
+
+```
+"bundles": [
+   {
+    "id": "biz.aQute:biz.aQute.api.authentication:1.3.0-SNAPSHOT"
+   }
+]
+```
 
 ## Developers
 

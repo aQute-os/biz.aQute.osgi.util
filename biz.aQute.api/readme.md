@@ -5,6 +5,11 @@
 * [Documentation](https://aQute.biz)
 * [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
+## Built Artifacts
+
+* [**biz.aQute.api.authentication**](readme.authentication.md)
+* [**biz.aQute.api.authorization**](readme.authorization.md)
+
 ## Developers
 
 * **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL

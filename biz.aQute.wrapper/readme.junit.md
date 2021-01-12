@@ -23,7 +23,7 @@ JUnit 4.13.1 is a simple framework to write repeatable tests. It is an instance 
 
 ```
 Bundle Symbolic Name: biz.aQute.wrapper.junit
-Version             : 4.13.1.202101071840
+Version             : 4.13.1.202101120015
 ```
 
 ### Feature-Coordinate
@@ -38,7 +38,7 @@ Version             : 4.13.1.202101071840
 
 ## Developers
 
-* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
 
 ## Licenses
 

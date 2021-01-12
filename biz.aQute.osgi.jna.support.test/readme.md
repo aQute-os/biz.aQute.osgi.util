@@ -21,7 +21,7 @@
 
 ```
 Bundle Symbolic Name: biz.aQute.osgi.jna.support.test.a
-Version             : 1.3.0.202101071841
+Version             : 1.3.0.202101120015
 ```
 
 ### Feature-Coordinate
@@ -36,7 +36,7 @@ Version             : 1.3.0.202101071841
 
 ## Developers
 
-* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
 
 ## Licenses
 

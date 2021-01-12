@@ -23,7 +23,7 @@ An SSH daemon that interacts with Gogo. Since many Linux distributions have remo
 
 ```
 Bundle Symbolic Name: biz.aQute.shell.sshd.provider
-Version             : 1.3.0.202101071841
+Version             : 1.3.0.202101120015
 ```
 
 ### Feature-Coordinate
@@ -38,7 +38,188 @@ Version             : 1.3.0.202101071841
 
 ## Components
 
-### biz.aQute.shell.sshd.provider.GogoSshd - *state = enabled, activation = immediate*
+### biz.aQute.shell.sshd.provider.GogoSshdSecure - *state = enabled, activation = immediate*
+
+#### Description
+
+#### Services
+
+No services.
+
+#### Properties
+
+|Name |Type |Value |
+|--- |--- |--- |
+|port |Integer |8062 |
+|address |String |"0.0.0.0" |
+|hostkey |String |"target/hostkey.ser" |
+|passwords |Boolean |false |
+|permission |String |"gogo.command:none" |
+
+#### Configuration - *policy = require*
+
+##### Factory Pid: `biz.aQute.shell.sshd`
+
+|Attribute |Value |
+|--- |--- |
+|Id |`port` |
+|Required |**true** |
+|Type |**Integer** |
+|Default |8062 |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`address` |
+|Required |**true** |
+|Type |**String** |
+|Default |"0.0.0.0" |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`hostkey` |
+|Required |**true** |
+|Type |**String** |
+|Default |"target/hostkey.ser" |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`passwords` |
+|Required |**true** |
+|Type |**Boolean** |
+|Default |false |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`permission` |
+|Required |**true** |
+|Type |**String** |
+|Default |"gogo.command:none" |
+
+#### Reference bindings
+
+|Attribute |Value |
+|--- |--- |
+|name |$001 |
+|interfaceName |org.apache.felix.service.command.CommandProcessor |
+|target | |
+|cardinality |1..1 |
+|policy |static |
+|policyOption |reluctant |
+|scope |bundle ||Attribute |Value |
+|--- |--- |
+|name |$002 |
+|interfaceName |biz.aQute.authentication.api.Authenticator |
+|target | |
+|cardinality |1..1 |
+|policy |static |
+|policyOption |reluctant |
+|scope |bundle ||Attribute |Value |
+|--- |--- |
+|name |$003 |
+|interfaceName |biz.aQute.authorization.api.Authority |
+|target | |
+|cardinality |1..1 |
+|policy |static |
+|policyOption |reluctant |
+|scope |bundle ||Attribute |Value |
+|--- |--- |
+|name |$004 |
+|interfaceName |biz.aQute.authorization.api.AuthorityAdmin |
+|target | |
+|cardinality |1..1 |
+|policy |static |
+|policyOption |reluctant |
+|scope |bundle |
+
+#### OSGi-Configurator
+
+
+```
+/*
+ * Component: biz.aQute.shell.sshd.provider.GogoSshdSecure
+ * policy:    require
+ */
+"biz.aQute.shell.sshd~FactoryNameChangeIt":{
+        //# Component properties
+        /*
+         * Type = Integer
+         * Default = 8062
+         */
+         // "port": null,
+
+        /*
+         * Type = String
+         * Default = "0.0.0.0"
+         */
+         // "address": null,
+
+        /*
+         * Type = String
+         * Default = "target/hostkey.ser"
+         */
+         // "hostkey": null,
+
+        /*
+         * Type = Boolean
+         * Default = false
+         */
+         // "passwords": null,
+
+        /*
+         * Type = String
+         * Default = "gogo.command:none"
+         */
+         // "permission": null,
+
+
+        //# Reference bindings
+        // "$001.target": "(component.pid=*)",
+        // "$002.target": "(component.pid=*)",
+        // "$003.target": "(component.pid=*)",
+        // "$004.target": "(component.pid=*)",
+
+
+        //# ObjectClassDefinition - Attributes
+        /*
+         * Required = true
+         * Type = Integer
+         * Default = 8062
+         */
+         "port": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Default = "0.0.0.0"
+         */
+         "address": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Default = "target/hostkey.ser"
+         */
+         "hostkey": null,
+
+        /*
+         * Required = true
+         * Type = Boolean
+         * Default = false
+         */
+         "passwords": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Default = "gogo.command:none"
+         */
+         "permission": null
+}
+```
+
+---
+
+### biz.aQute.shell.sshd.provider.GogoSshdInsecure - *state = enabled, activation = immediate*
 
 #### Description
 
@@ -51,19 +232,52 @@ No services.
 |Name |Type |Value |
 |--- |--- |--- |
 |port |Integer |8061 |
-|address |String |"localhost" |
+|hostkey |String |"target/host.ser" |
 
-#### Configuration - *policy = optional*
+#### Configuration - *policy = require*
 
-##### Pid: `biz.aQute.shell.sshd`
+##### Factory Pid: `biz.aQute.shell.sshd.insecure`
 
-No information available.
+|Attribute |Value |
+|--- |--- |
+|Id |`port` |
+|Required |**true** |
+|Type |**Integer** |
+|Default |8062 |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`address` |
+|Required |**true** |
+|Type |**String** |
+|Default |"0.0.0.0" |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`hostkey` |
+|Required |**true** |
+|Type |**String** |
+|Default |"target/hostkey.ser" |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`passwords` |
+|Required |**true** |
+|Type |**Boolean** |
+|Default |false |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`permission` |
+|Required |**true** |
+|Type |**String** |
+|Default |"gogo.command:none" |
 
 #### Reference bindings
 
 |Attribute |Value |
 |--- |--- |
-|name |$000 |
+|name |$001 |
 |interfaceName |org.apache.felix.service.command.CommandProcessor |
 |target | |
 |cardinality |1..1 |
@@ -76,10 +290,10 @@ No information available.
 
 ```
 /*
- * Component: biz.aQute.shell.sshd.provider.GogoSshd
- * policy:    optional
+ * Component: biz.aQute.shell.sshd.provider.GogoSshdInsecure
+ * policy:    require
  */
-"biz.aQute.shell.sshd":{
+"biz.aQute.shell.sshd.insecure~FactoryNameChangeIt":{
         //# Component properties
         /*
          * Type = Integer
@@ -89,23 +303,56 @@ No information available.
 
         /*
          * Type = String
-         * Default = "localhost"
+         * Default = "target/host.ser"
          */
-         // "address": null,
+         // "hostkey": null,
 
 
         //# Reference bindings
-        // "$000.target": "(component.pid=*)"
+        // "$001.target": "(component.pid=*)",
 
 
         //# ObjectClassDefinition - Attributes
-        // (No PidOcd available.)
+        /*
+         * Required = true
+         * Type = Integer
+         * Default = 8062
+         */
+         "port": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Default = "0.0.0.0"
+         */
+         "address": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Default = "target/hostkey.ser"
+         */
+         "hostkey": null,
+
+        /*
+         * Required = true
+         * Type = Boolean
+         * Default = false
+         */
+         "passwords": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Default = "gogo.command:none"
+         */
+         "permission": null
 }
 ```
 
 ## Developers
 
-* **Peter Kriens** (osgi) / [info@osgi.org](mailto:info@osgi.org) @ OSGi Alliance
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
 
 ## Licenses
 
