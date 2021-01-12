@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.Dictionary;
 import java.util.Map;
 
-import org.junit.Test;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -25,7 +24,6 @@ public class Readme {
 		String host() default "localhost";
 	}
 
-	@Test
 	public void testSimple() throws Exception {
 		ConfigHelper<FooConfig> ch = new ConfigHelper<>(FooConfig.class, cm);
 		Map<String, Object> read = ch.read("foo.bar");
