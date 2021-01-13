@@ -35,8 +35,6 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 			@Override
 			public boolean authenticate(String username, String password, ServerSession session)
 					throws PasswordChangeRequiredException, AsyncAuthException {
-				System.out.println("user "+username + " " + config.user());
-				System.out.println("pw "+password + " " + config.password());
 				return config.user().equals( username) && config.password().equals(password);
 			}
 		});
