@@ -7,13 +7,14 @@ import java.io.OutputStream;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
-import org.apache.sshd.server.auth.password.AcceptAllPasswordAuthenticator;
-import org.apache.sshd.server.auth.pubkey.AcceptAllPublickeyAuthenticator;
+import org.apache.sshd.server.auth.AsyncAuthException;
+import org.apache.sshd.server.auth.password.PasswordAuthenticator;
+import org.apache.sshd.server.auth.password.PasswordChangeRequiredException;
 import org.apache.sshd.server.channel.ChannelSession;
+import org.apache.sshd.server.session.ServerSession;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
@@ -29,8 +30,16 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 		super(context, processor, config.hostkey(), "localhost", config.port());
 		logger.warn("starting insecure ssh server on port localhost:{}", config.port());
 
-		sshd.setPasswordAuthenticator(AcceptAllPasswordAuthenticator.INSTANCE);
-		sshd.setPublickeyAuthenticator(AcceptAllPublickeyAuthenticator.INSTANCE);
+		sshd.setPasswordAuthenticator(new PasswordAuthenticator() {
+			
+			@Override
+			public boolean authenticate(String username, String password, ServerSession session)
+					throws PasswordChangeRequiredException, AsyncAuthException {
+				System.out.println("user "+username + " " + config.user());
+				System.out.println("pw "+password + " " + config.password());
+				return config.user().equals( username) && config.password().equals(password);
+			}
+		});
 		open();
 	}
 

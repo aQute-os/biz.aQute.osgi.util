@@ -22,4 +22,16 @@ public @interface SshdConfigInsecure {
 	 */
 	@AttributeDefinition(description = "Where to store the private key. This must be in forward slashes.")
 	String hostkey() default "target/host.ser";
+	
+	/**
+	 * The only accepted user name
+	 */
+	@AttributeDefinition(description = "The only accepted user name")
+	String user() default "brave";
+	
+	/**
+	 * The only accepted user name. THIS IS NOT SECURE!
+	 */
+	@AttributeDefinition(description = "The only accepted password")
+	String password() default "insecure";
 }
