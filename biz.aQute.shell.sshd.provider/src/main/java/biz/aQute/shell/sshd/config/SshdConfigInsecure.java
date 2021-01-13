@@ -1,6 +1,7 @@
 package biz.aQute.shell.sshd.config;
 
 import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 /**
@@ -32,6 +33,6 @@ public @interface SshdConfigInsecure {
 	/**
 	 * The only accepted user name. THIS IS NOT SECURE!
 	 */
-	@AttributeDefinition(description = "The only accepted password")
+	@AttributeDefinition(type = AttributeType.PASSWORD,description = "The only accepted password")
 	String password() default "insecure";
 }
