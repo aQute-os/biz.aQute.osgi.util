@@ -36,13 +36,14 @@ public class AnsiFilter {
 	int						cursor	= 0;
 	int						start	= 0;
 	String					current	= "";
-
+	boolean					hex;
+	
 	public AnsiFilter(int w, int h, InputStream in, OutputStream out, String term, Charset charset) {
 		this.w = w;
 		this.h = h;
 		this.in = in;
 		this.term = term;
-		this.ansi = "ansi".equalsIgnoreCase(term);
+		this.ansi = !"none".equalsIgnoreCase(term);
 
 		OutputStream tout = out;
 		if (ansi) {
@@ -80,6 +81,10 @@ public class AnsiFilter {
 				if (c < 0)
 					throw new EOFException();
 
+				if ( hex ) {
+					System.err.printf("%02X ", c);
+				}
+				
 				switch (c) {
 				case '\n': // enter;
 				case '\r': // enter;
@@ -94,14 +99,18 @@ public class AnsiFilter {
 							continue outer;
 						}
 						current = match.get();
-
 					}
-					history.add(0, current);
+					if (current.trim().length() > 0)
+						history.add(0, current);
 					return current;
 
 				case 0x01:
 					cursor = 0;
 					rewrite();
+					break;
+					
+				case 0x02:
+					hex=!hex;
 					break;
 
 				case 0x05:
@@ -121,10 +130,7 @@ public class AnsiFilter {
 					break;
 
 				case DEL:
-					if (buffer.length() > cursor) {
-						buffer.delete(cursor, cursor + 1);
-						rewrite();
-					}
+					delete();
 					break;
 
 				case ESCAPE:
@@ -141,6 +147,13 @@ public class AnsiFilter {
 
 				}
 			}
+		}
+	}
+
+	private void delete() throws IOException {
+		if (buffer.length() > cursor) {
+			buffer.delete(cursor, cursor + 1);
+			rewrite();
 		}
 	}
 
@@ -182,6 +195,14 @@ public class AnsiFilter {
 					buffer = new StringBuilder(history.get(where));
 					cursor = buffer.length();
 					rewrite();
+				}
+				break;
+
+			case '3':
+				c = reader.read();
+				switch (c) {
+				case '~':
+					delete();
 				}
 				break;
 

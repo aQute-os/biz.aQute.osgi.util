@@ -81,7 +81,6 @@ class CommandSessionHandler implements Closeable, Runnable {
 	}
 
 	public void run() {
-		System.out.println("running " + this);
 		try {
 			while (!thread.isInterrupted())
 				try {
@@ -150,8 +149,6 @@ class CommandSessionHandler implements Closeable, Runnable {
 
 	@Override
 	public void close() throws IOException {
-		System.out.println("closing " + this);
-		System.out.println("interrupt " + this);
 		thread.interrupt();
 		try {
 			thread.join(5000);
