@@ -42,6 +42,13 @@ DynamicImport-Package: \
     biz.aQute.authentication.api,\
     biz.aQute.authorization.api
 
+Provide-Capability: \
+    org.apache.felix.gogo; \
+        org.apache.felix.gogo="shell.implementation"; \
+        version:Version="1.0.0"; \
+        implementation.name="gogo.shell"
+
+
 
 Import-Package: \
     net.i2p.crypto.*;resolution:=optional, \
