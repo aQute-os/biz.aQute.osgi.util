@@ -167,10 +167,18 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 					IO.close(server);
 				}
 		} catch (InterruptedException e) {
-			// ignore
+			return;
 		} finally {
 			for (ModbusTCPIncoming client : clients) {
 				IO.close(client);
+			}
+
+			for (ModbusTCPIncoming client : clients) {
+				try {
+					client.join(5000);
+				} catch (InterruptedException e) {
+					// ignore
+				}
 			}
 		}
 
