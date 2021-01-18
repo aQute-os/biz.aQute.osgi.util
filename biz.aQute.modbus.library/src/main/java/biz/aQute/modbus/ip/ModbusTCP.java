@@ -44,6 +44,11 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 	@Override
 	public void close() {
 		thread.interrupt();
+		try {
+			thread.join(5000);
+		} catch (InterruptedException e) {
+			// ignore
+		}
 		IO.close(this.server);
 	}
 
