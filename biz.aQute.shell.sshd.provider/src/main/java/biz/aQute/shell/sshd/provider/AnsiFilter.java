@@ -113,24 +113,27 @@ public class AnsiFilter {
 					hex=!hex;
 					break;
 
+				case 0x03:
+					buffer.setLength(0);
+					cursor = 0;
+					rewrite();
+					break;
+
+				case 0x04:
+					return null;
+
 				case 0x05:
 					cursor = buffer.length();
 					rewrite();
 					break;
 
-				case 0x03:
-					return null;
-
+				case 0x7F:
 				case BS:
 					if (cursor > 0) {
 						buffer.delete(cursor - 1, cursor);
 						cursor--;
 						rewrite();
 					}
-					break;
-
-				case DEL:
-					delete();
 					break;
 
 				case ESCAPE:
