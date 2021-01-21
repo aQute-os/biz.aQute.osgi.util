@@ -44,12 +44,22 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 	@Override
 	public void close() {
 		thread.interrupt();
+		IO.close(this.server);
+		clients.forEach(IO::close);
 		try {
 			thread.join(5000);
 		} catch (InterruptedException e) {
+			Thread.currentThread()
+				.interrupt();
 			// ignore
 		}
-		IO.close(this.server);
+		clients.forEach(t -> {
+			try {
+				t.join(5000);
+			} catch (InterruptedException e) {
+				t.interrupt();
+			}
+		});
 	}
 
 	class ModbusTCPIncoming extends Thread implements Closeable {
@@ -129,6 +139,7 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 		@Override
 		public void close() {
 			this.interrupt();
+			IO.close(channel);
 		}
 
 		@Override
