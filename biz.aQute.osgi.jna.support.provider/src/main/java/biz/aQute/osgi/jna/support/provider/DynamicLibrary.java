@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -20,6 +19,7 @@ import org.osgi.framework.FrameworkUtil;
 
 import com.sun.jna.Library;
 import com.sun.jna.Library.Handler;
+import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 
@@ -70,7 +70,6 @@ import aQute.libg.parameters.ParameterMap;
  */
 
 public class DynamicLibrary<T extends Library> implements Closeable {
-	final static Random	random	= new Random();
 	final static Method	findLibrary;
 	final T				proxy;
 	final Class<T>		type;
@@ -78,9 +77,11 @@ public class DynamicLibrary<T extends Library> implements Closeable {
 	final NativeLibrary	lib;
 	final Closeable		deps;
 	final Bundle		bundle;
-	T					facade;
+	final T				facade;
+	boolean				exclusive	= true;
 
-	final Object		lock	= new Object();
+	final Object		lock		= new Object();
+	boolean				closed		= false;
 
 	/*
 	 * The findLibrary is protected, so sadly we need to set setAccessible
@@ -122,7 +123,7 @@ public class DynamicLibrary<T extends Library> implements Closeable {
 					deps.add(dynlib);
 				else if (mandatory)
 					throw new IllegalArgumentException(
-							"Dependency mandatory (does not start with -) but could not find it. ");
+						"Dependency mandatory (does not start with -) but could not find it. ");
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
@@ -160,9 +161,11 @@ public class DynamicLibrary<T extends Library> implements Closeable {
 
 			this.path = path;
 			this.proxy = Native.loadLibrary(this.path, type);
-			this.facade = (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[] { type }, (p, m, a) -> {
+			this.facade = (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[] {
+				type
+			}, (p, m, a) -> {
 				synchronized (lock) {
-					if (facade == null)
+					if (closed)
 						throw new IllegalStateException("The library is already closed " + this);
 					return m.invoke(proxy, a);
 				}
@@ -193,16 +196,40 @@ public class DynamicLibrary<T extends Library> implements Closeable {
 		}
 	}
 
+	/**
+	 * Return if this library is loaded
+	 *
+	 * @return true if is loaded
+	 */
 	public boolean isLoaded() {
 		return lib != null;
 	}
 
+	/**
+	 * Close the dynamic library. This will do a GC
+	 */
 	@Override
 	public void close() throws IOException {
+
 		synchronized (lock) {
-			if (facade == null)
+			if (closed)
 				return;
-			facade = null;
+			closed = true;
+		}
+
+		if (proxy != null) {
+
+			// gc should happen before
+			// because there might still be
+			// memory out there that can be gcd.
+			// If we wait, it might close after the
+			// lib is gc'ed. This should only happen
+			// once so we do it on the primary
+
+			if (exclusive)
+				Memory.disposeAll();
+			else
+				System.gc();
 		}
 
 		if (isLoaded())
@@ -210,13 +237,32 @@ public class DynamicLibrary<T extends Library> implements Closeable {
 
 		if (deps != null)
 			deps.close();
-
-		System.gc();
 	}
 
+	/**
+	 * Get the facade
+	 *
+	 * @return the facade or not present
+	 */
 	public Optional<T> get() {
 		synchronized (lock) {
+			if (closed)
+				return Optional.empty();
 			return Optional.ofNullable(facade);
+		}
+	}
+
+	/**
+	 * Get the library
+	 *
+	 * @return the facade or not present
+	 */
+	public Optional<T> getLibrary() {
+		synchronized (lock) {
+			if (closed)
+				return Optional.empty();
+
+			return Optional.ofNullable(proxy);
 		}
 	}
 
@@ -231,22 +277,34 @@ public class DynamicLibrary<T extends Library> implements Closeable {
 
 			if (this.bundle != null) {
 				BundleContext context = bundle.getBundleContext();
-				String [] fwconstants = new String[] {Constants.FRAMEWORK_OS_NAME, Constants.FRAMEWORK_OS_VERSION, Constants.FRAMEWORK_LANGUAGE,Constants.FRAMEWORK_PROCESSOR};
-				for ( String constant : fwconstants) {
+				String[] fwconstants = new String[] {
+					Constants.FRAMEWORK_OS_NAME, Constants.FRAMEWORK_OS_VERSION, Constants.FRAMEWORK_LANGUAGE,
+					Constants.FRAMEWORK_PROCESSOR
+				};
+				for (String constant : fwconstants) {
 					sb.format("%-30s  %s\n", constant, context.getProperty(constant));
 				}
-				String bnc = bundle.getHeaders().get(Constants.BUNDLE_NATIVECODE);
-				if ( bnc == null) {
+				String bnc = bundle.getHeaders()
+					.get(Constants.BUNDLE_NATIVECODE);
+				if (bnc == null) {
 					sb.format("No %s header in manifest", Constants.BUNDLE_NATIVECODE);
 				} else {
-					ParameterMap	nativeHeader = new ParameterMap(bnc);
-					nativeHeader.entrySet().forEach( e-> {
-						sb.format("    %-28s%s\n", e.getKey(), e.getValue());
-					});
+					ParameterMap nativeHeader = new ParameterMap(bnc);
+					nativeHeader.entrySet()
+						.forEach(e -> {
+							sb.format("    %-28s%s\n", e.getKey(), e.getValue());
+						});
 				}
 			}
 
 			return sb.toString();
 		}
+	}
+
+	/**
+	 * Allow this class to clear all memory before it cleans up.
+	 */
+	public void setExclusive() {
+		this.exclusive = true;
 	}
 }
