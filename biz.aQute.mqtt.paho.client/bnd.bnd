@@ -1,0 +1,30 @@
+#
+# biz.aQute.mqtt.paho.client PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.osgi.dto,\
+	org.osgi.framework,\
+	org.eclipse.paho.client.mqttv3, \
+    org.osgi.util.promise,\
+    org.osgi.util.function,\
+	slf4j.api,\
+    biz.aQute.api.broker,\
+    biz.aQute.result,\
+    aQute.libg
+	
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core, \
+    biz.aQute.osgi.configuration.util,\
+    org.awaitility, \
+    biz.aQute.mqtt.moquette.server, \
+    slf4j.simple
+    
+    
+

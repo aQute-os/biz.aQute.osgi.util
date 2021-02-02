@@ -6,5 +6,7 @@
 	osgi.annotation,\
 	org.osgi.util.promise,\
 	org.osgi.namespace.implementation,\
-	org.osgi.annotation.bundle
+	org.osgi.annotation.bundle,\
+	org.osgi.dto
+
 -sub: *.bnd
