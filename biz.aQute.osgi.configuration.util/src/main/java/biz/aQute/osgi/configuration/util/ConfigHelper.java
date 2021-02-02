@@ -50,6 +50,21 @@ public class ConfigHelper<T> {
 		this.delegate = (T) Proxy.newProxyInstance(type.getClassLoader(), new Class<?>[] { type }, this::invoke);
 	}
 
+	public class Setter<X> {
+		public ConfigHelper<T> to(X newer) throws Exception {
+			assert lastInvocation != null : "Missing invocation of target interface";
+
+			String key = Converter.mangleMethodName(lastInvocation.getName());
+			Object value = Converter.cnv(lastInvocation.getGenericReturnType(), newer);
+			properties.put(key, value);
+			lastInvocation = null;
+			return ConfigHelper.this;
+		}
+	}
+
+	public <X> Setter<X> set(X result) {
+		return new Setter<>();
+	}
 	/*
 	 * Invocation for a method on the configuration's interface proxy
 	 */
