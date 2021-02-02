@@ -1,0 +1,17 @@
+#
+# biz.aQute.scheduler.basic.provider PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	slf4j.api,\
+	biz.aQute.api.scheduler,\
+	org.osgi.util.promise
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+
