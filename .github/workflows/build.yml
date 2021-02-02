@@ -26,4 +26,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-reports
-          path: '*/target/reports/'
+          path: |
+            */target/reports/
