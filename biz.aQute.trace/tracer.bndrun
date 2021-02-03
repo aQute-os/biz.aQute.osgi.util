@@ -12,8 +12,7 @@ x=    aQute.trace.extra= \
         org.apache.felix.scr.impl.inject.methods.ActivateMethod:doFindMethod:DS, \
         
 //-runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
--runfw \
-    lib/org.eclipse.osgi.jar;version=file
+-runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
 
 
 -runsystempackages: sun.misc
@@ -32,7 +31,6 @@ x=    aQute.trace.extra= \
 	org.apache.felix.http.servlet-api;version='[1.1.2,1.1.3)',\
 	org.apache.felix.webconsole;version='[4.3.8,4.3.9)',\
 	org.apache.felix.webconsole.plugins.memoryusage;version='[1.0.6,1.0.7)',\
-	org.apache.servicemix.bundles.commons-io;version='[1.4.0,1.4.1)',\
 	org.apache.felix.http.jetty;version='[4.0.8,4.0.9)',\
 	org.apache.felix.gogo.command;version='[1.1.0,1.1.1)',\
 	org.apache.felix.scr;version='[2.1.16,2.1.17)',\
@@ -41,14 +39,10 @@ x=    aQute.trace.extra= \
 	org.apache.felix.inventory;version='[1.0.4,1.0.5)',\
 	org.osgi.service.log;version='[1.4.0,1.4.1)',\
 	org.osgi.util.pushstream;version='[1.0.1,1.0.2)',\
-	biz.aQute.trace.gui;version='[1.0.0,1.0.1)',\
-    biz.aQute.trace.tester;version='[1.0.0,1.0.1)',\
-    biz.aQute.trace.tester6;version='[1.0.0,1.0.1)',\
-    biz.aQute.trace.tester2;version='[1.0.0,1.0.1)',\
-    biz.aQute.trace.tester3;version='[1.0.0,1.0.1)',\
-    biz.aQute.trace.tester4;version='[1.0.0,1.0.1)',\
-    biz.aQute.trace.tester5;version='[1.0.0,1.0.1)',\
 	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\
-	org.apache.felix.gogo.shell;version='[1.1.2,1.1.3)'
+	org.apache.felix.gogo.shell;version='[1.1.2,1.1.3)',\
+	biz.aQute.trace.gui;version=snapshot,\
+	biz.aQute.trace.tester;version=snapshot,\
+	org.apache.commons.io;version='[2.5.0,2.5.1)'
 	
 -runtrace true

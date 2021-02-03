@@ -1,12 +1,13 @@
 package biz.aQute.mqtt.paho.client;
 
-import biz.aQute.broker.api.QoS;
-
 public @interface TopicConfiguration {
-	String local();
-	String url();
-	String remote() default "";
-	QoS qos() default QoS.AT_LEAST_ONCE;
+	String topic();
+
+	String broker();
+
 	String type();
-	boolean retain();
+
+	boolean retain() default false;
+
+	int qos() default 0;
 }

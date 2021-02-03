@@ -1,0 +1,15 @@
+#
+# biz.aQute.cryptonicom PROVIDER BUNDLE
+#
+
+-buildpath:  \
+	osgi.annotation, \
+	org.osgi.service.component.annotations, \
+	biz.aQute.api.pki
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+

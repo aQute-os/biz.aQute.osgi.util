@@ -1,20 +1,22 @@
 package biz.aQute.mqtt.paho.client;
 
-import java.io.Closeable;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.awaitility.Awaitility;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.osgi.dto.DTO;
-import org.osgi.util.promise.PromiseFactory;
 
 import aQute.lib.io.IO;
+import biz.aQute.broker.api.Subscriber;
 import biz.aQute.osgi.configuration.util.ConfigSetter;
 import io.moquette.broker.Server;
 import io.moquette.broker.config.FileResourceLoader;
@@ -23,8 +25,7 @@ import io.moquette.broker.config.IResourceLoader;
 import io.moquette.broker.config.ResourceLoaderConfig;
 
 public class TopicTest {
-	final PromiseFactory pf = new PromiseFactory(null);
-	Server mqttBroker;
+	Server					mqttBroker;
 
 	@Before
 	public void setup() throws InterruptedException, IOException {
@@ -34,44 +35,62 @@ public class TopicTest {
 		mqttBroker = new Server();
 		mqttBroker.startServer(classPathConfig, Collections.emptyList());
 	}
-	
+
 	@After
 	public void after() {
 		mqttBroker.stopServer();
 	}
-	
+
 	public static class TestDTO extends DTO {
 		public String	foo;
 		public boolean	bar;
 	}
 
-	@Ignore
 	@Test
 	public void testSimple() throws Exception {
 		ConfigSetter<TopicConfiguration> cs = new ConfigSetter<>(TopicConfiguration.class);
 		TopicConfiguration t = cs.delegate();
-		cs.set(t.local()).to("local");
-		cs.set(t.remote()).to("remote");
+		cs.set(t.topic()).to("remote");
 		cs.set(t.retain()).to(true);
-		cs.set(t.url()).to("tcp://CLIENTID@localhost:" + mqttBroker.getPort());
+		String broker = "ssl://CLIENTID@localhost:" + mqttBroker.getPort();
+		cs.set(t.broker()).to(broker);
 
-		MqttCentral mqttCentral = new MqttCentral(pf);
+		MqttCentral mqttCentral = new MqttCentral();
+		try {
+			List<TestDTO> dtos = new CopyOnWriteArrayList<>();
 
-		TopicImpl ti = new TopicImpl(mqttCentral, t);
-		List<TestDTO> dtos = new CopyOnWriteArrayList<>();
+			Subscriber<TestDTO> subscriber = new Subscriber<TestDTO>() {
+				@Override
+				public void receive(TestDTO data) {
+					System.out.println(data);
+					dtos.add(data);
+				}
+			};
+			
+			Map<String, Object> sp = new HashMap<>();
+			sp.put("broker", broker);
+			sp.put("topics", "remote");
+			mqttCentral.addSubscriber(subscriber, sp);
 
-		try (Closeable subscribe = ti.subscribe(d -> {
-			System.out.println(d);
-			dtos.add(d);
-		}, TestDTO.class)) {
-
-			Thread.sleep(1000);
+			TopicImpl topicImpl = new TopicImpl(mqttCentral, t);
 			TestDTO test = new TestDTO();
 			test.bar = true;
 			test.foo = "Foo";
-			ti.publish(test);
+			topicImpl.publish(test);
 
 			Awaitility.await().until(() -> !dtos.isEmpty());
+			
+			assertThat(mqttCentral.clients).hasSize(1);
+			
+			mqttCentral.removeSubscriber(subscriber);
+			
+			assertThat(mqttCentral.clients).hasSize(1);
+			topicImpl.deactivate();
+			assertThat(mqttCentral.clients).hasSize(0);
+
+			
+		} finally {
+			mqttCentral.deactivate();
 		}
 	}
 }
