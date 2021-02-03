@@ -33,11 +33,6 @@ public class Activator implements BundleActivator {
 		doExtra(context);
 
 		context.registerService(WeavingHook.class, this.weaver, null);
-
-		context.addServiceListener(e -> {
-		});
-		context.addBundleListener(e -> {});
-		context.addFrameworkListener(e -> {});
 	}
 
 	private void doExtra(BundleContext context) {
