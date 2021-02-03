@@ -52,7 +52,7 @@ public class TopicTest {
 		TopicConfiguration t = cs.delegate();
 		cs.set(t.topic()).to("remote");
 		cs.set(t.retain()).to(true);
-		String broker = "ssl://CLIENTID@localhost:" + mqttBroker.getPort();
+		String broker = "tcp://CLIENTID@localhost:" + mqttBroker.getPort();
 		cs.set(t.broker()).to(broker);
 
 		MqttCentral mqttCentral = new MqttCentral();
