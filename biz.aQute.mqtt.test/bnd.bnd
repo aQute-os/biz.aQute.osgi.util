@@ -1,0 +1,21 @@
+#
+# biz.aQute.mqtt.test PROVIDER BUNDLE
+#
+
+-buildpath:  \
+	osgi.annotation, \
+	org.osgi.service.component.annotations
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	biz.aQute.launchpad,\
+	org.osgi.service.cm,\
+	biz.aQute.osgi.configuration.util,\
+	biz.aQute.api.broker, \
+	slf4j.api, \
+	slf4j.simple, \
+	org.apache.felix.framework
+

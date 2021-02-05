@@ -2,11 +2,12 @@
 # biz.aQute.mqtt.moquette.server PROVIDER BUNDLE
 #
 
--buildpath:  \
-	osgi.annotation, \
-	org.osgi.service.component.annotations, \
-    io.moquette:moquette-broker, \
-    io.netty:netty-all
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	io.moquette:moquette-broker,\
+	io.netty:netty-all,\
+	org.osgi.service.metatype.annotations
 
 -testpath: \
 	biz.aQute.wrapper.junit,\

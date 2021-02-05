@@ -41,6 +41,8 @@ Bundle-Developers:      aQute; \
 Bundle-DocURL:          https://aQute.biz
 
 
+-includepackage: *;from:=classes
+
 Git-Descriptor:         ${system-allow-fail;git describe --dirty --always}
 Git-SHA:                ${system-allow-fail;git rev-list -1 HEAD}
 

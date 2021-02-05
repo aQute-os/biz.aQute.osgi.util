@@ -7,13 +7,14 @@
 	org.osgi.service.component.annotations,\
 	org.osgi.dto,\
 	org.osgi.framework,\
-	org.eclipse.paho.client.mqttv3, \
-    org.osgi.util.promise,\
-    org.osgi.util.function,\
+	org.eclipse.paho.client.mqttv3,\
+	org.osgi.util.promise,\
+	org.osgi.util.function,\
 	slf4j.api,\
-    biz.aQute.api.broker,\
-    biz.aQute.result,\
-    aQute.libg
+	biz.aQute.api.broker,\
+	biz.aQute.result,\
+	aQute.libg,\
+	org.osgi.service.metatype.annotations
 	
 	
 

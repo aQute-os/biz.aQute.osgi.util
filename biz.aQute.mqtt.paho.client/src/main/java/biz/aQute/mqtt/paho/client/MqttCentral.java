@@ -1,15 +1,10 @@
 package biz.aQute.mqtt.paho.client;
 
-import java.io.Closeable;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -21,24 +16,20 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.eclipse.paho.client.mqttv3.util.Strings;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.util.promise.Promise;
+import org.osgi.util.promise.PromiseFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aQute.lib.collections.MultiMap;
-import aQute.lib.converter.Converter;
 import aQute.lib.exceptions.Exceptions;
 import aQute.lib.io.IO;
 import aQute.lib.json.JSONCodec;
 import biz.aQute.broker.api.Subscriber;
 
 @Component(service = MqttCentral.class, immediate = true)
-class MqttCentral {
+public class MqttCentral {
 	Logger					log		= LoggerFactory.getLogger("biz.aQute.mqtt.paho");
 	final static JSONCodec	codec	= new JSONCodec();
-
 	final static Method		receive;
 	static {
 		try {
@@ -49,14 +40,22 @@ class MqttCentral {
 		}
 
 	}
+	// guard
+	final Object					lock				= new Object();
+	final Map<URI, Promise<Client>>	clients				= new HashMap<>();
+	final PromiseFactory			promiseFactory		= new PromiseFactory(null);
+	// all access guarded by MqttCentral.lock
+	int								openClients			= 0;
+	long							connectionTimeout	= 30000;
 
 	// all access guarded by MqttCentral.lock
 	class Client {
 		final URI			uri;
 		final MqttClient	client;
-		final Set<Object>	clients	= new HashSet<>();
+		final Set<Object>	owners	= new HashSet<>();
 		final String		uuid	= UUID.randomUUID().toString();
 
+		// all access guarded by MqttCentral.lock
 		Client(URI uri) {
 			try {
 				String clientId = uri.getUserInfo();
@@ -69,152 +68,76 @@ class MqttCentral {
 				options.setAutomaticReconnect(true);
 				options.setCleanSession(false);
 				client.connect(options);
+				System.out.println("connected " + client.isConnected() + " " + client.getCurrentServerURI());
+				openClients++;
 			} catch (MqttException e) {
+				e.printStackTrace();
 				throw Exceptions.duck(e);
 			}
 		}
 
+		// all access guarded by MqttCentral.lock
 		boolean remove(Object owner) {
-			clients.remove(owner);
-			if (clients.isEmpty()) {
-				IO.close(client);
+			owners.remove(owner);
+			if (owners.isEmpty()) {
+				System.out.println("clients empty");
+				clients.remove(uri);
+				promiseFactory.submit(() -> {
+					try {
+						client.disconnectForcibly();
+						client.close(true);
+						openClients--;
+						lock.notifyAll();
+						System.out.println("closed");
+					} catch (MqttException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return null;
+				});
 				return true;
 			}
 			return false;
 		}
-
 	}
 
-	// guard
-	final Object						lock				= new Object();
-	final Map<URI, Client>				clients				= new HashMap<>();
-
-	long								connectionTimeout	= 30000;
-	final Map<Subscriber<?>, Assistant>	subscribers			= new HashMap<>();
-	final MultiMap<String, Assistant>	callbacks			= new MultiMap<>();
-
-	
-	
-	
 	@Deactivate
 	void deactivate() {
-		clients.values().removeIf(c -> {
-			IO.close(c.client);
-			return true;
-		});
+		clients.values().forEach(p -> p.onSuccess(c -> IO.close(c.client)));
 	}
 
-	MqttClient getClient(Object owner, URI uri) {
-		synchronized (lock) {
-			Client client = clients.computeIfAbsent(uri, Client::new);
-			client.clients.add(owner);
-			return client.client;
-		}
-	}
-
-	void bye(Object topicImpl) {
-		synchronized (clients) {
-			clients.values().removeIf(c -> {
-				return c.remove(topicImpl);
-			});
-		}
-	}
-
-	private Closeable subscribe(URI broker, String topic, Assistant assistant) throws Exception {
+	Promise<MqttClient> getClient(Object owner, URI uri) {
 
 		synchronized (lock) {
-			if (!callbacks.containsKey(topic)) {
-				getClient(assistant, broker).subscribe(topic, 1, (tpc, message) -> {
-					synchronized (lock) {
-						receive(tpc, message.getPayload());
-					}
-				});
+
+			Promise<Client> client = clients.get(uri);
+			if (client == null) {
+				client = promiseFactory.submit(() -> new Client(uri));
+				clients.put(uri, client);
 			}
-			callbacks.add(topic, assistant);
-		}
 
-		return () -> {
-			synchronized (lock) {
-				if (callbacks.remove(topic, assistant) && callbacks.isEmpty()) {
-					try {
-						getClient(assistant, assistant.broker).unsubscribe(topic);
-					} catch (MqttException e) {
-						// ignore
-					}
+			return client.map(c -> c.client);
+		}
+	}
+
+	void bye(Object owner) {
+		synchronized (lock) {
+			Collection<Promise<Client>> values = new HashSet<>(clients.values());
+			values.forEach(p -> p.onSuccess(c -> {
+				synchronized (lock) {
+					c.remove(owner);
 				}
-			}
-
-		};
-	}
-
-	public void receive(String topic, byte[] payload) {
-		synchronized (lock) {
-			callbacks.getOrDefault(topic, Collections.emptyList()).forEach(assistant -> assistant.receive(payload));
+			}));
 		}
 	}
-
-	class Assistant {
-
-		final Subscriber<?>		subscriber;
-		final URI				broker;
-		final List<Closeable>	subscriptions	= new ArrayList<>();
-		final Type				type;
-
-		Assistant(Subscriber<?> subscriber, String broker, String[] topics) throws Exception {
-			this.subscriber = subscriber;
-			this.broker = new URI(broker).normalize();
-			this.type = getType(subscriber.getClass());
-			for (String topic : topics) {
-				Closeable subscription = subscribe(this.broker, topic, this);
-				subscriptions.add(subscription);
+	
+	void sync() throws InterruptedException {
+		long deadline = System.currentTimeMillis() + 10000;
+		synchronized(lock) {
+			while( openClients > 0 && System.currentTimeMillis() < deadline) {
+				lock.wait(100);
+				
 			}
-		}
-
-		private Type getType(Class<?> clazz) {
-			if (clazz == null)
-				throw new IllegalArgumentException(
-						"The subscriber must implement the Subscriber<T> type to participate");
-
-			for (Type t : clazz.getGenericInterfaces()) {
-				if (t instanceof ParameterizedType) {
-					if (((ParameterizedType) t).getRawType() == Subscriber.class)
-						return ((ParameterizedType) t).getActualTypeArguments()[0];
-				}
-			}
-			return getType(clazz.getSuperclass());
-		}
-
-		public void receive(byte[] payload) {
-			try {
-				Object object = codec.dec().from(payload).get(type);
-				receive.invoke(subscriber, object);
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-		void close() {
-			subscriptions.forEach(IO::close);
-			bye(this);
-		}
-
-	}
-
-	@Reference(target = "(&(broker=*)(topics=*))", cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
-	void addSubscriber(Subscriber<?> subscriber, Map<String, Object> serviceProperties) throws Exception {
-		String broker = Converter.cnv(String.class, serviceProperties.get(Subscriber.broker));
-		String[] topics = Converter.cnv(String[].class, serviceProperties.get(Subscriber.topics));
-		Assistant assistant = new Assistant(subscriber, broker, topics);
-		synchronized (lock) {
-			subscribers.put(subscriber, assistant);
-		}
-	}
-
-	void removeSubscriber(Subscriber<?> subscriber) {
-		synchronized (lock) {
-			subscribers.remove(subscriber).close();
 		}
 	}
 

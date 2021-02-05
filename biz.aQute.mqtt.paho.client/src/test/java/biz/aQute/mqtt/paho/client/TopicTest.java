@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.awaitility.Awaitility;
@@ -17,6 +15,8 @@ import org.osgi.dto.DTO;
 
 import aQute.lib.io.IO;
 import biz.aQute.broker.api.Subscriber;
+import biz.aQute.broker.api.Topic;
+import biz.aQute.mqtt.paho.client.config.BrokerConfig;
 import biz.aQute.osgi.configuration.util.ConfigSetter;
 import io.moquette.broker.Server;
 import io.moquette.broker.config.FileResourceLoader;
@@ -48,17 +48,18 @@ public class TopicTest {
 
 	@Test
 	public void testSimple() throws Exception {
-		ConfigSetter<TopicConfiguration> cs = new ConfigSetter<>(TopicConfiguration.class);
-		TopicConfiguration t = cs.delegate();
-		cs.set(t.topic()).to("remote");
-		cs.set(t.retain()).to(true);
-		String broker = "tcp://CLIENTID@localhost:" + mqttBroker.getPort();
-		cs.set(t.broker()).to(broker);
+		ConfigSetter<BrokerConfig> cs = new ConfigSetter<>(BrokerConfig.class);
+		BrokerConfig t = cs.delegate();
+		cs.set(t.name()).to("test");
+		cs.set(t.uri()).to("tcp://CLIENTID@localhost:" + mqttBroker.getPort());
+
 
 		MqttCentral mqttCentral = new MqttCentral();
 		try {
 			List<TestDTO> dtos = new CopyOnWriteArrayList<>();
 
+			BrokerImpl facade = new BrokerImpl(mqttCentral, t);
+			
 			Subscriber<TestDTO> subscriber = new Subscriber<TestDTO>() {
 				@Override
 				public void receive(TestDTO data) {
@@ -66,13 +67,10 @@ public class TopicTest {
 					dtos.add(data);
 				}
 			};
-			
-			Map<String, Object> sp = new HashMap<>();
-			sp.put("broker", broker);
-			sp.put("topics", "remote");
-			mqttCentral.addSubscriber(subscriber, sp);
 
-			TopicImpl topicImpl = new TopicImpl(mqttCentral, t);
+			facade.subscribe(subscriber, TestDTO.class, 0, "foo");
+
+			Topic<TestDTO> topicImpl = facade.topic("foo", false, 0, TestDTO.class);
 			TestDTO test = new TestDTO();
 			test.bar = true;
 			test.foo = "Foo";
@@ -82,12 +80,9 @@ public class TopicTest {
 			
 			assertThat(mqttCentral.clients).hasSize(1);
 			
-			mqttCentral.removeSubscriber(subscriber);
-			
-			assertThat(mqttCentral.clients).hasSize(1);
-			topicImpl.deactivate();
-			assertThat(mqttCentral.clients).hasSize(0);
+			facade.deactivate();
 
+			Awaitility.await().until(() ->  mqttCentral.clients.isEmpty());
 			
 		} finally {
 			mqttCentral.deactivate();

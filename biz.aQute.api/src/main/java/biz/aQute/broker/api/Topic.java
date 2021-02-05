@@ -1,20 +1,17 @@
 package biz.aQute.broker.api;
 
-import org.osgi.dto.DTO;
-
 /**
  * A configured topic to publish or subscribe to.
  *
  */
-public interface Topic {
-	String		topic="topic";
-	String		broker="broker";
+public interface Topic<T> {
 	
 	/**
 	 * Publish to this topic.
 	 * 
 	 * @param data
 	 *            the data to publish
+	 * @throws Exception 
 	 */
-	void publish(DTO data);
+	void publish(T data) throws Exception;
 }

@@ -1,4 +1,4 @@
-package biz.aQute.mqtt.moquette.server;
+package biz.aQute.mqtt.test;
 
 
 import org.osgi.service.component.annotations.Component;
