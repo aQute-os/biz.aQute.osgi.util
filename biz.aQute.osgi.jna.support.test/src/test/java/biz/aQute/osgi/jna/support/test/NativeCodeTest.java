@@ -20,14 +20,14 @@ public class NativeCodeTest {
 		for (int times = 0; times < 3; times++) {
 			int X = times;
 			try (Launchpad lp = builder.create()) {
-				CountDownLatch l= new CountDownLatch(5);
+				CountDownLatch l= new CountDownLatch(2);
 				Bundle bundle = lp.getBundle("biz.aQute.osgi.jna.support.test.a").get();
 
 				for (int t = 0; t < l.getCount(); t++) {
 					int T = t;
 					Thread thread = new Thread(() -> {
 						
-						for (int j=0; j<10; j++) {
+						for (int j=0; j<5; j++) {
 							try {
 								Thread.sleep(102);
 								System.out.println(X + " " + T);

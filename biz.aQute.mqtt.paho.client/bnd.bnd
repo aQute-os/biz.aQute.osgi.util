@@ -16,7 +16,7 @@
 	aQute.libg,\
 	org.osgi.service.metatype.annotations
 	
-	
+-includeresource @${repo;org.eclipse.paho.client.mqttv3}
 
 -testpath: \
 	biz.aQute.wrapper.junit, \
@@ -29,3 +29,4 @@
     
     
 
+-conditionalpackage aQute.lib*
