@@ -67,7 +67,8 @@ public class BrokerImpl implements Broker {
 						T data = MqttCentral.codec.dec().from(m.getPayload()).get(type);
 						subscriber.receive(data);
 					} catch (Exception e) {
-
+						MqttCentral.log.error("failed to deserialize received object {} for topic {}", m, t, e);
+						e.printStackTrace();
 					}
 				});
 			} catch (MqttException e) {

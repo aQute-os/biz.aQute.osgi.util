@@ -28,7 +28,7 @@ import biz.aQute.broker.api.Subscriber;
 
 @Component(service = MqttCentral.class, immediate = true)
 public class MqttCentral {
-	Logger					log		= LoggerFactory.getLogger("biz.aQute.mqtt.paho");
+	final static Logger					log		= LoggerFactory.getLogger("biz.aQute.mqtt.paho");
 	final static JSONCodec	codec	= new JSONCodec();
 	final static Method		receive;
 	static {
