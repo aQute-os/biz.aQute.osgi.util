@@ -1,0 +1,14 @@
+#
+# biz.aQute.quantity.library PROVIDER BUNDLE
+#
+
+-buildpath:  \
+	osgi.annotation, \
+	org.osgi.service.component.annotations
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+

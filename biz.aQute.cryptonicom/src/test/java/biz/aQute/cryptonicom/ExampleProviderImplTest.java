@@ -4,8 +4,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import biz.aQute.cryptonicom.ExampleProviderImpl;
-
 public class ExampleProviderImplTest {
 	@Test
 	public void simple() {
