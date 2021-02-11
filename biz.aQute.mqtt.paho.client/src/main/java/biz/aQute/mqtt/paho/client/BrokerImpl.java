@@ -27,15 +27,17 @@ public class BrokerImpl implements Broker {
 	final MqttCentral			central;
 	final URI					uri;
 	final Promise<MqttClient>	client;
+	final BrokerConfig			config;
 
 	@Activate
 	public BrokerImpl(@Reference MqttCentral central, BrokerConfig config) throws URISyntaxException {
 		this.central = central;
+		this.config = config;
 		if (config.uri() == null)
 			throw new IllegalArgumentException("The uri is a mandatory parameter");
 
 		this.uri = new URI(config.uri()).normalize();
-		this.client = this.central.getClient(this, uri);
+		this.client = this.central.getClient(this, uri, config);
 	}
 
 	@Deactivate
@@ -48,10 +50,9 @@ public class BrokerImpl implements Broker {
 		return new TopicImpl<T>(this, topic, retain, qos, type);
 	}
 
-	
-	// TODO check for multiple subscriptions to same topic, 
+	// TODO check for multiple subscriptions to same topic,
 	// PAHO can't handle that
-	
+
 	@Override
 	public <T> Closeable subscribe(Subscriber<T> subscriber, Class<T> type, int qos, String... topics) {
 		if (topics.length == 0)
@@ -91,12 +92,12 @@ public class BrokerImpl implements Broker {
 
 	MqttClient getClient() {
 		try {
-			return central.getClient(this, uri).getValue();
+			return central.getClient(this, uri, config).getValue();
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			throw Exceptions.duck(e);			
+			throw Exceptions.duck(e);
 		} catch (Exception e) {
-			throw Exceptions.duck(e);			
+			throw Exceptions.duck(e);
 		}
 	}
 }

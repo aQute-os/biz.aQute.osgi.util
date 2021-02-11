@@ -25,6 +25,7 @@ import aQute.lib.exceptions.Exceptions;
 import aQute.lib.io.IO;
 import aQute.lib.json.JSONCodec;
 import biz.aQute.broker.api.Subscriber;
+import biz.aQute.mqtt.paho.client.config.BrokerConfig;
 
 @Component(service = MqttCentral.class, immediate = true)
 public class MqttCentral {
@@ -56,7 +57,7 @@ public class MqttCentral {
 		final String		uuid	= UUID.randomUUID().toString();
 
 		// all access guarded by MqttCentral.lock
-		Client(URI uri) {
+		Client(URI uri, BrokerConfig config) {
 			try {
 				String clientId = uri.getUserInfo();
 				if (Strings.isEmpty(clientId))
@@ -65,6 +66,12 @@ public class MqttCentral {
 				// TODO persistence
 				this.client = new MqttClient(uri.toString(), clientId, new MemoryPersistence());
 				MqttConnectOptions options = new MqttConnectOptions();
+				
+				if ( config.username() != null && config.password()!=null) {
+					options.setUserName(config.username());
+					options.setPassword(config.password().toCharArray());
+				}
+				
 				options.setAutomaticReconnect(true);
 				options.setCleanSession(false);
 				client.connect(options);
@@ -106,13 +113,13 @@ public class MqttCentral {
 		clients.values().forEach(p -> p.onSuccess(c -> IO.close(c.client)));
 	}
 
-	Promise<MqttClient> getClient(Object owner, URI uri) {
+	Promise<MqttClient> getClient(Object owner, URI uri, BrokerConfig config) {
 
 		synchronized (lock) {
 
 			Promise<Client> client = clients.get(uri);
 			if (client == null) {
-				client = promiseFactory.submit(() -> new Client(uri));
+				client = promiseFactory.submit(() -> new Client(uri, config));
 				clients.put(uri, client);
 			}
 

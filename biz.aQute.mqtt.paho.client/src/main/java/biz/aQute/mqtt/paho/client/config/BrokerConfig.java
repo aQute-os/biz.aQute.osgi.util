@@ -7,5 +7,8 @@ public @interface BrokerConfig {
 
 	String uri();
 	String name();
+	
+	String username();
+	String password();
 
 }
