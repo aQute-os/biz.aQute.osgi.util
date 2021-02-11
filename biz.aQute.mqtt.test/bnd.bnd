@@ -2,7 +2,9 @@
 # biz.aQute.mqtt.test PROVIDER BUNDLE
 #
 
--dependson biz.aQute.mqtt.paho.client, biz.aQute.mqtt.moquette.server
+-dependson \
+    biz.aQute.mqtt.paho.client, \
+    biz.aQute.mqtt.moquette.server
 
 -buildpath:  \
 	osgi.annotation, \
