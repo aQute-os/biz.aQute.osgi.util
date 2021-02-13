@@ -1,4 +1,6 @@
-# biz.aQute.osgi.jna.support.test.a
+# biz.aQute.trace.runpath
+
+Weaves DS components and Bundle Activtors to record timing of the start/stop/modify methods. This JAR is not a proper bundle but must be placed on the -runpath. It uses the Embedded-Launcher facility of the bnd launchers. The JAR includes Javassist to perform the byte code weaving.
 
 ## Links
 
@@ -12,7 +14,7 @@
 ```xml
 <dependency>
     <groupId>biz.aQute</groupId>
-    <artifactId>biz.aQute.osgi.jna.support.test.a</artifactId>
+    <artifactId>biz.aQute.trace.runpath</artifactId>
     <version>1.3.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -20,7 +22,7 @@
 ### OSGi
 
 ```
-Bundle Symbolic Name: biz.aQute.osgi.jna.support.test.a
+Bundle Symbolic Name: biz.aQute.trace.runpath
 Version             : 1.3.0.202101120015
 ```
 
@@ -29,7 +31,7 @@ Version             : 1.3.0.202101120015
 ```
 "bundles": [
    {
-    "id": "biz.aQute:biz.aQute.osgi.jna.support.test.a:1.3.0-SNAPSHOT"
+    "id": "biz.aQute:biz.aQute.trace.runpath:1.3.0-SNAPSHOT"
    }
 ]
 ```

@@ -1,28 +1,55 @@
 # biz.aQute.osgi.agent.provider
 
-An agent for a management system that will go to great lengths to stay alive and follow 
-the lead of the management systems. 
+Implements a simple agent to update/install/uninstall bundles
 
-## Operations
+## Links
 
-The agent polls a file from the management agent that contains a _configuration_. This configuration
-provides a set of tuples with (location,digest). The agent will compare the required configuration against
-the set of installed bundles. It will then uninstall, update, or install the bundles as required. The digest
-is used both to verify the download as well as the name of the resource on a CDN server.
+* [Documentation](https://aQute.biz)
+* [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-If anything files during an upload, the remainder of the actions are aborted, a short delay, and then
-the process is re-attempted.
+## Coordinates
 
-If this still fails after a number of retries then the configuration is ignored and the previous 
-configuration is restored. Well, at least that is attempted.
+### Maven
 
-## Strategies
+```xml
+<dependency>
+    <groupId>biz.aQute</groupId>
+    <artifactId>biz.aQute.osgi.agent.provider</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
 
-The code has the following strategies implemented as separate classes:
+### OSGi
 
-* Downloader – A Downloader that defines how files are downloaded. This is currently very simple a URL. The downloader 
-is not doing retries etc. Howeve
-* Digest Verifier – The agent algorithm needs to know if a bundle is already installed or not. This decision is delegated to the DigestVerifier.
-* TransactionStore – Is used to store the 'current' configuration. Stores this always in a new file with a new name. Remembers
-the last n generations and fallbacks. Also verifies that the write is readable.
+```
+Bundle Symbolic Name: biz.aQute.osgi.agent.provider
+Version             : 1.0.0.202101120015
+```
 
+### Feature-Coordinate
+
+```
+"bundles": [
+   {
+    "id": "biz.aQute:biz.aQute.osgi.agent.provider:1.3.0-SNAPSHOT"
+   }
+]
+```
+
+## Developers
+
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
+
+## Licenses
+
+**http://opensource.org/licenses/apache2.0.php**
+  > Apache License, Version 2.0
+  >
+  > For more information see [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Copyright
+
+aQute SARL All Rights Reserved
+
+---
+aQute SARL

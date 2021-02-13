@@ -1,4 +1,4 @@
-# biz.aQute.osgi.jna.support.test.a
+# biz.aQute.osgi.spy.runpath
 
 ## Links
 
@@ -12,7 +12,7 @@
 ```xml
 <dependency>
     <groupId>biz.aQute</groupId>
-    <artifactId>biz.aQute.osgi.jna.support.test.a</artifactId>
+    <artifactId>biz.aQute.osgi.spy.runpath</artifactId>
     <version>1.3.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -20,7 +20,7 @@
 ### OSGi
 
 ```
-Bundle Symbolic Name: biz.aQute.osgi.jna.support.test.a
+Bundle Symbolic Name: biz.aQute.osgi.spy.runpath
 Version             : 1.3.0.202101120015
 ```
 
@@ -29,7 +29,7 @@ Version             : 1.3.0.202101120015
 ```
 "bundles": [
    {
-    "id": "biz.aQute:biz.aQute.osgi.jna.support.test.a:1.3.0-SNAPSHOT"
+    "id": "biz.aQute:biz.aQute.osgi.spy.runpath:1.3.0-SNAPSHOT"
    }
 ]
 ```

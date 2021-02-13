@@ -1,4 +1,4 @@
-# biz.aQute.osgi.jna.support.test.a
+# biz.aQute.osgi.jna.support.provider
 
 ## Links
 
@@ -12,7 +12,7 @@
 ```xml
 <dependency>
     <groupId>biz.aQute</groupId>
-    <artifactId>biz.aQute.osgi.jna.support.test.a</artifactId>
+    <artifactId>biz.aQute.osgi.jna.support.provider</artifactId>
     <version>1.3.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -20,8 +20,8 @@
 ### OSGi
 
 ```
-Bundle Symbolic Name: biz.aQute.osgi.jna.support.test.a
-Version             : 1.3.0.202101120015
+Bundle Symbolic Name: biz.aQute.osgi.jna.support.provider
+Version             : 1.3.0.202101120018
 ```
 
 ### Feature-Coordinate
@@ -29,7 +29,7 @@ Version             : 1.3.0.202101120015
 ```
 "bundles": [
    {
-    "id": "biz.aQute:biz.aQute.osgi.jna.support.test.a:1.3.0-SNAPSHOT"
+    "id": "biz.aQute:biz.aQute.osgi.jna.support.provider:1.3.0-SNAPSHOT"
    }
 ]
 ```

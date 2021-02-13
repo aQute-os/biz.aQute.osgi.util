@@ -1,38 +1,14 @@
-# biz.aQute.osgi.jna.support.test.a
+# biz.aQute.wrapper
 
 ## Links
 
 * [Documentation](https://aQute.biz)
 * [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-## Coordinates
+## Built Artifacts
 
-### Maven
-
-```xml
-<dependency>
-    <groupId>biz.aQute</groupId>
-    <artifactId>biz.aQute.osgi.jna.support.test.a</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
-</dependency>
-```
-
-### OSGi
-
-```
-Bundle Symbolic Name: biz.aQute.osgi.jna.support.test.a
-Version             : 1.3.0.202101120015
-```
-
-### Feature-Coordinate
-
-```
-"bundles": [
-   {
-    "id": "biz.aQute:biz.aQute.osgi.jna.support.test.a:1.3.0-SNAPSHOT"
-   }
-]
-```
+* [**biz.aQute.wrapper.hamcrest**](readme.hamcrest.md): Hamcrest 1.3. Matchers that can be combined to create flexible expressions of intent
+* [**biz.aQute.wrapper.junit**](readme.junit.md): JUnit 4.13.1 is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks. This bundle wraps JUnit as is and exports all packages with the bundle version since JUnit has not understood package versioning,nor semantic versioning.
 
 ## Developers
 

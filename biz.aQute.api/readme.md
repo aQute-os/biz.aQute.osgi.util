@@ -1,38 +1,14 @@
-# biz.aQute.osgi.jna.support.test.a
+# biz.aQute.api
 
 ## Links
 
 * [Documentation](https://aQute.biz)
 * [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-## Coordinates
+## Built Artifacts
 
-### Maven
-
-```xml
-<dependency>
-    <groupId>biz.aQute</groupId>
-    <artifactId>biz.aQute.osgi.jna.support.test.a</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
-</dependency>
-```
-
-### OSGi
-
-```
-Bundle Symbolic Name: biz.aQute.osgi.jna.support.test.a
-Version             : 1.3.0.202101120015
-```
-
-### Feature-Coordinate
-
-```
-"bundles": [
-   {
-    "id": "biz.aQute:biz.aQute.osgi.jna.support.test.a:1.3.0-SNAPSHOT"
-   }
-]
-```
+* [**biz.aQute.api.authentication**](readme.authentication.md)
+* [**biz.aQute.api.authorization**](readme.authorization.md)
 
 ## Developers
 

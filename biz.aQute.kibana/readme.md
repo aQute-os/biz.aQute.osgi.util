@@ -1,44 +1,183 @@
-# Kibana 
+# biz.aQute.kibana
 
-Elastic Search is a no-schema database for humongous amounts of data. Kibana is a visualization tool that leverages
-the features of Elastic Search.
-  
-Kibana provides standard tools to upload data to Elastic Search: [beats][1] and [logstash][2]. Although these are very useful, they 
-immediately make the application depend on native programs. Although that is often a quick and dirty solution,
-it does imply deployment and portability issues. The beauty of Java is that it runs anywhere.
+## Links
 
-Therefore, this bundle acts as a log forwarder to Kibana, i.e. it works like a beat. It can be configured with a number of 
-URL's to an elastic search cluster. It will then listen to OSGi log entries and forward them to elastic search. A short
-delay can be configured to aggregate a number of log records per request for efficiency.
+* [Documentation](https://aQute.biz)
+* [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-## Trying it out
+## Coordinates
 
-You can create a [free Eleastic Search trial account][3]. You then need to create a _deployment_ in the cloud. This
-deployment starts up a cluster of Elastic Search nodes. This bundles needs the URL to the Elastic Search engine,
-which you can copy from the [home page][4], select your deployment, and then copy the _Elastic Search_ endpoint. 
+### Maven
 
-The `bnd.bnd` file in this project contains a run configuration. You can select it, then the `Run` tab, and then click 
-on the `Run` icon in the right top. Then goto: [http://localhost:8080/system/console/configMgr](http://localhost:8080/system/console/configMgr).
-Click on the `+` at the line with `Biz a qute kibana kibana log uploader configuration`. This creates a new
-configuration record. The form you see should make the parameters clear.
+```xml
+<dependency>
+    <groupId>biz.aQute</groupId>
+    <artifactId>biz.aQute.kibana</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
 
-* Hosts – One or more URLs to the Elastic Search engines. Each URL is tried in turn.
-* Password – A password for your account.
-* User id – The user id of the account, this was `elastic` for me.
-* Delay – Number of seconds to wait before pushing a log record. Logs are aggregated so this is more efficient if you make it longer.
-* Index – The name of the log. This is normally a gateway specific name. The Kibaba convention is to start with `logs-`. I suggest then
-  the name of the gateway, and then `osgi`. E.g. `logs-GW5124232-osgi`.
-  
-You can create multiple Kibaba Log Forwarders.
+### OSGi
 
-## Configuration
+```
+Bundle Symbolic Name: biz.aQute.kibana
+Version             : 1.3.0.202101120018
+```
 
-* The PID is `biz.aQute.kibana`. 
-* Configuration is defined in [biz.aQute.kibana.KibanaLogUploader$Configuration][5]
+### Feature-Coordinate
+
+```
+"bundles": [
+   {
+    "id": "biz.aQute:biz.aQute.kibana:1.3.0-SNAPSHOT"
+   }
+]
+```
+
+## Components
+
+### biz.aQute.kibana.KibanaLogUploader - *state = enabled, activation = immediate*
+
+#### Description
+
+#### Services
+
+No services.
+
+#### Properties
+
+|Name |Type |Value |
+|--- |--- |--- |
+|delay |Integer |30 |
+
+#### Configuration - *policy = require*
+
+##### Factory Pid: `biz.aQute.kibana`
+
+|Attribute |Value |
+|--- |--- |
+|Id |`hosts` |
+|Required |**true** |
+|Type |**String[]** |
+|Description |List of URIs to the Elastic search host. This is the scheme + host + port. The path is discarded |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`password` |
+|Required |**true** |
+|Type |**String** |
+|Description |Password for Elastic search |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`userid` |
+|Required |**true** |
+|Type |**String** |
+|Description |User id for Elastic search |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`delay` |
+|Required |**true** |
+|Type |**Integer** |
+|Description |Buffering delay in seconds before records are pushed |
+|Default |30 |
+|Value range |`min = 5` |
+
+|Attribute |Value |
+|--- |--- |
+|Id |`index` |
+|Required |**true** |
+|Type |**String** |
+|Description |The log index to use |
+
+#### Reference bindings
+
+|Attribute |Value |
+|--- |--- |
+|name |$000 |
+|interfaceName |org.osgi.service.log.LogReaderService |
+|target | |
+|cardinality |1..1 |
+|policy |static |
+|policyOption |reluctant |
+|scope |bundle |
+
+#### OSGi-Configurator
 
 
-[1]: https://www.elastic.co/beats/
-[2]: https://www.elastic.co/guide/en/kibana/current/logstash-page.html
-[3]: https://www.elastic.co/downloads/
-[4]: https://cloud.elastic.co/home
-[5]: https://github.com/aQute-os/biz.aQute.osgi.util/blob/master/biz.aQute.kibana/src/main/java/biz/aQute/kibana/KibanaLogUploader.java
+```
+/*
+ * Component: biz.aQute.kibana.KibanaLogUploader
+ * policy:    require
+ */
+"biz.aQute.kibana~FactoryNameChangeIt":{
+        //# Component properties
+        /*
+         * Type = Integer
+         * Default = 30
+         */
+         // "delay": null,
+
+
+        //# Reference bindings
+        // "$000.target": "(component.pid=*)",
+
+
+        //# ObjectClassDefinition - Attributes
+        /*
+         * Required = true
+         * Type = String[]
+         * Description = List of URIs to the Elastic search host. This is the scheme + host + port. The path is discarded
+         */
+         "hosts": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Description = Password for Elastic search
+         */
+         "password": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Description = User id for Elastic search
+         */
+         "userid": null,
+
+        /*
+         * Required = true
+         * Type = Integer
+         * Description = Buffering delay in seconds before records are pushed
+         * Default = 30
+         * Value restriction = `min = 5` / `max = `
+         */
+         "delay": null,
+
+        /*
+         * Required = true
+         * Type = String
+         * Description = The log index to use
+         */
+         "index": null
+}
+```
+
+## Developers
+
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
+
+## Licenses
+
+**http://opensource.org/licenses/apache2.0.php**
+  > Apache License, Version 2.0
+  >
+  > For more information see [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Copyright
+
+aQute SARL All Rights Reserved
+
+---
+aQute SARL

@@ -1,36 +1,53 @@
-# Logger Forwarder
+# biz.aQute.osgi.logger.forwarder
 
-This bundle forwards logs from SLF4J to OSGi. A special bundle is needed because SLF4J can start logging
-before the OSGi log service is present. This code maintains a static queue for log entries from 
-SLF4J that is forwarded to the OSGi log service once it becomes available.
+## Links
 
-Although less popular, `java.util.logging` is also forwarded in this way.
+* [Documentation](https://aQute.biz)
+* [Source Code](https://github.com/aQute-os/biz.aQute.osgi.util) (clone with `scm:git:git@github.com/aQute-os/biz.aQute.osgi.util.git`)
 
-**NOTE:** This bundle was designed to work with the bnd launcher, it uses the Embedded Activator support in the
-bnd launcher and will not work with it.
+## Coordinates
 
-In general, other log subsystems, like for example log4j, should be forwarded to SLF4J. It was considered to support
-them directly from this JAR but the log4j APIs (old and new) are so badly designed that it is a major amount of work.
-In general, the best solution is to minimimze logging to SLF4J. 
+### Maven
 
-## How to Use
+```xml
+<dependency>
+    <groupId>biz.aQute</groupId>
+    <artifactId>biz.aQute.osgi.logger.forwarder</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
 
-This is **not** a bundle. The JAR must be placed on the `-runpath` of a bnd(run) file to work. It will
-export `slf4j` API which will look exported by the framework. That is, you should not add the SLF4J
-API nor an implementation of SLF4J.
+### OSGi
 
-## Operation
+```
+Bundle Symbolic Name: biz.aQute.osgi.logger.forwarder
+Version             : 1.3.0.202101120015
+```
 
-The code implements the SLF4J extension mechanism to provide an implementation. That is, it provides the 
-SLF4J LoggerFactory implementation.
+### Feature-Coordinate
 
-When a new logger is requested, a _facade_ is returned. If the OSGi log service is present, the facade
-will delegate to the OSGi log service. Otherwise, it will queue the log entries. When the OSGi log 
-service becomes available, it will send all queued log entries to the OSGi service.
+```
+"bundles": [
+   {
+    "id": "biz.aQute:biz.aQute.osgi.logger.forwarder:1.3.0-SNAPSHOT"
+   }
+]
+```
 
-When the OSGi service is unregistered, the queuing will start again. That is, the OSGi log service
-implementation can be updated.
+## Developers
 
-## Configuration
+* **Peter Kriens** (aQute) / [info@aQute.biz](mailto:info@aQute.biz) @ aQute SARL
 
-This is not a bundle and therfore cannot be configured.
+## Licenses
+
+**http://opensource.org/licenses/apache2.0.php**
+  > Apache License, Version 2.0
+  >
+  > For more information see [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Copyright
+
+aQute SARL All Rights Reserved
+
+---
+aQute SARL
