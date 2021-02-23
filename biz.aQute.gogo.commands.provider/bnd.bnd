@@ -2,6 +2,8 @@
 # biz.aQute.gogo.commands.provider PROVIDER BUNDLE
 #
 
+Bundle-Activator:       biz.aQute.gogo.commands.provider.Activator
+DynamicImport-Package   *
 -buildpath: \
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
@@ -9,7 +11,9 @@
 	org.osgi.service.log;version='1.4.0',\
 	slf4j.api;version='1.7.30',\
 	org.osgi.framework;version='1.8.0',\
-	aQute.libg;version='5.0.0'
+	aQute.libg,\
+	osgi.core,\
+	org.osgi.service.component
 	
 
 -testpath: \

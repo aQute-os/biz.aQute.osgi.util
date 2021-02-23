@@ -23,7 +23,7 @@ import org.osgi.service.log.admin.LoggerAdmin;
 import org.osgi.service.log.admin.LoggerContext;
 import org.slf4j.LoggerFactory;
 
-@GogoCommand(scope = "logadmin", function = {
+@GogoCommand(scope = "aQute", function = {
 	"levels", "defaultlevel", "addlevel", "rmlevel", //
 	"slf4jdebug", "slf4jinfo", "slf4jwarn", "slf4jerror", //
 	"tail"
@@ -37,7 +37,9 @@ public class LoggerAdminCommands {
 	final LogReaderService				log;
 
 	@Activate
-	public LoggerAdminCommands(@Reference LoggerAdmin admin, @Reference LogReaderService log, BundleContext context) {
+	public LoggerAdminCommands(@Reference
+	LoggerAdmin admin, @Reference
+	LogReaderService log, BundleContext context) {
 		this.log = log;
 		this.context = context;
 		this.admin = admin;
