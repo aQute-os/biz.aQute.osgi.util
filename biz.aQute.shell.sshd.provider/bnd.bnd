@@ -8,7 +8,8 @@ Bundle-Description: \
     approved. This ssh provider can be used without authentication when registered \
     only on localhost. Otherwise the user should register an biz.aQute.authentication.api.Authenticator \
     service. The configuration by default requires this optional service to be there.
-    
+
+-dependson biz.aQute.gogo.commands.provider
 
 -buildpath: \
 	osgi.annotation,\

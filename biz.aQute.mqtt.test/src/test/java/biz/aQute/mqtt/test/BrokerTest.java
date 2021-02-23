@@ -162,7 +162,7 @@ public class BrokerTest {
 
 	@Test
 	public void simple() throws Exception {
-		try (Launchpad lp = builder.create().inject(this)) {
+		try (Launchpad lp = builder.bundles("org.apache.felix.gogo.runtime, biz.aQute.shell.sshd.provider, biz.aQute.gogo.commands.provider, org.apache.felix.log").create().inject(this).debug()) {
 
 			update("biz.aQute.mqtt.moquette.server", //
 					"host", "localhost", //
@@ -173,7 +173,11 @@ public class BrokerTest {
 					"uri", "tcp://clientid@localhost:2883", //
 					"name", "broker");
 
-			Optional<Broker> t = lp.waitForService(Broker.class, 5000);
+			
+			Optional<Broker> t = lp.waitForService(Broker.class, 60_000);
+			
+			lp.report();
+			
 			assertThat(t).isPresent();
 
 			Broker broker = t.get();

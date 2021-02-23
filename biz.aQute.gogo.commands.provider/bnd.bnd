@@ -15,6 +15,7 @@ DynamicImport-Package   *
 	osgi.core,\
 	org.osgi.service.component
 	
+-conditionalpackage: aQute.lib*
 
 -testpath: \
 	biz.aQute.wrapper.junit, \

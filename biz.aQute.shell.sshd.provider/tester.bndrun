@@ -6,11 +6,11 @@
 -runpath: slf4j.api, slf4j.simple
 -runrequires: \
 	osgi.identity;filter:='(osgi.identity=biz.aQute.shell.sshd.provider)',\
-	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole.plugins.ds)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.http.jetty)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.configadmin)',\
-	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)'
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)',\
+	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)'
 -runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
 -runee: JavaSE-1.8
 -runbundles: \
@@ -19,7 +19,6 @@
 	org.apache.felix.scr;version='[2.1.16,2.1.17)',\
 	org.osgi.util.function;version='[1.1.0,1.1.1)',\
 	org.osgi.util.promise;version='[1.1.1,1.1.2)',\
-	aQute.libg;version='[5.1.0,5.1.1)',\
 	biz.aQute.gogo.commands.provider;version=snapshot,\
 	org.apache.felix.configadmin;version='[1.9.12,1.9.13)',\
 	org.apache.felix.log;version='[1.2.0,1.2.1)',\
