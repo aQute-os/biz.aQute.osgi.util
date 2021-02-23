@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
@@ -16,32 +17,32 @@ import org.apache.felix.service.command.Converter;
 import org.apache.felix.service.command.Function;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
-import org.apache.sshd.server.channel.ChannelSession;
 import org.osgi.framework.BundleContext;
 
 import aQute.lib.strings.Strings;
 
 class CommandSessionHandler implements Closeable, Runnable {
 
+	static final String NEWLINE = "\r\n";
 	final CommandSession	session;
 	final AnsiFilter		console;
 	final ExitCallback		callback;
 	final Thread			thread;
 
-	CommandSessionHandler(BundleContext context, ChannelSession channel, Environment env,
+	CommandSessionHandler(BundleContext context, String username, Map<String,String> env,
 			InputStream in, OutputStream out, OutputStream err, CommandProcessor processor, ExitCallback callback) throws Exception {
-		this.thread = new Thread(this, "sshd-gogo-"+channel.getSession().getUsername());
+		this.thread = new Thread(this, "sshd-gogo-"+username);
 		this.callback = callback;
-		int w = getInt(env.getEnv().get(Environment.ENV_COLUMNS), 80);
-		int h = getInt(env.getEnv().get(Environment.ENV_LINES), 40);
-		String term = env.getEnv().getOrDefault(Environment.ENV_TERM, "none");
+		int w = getInt(env.get(Environment.ENV_COLUMNS), 80);
+		int h = getInt(env.get(Environment.ENV_LINES), 40);
+		String term = env.getOrDefault(Environment.ENV_TERM, "none");
 
 		console = new AnsiFilter(w, h, in, out, term, StandardCharsets.UTF_8);
 
 		session = processor.createSession(in, out, err);
-		session.put(".context", env.getEnv());
+		session.put(".context",context);
 		session.put(".system", System.class);
-		session.put(".env", env.getEnv());
+		session.put(".env", env);
 		session.put("history", (Function) (ses, args) -> {
 			List<String> r = new ArrayList<>();
 			for (String s : console.getHistory()) {
@@ -52,7 +53,7 @@ class CommandSessionHandler implements Closeable, Runnable {
 		});
 
 		session.put("exit", (Function) (ses, args) -> {
-			AbstractGogoSshd.logger.info("exiting {} {}", ses);
+			AbstractGogoSshd.logger.info("exiting {} {}", ses,args);
 			switch (args.size()) {
 			case 0:
 				callback.onExit(0);
@@ -88,25 +89,34 @@ class CommandSessionHandler implements Closeable, Runnable {
 					String line = console.readline(getPrompt());
 					if (line == null)
 						return;
+					boolean wasnl=false;
+					if ( console.echo )
+						console.write(NEWLINE);
 					if (!Strings.trim(line).isEmpty()) {
-						console.write("\n");
 						try {
 							Object execute = execute(line);
 							if (execute != null) {
-								String s = session.format(execute, Converter.INSPECT).toString();
-								console.write(s);
+								char[] s = session.format(execute, Converter.INSPECT).toString().toCharArray();
+								wasnl = fixupLF(wasnl, s);
 							}
 						} catch (Exception e) {
-							console.write(e.getMessage());
+							session.put("exception", e);
+							if ( e.getMessage() == null || e.getMessage().trim().isEmpty())
+								console.write(e.getClass().getName());
+							else 
+								console.write(e.getMessage());
+							console.write(NEWLINE);
+							wasnl=true;
 						}
+						if (!wasnl)
+							console.write(NEWLINE);
 					}
-					console.write("\n");
 					console.flush();
 				} catch (EOFException e) {
 					// ignore
 					return;
-				} catch (Exception e) {
-					callback.onExit(0, e.toString());
+				} catch (Throwable e) {
+					callback.onExit(0, e.toString() + ": exiting");
 				}
 		} finally {
 			try {
@@ -118,6 +128,29 @@ class CommandSessionHandler implements Closeable, Runnable {
 			callback.onExit(0);
 			AbstractGogoSshd.logger.info("quiting thread");
 		}
+	}
+
+	private boolean fixupLF(boolean wasnl, char[] s) throws IOException {
+		int start=0;
+		for ( int i=0; i<s.length; i++) {
+			char ch = s[i];
+			switch(ch) {
+			case '\n':
+				console.writer.write(s,start,i-start);
+				console.writer.write(NEWLINE);
+				console.writer.flush();
+				wasnl=true;
+				start = i+1;
+				break;
+			case '\r':
+				break;
+				
+			default:
+				wasnl=false;
+			}
+		}
+		console.writer.write(s,start,s.length-start);
+		return wasnl;
 	}
 
 	protected Object execute(String line) throws Exception {
@@ -156,6 +189,10 @@ class CommandSessionHandler implements Closeable, Runnable {
 			thread.interrupt();
 			throw new RuntimeException(e);
 		}
+	}
+
+	public AnsiFilter getANSI() {
+		return console;
 	}
 
 }

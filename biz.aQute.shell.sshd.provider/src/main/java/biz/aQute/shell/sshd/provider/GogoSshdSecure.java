@@ -19,6 +19,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.metatype.annotations.Designate;
 
 import aQute.lib.strings.Strings;
@@ -28,18 +30,21 @@ import biz.aQute.authorization.api.AuthorityAdmin;
 import biz.aQute.shell.sshd.config.SshdConfig;
 
 @Designate(ocd = SshdConfig.class, factory = true)
-@Component(configurationPid = SshdConfig.PID )
+@Component(configurationPid = SshdConfig.PID)
 public class GogoSshdSecure extends AbstractGogoSshd {
 
-	final Authenticator authenticator;
-	final Authority authority;
-	final AuthorityAdmin admin;
-	final Map<ServerSession, String> users = Collections.synchronizedMap(new IdentityHashMap<ServerSession, String>());
-	final String permission;
+	final Authenticator					authenticator;
+	final Authority						authority;
+	final AuthorityAdmin				admin;
+	final Map<ServerSession, String>	users	= Collections
+			.synchronizedMap(new IdentityHashMap<ServerSession, String>());
+	final String						permission;
 
 	@Activate
 	public GogoSshdSecure(BundleContext context, @Reference CommandProcessor processor,
-			@Reference Authenticator authenticator, @Reference Authority authority, @Reference AuthorityAdmin admin,
+			@Reference(cardinality = ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY) Authenticator authenticator,
+			@Reference(cardinality = ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY) Authority authority,
+			@Reference(cardinality = ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY) AuthorityAdmin admin,
 			SshdConfig config) throws IOException {
 		super(context, processor, config.hostkey(), config.address(), config.port());
 		this.authenticator = authenticator;
@@ -60,7 +65,7 @@ public class GogoSshdSecure extends AbstractGogoSshd {
 
 		String user = users.get(channel.getServerSession());
 
-		return new CommandSessionHandler(context, channel, env, in, out, err, processor, callback) {
+		return new CommandSessionHandler(context, channel.getSession().getUsername(), env.getEnv(), in, out, err, processor, callback) {
 
 			@Override
 			public void run() {

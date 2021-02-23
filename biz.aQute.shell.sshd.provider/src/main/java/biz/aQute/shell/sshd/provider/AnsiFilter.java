@@ -2,10 +2,10 @@ package biz.aQute.shell.sshd.provider;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
-import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -37,7 +37,9 @@ public class AnsiFilter {
 	int						start	= 0;
 	String					current	= "";
 	boolean					hex;
-	
+	boolean					cr=true;
+	boolean					echo=true;
+
 	public AnsiFilter(int w, int h, InputStream in, OutputStream out, String term, Charset charset) {
 		this.w = w;
 		this.h = h;
@@ -46,22 +48,25 @@ public class AnsiFilter {
 		this.ansi = !"none".equalsIgnoreCase(term);
 
 		OutputStream tout = out;
-		if (ansi) {
-			tout = new FilterOutputStream(out) {
-				public void write(int b) throws IOException {
-					if (b == '\n') {
-						out.write(crlf);
-						out.flush();
-					} else {
-						out.write(b);
-					}
-				}
-			};
-		}
+//		if (ansi) {
+//			tout = new FilterOutputStream(out) {
+//				public void write(int b) throws IOException {
+//					if (b == '\n' && cr) {
+//						out.write(crlf);
+//						out.flush();
+//					} else if(b=='\r') {
+//						//skip
+//					}
+//					else {
+//						out.write(b);
+//					}
+//				}
+//			};
+//		}
 		this.out = tout;
 		this.charset = charset;
 		this.reader = IO.reader(this.in, charset);
-		this.writer = IO.writer(this.out, charset);
+		this.writer = new OutputStreamWriter(tout);
 	}
 
 	public String readline(String prompt) throws IOException {
@@ -81,10 +86,10 @@ public class AnsiFilter {
 				if (c < 0)
 					throw new EOFException();
 
-				if ( hex ) {
+				if (hex) {
 					System.err.printf("%02X ", c);
 				}
-				
+
 				switch (c) {
 				case '\n': // enter;
 				case '\r': // enter;
@@ -108,9 +113,9 @@ public class AnsiFilter {
 					cursor = 0;
 					rewrite();
 					break;
-					
+
 				case 0x02:
-					hex=!hex;
+					hex = !hex;
 					break;
 
 				case 0x03:
@@ -246,35 +251,42 @@ public class AnsiFilter {
 	}
 
 	private void rewrite() throws IOException {
-		begin();
+		if (!echo)
+			return;
 		int i = 0;
 		while (i < this.current.length() && i < buffer.length() && this.current.charAt(i) == this.buffer.charAt(i))
 			i++;
 
-		right(start + i);
-
+		column(start+i+1);
+		
 		String current = buffer.toString();
 		writer.write(current, i, current.length() - i);
 		if (this.current.length() > current.length())
 			eraseEOL();
+
 		if (cursor < current.length()) {
 			left(current.length() - cursor);
 		}
+
 		this.current = current;
 		writer.flush();
+	}
+
+	private void column(int i) throws IOException {
+		write("\u001B["+i+"G");
 	}
 
 	private void eraseEOL() throws IOException {
 		write("\u001B[0K");
 	}
 
-	private void begin() throws IOException {
-		write("\r");
-	}
-
-	private void right(int cnt) throws IOException {
-		write("\u001B[" + cnt + "C");
-	}
+//	private void begin() throws IOException {
+//		write("\r");
+//	}
+//
+//	private void right(int cnt) throws IOException {
+//		write("\u001B[" + cnt + "C");
+//	}
 
 	private void left(int cnt) throws IOException {
 		write("\u001B[" + cnt + "D");
@@ -290,6 +302,14 @@ public class AnsiFilter {
 
 	public List<String> getHistory() {
 		return history;
+	}
+
+	public void setNoCR() {
+		cr = false;
+	}
+
+	public void setNoEcho() {
+		echo = false;
 	}
 
 }

@@ -45,7 +45,7 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 	protected CommandSessionHandler getCommandSessionHandler(BundleContext context, ChannelSession channel,
 			Environment env, InputStream in, OutputStream out, OutputStream err, CommandProcessor processor,
 			ExitCallback callback) throws Exception {
-		return new CommandSessionHandler(context, channel, env, in, out, err, processor, callback);
+		return new CommandSessionHandler(context, channel.getSession().getUsername(), env.getEnv(), in, out, err, processor, callback);
 	}
 
 }
