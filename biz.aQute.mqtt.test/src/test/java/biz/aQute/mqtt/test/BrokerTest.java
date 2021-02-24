@@ -162,7 +162,7 @@ public class BrokerTest {
 
 	@Test
 	public void simple() throws Exception {
-		try (Launchpad lp = builder.bundles("org.apache.felix.gogo.runtime, biz.aQute.shell.sshd.provider, biz.aQute.gogo.commands.provider, org.apache.felix.log").create().inject(this).debug()) {
+		try (Launchpad lp = builder.create().inject(this).debug()) {
 
 			update("biz.aQute.mqtt.moquette.server", //
 					"host", "localhost", //
