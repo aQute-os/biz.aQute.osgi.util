@@ -22,6 +22,7 @@ import org.osgi.service.log.LogEntry;
 import org.osgi.service.log.LogLevel;
 import org.osgi.service.log.LogReaderService;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
@@ -41,7 +42,12 @@ public class KibanaLogUploader extends Thread {
 		@AttributeDefinition(required = true, description = "List of URIs to the Elastic search host. This is the scheme + host + port. The path is discarded")
 		String[] hosts();
 
-		@AttributeDefinition(required = true, description = "Password for Elastic search")
+		/**
+		 * This name starts with full stop. Is is available to the component
+		 * instance but not available as service properties of the registered
+		 * service.
+		 */
+		@AttributeDefinition(required = true, description = "Password for Elastic search", name = ".password", type = AttributeType.PASSWORD)
 		String password();
 
 		@AttributeDefinition(required = true, description = "User id for Elastic search")
