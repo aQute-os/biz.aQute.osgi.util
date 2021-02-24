@@ -59,7 +59,7 @@ public class TopicTest {
 			List<TestDTO> dtos = new CopyOnWriteArrayList<>();
 
 			BrokerImpl facade = new BrokerImpl(mqttCentral, t);
-			
+			System.out.println("port : " + mqttBroker.getPort());
 			Subscriber<TestDTO> subscriber = new Subscriber<TestDTO>() {
 				@Override
 				public void receive(TestDTO data) {
