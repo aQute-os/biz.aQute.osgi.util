@@ -23,6 +23,7 @@ jobs:
         shell: bash
         run: ./gradlew --parallel build
       - name: save-tests
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: test-reports
