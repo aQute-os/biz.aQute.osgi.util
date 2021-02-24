@@ -32,7 +32,8 @@ public @interface SshdConfigInsecure {
 	
 	/**
 	 * The only accepted user name. THIS IS NOT SECURE!
+	 * This name starts with full stop. Is is available to the component instance but not available as service properties of the registered service. 
 	 */
-	@AttributeDefinition(type = AttributeType.PASSWORD,description = "The only accepted password")
+	@AttributeDefinition(name = ".password", type = AttributeType.PASSWORD, description = "The only accepted password. THIS IS NOT SECURE!")
 	String password() default "insecure";
 }
