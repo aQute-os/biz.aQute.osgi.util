@@ -3,6 +3,7 @@ package biz.aQute.mqtt.paho.client;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -84,6 +85,25 @@ public class TopicTest {
 
 			Awaitility.await().until(() ->  mqttCentral.clients.isEmpty());
 			
+		} finally {
+			mqttCentral.deactivate();
+		}
+	}
+
+	@Test(expected = InvocationTargetException.class)
+	public void testServerDelay() throws Exception {
+		ConfigSetter<BrokerConfig> cs = new ConfigSetter<>(BrokerConfig.class);
+		BrokerConfig t = cs.delegate();
+		cs.set(t.name()).to("test");
+		int nonExistentServerPort = 100;
+		cs.set(t.uri()).to("tcp://CLIENTID@localhost:" + nonExistentServerPort);
+
+
+		MqttCentral mqttCentral = new MqttCentral();
+		mqttCentral.retries = 2;
+		try {
+			BrokerImpl facade = new BrokerImpl(mqttCentral, t);
+			facade.getClient();
 		} finally {
 			mqttCentral.deactivate();
 		}

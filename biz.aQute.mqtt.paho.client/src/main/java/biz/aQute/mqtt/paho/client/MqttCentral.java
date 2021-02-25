@@ -29,7 +29,7 @@ import biz.aQute.mqtt.paho.client.config.BrokerConfig;
 
 @Component(service = MqttCentral.class, immediate = true)
 public class MqttCentral {
-	final static Logger					log		= LoggerFactory.getLogger("biz.aQute.mqtt.paho");
+	final static Logger		log		= LoggerFactory.getLogger("biz.aQute.mqtt.paho");
 	final static JSONCodec	codec	= new JSONCodec();
 	final static Method		receive;
 	static {
@@ -48,6 +48,7 @@ public class MqttCentral {
 	// all access guarded by MqttCentral.lock
 	int								openClients			= 0;
 	long							connectionTimeout	= 30000;
+	int								retries				= 20;
 
 	// all access guarded by MqttCentral.lock
 	class Client {
@@ -57,25 +58,47 @@ public class MqttCentral {
 		final String		uuid	= UUID.randomUUID().toString();
 
 		// all access guarded by MqttCentral.lock
-		Client(URI uri, BrokerConfig config) {
+		Client(URI uri, BrokerConfig config) throws InterruptedException {
+			int i = 0;
+			this.uri = uri;
+			String clientId = uri.getUserInfo();
+			if (Strings.isEmpty(clientId))
+				clientId = uuid;
+
 			try {
-				String clientId = uri.getUserInfo();
-				if (Strings.isEmpty(clientId))
-					clientId = uuid;
-				this.uri = uri;
-				// TODO persistence
-				this.client = new MqttClient(uri.toString(), clientId, new MemoryPersistence());
-				MqttConnectOptions options = new MqttConnectOptions();
-				
-				if ( config.username() != null && config.password()!=null) {
-					options.setUserName(config.username());
-					options.setPassword(config.password().toCharArray());
+				MqttClient client = new MqttClient(uri.toString(), clientId, new MemoryPersistence());
+				while (true) {
+					try {
+
+						// TODO persistence
+						MqttConnectOptions options = new MqttConnectOptions();
+
+						if (config.username() != null && config.password() != null) {
+							options.setUserName(config.username());
+							options.setPassword(config.password().toCharArray());
+						}
+
+						options.setAutomaticReconnect(true);
+						options.setCleanSession(false);
+						client.connect(options);
+						System.out.println("connected " + client.isConnected() + " " + client.getCurrentServerURI());
+						break;
+					} catch (MqttException e) {
+						if (i++ < retries) {
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e1) {
+								log.info("interrupted {}", uri);
+								throw e1;
+							}
+						} else {
+							log.error("could not create a connection to {}", uri);
+							throw e;
+						}
+
+					}
 				}
-				
-				options.setAutomaticReconnect(true);
-				options.setCleanSession(false);
-				client.connect(options);
-				System.out.println("connected " + client.isConnected() + " " + client.getCurrentServerURI());
+				this.client = client;
 				openClients++;
 			} catch (MqttException e) {
 				e.printStackTrace();
@@ -137,13 +160,13 @@ public class MqttCentral {
 			}));
 		}
 	}
-	
+
 	void sync() throws InterruptedException {
 		long deadline = System.currentTimeMillis() + 10000;
-		synchronized(lock) {
-			while( openClients > 0 && System.currentTimeMillis() < deadline) {
+		synchronized (lock) {
+			while (openClients > 0 && System.currentTimeMillis() < deadline) {
 				lock.wait(100);
-				
+
 			}
 		}
 	}
