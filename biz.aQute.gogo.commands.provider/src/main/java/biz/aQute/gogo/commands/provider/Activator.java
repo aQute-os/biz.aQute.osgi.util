@@ -36,14 +36,17 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		this.context = context;
 		registerConverter(context);
+		register(DTOFramework.class);
 		register(Diagnostics.class);
 		register(Builtin.class);
-		register(Log.class);
-		register(DS.class);
 		register(Help.class);
 		register(Files.class);
 		register(Inspect.class);
 		register(Core.class);
+		register(DS.class);
+		register(LoggerAdminCommands.class);
+		register(HTTP.class);
+		register(JaxRS.class);
 	}
 
 	private void registerConverter(BundleContext context) {
@@ -117,12 +120,13 @@ public class Activator implements BundleActivator {
 		});
 	}
 
-	<T> void register(Class<T> c) throws Exception {
+	<T> ServiceRegistration<?> register(Class<T> c) throws Exception {
 		try {
 			Constructor<T> constructor = c.getConstructor(BundleContext.class, DTOFormatter.class);
 
 			Hashtable<String, Object> properties = new Hashtable<>();
-			properties.put(CommandProcessor.COMMAND_SCOPE, "bnd");
+			properties.put(CommandProcessor.COMMAND_SCOPE, "aQute");
+
 			Set<String> commands = new TreeSet<>();
 			for (Method m : c.getMethods()) {
 				Descriptor d = m.getAnnotation(Descriptor.class);
@@ -132,8 +136,6 @@ public class Activator implements BundleActivator {
 						.toLowerCase());
 			}
 			T service = constructor.newInstance(context, formatter);
-
-			properties.put(CommandProcessor.COMMAND_SCOPE, "aQute");
 
 			String[] functions = commands.stream()
 				.map(name -> name.startsWith("_") ? name.substring(1) : name)
@@ -148,8 +150,10 @@ public class Activator implements BundleActivator {
 					((Closeable) service).close();
 				}
 			});
+			return registration;
 		} catch (Throwable e) {
 			e.printStackTrace();
+			return null;
 			// ignore
 		}
 	}

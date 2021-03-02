@@ -74,6 +74,14 @@ public class Help {
 			.as(Command::toString);
 	}
 
+	@Descriptor("clears the screen")
+	public void clear(CommandSession s) {
+		for (int i = 0; i < 100; i++) {
+			s.getConsole()
+				.println();
+		}
+	}
+
 	@Descriptor("Format in box form or turn it off")
 	public boolean box(boolean on) {
 		return DTOFormatter.boxes = on;
