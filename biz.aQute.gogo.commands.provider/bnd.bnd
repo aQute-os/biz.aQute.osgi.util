@@ -13,7 +13,9 @@ DynamicImport-Package   *
 	org.osgi.framework;version='1.8.0',\
 	aQute.libg,\
 	osgi.core,\
-	org.osgi.service.component
+	org.osgi.service.component,\
+	org.osgi.service.jaxrs,\
+	org.osgi.service.http.whiteboard
 	
 -conditionalpackage: aQute.lib*
 
@@ -42,3 +44,15 @@ DynamicImport-Package   *
 	org.osgi.util.function;version='[1.1.0,1.1.1)',\
 	org.osgi.util.promise;version='[1.1.1,1.1.2)'
 -runee: JavaSE-1.8
+
+Export-Package: biz.aQute.gogo.commands.provider
+Import-Package: \
+	org.osgi.service.log;'resolution:'=optional,\
+	org.osgi.service.log.admin;'resolution:'=optional,\
+	org.osgi.service.component.runtime;'resolution:'=optional,\
+	org.osgi.service.component.runtime.dto;'resolution:'=optional,\
+	org.osgi.service.http.runtime;'resolution:'=optional,\
+	org.osgi.service.http.runtime.dto;'resolution:'=optional,\
+	org.osgi.service.jaxrs.runtime;'resolution:'=optional,\
+	org.osgi.service.jaxrs.runtime.dto;'resolution:'=optional,\
+	*
