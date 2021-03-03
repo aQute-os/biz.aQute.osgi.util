@@ -100,7 +100,9 @@ public class Table implements Cell {
 	public int height() {
 		int h = 0;
 		for (int r = 0; r < rows; r++) {
-			h += height(r) - 1;// remove bottom border width because we overlap
+			int height = height(r);
+			if (height > 0)
+				h += height - 1;// remove bottom border width because we overlap
 		}
 		return h + 1; // add bottom border
 	}
@@ -110,6 +112,9 @@ public class Table implements Cell {
 	}
 
 	public void set(int r, int c, Cell table) {
+		if (table.width() == 0 || table.height() == 0)
+			table = Table.EMPTY;
+
 		cells[r][c] = table;
 	}
 

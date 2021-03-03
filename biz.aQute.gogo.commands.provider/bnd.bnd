@@ -45,7 +45,6 @@ DynamicImport-Package   *
 	org.osgi.util.promise;version='[1.1.1,1.1.2)'
 -runee: JavaSE-1.8
 
-Export-Package: biz.aQute.gogo.commands.provider
 Import-Package: \
 	org.osgi.service.log;'resolution:'=optional,\
 	org.osgi.service.log.admin;'resolution:'=optional,\

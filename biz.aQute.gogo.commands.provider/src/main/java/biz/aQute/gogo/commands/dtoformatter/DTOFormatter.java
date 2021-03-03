@@ -486,25 +486,32 @@ public class DTOFormatter implements ObjectFormatter {
 				r++;
 			}
 		} else {
-			table = new Table(list.size() + 1, group.items.size(), 1);
-
-			int col = 0;
-
-			for (ItemDescription item : group.items.values()) {
-				table.set(0, col, item.label);
-				col++;
-			}
-
-			int row = 1;
-			for (Object member : list) {
-				col = 0;
+			int cols = group.items.size();
+			if (cols == 0) {
+				// no columns defined
+				int row = 0;
+				table = new Table(list.size(), 1, 0);
+				for (Object member : list) {
+					table.set(row, 0, member.toString());
+				}
+			} else {
+				int col = 0;
+				table = new Table(list.size() + 1, cols, 1);
 				for (ItemDescription item : group.items.values()) {
-					Object o = getValue(member, item);
-					Cell cell = cell(o, formatter);
-					table.set(row, col, cell);
+					table.set(0, col, item.label);
 					col++;
 				}
-				row++;
+				int row = 1;
+				for (Object member : list) {
+					col = 0;
+					for (ItemDescription item : group.items.values()) {
+						Object o = getValue(member, item);
+						Cell cell = cell(o, formatter);
+						table.set(row, col, cell);
+						col++;
+					}
+					row++;
+				}
 			}
 		}
 		return table;

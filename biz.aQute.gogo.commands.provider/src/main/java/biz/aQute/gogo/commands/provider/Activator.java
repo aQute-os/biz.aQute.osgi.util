@@ -152,7 +152,6 @@ public class Activator implements BundleActivator {
 			});
 			return registration;
 		} catch (Throwable e) {
-			e.printStackTrace();
 			return null;
 			// ignore
 		}
