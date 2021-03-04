@@ -1,0 +1,4 @@
+-buildpath: \
+	org.apache.felix.http.servlet-api,\
+	org.osgi.service.http.whiteboard,\
+	org.osgi.service.component.annotations
