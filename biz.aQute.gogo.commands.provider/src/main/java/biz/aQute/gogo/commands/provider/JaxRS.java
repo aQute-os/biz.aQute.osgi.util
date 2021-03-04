@@ -39,27 +39,23 @@ public class JaxRS {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] ", dto.serviceDTO.id));
+
+		formatter.build(FailedApplicationDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
 		formatter.build(ApplicationDTO.class)
 			.inspect()
 			.fields("*")
 			.line()
-			.part()
-			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
-
-		formatter.build(ExtensionDTO.class)
-			.inspect()
 			.fields("*")
-			.line()
-			.part()
-			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
-
-		formatter.build(FailedResourceDTO.class)
-			.inspect()
-			.fields("*")
-			.line()
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -67,13 +63,23 @@ public class JaxRS {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
-		formatter.build(FailedApplicationDTO.class)
+		formatter.build(ExtensionDTO.class)
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
+
+		formatter.build(FailedResourceDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -81,6 +87,7 @@ public class JaxRS {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -88,6 +95,7 @@ public class JaxRS {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.method, dto.path));
 

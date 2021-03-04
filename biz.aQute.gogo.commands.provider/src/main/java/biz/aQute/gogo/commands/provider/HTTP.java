@@ -25,6 +25,7 @@ import org.osgi.service.http.runtime.dto.RequestInfoDTO;
 import org.osgi.service.http.runtime.dto.ResourceDTO;
 import org.osgi.service.http.runtime.dto.RuntimeDTO;
 import org.osgi.service.http.runtime.dto.ServletContextDTO;
+import org.osgi.service.http.runtime.dto.ServletDTO;
 import org.osgi.util.tracker.ServiceTracker;
 
 import biz.aQute.gogo.commands.dtoformatter.DTOFormatter;
@@ -46,34 +47,55 @@ public class HTTP {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] port: %s", dto.serviceDTO.id, port(dto)));
-
-		formatter.build(PreprocessorDTO.class)
-			.inspect()
-			.fields("*")
-			.line()
-			.part()
-			.as(dto -> String.format("[%s] ", dto.serviceId));
-
-		formatter.build(ServletContextDTO.class)
-			.inspect()
-			.fields("*")
-			.line()
-			.part()
-			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
 		formatter.build(FailedServletContextDTO.class)
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
+
+		formatter.build(ServletContextDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
+
+		formatter.build(FailedPreprocessorDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s]", dto.serviceId));
+
+		formatter.build(PreprocessorDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s] ", dto.serviceId));
 
 		formatter.build(FailedServletDTO.class)
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
+
+		formatter.build(ServletDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -81,41 +103,7 @@ public class HTTP {
 			.inspect()
 			.fields("*")
 			.line()
-			.part()
-			.as(dto -> String.format("[%s]", dto.serviceId));
-
-		formatter.build(FailedPreprocessorDTO.class)
-			.inspect()
 			.fields("*")
-			.line()
-			.part()
-			.as(dto -> String.format("[%s]", dto.serviceId));
-
-		formatter.build(FailedFilterDTO.class)
-			.inspect()
-			.fields("*")
-			.line()
-			.part()
-			.as(dto -> String.format("[%s]", dto.serviceId));
-
-		formatter.build(FailedErrorPageDTO.class)
-			.inspect()
-			.fields("*")
-			.line()
-			.part()
-			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
-
-		formatter.build(FailedListenerDTO.class)
-			.inspect()
-			.fields("*")
-			.line()
-			.part()
-			.as(dto -> String.format("[%s]", dto.serviceId));
-
-		formatter.build(FailedListenerDTO.class)
-			.inspect()
-			.fields("*")
-			.line()
 			.part()
 			.as(dto -> String.format("[%s]", dto.serviceId));
 
@@ -123,6 +111,15 @@ public class HTTP {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s]", dto.serviceId));
+
+		formatter.build(FailedFilterDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s]", dto.serviceId));
 
@@ -130,6 +127,15 @@ public class HTTP {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
+
+		formatter.build(FailedErrorPageDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -137,13 +143,23 @@ public class HTTP {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
+
+		formatter.build(FailedListenerDTO.class)
+			.inspect()
+			.fields("*")
+			.line()
+			.fields("*")
+			.part()
+			.as(dto -> String.format("[%s]", dto.serviceId));
 
 		formatter.build(ListenerDTO.class)
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
 			.as(dto -> String.format("[%s]", dto.serviceId));
 
@@ -151,8 +167,9 @@ public class HTTP {
 			.inspect()
 			.fields("*")
 			.line()
+			.fields("*")
 			.part()
-			.as(dto -> String.format("[%s]", dto.path));
+			.as(dto -> String.format("[%s] ", dto.path));
 
 	}
 

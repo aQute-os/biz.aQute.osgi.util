@@ -3,11 +3,13 @@
 	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)',\
 	osgi.identity;filter:='(osgi.identity=biz.aQute.shell.sshd.provider)',\
 	bnd.identity;id='org.apache.felix.log',\
-	bnd.identity;id='org.apache.felix.http.jetty'
+	bnd.identity;id='org.apache.felix.http.jetty',\
+	bnd.identity;id='biz.aQute.gogo.commands.provider.test'
 -runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
 -runee: JavaSE-1.8
 -runbundles: \
 	biz.aQute.gogo.commands.provider;version=snapshot,\
+	biz.aQute.gogo.commands.provider.test;version=snapshot,\
 	biz.aQute.shell.sshd.provider;version=snapshot,\
 	org.apache.felix.configadmin;version='[1.9.12,1.9.13)',\
 	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\
