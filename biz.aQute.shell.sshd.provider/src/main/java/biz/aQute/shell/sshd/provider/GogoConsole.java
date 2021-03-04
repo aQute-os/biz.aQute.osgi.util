@@ -21,10 +21,13 @@ public class GogoConsole {
 
 	@Activate
 	public GogoConsole(@Reference CommandProcessor cp, BundleContext context) throws Exception {
-		String goshArgs = context.getProperty("gosh.args");
-		if (goshArgs!=null && goshArgs.contains("--nointeractive"))
+		String console = context.getProperty("biz.aQute.gogo.console");
+		if ( console == null || console.isEmpty())
 			return;
 
+		if ( !console.equalsIgnoreCase("true"))
+			return;
+		
 		Map<String, String> env = new HashMap<>();
 		env.put("TERM", "plain");
 		FileInputStream in = new FileInputStream(FileDescriptor.in);
