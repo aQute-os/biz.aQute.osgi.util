@@ -1,0 +1,22 @@
+#
+# biz.aQute.dtos.provider PROVIDER BUNDLE
+#
+
+-conditionalpackage: aQute.libg*
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.osgi.dto,\
+	aQute.libg,\
+	biz.aQute.api.dtos,\
+	biz.aQute.result,\
+	slf4j.api
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	org.osgi.framework
+
