@@ -12,9 +12,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Descriptor;
+import org.apache.felix.service.command.Parameter;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -82,14 +84,41 @@ public class LoggerAdminCommands implements Closeable {
 	}
 
 	@Descriptor("Show the current log")
-	public List<LogEntry> log() throws InterruptedException {
+	public List<LogEntry> log(
+		//@formatter:off
+		@Parameter( absentValue="false", presentValue="true",names={"-d","--debug"})
+		boolean debug,
+		@Parameter( absentValue="false", presentValue="true",names={"-i","--info"})
+		boolean info,
+		@Parameter( absentValue="false", presentValue="true",names={"-w","--warning"})
+		boolean warning
+		//@formatter:on
+
+		) throws InterruptedException {
 		return	getLogReaderService()
 			.map(LogReaderService::getLog)
 			.map(Collections::list)
 			.orElseGet(() -> {
 				System.err.println("No log service");
 				return new ArrayList<>();
-			});
+			})
+			.stream()
+			.filter(e -> {
+				switch (e.getLogLevel()) {
+					case DEBUG :
+						return debug;
+
+					case INFO :
+						return info || debug;
+					case TRACE :
+						return info || debug;
+					case WARN :
+						return info || debug || warning;
+					default :
+						return true;
+				}
+			})
+			.collect(Collectors.toList());
 
 	}
 
