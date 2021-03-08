@@ -1,6 +1,14 @@
 #
-# biz.aQute.result
+# biz.aQute.result PROVIDER BUNDLE
 #
 
+-includepackage biz.aQute.result
+
 -buildpath:  \
-	osgi.annotation
+    biz.aQute.api.result	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+
