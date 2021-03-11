@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-{{javaLevel}}"/>
+    <classpathentry kind="con" path="aQute.bnd.classpath.container"/>
+    <classpathentry kind="src" output="{{binDir}}" path="{{srcDir}}"/>
+    <classpathentry kind="src" output="{{testBinDir}}" path="{{testSrcDir}}">
+        <attributes>
+            <attribute name="test" value="true"/>
+        </attributes>
+    </classpathentry>
+</classpath>
