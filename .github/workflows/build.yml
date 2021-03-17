@@ -7,6 +7,8 @@ on:
 
 env:
   LC_ALL: en_US.UTF-8
+  awsid: ${{ secrets.AWSID }}
+  awssecret: ${{ secrets.AWSSECRET }}
 
 jobs:
   build:
