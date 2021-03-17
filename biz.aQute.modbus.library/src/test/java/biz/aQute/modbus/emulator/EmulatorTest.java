@@ -20,6 +20,10 @@ public class EmulatorTest {
 			return foo++;
 		}
 
+		public int setFoo(int v) {
+			return foo = v;
+		}
+
 		public String getBar() {
 			return "Hello";
 		}

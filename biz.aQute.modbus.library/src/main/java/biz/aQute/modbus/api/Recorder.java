@@ -10,7 +10,6 @@ public class Recorder implements Server {
 	@Override
 	public PDU accept(PDU request) {
 		PDU response = forward.accept(request);
-		System.out.println(response);
 		return response;
 	}
 
