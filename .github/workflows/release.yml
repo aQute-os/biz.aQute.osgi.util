@@ -8,6 +8,8 @@ env:
   LC_ALL: en_US.UTF-8
   REPOSITORY_USERNAME: ${{ secrets.REPOSITORY_USERNAME }}
   REPOSITORY_PASSWORD: ${{ secrets.REPOSITORY_PASSWORD }}
+  awsid: ${{ secrets.AWSID }}
+  awssecret: ${{ secrets.AWSSECRET }}
 
 jobs:
   build:
