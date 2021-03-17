@@ -116,10 +116,10 @@ public class Reflector {
 			}
 			String setters[] = toSetters(name);
 			for (Method method : target.getClass().getMethods()) {
-				if (Strings.in(setters, method.getName()) && method.getParameters().length == 0)
+				if (Strings.in(setters, method.getName()) && method.getParameters().length == 1)
 					return (v) -> {
 						try {
-							method.invoke(target, Converter.cnv(method.getGenericReturnType(), v));
+							method.invoke(target, Converter.cnv(method.getGenericParameterTypes()[0], v));
 						} catch (Exception e) {
 							throw new RuntimeException(e);
 						}
