@@ -1,0 +1,17 @@
+#
+# biz.aQute.aws.provider PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	aQute.libg,\
+	org.osgi.service.log,\
+	slf4j.api
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+
