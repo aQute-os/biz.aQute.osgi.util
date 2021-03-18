@@ -2,18 +2,19 @@ package biz.aQute.aws.sqs;
 
 import java.util.UUID;
 
-import biz.aQute.aws.AWS;
 import biz.aQute.aws.credentials.UserCredentials;
+import biz.aQute.aws.impl.AWSImpl;
+import biz.aQute.aws.impl.Protocol;
 import junit.framework.TestCase;
 
 public class SQSTest extends TestCase {
 	UserCredentials	uc	= new UserCredentials();
-	AWS				aws;
+	AWSImpl				aws;
 
 	public void test() throws Exception {
-		aws = new AWS(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
+		aws = new AWSImpl(uc.getAWSAccessKeyId(), uc.getAWSSecretKey(), "https://sqs.us-east-1.amazonaws.com");
 
-		SQS sqs = aws.sqs("https://sqs.us-east-1.amazonaws.com");
+		SQSImpl sqs = aws.sqs();
 
 		MessageQueue q1 = sqs.getQueue("test");
 		assertNotNull(q1);
@@ -26,8 +27,10 @@ public class SQSTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void queueLifeCycle() throws Exception {
-		aws = new AWS(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
-		SQS sqs = aws.sqs("http://sqs.us-east-1.amazonaws.com");
+		aws = new AWSImpl(uc.getAWSAccessKeyId(), uc.getAWSSecretKey(), "https://sqs.us-east-1.amazonaws.com");
+		Protocol protocol = new Protocol(aws, "https://sqs.us-east-1.amazonaws.com", SQSImpl.version, 2);
+
+		SQSImpl sqs = new SQSImpl(protocol);
 
 		String name = UUID.randomUUID().toString();
 		MessageQueue q1 = sqs.getQueue(name);

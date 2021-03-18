@@ -42,4 +42,8 @@ public class UserCredentials {
 		}
 		return properties;
 	}
+
+	public String getProperty(String key, String deflt) {
+		return getProperties().getProperty(key,deflt);
+	}
 }

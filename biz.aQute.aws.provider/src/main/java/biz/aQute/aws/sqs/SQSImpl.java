@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 
-import biz.aQute.aws.*;
+import biz.aQute.aws.impl.*;
 
 /**
  * A service interface based on Amazon's Simple Queue Service (SQS) {@see
@@ -16,18 +16,18 @@ import biz.aQute.aws.*;
  * the queuing service. It uses {@link MessageQueue} and {@link Message} objects
  * to model the service.
  */
-public class SQS {
-	final static Logger	logger	= LoggerFactory.getLogger(SQS.class);
+public class SQSImpl {
+	final static Logger	logger	= LoggerFactory.getLogger(SQSImpl.class);
 	public final static String	version	= "2011-10-01";
 	URL							region;
 	LogService					log;
 	final Protocol				client;
 
-	public SQS(Protocol protocol) {
+	public SQSImpl(Protocol protocol) {
 		this.client = protocol;
 	}
 
-	public SQS setEndpoint(URL endpoint) {
+	public SQSImpl setEndpoint(URL endpoint) {
 		this.region = endpoint;
 		return this;
 	}
@@ -106,12 +106,12 @@ public class SQS {
 	}
 
 	static public class CreateQueueRequest {
-		final SQS		sqs;
+		final SQSImpl		sqs;
 		final Request	request;
 		int				attribute	= 1;
 		final String	name;
 
-		CreateQueueRequest(SQS sqs, String queueName) throws Exception {
+		CreateQueueRequest(SQSImpl sqs, String queueName) throws Exception {
 			request = sqs.client.action("CreateQueue").arg("QueueName", queueName);
 			this.sqs = sqs;
 			this.name = queueName;

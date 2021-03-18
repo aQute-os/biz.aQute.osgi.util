@@ -1,19 +1,27 @@
-package biz.aQute.aws;
+package biz.aQute.aws.impl;
 
-import java.io.*;
-import java.net.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
-import javax.crypto.*;
-import javax.crypto.spec.*;
-import javax.xml.parsers.*;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import aQute.lib.base64.Base64;
-import biz.aQute.aws.s3.*;
-import biz.aQute.aws.ses.*;
-import biz.aQute.aws.sqs.*;
+import biz.aQute.aws.s3.S3Impl;
+import biz.aQute.aws.sqs.SQSImpl;
 
 /**
  * https://email.us-east-1.amazonaws.com/ ?Action=SendEmail
@@ -33,20 +41,25 @@ import biz.aQute.aws.sqs.*;
  * &AWSAccessKeyId=AKIAIOSFODNN7EXAMPLE
  * &Signature=RhU864jFu893mg7g9N9j9nr6h7EXAMPLE &Algorithm=HMACSHA256
  */
-public class AWS {
+
+public class AWSImpl {
 	final private String						accessKey;
 	final private String						secretKey;
 	final private Mac							mac;
 	final private SecretKeySpec					secret;
-	final private static SimpleDateFormat		awsDateFormat	= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
-	static SimpleDateFormat						httpDateFormat	= new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+	final private static SimpleDateFormat		awsDateFormat	= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+			Locale.ENGLISH);
+	static SimpleDateFormat						httpDateFormat	= new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z",
+			Locale.ENGLISH);
 	final private static DocumentBuilderFactory	dbf				= DocumentBuilderFactory.newInstance();
+	final String								region;
 	static {
 		dbf.setNamespaceAware(false);
 	}
 
-	public AWS(String accessKey, String secretKey) throws NoSuchAlgorithmException {
+	public AWSImpl(String accessKey, String secretKey, String region) throws NoSuchAlgorithmException {
 		this.accessKey = accessKey;
+		this.region = region;
 		this.mac = Mac.getInstance("HmacSHA256");
 		this.secret = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
 		this.secretKey = secretKey;
@@ -67,12 +80,12 @@ public class AWS {
 				synchronized (secret) {
 
 					switch (protocol.signature) {
-						case 2 :
-							return signVersion2(protocol);
-						case 3 :
-							return signVersion3();
-						default :
-							throw new IllegalArgumentException("Invalid signature version");
+					case 2:
+						return signVersion2(protocol);
+					case 3:
+						return signVersion3();
+					default:
+						throw new IllegalArgumentException("Invalid signature version");
 					}
 				}
 			}
@@ -122,7 +135,7 @@ public class AWS {
 				StringBuilder sb = new StringBuilder();
 				String del = "";
 
-				for (Map.Entry<String,Object> parameter : arguments.entrySet()) {
+				for (Map.Entry<String, Object> parameter : arguments.entrySet()) {
 					Object value = parameter.getValue();
 					if (value != null) {
 						sb.append(del) //
@@ -147,8 +160,7 @@ public class AWS {
 		try {
 			// TODO Not very efficient now
 			return URLEncoder.encode(value, "utf-8").replace("+", "%20").replace("*", "%2A").replace("%7E", "~");
-		}
-		catch (final UnsupportedEncodingException ex) {
+		} catch (final UnsupportedEncodingException ex) {
 			throw new RuntimeException(ex);
 		}
 	}
@@ -156,23 +168,17 @@ public class AWS {
 	private byte[] hmacSha256(final String str) {
 		try {
 			mac.init(secret);
-		}
-		catch (final Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 		return mac.doFinal(str.getBytes());
 	}
 
-	public S3 s3() {
-		return new S3(accessKey, secretKey);
+	public S3Impl s3() {
+		return new S3Impl(accessKey, secretKey);
 	}
-
-	public SES ses() {
-		return new SES(new Protocol(this, "https://email.us-east-1.amazonaws.com/", null, 3));
-	}
-
-	public SQS sqs(String region) {
-		return new SQS(new Protocol(this, region, SQS.version, 2));
+	public SQSImpl sqs() {
+		return new SQSImpl(new Protocol(this, region, SQSImpl.version, 2));
 	}
 
 }

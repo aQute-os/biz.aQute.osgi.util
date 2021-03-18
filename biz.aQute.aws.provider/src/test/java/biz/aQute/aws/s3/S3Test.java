@@ -6,7 +6,8 @@ import java.net.URI;
 
 import aQute.lib.io.IO;
 import biz.aQute.aws.credentials.UserCredentials;
-import biz.aQute.aws.s3.Bucket.Content;
+import biz.aQute.aws.s3.api.Bucket;
+import biz.aQute.aws.s3.api.Bucket.Content;
 import junit.framework.TestCase;
 
 public class S3Test extends TestCase {
@@ -14,10 +15,10 @@ public class S3Test extends TestCase {
 	public void testSignedUrl() throws Exception {
 		UserCredentials uc = new UserCredentials();
 
-		S3 s3 = new S3(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
+		S3Impl s3 = new S3Impl(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
 		deleteBucket(s3);
 
-		Bucket bucket = s3.createBucket("libsync-test");
+		BucketImpl bucket = s3.createBucket("libsync-test");
 		URI signedUri = bucket.putObject("hello").contentType("application/octet-stream").signedUri(10000);
 		System.out.println(signedUri);
 
@@ -37,10 +38,10 @@ public class S3Test extends TestCase {
 	public void testSimple() throws Exception {
 		UserCredentials uc = new UserCredentials();
 
-		S3 s3 = new S3(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
+		S3Impl s3 = new S3Impl(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
 		deleteBucket(s3);
 
-		Bucket bucket = s3.createBucket("libsync-test");
+		BucketImpl bucket = s3.createBucket("libsync-test");
 		try {
 			assertNotNull(bucket);
 			assertEquals("libsync-test", bucket.getName());
@@ -93,21 +94,21 @@ public class S3Test extends TestCase {
 	public void testEBR() throws Exception {
 		UserCredentials uc = new UserCredentials();
 
-		S3 s3 = new S3(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
-		Bucket bucket = s3.getBucket("repository.springframework.org");
+		S3Impl s3 = new S3Impl(uc.getAWSAccessKeyId(), uc.getAWSSecretKey());
+		BucketImpl bucket = s3.getBucket("repository.springframework.org");
 		traverse(bucket, "", "");
 	}
 
-	void traverse(Bucket bucket, String prefix, String indent) throws Exception {
+	void traverse(BucketImpl bucket, String prefix, String indent) throws Exception {
 		for (Content x : bucket.listObjects().delimiter("/")) {
 			System.out.printf("%s%20s %d %s\n", indent, x.key, x.size, x.etag);
 		}
 
 	}
 
-	private void deleteBucket(S3 s3) {
+	private void deleteBucket(S3Impl s3) {
 		try {
-			Bucket b = s3.getBucket("libsync-test");
+			BucketImpl b = s3.getBucket("libsync-test");
 			if (b != null) {
 				for (Content c : b.listObjects()) {
 					b.delete(c.key);

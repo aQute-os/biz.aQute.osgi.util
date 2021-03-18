@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
-import biz.aQute.aws.Request;
+import biz.aQute.aws.impl.Request;
 
 /**
  * A Simple Queue service Message Queue. Provides access to the SQ service
@@ -13,10 +13,10 @@ import biz.aQute.aws.Request;
  */
 public class MessageQueue {
 	final String		name;
-	final SQS			parent;
+	final SQSImpl			parent;
 	final String		endpoint;
 
-	MessageQueue(SQS parent, String endpoint) {
+	MessageQueue(SQSImpl parent, String endpoint) {
 		this.parent = parent;
 		this.endpoint = endpoint;
 		String s = endpoint.toString();
@@ -71,7 +71,7 @@ public class MessageQueue {
 						receiveCount, senderId);
 				result.add(msg);
 			} else
-				SQS.logger
+				SQSImpl.logger
 						.warn("Received false md5, ignored {} {}" , receiptHandle, messageId);
 		}
 		return result;
@@ -109,7 +109,7 @@ public class MessageQueue {
 			if (request.checkmd5(md5OfBody, (String) messages[i])) {
 				result.add(new Message(this, messageId, (String) messages[id]));
 			} else
-				SQS.logger.warn("Invalid md5 after sending message {}",messageId);
+				SQSImpl.logger.warn("Invalid md5 after sending message {}",messageId);
 
 			i++;
 		}

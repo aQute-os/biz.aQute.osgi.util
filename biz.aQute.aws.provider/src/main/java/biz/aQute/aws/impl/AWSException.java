@@ -1,4 +1,4 @@
-package biz.aQute.aws;
+package biz.aQute.aws.impl;
 
 public class AWSException extends RuntimeException {
 	private static final long	serialVersionUID	= 1L;

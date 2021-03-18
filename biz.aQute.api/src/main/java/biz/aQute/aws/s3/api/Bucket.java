@@ -1,46 +1,13 @@
-package biz.aQute.aws.s3;
+package biz.aQute.aws.s3.api;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.Collection;
+import java.util.Date;
 
-import biz.aQute.aws.s3.S3.*;
+public interface Bucket {
 
-public class Bucket {
-	final String	name;
-	final S3		parent;
-
-	// TODO verify bucket name
-
-	Bucket(S3 parent, String name) {
-		this.parent = parent;
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public GetRequest getObject(String key) {
-		return new GetRequestImpl(parent, this, key);
-	}
-
-	public void delete(String key) throws Exception {
-		parent.construct(S3.METHOD.DELETE, this, key, null, null, null);
-	}
-
-	public PutRequest putObject(String key) {
-		return new PutRequestImpl(parent, this, key);
-	}
-
-	public ListRequest listObjects() throws Exception {
-		return new ListRequestImpl(parent, this);
-	}
-
-	public String toString() {
-		return name;
-	}
-
+	String getName();
 	public static class Content {
 		public Bucket		bucket;
 		public String		key;
@@ -106,7 +73,7 @@ public class Bucket {
 
 		PutRequest expires(long ms);
 
-		PutRequest storageClass(S3.StorageClass storageClass);
+		PutRequest storageClass(StorageClass storageClass);
 
 		PutRequest contentLength(long length);
 
@@ -114,7 +81,7 @@ public class Bucket {
 
 		/**
 		 * Put a string as UTF-8 encoded data.
-		 * 
+		 *
 		 * @param in
 		 *            The string to put
 		 * @throws Exception
@@ -133,5 +100,14 @@ public class Bucket {
 
 		ListRequest prefix(String prefix);
 	}
+
+	PutRequest putObject(String key);
+
+	GetRequest getObject(String key);
+
+	void delete(String key) throws Exception;
+
+	ListRequest listObjects() throws Exception;
+
 
 }

@@ -1,4 +1,4 @@
-package biz.aQute.aws;
+package biz.aQute.aws.impl;
 
 import java.io.*;
 import java.net.*;

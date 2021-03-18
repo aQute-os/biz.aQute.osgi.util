@@ -1,26 +1,34 @@
 package biz.aQute.aws.s3;
 
-import java.io.*;
-import java.util.*;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-import javax.xml.parsers.*;
-import javax.xml.xpath.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import biz.aQute.aws.s3.Bucket.*;
+import biz.aQute.aws.s3.api.Bucket.Content;
+import biz.aQute.aws.s3.api.Bucket.ListRequest;
+import biz.aQute.aws.s3.api.StorageClass;
 
 public class ListRequestImpl extends CommonRequestImpl<ListRequest> implements ListRequest {
-	final Bucket					bucket;
+	final BucketImpl					bucket;
 	final SortedMap<String,String>	args	= new TreeMap<String,String>();
 	final DocumentBuilder			db;
 	final XPath						xpath;
 
-	ListRequestImpl(S3 parent, Bucket bucket) throws ParserConfigurationException {
+	ListRequestImpl(S3Impl parent, BucketImpl bucket) throws ParserConfigurationException {
 		super(parent);
 		this.bucket = bucket;
-		db = S3.dbf.newDocumentBuilder();
-		xpath = S3.xpf.newXPath();
+		db = S3Impl.dbf.newDocumentBuilder();
+		xpath = S3Impl.xpf.newXPath();
 	}
 
 	@Override
@@ -83,7 +91,7 @@ public class ListRequestImpl extends CommonRequestImpl<ListRequest> implements L
 					while (isTruncated) {
 						if (current != null)
 							args.put("marker", current.key);
-						InputStream in = parent.construct(S3.METHOD.GET, bucket, null, null, headers, args);
+						InputStream in = parent.construct(S3Impl.METHOD.GET, bucket, null, null, headers, args);
 
 						if (in == null)
 							return false;
@@ -118,7 +126,7 @@ public class ListRequestImpl extends CommonRequestImpl<ListRequest> implements L
 					current.etag = xpath.evaluate("ETag", c);
 					current.etag = current.etag.substring(1, current.etag.length() - 1);
 					current.size = Long.parseLong(xpath.evaluate("Size", c));
-					current.storageClass = Enum.valueOf(S3.StorageClass.class, xpath.evaluate("StorageClass", c));
+					current.storageClass = Enum.valueOf(StorageClass.class, xpath.evaluate("StorageClass", c));
 					return current;
 				}
 				catch (Exception e) {

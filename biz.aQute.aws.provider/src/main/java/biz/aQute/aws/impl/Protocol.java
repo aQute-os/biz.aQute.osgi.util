@@ -1,12 +1,12 @@
-package biz.aQute.aws;
+package biz.aQute.aws.impl;
 
 public class Protocol {
 	final int		signature;
-	final AWS		aws;
+	final AWSImpl		aws;
 	final String	endpoint;
 	final String	version;
 
-	Protocol(AWS aws, String endpoint, String version, int signature) {
+	public Protocol(AWSImpl aws, String endpoint, String version, int signature) {
 		this.aws = aws;
 		this.endpoint = endpoint;
 		this.version = version;

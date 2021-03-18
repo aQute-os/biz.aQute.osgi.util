@@ -1,23 +1,27 @@
 package biz.aQute.aws.s3;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
-import biz.aQute.aws.s3.Bucket.*;
+import biz.aQute.aws.s3.api.Bucket.GetRequest;
+import biz.aQute.aws.s3.api.Bucket.Range;
 
 /**
  * Implements a get request so that the caller can provide all the options
  * without being confronted with a huge API.
  */
 public class GetRequestImpl extends CommonRequestImpl<GetRequest> implements GetRequest {
-	final Bucket	bucket;
+	final BucketImpl	bucket;
 	final String	key;
 	List<Range>		ranges;
 	boolean			accept304;
 	boolean			accept412;
 
-	public GetRequestImpl(S3 parent, Bucket bucket, String key) {
+	public GetRequestImpl(S3Impl parent, BucketImpl bucket, String key) {
 		super(parent);
 		this.bucket = bucket;
 		this.key = key;
@@ -86,7 +90,7 @@ public class GetRequestImpl extends CommonRequestImpl<GetRequest> implements Get
 		}
 
 		try {
-			return parent.construct(S3.METHOD.GET, bucket, key, null, headers, null);
+			return parent.construct(S3Impl.METHOD.GET, bucket, key, null, headers, null);
 		}
 		catch (S3Exception e) {
 			if (e.responseCode == 304 && accept304)

@@ -1,16 +1,18 @@
 package biz.aQute.aws.s3;
 
-import java.util.*;
+import java.util.Date;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-import biz.aQute.aws.s3.Bucket.*;
+import biz.aQute.aws.s3.api.Bucket.CommonRequest;
 
 @SuppressWarnings("unchecked")
 public class CommonRequestImpl<T> implements CommonRequest<T> {
 	final SortedMap<String,String>	headers		= new TreeMap<String,String>(String.CASE_INSENSITIVE_ORDER);
 	final SortedMap<String,String>	arguments	= new TreeMap<String,String>();
-	final S3						parent;
+	final S3Impl						parent;
 
-	CommonRequestImpl(S3 parent) {
+	CommonRequestImpl(S3Impl parent) {
 		this.parent = parent;
 	}
 

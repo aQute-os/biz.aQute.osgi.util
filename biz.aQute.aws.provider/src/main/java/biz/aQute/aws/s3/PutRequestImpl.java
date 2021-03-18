@@ -1,20 +1,25 @@
 package biz.aQute.aws.s3;
 
-import java.io.*;
-import java.net.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URI;
 
-import aQute.lib.base64.*;
-import aQute.lib.io.*;
-import aQute.libg.cryptography.*;
-import biz.aQute.aws.s3.Bucket.*;
-import biz.aQute.aws.s3.S3.*;
+import aQute.lib.base64.Base64;
+import aQute.lib.io.IO;
+import aQute.libg.cryptography.Digester;
+import aQute.libg.cryptography.MD5;
+import biz.aQute.aws.s3.api.Bucket.PutRequest;
+import biz.aQute.aws.s3.api.StorageClass;
 
 class PutRequestImpl extends CommonRequestImpl<PutRequest> implements PutRequest {
-	final Bucket	bucket;
+	final BucketImpl	bucket;
 	final String	key;
 	long			length	= -1;
 
-	PutRequestImpl(S3 parent, Bucket Bucket, String key) {
+	PutRequestImpl(S3Impl parent, BucketImpl Bucket, String key) {
 		super(parent);
 		this.bucket = Bucket;
 		this.key = key;
@@ -57,7 +62,7 @@ class PutRequestImpl extends CommonRequestImpl<PutRequest> implements PutRequest
 			in = new FileInputStream(tmpfile);
 		}
 		// System.out.println(headers);
-		parent.construct(S3.METHOD.PUT, bucket, key, in, headers, null);
+		parent.construct(S3Impl.METHOD.PUT, bucket, key, in, headers, null);
 	}
 
 	public PutRequest contentLength(long length) {
