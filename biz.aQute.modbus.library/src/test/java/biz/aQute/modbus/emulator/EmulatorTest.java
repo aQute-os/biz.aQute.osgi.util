@@ -13,7 +13,7 @@ import biz.aQute.modbus.reflective.Emulator;
 public class EmulatorTest {
 
 	static class Foo {
-		int foo = 76;
+		int		foo	= 76;
 		boolean	c1	= false;
 
 		public int getFoo() {
@@ -28,13 +28,26 @@ public class EmulatorTest {
 			return "Hello";
 		}
 
+		public int getSigned() {
+			return 25;
+		}
+
+		public int getNegative() {
+			return -25;
+		}
 	}
 
 	@Test
 	public void emulator() throws InterruptedException, IOException {
 		Foo foo = new Foo();
-		Emulator emulator = new Emulator("H:foo:10:i32\n"
-			+ "H:bar:12:String:8\n" + "C:c1:20", foo);
+		Emulator emulator = new Emulator(//
+			"" //
+				+ "H:foo:10:i32\n" //
+				+ "H:bar:12:String:8\n" //
+				+ "C:c1:20\n" //
+				+ "H:signed:30:i16\n" //
+				+ "H:negative:4000:i16\n",
+			foo);
 
 		MessagingProtocol server = new MessagingProtocol(true);
 		server.addUnit(1, emulator);
@@ -55,6 +68,10 @@ public class EmulatorTest {
 
 		pdu = client.readHoldingRegisters(server, 1, 12, 8);
 
+		pdu = client.readHoldingRegisters(server, 1, 30, 1);
+		assertThat(pdu.getI16()).isEqualTo(25);
+		pdu = client.readHoldingRegisters(server, 1, 4000, 1);
+		assertThat(pdu.getI16()).isEqualTo(-25);
 	}
 
 }

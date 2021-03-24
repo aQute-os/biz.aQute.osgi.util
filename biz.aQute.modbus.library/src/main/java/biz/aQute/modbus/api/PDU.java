@@ -306,11 +306,11 @@ public class PDU {
 		assert v >= Short.MIN_VALUE && v <= Short.MAX_VALUE;
 
 		if (bigByteEndian) {
-			putU8(relPosition, 0xFF & (v / 8));
+			putU8(relPosition, 0xFF & (v >> 8));
 			putU8(relPosition + 1, 0xFF & v);
 		} else {
 			putU8(relPosition, 0xFF & v);
-			putU8(relPosition + 1, 0xFF & (v / 8));
+			putU8(relPosition + 1, 0xFF & (v >> 8));
 		}
 		return this;
 	}
