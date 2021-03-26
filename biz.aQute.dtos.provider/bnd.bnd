@@ -2,8 +2,9 @@
 # biz.aQute.dtos.provider PROVIDER BUNDLE
 #
 
--conditionalpackage: aQute.libg*
+-conditionalpackage: aQute.lib*
 
+-includepackage     biz.aQute.dtos.api
 -buildpath: \
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
@@ -12,7 +13,7 @@
 	biz.aQute.api.dtos,\
 	biz.aQute.result,\
 	slf4j.api
-	
+
 
 -testpath: \
 	biz.aQute.wrapper.junit,\
