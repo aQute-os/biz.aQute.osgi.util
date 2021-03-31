@@ -35,6 +35,10 @@ public class TopicTest {
 
 		mqttBroker = new Server();
 		mqttBroker.startServer(classPathConfig, Collections.emptyList());
+		while(mqttBroker.getPort() == 0) {
+			System.out.println("still at port 0");
+			Thread.sleep(100);
+		}
 	}
 
 	@After
@@ -78,13 +82,13 @@ public class TopicTest {
 			topicImpl.publish(test);
 
 			Awaitility.await().until(() -> !dtos.isEmpty());
-			
+
 			assertThat(mqttCentral.clients).hasSize(1);
-			
+
 			facade.deactivate();
 
 			Awaitility.await().until(() ->  mqttCentral.clients.isEmpty());
-			
+
 		} finally {
 			mqttCentral.deactivate();
 		}
