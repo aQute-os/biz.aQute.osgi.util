@@ -2,7 +2,7 @@ baseline.version:       1.5.0
 base.version:           1.6.0
 
 # To release, remove the -SNAPSHOT
--pom:                   version=${base.version}-SNAPSHOT
+-pom:                   version=${base.version}
 -groupid:               biz.aQute
 
 src:                    src/main/java,src/main/resources
