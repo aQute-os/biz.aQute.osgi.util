@@ -92,6 +92,9 @@ public abstract class ApplicationProtocol {
 				case 0x06 :
 					return writeSingleRegister(buffer, slave, response);
 
+				case 0x10 :
+					return writeMultipleRegisters(buffer, slave, response);
+
 				default :
 					return Response.illegalFunction("no such function " + function);
 			}

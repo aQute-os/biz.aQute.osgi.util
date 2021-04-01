@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import biz.aQute.modbus.api.PDU.Bits;
 import biz.aQute.modbus.api.PDU.BlockLength;
+import biz.aQute.modbus.api.PDU.DataType;
+import biz.aQute.modbus.api.PDU.Entry;
 
 public class PDUTest {
 
@@ -193,6 +195,22 @@ public class PDUTest {
 		assertThat(pdu.getI64()).isEqualTo(12345L);
 		assertThat(pdu.getI64()).isEqualTo(-3L);
 
+	}
+
+	@Test
+	public void testEntryIntAndBooleans() {
+		PDU pdu = new PDU(100);
+		PDU.Entry i16 = new Entry(DataType.i16, 2, 0);
+		PDU.Entry i64 = new Entry(DataType.i64, 8, 0);
+		PDU.Entry u32 = new Entry(DataType.u32, 4, 0);
+		pdu.put(i16, true);
+		pdu.put(i64, false);
+		pdu.put(u32, false);
+		pdu.seal();
+
+		assertThat(pdu.getI16()).isEqualTo(1);
+		assertThat(pdu.getI64()).isEqualTo(0L);
+		assertThat(pdu.getU32()).isEqualTo(0L);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
