@@ -9,6 +9,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Formatter;
 
+import aQute.lib.converter.Converter;
+
 public class PDU {
 
 	public static class Entry {
@@ -906,21 +908,41 @@ public class PDU {
 			case bit :
 				throw new UnsupportedOperationException();
 			case i16 :
-				return putI16(position, ((Number) o).intValue());
+				return putI16(position, toInt(o));
 			case i32 :
-				return putI32(position, ((Number) o).intValue());
+				return putI32(position, toInt(o));
 			case i64 :
-				return putI64(position, ((Number) o).longValue());
+				return putI64(position, toLong(o));
 			case i8 :
-				return putI8(position, ((Number) o).intValue());
+				return putI8(position, toInt(o));
 			case u16 :
-				return putU16(position, ((Number) o).intValue());
+				return putU16(position, toInt(o));
 			case u32 :
-				return putU32(position, ((Number) o).longValue());
+				return putU32(position, toLong(o));
 			case u8 :
-				return putU8(position, ((Number) o).intValue());
+				return putU8(position, toInt(o));
 		}
 		return null;
+	}
+
+	private long toLong(Object o) {
+		if (o instanceof Number)
+			return ((Number) o).longValue();
+		return toInt(o);
+	}
+
+	private int toInt(Object o) {
+		if (o instanceof Boolean)
+			return ((Boolean) o) ? 1 : 0;
+
+
+		if (o instanceof Number)
+			return ((Number) o).intValue();
+
+		try {
+			return Converter.cnv(Integer.class, o);
+		} catch (Exception e) {}
+		return 0;
 	}
 
 	@Override
