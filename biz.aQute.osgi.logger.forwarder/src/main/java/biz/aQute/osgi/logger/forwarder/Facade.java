@@ -213,15 +213,20 @@ final class Facade extends MarkerIgnoringBase {
 	}
 
 	private boolean fixupArguments(Object... arguments) {
-		if (arguments == null || arguments.length == 0)
-			return true;
+		try {
+			if (arguments == null || arguments.length == 0)
+				return true;
 
-		HashSet<Object> visited = new HashSet<>();
-		for (int i = 0; i < arguments.length; i++) {
-			visited.clear();
-			arguments[i] = print(arguments[i], visited);
+			HashSet<Object> visited = new HashSet<>();
+			for (int i = 0; i < arguments.length; i++) {
+				visited.clear();
+				arguments[i] = print(arguments[i], visited);
+			}
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	private Object fixup(Object in) {
@@ -266,7 +271,6 @@ final class Facade extends MarkerIgnoringBase {
 		}
 		return object;
 	}
-
 
 	void publish(LogRecord record) {
 		try {
