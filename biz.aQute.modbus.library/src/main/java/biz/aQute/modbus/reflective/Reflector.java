@@ -65,16 +65,6 @@ public class Reflector {
 
 	private static Supplier<Object> get(Object[] targets, String name) {
 		for (Object target : targets) {
-			for (Field field : target.getClass().getFields()) {
-				if (field.getName().equals(name))
-					return () -> {
-						try {
-							return field.get(target);
-						} catch (IllegalArgumentException | IllegalAccessException e) {
-							throw new RuntimeException(e);
-						}
-					};
-			}
 
 			String getters[] = toGetters(name);
 			for (Method method : target.getClass().getMethods()) {
@@ -93,6 +83,18 @@ public class Reflector {
 							method.setAccessible(true);
 							return method.invoke(target);
 						} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+							throw new RuntimeException(e);
+						}
+					};
+			}
+			for (Field field : target.getClass()
+				.getFields()) {
+				if (field.getName()
+					.equals(name))
+					return () -> {
+						try {
+							return field.get(target);
+						} catch (IllegalArgumentException | IllegalAccessException e) {
 							throw new RuntimeException(e);
 						}
 					};

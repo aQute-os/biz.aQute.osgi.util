@@ -74,4 +74,27 @@ public class EmulatorTest {
 		assertThat(pdu.getI16()).isEqualTo(-25);
 	}
 
+	public static class Bar {
+		public int bar = 1;
+
+		public int getBar() {
+			return 2;
+		}
+	}
+
+	@Test
+	public void testMethodPriorityOverField() throws InterruptedException, IOException {
+		Bar bar = new Bar();
+		Emulator emulator = new Emulator(//
+			"" //
+				+ "H:bar:0:i32\n" //
+			, bar);
+
+		MessagingProtocol server = new MessagingProtocol(true);
+		server.addUnit(1, emulator);
+
+		MessagingProtocol client = new MessagingProtocol(true);
+		PDU pdu = client.readHoldingRegisters(server, 1, 0, 2);
+		assertThat(pdu.getI32()).isEqualTo(2);
+	}
 }
