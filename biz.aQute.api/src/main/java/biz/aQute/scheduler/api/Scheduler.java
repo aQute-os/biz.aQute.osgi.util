@@ -11,11 +11,11 @@ import org.osgi.util.promise.Promise;
  */
 @ProviderType
 public interface Scheduler extends Executor {
-	
+
 	interface RunnableWithException {
 		void run() throws Exception;
 	}
-	
+
 
 	/**
 	 * Schedule a runnable to run periodically at a fixed rate. The schedule can
@@ -48,14 +48,14 @@ public interface Scheduler extends Executor {
 	 */
 
 	<T> Promise<T> submit(Callable<T> callable, String name);
-	
+
 	/**
 	 * Execute long running task and optionally restart when
 	 * exceptions are thrown.
-	 * 
+	 *
 	 * @param r The body
-	 * @param manage restart when it fails 
-	 * 
+	 * @param manage restart when it fails
+	 *
 	 */
 	Task deamon(RunnableWithException r, boolean manage, String name);
 }

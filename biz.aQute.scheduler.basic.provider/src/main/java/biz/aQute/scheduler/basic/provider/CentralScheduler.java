@@ -15,17 +15,17 @@ import org.osgi.util.promise.PromiseFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(service=CentralScheduler.class,scope=ServiceScope.SINGLETON)
+@Component(service = CentralScheduler.class, scope = ServiceScope.SINGLETON)
 class CentralScheduler {
 	final static Logger				logger			= LoggerFactory.getLogger(SchedulerImpl.class);
-	final ScheduledExecutorService	scheduler;
+	final ScheduledExecutorService	scheduler	;
 	final PromiseFactory			factory;
 
 	long							shutdownTimeout	= 5000;
 
 	@Activate
 	public CentralScheduler() {
-		scheduler = Executors.newScheduledThreadPool(100);
+		scheduler = Executors.newScheduledThreadPool(50);
 		factory = new PromiseFactory(scheduler);
 	}
 
@@ -45,18 +45,17 @@ class CentralScheduler {
 			}
 		} catch (InterruptedException e) {
 			Thread.currentThread()
-				.interrupt();
+					.interrupt();
 			logger.info("terminated by interrupt");
 		}
 	}
 
-
 	public <T> Promise<T> submit(Callable<T> callable, String name) {
 		return factory.submit(() -> {
 			String tname = Thread.currentThread()
-				.getName();
+					.getName();
 			Thread.currentThread()
-				.setName(name);
+					.setName(name);
 			try {
 				return callable.call();
 			} catch (Exception e) {
@@ -64,7 +63,7 @@ class CentralScheduler {
 				throw e;
 			} finally {
 				Thread.currentThread()
-					.setName(tname);
+						.setName(tname);
 			}
 		});
 	}

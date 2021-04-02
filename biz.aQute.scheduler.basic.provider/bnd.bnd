@@ -11,7 +11,8 @@
 	
 
 -testpath: \
-	biz.aQute.wrapper.junit, \
-	biz.aQute.wrapper.hamcrest, \
-	org.assertj.core
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	org.awaitility
 

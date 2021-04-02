@@ -16,6 +16,8 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import biz.aQute.scheduler.api.Scheduler;
 import biz.aQute.scheduler.api.Task;
@@ -26,23 +28,79 @@ import biz.aQute.scheduler.api.Task;
  */
 @Component(scope = ServiceScope.PROTOTYPE)
 public class SchedulerImpl implements Executor, Scheduler {
-
+	final Logger			logger	= LoggerFactory.getLogger(SchedulerImpl.class);
 	final Set<Task>			tasks	= Collections.synchronizedSet(new HashSet<>());
 	final CentralScheduler	scheduler;
+	final Object			lock	= new Object();
 
 	class TaskImpl implements Runnable, Task {
-		Runnable cancel;
+		final RunnableWithException	runnable;
+		final String				name;
+		Runnable					cancel;
+		Thread						thread;
+		final boolean				manage;
+
+		TaskImpl(RunnableWithException runnable, String name, boolean manage) {
+			this.manage = manage;
+			this.runnable = runnable::run;
+			this.name = name;
+		}
+
+		TaskImpl(Runnable runnable, String name, boolean manage) {
+			this((RunnableWithException) runnable::run, name, manage);
+		}
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
-
+			synchronized (lock) {
+				thread = Thread.currentThread();
+			}
+			String old = thread.getName();
+			try {
+				boolean logged=false;
+				while (!thread.isInterrupted())
+					try {
+						thread.setName(name);
+						runnable.run();
+					} catch (Exception e) {
+						if (!manage) {
+							return;
+						}
+						if (!logged) {
+							logger.info("managed task {} failed with {}. Sleeping 1sec", name, e, e);
+							logged = true;
+						}
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							thread.interrupt();
+							logger.info("managed task {} interrupted", name);
+							return;
+						}
+					}
+			} finally {
+				thread.setName(old);
+				synchronized (lock) {
+					thread = null;
+					tasks.remove(this);
+				}
+			}
 		}
 
 		@Override
 		public boolean cancel() {
-			// TODO Auto-generated method stub
-			return false;
+			if (cancel != null)
+				cancel.run();
+			synchronized (lock) {
+				if (tasks.remove(this)) {
+					if (thread == null) {
+						return false;
+					}
+					thread.interrupt();
+				} else
+					return false;
+			}
+			return true;
 		}
 	}
 
@@ -58,7 +116,7 @@ public class SchedulerImpl implements Executor, Scheduler {
 
 	@Override
 	public Task periodic(Runnable runnable, long ms, String name) {
-		TaskImpl task = createWrapper(runnable, name, false);
+		TaskImpl task = new TaskImpl(runnable, name, false);
 		ScheduledFuture<?> future = scheduler.scheduler.scheduleAtFixedRate(task, ms, ms, TimeUnit.MILLISECONDS);
 		task.cancel = () -> future.cancel(true);
 		tasks.add(task);
@@ -67,7 +125,7 @@ public class SchedulerImpl implements Executor, Scheduler {
 
 	@Override
 	public Task after(Runnable runnable, long ms, String name) {
-		TaskImpl task = createWrapper(runnable, name, false);
+		TaskImpl task = new TaskImpl(runnable, name, false);
 		ScheduledFuture<?> future = scheduler.scheduler.schedule(task, ms, TimeUnit.MILLISECONDS);
 		task.cancel = () -> future.cancel(true);
 		tasks.add(task);
@@ -76,21 +134,16 @@ public class SchedulerImpl implements Executor, Scheduler {
 
 	@Override
 	public Task execute(Runnable runnable, String name) {
-		TaskImpl task = createWrapper(runnable, name, false);
+		TaskImpl task = new TaskImpl(runnable, name, false);
 		scheduler.scheduler.execute(task);
 		tasks.add(task);
 		return task;
 	}
 
-	private TaskImpl createWrapper(Runnable runnable, String name, boolean manage) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public <T> Promise<T> submit(Callable<T> callable, String name) {
 		Deferred<T> deferred = scheduler.factory.deferred();
-		TaskImpl task = createWrapper(() -> {
+		TaskImpl task = new TaskImpl((Runnable) () -> {
 			try {
 				deferred.resolve(callable.call());
 			} catch (Throwable e) {
@@ -105,8 +158,10 @@ public class SchedulerImpl implements Executor, Scheduler {
 
 	@Override
 	public Task deamon(RunnableWithException r, boolean manage, String name) {
-		
-		return null;
+		TaskImpl task = new TaskImpl(r, name, manage);
+		Thread thread = new Thread(task, name);
+		thread.start();
+		return task;
 	}
 
 	@Override
