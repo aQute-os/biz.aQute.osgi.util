@@ -1,0 +1,20 @@
+#
+# biz.aQute.osgi.logger.components.provider PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.osgi.service.log,\
+	org.osgi.framework,\
+	org.apache.felix.gogo.runtime,\
+	org.osgi.service.metatype.annotations,\
+	aQute.libg
+
+
+-testpath: \
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	org.mockito.mockito-all
+
