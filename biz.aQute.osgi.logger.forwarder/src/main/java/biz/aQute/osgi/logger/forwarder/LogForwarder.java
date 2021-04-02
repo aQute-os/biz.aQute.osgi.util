@@ -2,6 +2,7 @@ package biz.aQute.osgi.logger.forwarder;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -27,12 +28,11 @@ import org.slf4j.Logger;
 public class LogForwarder implements ILoggerFactory {
 
 	static final int							QUEUE_CAPACITY			= 5_000;
-	static final Bundle							thisBundle				= FrameworkUtil
-			.getBundle(LogForwarder.class);
+	static final Bundle							thisBundle				= FrameworkUtil.getBundle(LogForwarder.class);
 	static final SecurityManagerContext			securityManagerContext	= new SecurityManagerContext();
-	final BlockingQueue<Runnable>				queue					= new LinkedBlockingQueue<>(
-			QUEUE_CAPACITY);
+	final BlockingQueue<Runnable>				queue					= new LinkedBlockingQueue<>(QUEUE_CAPACITY);
 	static LogForwarder							SINGLETON				= new LogForwarder();
+	static Instant								starting				= Instant.now();
 	final ReferenceQueue<Facade>				referenceQueue			= new ReferenceQueue<>();
 
 	// Guardby lock
@@ -154,11 +154,12 @@ public class LogForwarder implements ILoggerFactory {
 			return;
 
 		selectedLogService = newLogService;
-
 		if (newLogService == null) {
 			// Start queuing
 			getLoggerFacades().forEach(facade -> facade.delegate = new QueuingLogger(queue, facade));
 		} else {
+			selectedLogService.getLogger(LogForwarder.class.getName())
+				.audit("RESTART {} #queued={}", starting, queue.size());
 			// Start logging
 			getLoggerFacades().forEach(facade -> {
 				setDelegate(facade, newLogService);
@@ -187,19 +188,19 @@ public class LogForwarder implements ILoggerFactory {
 	// guarded by lock
 	private Stream<Facade> getLoggerFacades() {
 		return facades.values()
-				.stream()
-				.map(WeakReference::get)
-				.filter(Objects::nonNull);
+			.stream()
+			.map(WeakReference::get)
+			.filter(Objects::nonNull);
 	}
 
 	// guarded by lock
 	private void setHighestRankingLogService() {
 		Optional<LogService> highest = rankedLogServices.entrySet()
-				.stream()
-				.sorted((a, b) -> b.getValue()
-						.compareTo(a.getValue()))
-				.map(Map.Entry::getKey)
-				.findFirst();
+			.stream()
+			.sorted((a, b) -> b.getValue()
+				.compareTo(a.getValue()))
+			.map(Map.Entry::getKey)
+			.findFirst();
 
 		setLogService(highest.orElse(null));
 	}
