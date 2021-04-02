@@ -106,22 +106,25 @@ public class Reflector {
 
 	private static Consumer<Object> set(Object[] targets, String name) {
 		for (Object target : targets) {
-			for (Field field : target.getClass().getFields()) {
-				if (field.getName().equals(name))
+			String setters[] = toSetters(name);
+			for (Method method : target.getClass()
+				.getMethods()) {
+				if (Strings.in(setters, method.getName()) && method.getParameters().length == 1)
 					return (v) -> {
 						try {
-							field.set(target, Converter.cnv(field.getGenericType(), v));
+							method.invoke(target, Converter.cnv(method.getGenericParameterTypes()[0], v));
 						} catch (Exception e) {
 							throw new RuntimeException(e);
 						}
 					};
 			}
-			String setters[] = toSetters(name);
-			for (Method method : target.getClass().getMethods()) {
-				if (Strings.in(setters, method.getName()) && method.getParameters().length == 1)
+			for (Field field : target.getClass()
+				.getFields()) {
+				if (field.getName()
+					.equals(name))
 					return (v) -> {
 						try {
-							method.invoke(target, Converter.cnv(method.getGenericParameterTypes()[0], v));
+							field.set(target, Converter.cnv(field.getGenericType(), v));
 						} catch (Exception e) {
 							throw new RuntimeException(e);
 						}
