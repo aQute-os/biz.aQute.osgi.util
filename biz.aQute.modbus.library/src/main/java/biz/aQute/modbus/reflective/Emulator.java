@@ -6,11 +6,11 @@ import java.util.Optional;
 
 import aQute.lib.converter.Converter;
 import aQute.lib.io.IO;
-import biz.aQute.modbus.api.Unit;
 import biz.aQute.modbus.api.PDU;
 import biz.aQute.modbus.api.PDU.Bits;
-import biz.aQute.modbus.reflective.AccessMapper.Access;
 import biz.aQute.modbus.api.Response;
+import biz.aQute.modbus.api.Unit;
+import biz.aQute.modbus.reflective.AccessMapper.Access;
 import biz.aQute.result.Result;
 
 public class Emulator implements Unit {

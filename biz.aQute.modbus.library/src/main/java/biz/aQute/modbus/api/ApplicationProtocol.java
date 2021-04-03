@@ -367,7 +367,7 @@ public abstract class ApplicationProtocol {
 	Response writeSingleRegister(PDU buffer, Unit impl, PDU response) throws Exception {
 
 		int start = buffer.getU16();
-		int value = buffer.getU16(buffer.absPosition);
+		int value = buffer.getU16();
 
 		Response rsp = impl.writeHoldingRegisters(buffer, start, 1);
 		if (rsp != Response.OK) {
@@ -378,6 +378,23 @@ public abstract class ApplicationProtocol {
 		response.putU16(value);
 
 		return Response.OK;
+	}
+
+	public PDU writeSingleRegister(Server transport, int unit, int start, int value) throws Exception {
+		PDU request = getRequestPDU();
+		request.putU8(unit)
+			.putU8(0x06)
+			.putU16(start)
+			.putU16(value);
+
+		PDU response = send(request, transport);
+		int function = response.getU8();
+		if (function != 0x06)
+			throw new IllegalArgumentException("exception " + response);
+
+		int l = response.getU8();
+		assert l == response.limit() - response.position() : "must match";
+		return response;
 	}
 
 	/**
@@ -440,6 +457,33 @@ public abstract class ApplicationProtocol {
 		response.putU16(start);
 		response.putU16(length);
 		return Response.OK;
+	}
+
+	public PDU writeMultipleRegisters(Server transport, int unit, int start, int... value) throws Exception {
+		PDU request = getRequestPDU();
+		request.putU8(unit)
+			.putU8(0x10)
+			.putU16(start)
+			.putU16(value.length)
+			.putU8(value.length * 2);
+
+		for (int i = 0; i < value.length; i++) {
+			request.putU16(value[i]);
+		}
+
+		PDU response = send(request, transport);
+		int function = response.getU8();
+		if (function != 0x10)
+			throw new IllegalArgumentException("exception " + response);
+
+		int startx = response.getU16();
+		int quantityx = response.getU16();
+		if (startx != start)
+			throw new IllegalArgumentException("start register not the same " + response);
+		if (quantityx != value.length)
+			throw new IllegalArgumentException("quantity not the same " + response);
+
+		return response;
 	}
 
 	public Set<Integer> getUnitAddresses() {

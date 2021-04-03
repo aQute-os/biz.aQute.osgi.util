@@ -16,6 +16,7 @@ import biz.aQute.modbus.api.PDU;
 
 public class AccessMapper {
 	public static class Access implements Comparable<Access> {
+
 		final public Bank		bank;
 		final public String		name;
 		final public int		address;
@@ -33,6 +34,10 @@ public class AccessMapper {
 			return Integer.compare(address, o.address);
 		}
 
+		@Override
+		public String toString() {
+			return "Access [bank=" + bank + ", name=" + name + ", address=" + address + ", entry=" + entry + "]";
+		}
 	}
 
 	final MultiMap<Bank, Access>	access	= new MultiMap<>();
@@ -144,11 +149,6 @@ public class AccessMapper {
 
 				if (parts.length > 4) {
 
-					if (registerType != PDU.DataType.String) {
-						error("Width specified but not a String type %s", trimmed);
-						return null;
-					}
-
 					try {
 						// x2 for word registers
 						width = Integer.parseInt(parts[4]) * 2;
@@ -159,6 +159,14 @@ public class AccessMapper {
 					if (width < 1) {
 						error("width is less than 1  %s", trimmed);
 						return null;
+					}
+
+					if (registerType != PDU.DataType.String) {
+						if (width % registerType.width != 0) {
+							error("Width %s for an array specified but not multiple of type %s width %s", width,
+								registerType, registerType.width);
+							return null;
+						}
 					}
 
 				} else {

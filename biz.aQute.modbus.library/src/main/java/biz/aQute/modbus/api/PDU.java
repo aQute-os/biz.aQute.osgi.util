@@ -3,6 +3,7 @@ package biz.aQute.modbus.api;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.nio.charset.Charset;
@@ -10,10 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Formatter;
 
 import aQute.lib.converter.Converter;
+import aQute.lib.exceptions.Exceptions;
 
 public class PDU {
 
 	public static class Entry {
+
 		public final DataType	type;
 		public final int		width;
 		public final int		bitpos;
@@ -23,26 +26,38 @@ public class PDU {
 			this.width = width == 0 ? type.width : width;
 			this.bitpos = bitpos;
 		}
+
+		public boolean isArray() {
+			return (type != DataType.String && type != DataType.bit) && type.width != width;
+		}
+
+		@Override
+		public String toString() {
+			return "Entry [type=" + type + ", width=" + width + ", bitpos=" + bitpos + "]";
+		}
+
 	}
 
 	public enum DataType {
-		bit(0), //
-		u8(1), //
-		i8(1), //
-		u16(2), //
-		i16(2), //
-		u32(4), //
-		i32(4), //
-		i64(8), //
-		Double(8), //
-		Float(4), //
-		String(0), //
+		bit(0, null), //
+		u8(1, int.class), //
+		i8(1, byte.class), //
+		u16(2, int.class), //
+		i16(2, short.class), //
+		u32(4, long.class), //
+		i32(4, int.class), //
+		i64(8, long.class), //
+		Double(8, double.class), //
+		Float(4, float.class), //
+		String(0, null), //
 		;
 
-		public final int width;
+		public final int		width;
+		public final Class<?>	type;
 
-		DataType(int width) {
+		DataType(int width, Class<?> type) {
 			this.width = width;
+			this.type = type;
 		}
 	}
 
@@ -96,11 +111,11 @@ public class PDU {
 
 			if (capacity > buffer.length)
 				throw new IllegalArgumentException(
-						"limit larger than buffer length. b.length=" + buffer.length + " capacity=" + capacity);
+					"limit larger than buffer length. b.length=" + buffer.length + " capacity=" + capacity);
 
 			if (offset > capacity)
 				throw new IllegalArgumentException(
-						"offset larger than capacity capacity=" + capacity + " offset=" + offset);
+					"offset larger than capacity capacity=" + capacity + " offset=" + offset);
 
 			return new PDU(buffer, offset, capacity, bigByteEndian, bigWordEndian);
 		}
@@ -109,7 +124,6 @@ public class PDU {
 	/**
 	 * Marks a position for a length field and then will fill in the length
 	 * field when this block is closed.
-	 *
 	 */
 	public interface BlockLength {
 		/**
@@ -211,7 +225,7 @@ public class PDU {
 	// I8
 
 	public int getI8() {
-		int v= getI8(position());
+		int v = getI8(position());
 		next(1);
 		return v;
 	}
@@ -496,7 +510,6 @@ public class PDU {
 		return this;
 	}
 
-
 	// String
 
 	public String getString(int maxbytes) {
@@ -504,6 +517,7 @@ public class PDU {
 		next(maxbytes);
 		return s;
 	}
+
 	public String getString(int relPosition, int maxbytes) {
 		return getString(relPosition, maxbytes, StandardCharsets.UTF_8);
 	}
@@ -513,14 +527,14 @@ public class PDU {
 
 		int i = 0;
 		for (; i < maxbytes; i++) {
-			if (getU8(relPosition+i) == 0)
+			if (getU8(relPosition + i) == 0)
 				break;
 		}
 		return new String(buffer, offset + relPosition, i, charSet);
 	}
 
 	public PDU putString(String str, int width) {
-		return putString(str,width, StandardCharsets.UTF_8);
+		return putString(str, width, StandardCharsets.UTF_8);
 	}
 
 	public PDU putString(String str, int width, Charset charSet) {
@@ -530,9 +544,8 @@ public class PDU {
 	}
 
 	public PDU putString(int relPosition, String str, int width) {
-		return putString(position(), str, width, StandardCharsets.UTF_8 );
+		return putString(position(), str, width, StandardCharsets.UTF_8);
 	}
-
 
 	public PDU putString(int relPosition, String str, int width, Charset charSet) {
 		check(relPosition, width);
@@ -569,9 +582,8 @@ public class PDU {
 		int absPosition = offset + relPosition;
 
 		if (absPosition + length > limit)
-			throw new IllegalArgumentException(
-					error("[absPosition=%s, length=%s) must be within [offset=%s,limit=%s)", absPosition, length,
-							offset, limit));
+			throw new IllegalArgumentException(error("[absPosition=%s, length=%s) must be within [offset=%s,limit=%s)",
+				absPosition, length, offset, limit));
 
 		invariant();
 		return absPosition;
@@ -672,15 +684,15 @@ public class PDU {
 	}
 
 	public PDU limit(int relLimit) {
-		if ( relLimit < 0)
+		if (relLimit < 0)
 			throw new IllegalArgumentException(error("limit is negative %s", relLimit));
 
-		if ( relLimit > MAX_SIZE)
+		if (relLimit > MAX_SIZE)
 			throw new IllegalArgumentException(error("limit %s is larger than 1Gb", relLimit));
 
-		int absLimit = relLimit+offset;
+		int absLimit = relLimit + offset;
 
-		if ( absLimit > capacity)
+		if (absLimit > capacity)
 			throw new IllegalArgumentException(error("abs limit %s is larger than capacity %s", absLimit, capacity));
 
 		this.limit = absLimit;
@@ -696,7 +708,6 @@ public class PDU {
 		this.limit = capacity;
 		this.sealed = false;
 	}
-
 
 	public void write(OutputStream outputStream) throws IOException {
 		outputStream.flush();
@@ -754,7 +765,7 @@ public class PDU {
 
 	public Bits putBits(int bits) {
 		Bits b = putBits(position(), bits);
-		next( b.byteWidth());
+		next(b.byteWidth());
 		return b;
 	}
 
@@ -829,20 +840,20 @@ public class PDU {
 
 			@Override
 			public Bits put(int width, long value) {
-				put(bits,width,value);
-				bitRover+=width;
+				put(bits, width, value);
+				bitRover += width;
 				return this;
 			}
 
 			@Override
 			public Bits put(int bit, int width, long value) {
 
-				if ( width >=64 || width < 0)
-					throw new IllegalArgumentException("a bit field width must be between 0 & 64 "+width);
+				if (width >= 64 || width < 0)
+					throw new IllegalArgumentException("a bit field width must be between 0 & 64 " + width);
 
 				long mask = 1 << width;
-				for ( int i=0; i<width; i++) {
-					put(bit+i, (mask & value)!=0);
+				for (int i = 0; i < width; i++) {
+					put(bit + i, (mask & value) != 0);
 					mask >>= 1;
 				}
 				return this;
@@ -859,6 +870,24 @@ public class PDU {
 
 	public Object get(int position, Entry entry) {
 
+		if (entry.type == DataType.String) {
+			return getString(position, entry.width);
+		}
+
+		int n = entry.width / entry.type.width;
+		if (n == 1) {
+			return getByType(position, entry);
+		} else {
+			Object array = new Object[n];
+			for (int i = 0; i < n; i++) {
+				Object v = getByType(position + i * entry.type.width, entry);
+				Array.set(array, i, v);
+			}
+			return array;
+		}
+	}
+
+	private Object getByType(int position, Entry entry) {
 		switch (entry.type) {
 			case Double :
 				return getDouble(position);
@@ -866,10 +895,6 @@ public class PDU {
 			case Float :
 				return getFloat(position);
 
-			case String :
-				return getString(position, entry.width);
-			case bit :
-				throw new UnsupportedOperationException();
 			case i16 :
 				return getI16(position);
 			case i32 :
@@ -884,8 +909,12 @@ public class PDU {
 				return getU32(position);
 			case u8 :
 				return getU8(position);
+
+			default :
+			case String :
+			case bit :
+				throw new UnsupportedOperationException();
 		}
-		return null;
 	}
 
 	public PDU put(Entry entry, Object o) {
@@ -894,8 +923,31 @@ public class PDU {
 		return this;
 	}
 
-	public Object put(int position, Entry entry, Object o) {
+	public PDU put(int position, Entry entry, Object o) {
 
+		if (entry.isArray()) {
+			try {
+				Object[] array = Converter.cnv(Object[].class, o);
+				int n = entry.width / entry.type.width;
+				for (int i = 0; i < n; i++) {
+					int p = position + i * entry.type.width;
+					if (array.length > i) {
+						Object v = array[i];
+						putSimple(p, entry, v);
+					} else {
+						putSimple(p, entry, 0);
+					}
+				}
+			} catch (Exception e) {
+				throw Exceptions.duck(e);
+			}
+		} else {
+			putSimple(position, entry, o);
+		}
+		return this;
+	}
+
+	PDU putSimple(int position, Entry entry, Object o) {
 		switch (entry.type) {
 			case Double :
 				return putDouble(position, ((Number) o).doubleValue());
@@ -934,7 +986,6 @@ public class PDU {
 	private int toInt(Object o) {
 		if (o instanceof Boolean)
 			return ((Boolean) o) ? 1 : 0;
-
 
 		if (o instanceof Number)
 			return ((Number) o).intValue();
