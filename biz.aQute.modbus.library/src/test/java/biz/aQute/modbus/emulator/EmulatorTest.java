@@ -2,8 +2,6 @@ package biz.aQute.modbus.emulator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import biz.aQute.modbus.api.MessagingProtocol;
@@ -12,9 +10,11 @@ import biz.aQute.modbus.reflective.Emulator;
 
 public class EmulatorTest {
 
-	static class Foo {
+	public static class Foo {
 		int		foo	= 76;
 		boolean	c1	= false;
+
+		public int	somei16;
 
 		public int getFoo() {
 			return foo++;
@@ -35,10 +35,11 @@ public class EmulatorTest {
 		public int getNegative() {
 			return -25;
 		}
+
 	}
 
 	@Test
-	public void emulator() throws InterruptedException, IOException {
+	public void emulator() throws Exception {
 		Foo foo = new Foo();
 		Emulator emulator = new Emulator(//
 			"" //
@@ -46,7 +47,8 @@ public class EmulatorTest {
 				+ "H:bar:12:String:8\n" //
 				+ "C:c1:20\n" //
 				+ "H:signed:30:i16\n" //
-				+ "H:negative:4000:i16\n",
+				+ "H:negative:4000:i16\n" //
+				+ "H:somei16:5678:i16",
 			foo);
 
 		MessagingProtocol server = new MessagingProtocol(true);
@@ -72,6 +74,9 @@ public class EmulatorTest {
 		assertThat(pdu.getI16()).isEqualTo(25);
 		pdu = client.readHoldingRegisters(server, 1, 4000, 1);
 		assertThat(pdu.getI16()).isEqualTo(-25);
+
+		client.writeSingleRegister(server, 1, 5678, 0xAA);
+		assertThat(foo.somei16).isEqualTo(0xAA);
 	}
 
 	public static class Bar {
@@ -137,23 +142,23 @@ public class EmulatorTest {
 	}
 
 	@Test
-	public void testDoubleArrays() throws Exception {
+	public void testLongArray() throws Exception {
 		WithArray bar = new WithArray();
 		Emulator emulator = new Emulator(//
 			"" //
-				+ "H:bar:0:Double:6\n" //
+				+ "H:bar:55:i64:12\n" // 3 registers
 			, bar);
-
+		assertThat(emulator.check()).isTrue();
 		MessagingProtocol server = new MessagingProtocol(true);
 		server.addUnit(1, emulator);
 
 		MessagingProtocol client = new MessagingProtocol(true);
-		PDU pdu = client.readHoldingRegisters(server, 1, 0, 12);
-		assertThat(pdu.getDouble()).isEqualTo(1D);
-		assertThat(pdu.getDouble()).isEqualTo(2D);
-		assertThat(pdu.getDouble()).isEqualTo(3D);
+		PDU pdu = client.readHoldingRegisters(server, 1, 55, 12);
+		assertThat(pdu.getI64()).isEqualTo(1L);
+		assertThat(pdu.getI64()).isEqualTo(2L);
+		assertThat(pdu.getI64()).isEqualTo(3L);
 
-		pdu = client.writeMultipleRegisters(server, 1, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 0, 0, 6);
+		pdu = client.writeMultipleRegisters(server, 1, 55, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 6);
 		assertThat(bar.bar).isEqualTo(new int[] {
 			4, 5, 6
 		});

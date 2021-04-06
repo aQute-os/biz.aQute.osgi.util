@@ -24,6 +24,8 @@ public class LogForwarderTest {
 		org.osgi.service.log.Logger mlogger = Mockito.mock(org.osgi.service.log.Logger.class);
 		Mockito.when(mock.getLogger(LogForwarderTest.class.getName()))
 			.thenReturn(mlogger);
+		Mockito.when(mock.getLogger(LogForwarder.class.getName()))
+			.thenReturn(mlogger);
 		LogForwarder.addLogService(mock, 1);
 		assertThat(LogForwarder.SINGLETON.queue).isEmpty();
 	}

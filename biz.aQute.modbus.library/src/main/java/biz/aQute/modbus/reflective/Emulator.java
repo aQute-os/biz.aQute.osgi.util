@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import aQute.lib.converter.Converter;
 import aQute.lib.io.IO;
+import aQute.lib.strings.Strings;
 import biz.aQute.modbus.api.PDU;
 import biz.aQute.modbus.api.PDU.Bits;
 import biz.aQute.modbus.api.Response;
@@ -133,6 +134,16 @@ public class Emulator implements Unit {
 			rover += a.entry.width / 2;
 		}
 		return Response.OK;
+	}
+
+	public boolean check() {
+		if (access.errors.size() == 0)
+			return true;
+
+		String errors = Strings.join("\n", access.errors);
+		System.err.println(errors);
+		return false;
+
 	}
 
 }

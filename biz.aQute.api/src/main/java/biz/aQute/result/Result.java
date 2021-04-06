@@ -7,6 +7,11 @@ import java.util.Set;
 
 public class Result<T> {
 
+	@Override
+	public String toString() {
+		return message == null ? "ok["+value+"]" : "err["+message+"]";
+	}
+
 	final T			value;
 	final String	message;
 

@@ -139,7 +139,7 @@ public class AccessMapper {
 				try {
 					registerType = PDU.DataType.valueOf(parts[3]);
 				} catch (IllegalArgumentException e0) {
-					error("invalid address for %s: %s", trimmed);
+					error("invalid data type %s", parts[3]);
 					return null;
 				}
 				if (registerType == PDU.DataType.bit) {

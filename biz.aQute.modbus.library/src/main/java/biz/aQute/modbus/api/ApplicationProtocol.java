@@ -367,13 +367,19 @@ public abstract class ApplicationProtocol {
 	Response writeSingleRegister(PDU buffer, Unit impl, PDU response) throws Exception {
 
 		int start = buffer.getU16();
-		int value = buffer.getU16();
+
+		// we read the value for the
+		// response but we fake a multiple
+		// write holding registers so we do not
+		// progress the buffer pointer
+
+		int value = buffer.getU16(buffer.position());
 
 		Response rsp = impl.writeHoldingRegisters(buffer, start, 1);
 		if (rsp != Response.OK) {
 			return rsp;
 		}
-
+		response.putU8(0x06);
 		response.putU16(start);
 		response.putU16(value);
 
@@ -392,8 +398,11 @@ public abstract class ApplicationProtocol {
 		if (function != 0x06)
 			throw new IllegalArgumentException("exception " + response);
 
-		int l = response.getU8();
-		assert l == response.limit() - response.position() : "must match";
+		int startx = response.getU16();
+		assert startx == start : "writeSingleRegister does not return required register address: " + start + " != " + startx;
+		int valuex = response.getU16();
+		assert valuex == value : "writeSingleRegister does not return required value: " + value + " != " + valuex;
+
 		return response;
 	}
 
