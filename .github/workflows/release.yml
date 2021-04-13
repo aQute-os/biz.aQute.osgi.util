@@ -3,7 +3,7 @@ name: release
 on:
   push:
     branches: ["master","release"]
-
+    tags: [ 'v*' ]
 env:
   LC_ALL: en_US.UTF-8
   REPOSITORY_USERNAME: ${{ secrets.REPOSITORY_USERNAME }}
