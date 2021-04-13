@@ -31,3 +31,12 @@ jobs:
           name: test-reports
           path: |
             */target/reports/
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            biz.aQute.api/target/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
