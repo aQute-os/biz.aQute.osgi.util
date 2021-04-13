@@ -23,17 +23,17 @@ public @interface SshdConfigInsecure {
 	 */
 	@AttributeDefinition(description = "Where to store the private key. This must be in forward slashes.")
 	String hostkey() default "target/host.ser";
-	
+
 	/**
 	 * The only accepted user name
 	 */
 	@AttributeDefinition(description = "The only accepted user name")
 	String user() default "brave";
-	
+
 	/**
 	 * The only accepted user name. THIS IS NOT SECURE!
-	 * This name starts with full stop. Is is available to the component instance but not available as service properties of the registered service. 
+	 * This name starts with full stop. Is is available to the component instance but not available as service properties of the registered service.
 	 */
-	@AttributeDefinition(name = ".password", type = AttributeType.PASSWORD, description = "The only accepted password. THIS IS NOT SECURE!")
+	@AttributeDefinition(name = ".password", type = AttributeType.PASSWORD, description = "The only accepted password. THIS IS NOT SECURE! And if you want to be really have no security, you can use '*' to accept _any_ password.")
 	String password() default "insecure";
 }

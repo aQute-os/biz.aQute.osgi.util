@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
@@ -23,15 +24,17 @@ import aQute.lib.strings.Strings;
 
 class CommandSessionHandler implements Closeable, Runnable {
 
-	static final String NEWLINE = "\r\n";
+	static final String		NEWLINE	= "\r\n";
 	final CommandSession	session;
 	final AnsiFilter		console;
 	final ExitCallback		callback;
 	final Thread			thread;
+	final AtomicBoolean		quit	= new AtomicBoolean();
 
-	CommandSessionHandler(BundleContext context, String username, Map<String,String> env,
-			InputStream in, OutputStream out, OutputStream err, CommandProcessor processor, ExitCallback callback) throws Exception {
-		this.thread = new Thread(this, "sshd-gogo-"+username);
+	CommandSessionHandler(BundleContext context, String username, Map<String, String> env,
+			InputStream in, OutputStream out, OutputStream err, CommandProcessor processor, ExitCallback callback)
+			throws Exception {
+		this.thread = new Thread(this, "sshd-gogo-" + username);
 		this.callback = callback;
 		int w = getInt(env.get(Environment.ENV_COLUMNS), 80);
 		int h = getInt(env.get(Environment.ENV_LINES), 40);
@@ -125,7 +128,6 @@ class CommandSessionHandler implements Closeable, Runnable {
 				// ignore
 			}
 			session.close();
-			callback.onExit(0);
 			AbstractGogoSshd.logger.info("quiting thread");
 		}
 	}
@@ -182,12 +184,14 @@ class CommandSessionHandler implements Closeable, Runnable {
 
 	@Override
 	public void close() throws IOException {
-		thread.interrupt();
-		try {
-			thread.join(5000);
-		} catch (InterruptedException e) {
+		if (quit.getAndSet(true) == false) {
 			thread.interrupt();
-			throw new RuntimeException(e);
+			try {
+				thread.join(5000);
+			} catch (InterruptedException e) {
+				thread.interrupt();
+				throw new RuntimeException(e);
+			}
 		}
 	}
 

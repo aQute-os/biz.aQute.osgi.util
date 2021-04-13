@@ -31,10 +31,12 @@ public class GogoSshdInsecure extends AbstractGogoSshd {
 		logger.warn("starting insecure ssh server on port localhost:{}", config.port());
 
 		sshd.setPasswordAuthenticator(new PasswordAuthenticator() {
-			
+
 			@Override
 			public boolean authenticate(String username, String password, ServerSession session)
 					throws PasswordChangeRequiredException, AsyncAuthException {
+				if ( config.password().equals("*"))
+					return true;
 				return config.user().equals( username) && config.password().equals(password);
 			}
 		});
