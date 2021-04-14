@@ -31,7 +31,7 @@ jobs:
           name: test-reports
           path: |
             */target/reports/
-      - name: Release
+      - name: SNAPSHOT Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: SNAPSHOT
