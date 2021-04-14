@@ -35,7 +35,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: SNAPSHOT
-          pre-release: true
+          prerelease: true
           draft: true
           files: |
             biz.aQute.api/target/*.jar
