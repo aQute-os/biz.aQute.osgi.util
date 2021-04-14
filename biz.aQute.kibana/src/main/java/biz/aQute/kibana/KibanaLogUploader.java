@@ -92,7 +92,7 @@ public class KibanaLogUploader extends Thread {
 		super("aQute.kibana");
 		reader.addLogListener(this::log);
 		this.index = configuration.index();
-		this.delay = configuration.delay() * 1000;
+		this.delay = configuration.delay() * 1000L;
 		for (String s : configuration.hosts()) {
 			uris.add(new URI(s));
 		}
@@ -142,7 +142,7 @@ public class KibanaLogUploader extends Thread {
 							if (dtos.size() > 500)
 								dtos.subList(500, dtos.size()).clear();
 						}
-						Thread.sleep(1000 * failures);
+						Thread.sleep(1000L * failures);
 					} catch (InterruptedException ee) {
 						this.interrupt();
 						return;

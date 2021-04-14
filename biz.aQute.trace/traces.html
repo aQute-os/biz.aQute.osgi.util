@@ -3,17 +3,17 @@
    <head>
       <script src = "https://d3js.org/d3.v4.min.js"></script>
       <style>
-      
+
       svg text {
         font-size: 0.8em;
         font-family: sans-serif;
       }
-      
+
       </style>
    </head>
 
    <body>
-        
+
     <svg id="chart" width="100%" height="500">
     </svg>
      <div>
@@ -21,7 +21,7 @@
      </div>
      <script>
         var data = "$$$"
-      
+
         window.fileSelect.addEventListener( "input", evt=> {
             var file = evt.target.files[0]
             if (file) {
@@ -48,88 +48,87 @@
             var r = /([^()]+)\.[^().]+\([^()]*\)/.exec(m)
             return r[1]
         }
-        
+
         function foo(period) {
             if ( period < 5000)
                 return Math.round(period) + " ns";
 
             period /= 1000;
-                        
+
             if ( period < 5000)
                 return Math.round(period) + " \u00B5s";
 
             period /= 1000;
-            
+
             if ( period < 5000)
                 return Math.round(period) + " ms";
 
             period /= 1000;
-            
+
             if ( period < 5000)
                 return Math.round(period) + " s";
 
             period /= 60;
-            
+
             if ( period < 120)
                 return Math.round(period) + " min";
 
             period /= 60;
-            
+
             return Math.round(period) + " h";
         }
         function display(data) {
             d3.select("svg").selectAll("*").remove();
-	        var threads = Array.from(new Set(data.map( (d) => { 
-	            return d.threadId 
+	        var threads = Array.from(new Set(data.map( (d) => {
+	            return d.threadId
 	        })))
 	        var colors = d3.scaleOrdinal(threads,d3.schemeCategory10);
-	
+
 	        var components = data.map( d=> toClassName(d.methodName) )
 	        components = components.filter( (d,i,a)=> a.indexOf(d)==i)
-	        
+
 	        var min = d3.min( data.map((d)=>{return d.begin}))
 	        var max = d3.max( data.map((d)=>{return d.end+100000}))
-	        var duration = max - min
-	        
+
 	        var xscale = d3.scaleLinear()
 	            .domain([min, max])
 	            .range([labels, width-labels-50]);
-	         
+
 	        var x_axis = d3.axisTop()
 	            .scale(xscale);
-	   
-	   
+
+
 	        var height  = start + line*d3.keys(components).length + line
-	        
+
 	        var svg = d3.select("svg").attr("width", width).attr("height", height)
 	        svg.append("g").attr("transform", "translate("+labels+","+line+")").call(x_axis)
-	        
+
 	        var g = svg.selectAll( "g.component")
 	            .data(components)
 	            .enter()
 	                .append("g")
 	                    .attr("class","component")
 	                    .attr("transform", (d,i) => "translate(0,"+(i*line+start)+")")
-	        
+
 	        g.append("rect").attr("width", width).attr("height", 22).attr("y", -12).attr("style", (d,i) => "fill:" + (i%2 ?  "#FFFFFF" : "#F0F0F0") )
 	        g.append("text").attr("x", 20).text( d => toShortName(d)).append("title").text( d => d)
 	        g.append("text").text( d => d.bundle).attr("x", 20)
-	        
+
 	        var pt = g.selectAll("g.period").data( className => data.filter( d => d.methodName.startsWith(className))).enter().append("g").attr("transform", "translate("+labels+",-4)")
-	        
+
 	        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.end)).attr("y1",0).attr("y2",0).attr("style",d => "stroke-width:3px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
 	        pt.append("line").attr("x1", d=>xscale(d.begin)).attr("x2", d=>xscale(d.begin)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
 	        pt.append("line").attr("x1", d=>xscale(d.end)).attr("x2", d=>xscale(d.end)).attr("y1",-5).attr("y2",5).attr("style",d => "stroke-width:1px;stroke:" + d3.schemeCategory10[threads.indexOf(d.threadId)])
 	        pt.append("title").text( d => d.action + " " + foo(d.end-d.begin) + " on thread " + d.threadId + " -> " + d.thread)
 	    }
-	    
+
 	    if ( data != "$$$" )
 	       display(data)
-	       
+
       </script>
    </body>
                <!--<g class="thread">  for each thread
-                <rect width="450" height="100" style="fill: rgb(220,220,220);stroke-width:0"/> 
+                <rect width="450" height="100" style="fill: rgb(220,220,220);stroke-width:0"/>
                 <line style="stroke:rgb(0,0,0);stroke-width:2"/>
                 <text x="0" y="15" fill="black">I love SVG!</text>
             </g>

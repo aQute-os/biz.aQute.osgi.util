@@ -3,6 +3,7 @@ package biz.aQute.modbus.reflective;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -104,7 +105,7 @@ public class AccessMapper {
 		try {
 			bank = Bank.valueOf(parts[0]);
 		} catch (IllegalArgumentException e0) {
-			error("invalid bank in %s, must be one of %s", trimmed, Bank.values());
+			error("invalid bank in %s, must be one of %s", trimmed, Arrays.toString(Bank.values()));
 			return null;
 		}
 

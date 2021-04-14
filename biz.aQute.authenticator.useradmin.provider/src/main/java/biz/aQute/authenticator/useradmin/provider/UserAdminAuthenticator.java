@@ -133,12 +133,12 @@ public class UserAdminAuthenticator implements Authenticator {
 	private String verify(String id, String pw) throws Exception {
 		Role role = userAdmin.getRole(id);
 		if (role == null) {
-			log.info("Failed login attempt for %s: no such user", id);
+			log.info("Failed login attempt for {}: no such user", id);
 			return null;
 		}
 
 		if (!(role instanceof User)) {
-			log.info("Failed login attempt for %s: id is not a user name but %s", id, role);
+			log.info("Failed login attempt for {}: id is not a user name but {}", id, role);
 			return null;
 		}
 
@@ -149,11 +149,11 @@ public class UserAdminAuthenticator implements Authenticator {
 			return id;
 
 		if (root != null && root.equals(hash)) {
-			log.info("Root login by %s", id);
+			log.info("Root login by {}", id);
 			return id;
 		}
 
-		log.info("Failed login attempt for %s: invalid password", id);
+		log.info("Failed login attempt for {}: invalid password", id);
 		return null;
 	}
 
@@ -190,7 +190,7 @@ public class UserAdminAuthenticator implements Authenticator {
 					getRoles(roles, f);
 				} else {
 					Role r = userAdmin.getRole(f);
-					if (f != null)
+					if (r != null)
 						roles.add(r);
 				}
 			}

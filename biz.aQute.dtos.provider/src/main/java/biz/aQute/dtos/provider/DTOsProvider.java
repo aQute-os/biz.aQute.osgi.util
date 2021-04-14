@@ -84,7 +84,7 @@ public class DTOsProvider implements DTOs {
 
 		void verifyCycle(Object o) {
 			if (isCycle(o)) {
-				throw new IllegalArgumentException("Cycle in DTO " + getPath(0));
+				throw new IllegalArgumentException("Cycle in DTO " + Arrays.toString(getPath(0)));
 			}
 		}
 	}
@@ -483,7 +483,7 @@ public class DTOsProvider implements DTOs {
 			diffs.add(new Diff(Reason.UNEQUAL, link));
 			return true;
 		} catch (Exception e) {
-			logger.warn("failed to diff %s to %s : %s", older, newer, e.getMessage(), e);
+			logger.warn("failed to diff {} to {} : {}", older, newer, e.getMessage(), e);
 			throw Exceptions.duck(e);
 		}
 	}

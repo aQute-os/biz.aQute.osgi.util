@@ -146,7 +146,7 @@ public class Help {
 				f.format("DESCRIPTION\n");
 				f.format("\t1%s\n", topDescription);
 			}
-			f.format("\u2007\nSYNOPSIS\n", name);
+			f.format("\u2007\nSYNOPSIS %s\n", name);
 			for (Method m : methods) {
 				f.format("\t1%s", name);
 				String description = Help.getDescription(m);
@@ -389,15 +389,15 @@ public class Help {
 	}
 
 	private static Properties getResource(String path, Class<?> clazz) {
-		try {
-			InputStream in = clazz.getResourceAsStream(path);
+		try (InputStream in = clazz.getResourceAsStream(path)) {
 			if (in == null)
 				return null;
 
-			InputStreamReader rd = new InputStreamReader(in);
-			Properties p = new Properties();
-			p.load(rd);
-			return p;
+			try (InputStreamReader rd = new InputStreamReader(in)) {
+				Properties p = new Properties();
+				p.load(rd);
+				return p;
+			}
 		} catch (Exception e) {
 			return null;
 		}

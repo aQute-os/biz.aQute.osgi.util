@@ -48,7 +48,7 @@ abstract class AbstractGogoSshd {
 	void open() throws IOException {
 		sshd.start();
 		port = sshd.getPort();
-		logger.info("SshServer opened: %s", sshd.toString());
+		logger.info("SshServer opened: {}", sshd.toString());
 	}
 
 	private Command getCommand(CommandProcessor processor) {

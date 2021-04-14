@@ -278,7 +278,7 @@ public class PDU {
 	}
 
 	public PDU putU16(int relPosition, int v) {
-		if (v < 0 && v > 0xFFFF) {
+		if (v < 0 || v > 0xFFFF) {
 			throw new IllegalArgumentException("U8 >=0 && < 0x1_0000 : " + v);
 		}
 

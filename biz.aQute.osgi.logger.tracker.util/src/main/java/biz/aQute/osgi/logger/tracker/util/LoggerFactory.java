@@ -24,29 +24,28 @@ public class LoggerFactory implements Closeable {
 																public void log(ServiceReference ref, int level,
 																		String msg,
 																		Throwable throwable) {
-																	System.err.printf("%s:%s %s: %s\n", level(level),
+																	System.err.printf("%s:%s:%s:%s\n", level(level),
 																			ref,
-																			throwable, msg);
+																		msg, throwable);
 																}
 
 																@Override
 																public void log(ServiceReference ref, int level,
 																		String msg) {
-																	System.err.printf("%s:%s:%s: %s\n", level(level),
-																			ref, msg);
+																	System.err.printf("%s:%s:%s:\n", level(level), ref,
+																		msg);
 																}
 
 																@Override
 																public void log(int level, String msg,
 																		Throwable throwable) {
-																	System.err.printf("%s:%s:%s: %s\n", level(level),
-																			throwable,
-																			msg);
+																	System.err.printf("%s::%s:%s\n", level(level), msg,
+																		throwable);
 																}
 
 																@Override
 																public void log(int level, String msg) {
-																	System.err.printf("%s:%s:: %s\n", level(level),
+																	System.err.printf("%s:::%s\n", level(level),
 																			msg);
 																}
 															};

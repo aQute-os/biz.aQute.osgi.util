@@ -1,6 +1,7 @@
 package biz.aQute.result;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class Result<T> {
 			}
 			return new Result<X>(String.format(format, args));
 		} catch (Exception e) {
-			return new Result<X>(format + ": " + args);
+			return new Result<X>(format + ": " + Arrays.toString(args));
 		}
 	}
 

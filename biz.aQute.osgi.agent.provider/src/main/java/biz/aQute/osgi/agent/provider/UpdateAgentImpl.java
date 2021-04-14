@@ -59,12 +59,13 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 	private URI									configUrl;
 
 	enum Phase {
-		VETOED, COMMITTED, OK
+		VETOED,
+		COMMITTED,
+		OK
 	}
 
 	UpdateAgentImpl(BundleContext context, Executor executor, PackageAdmin packageAdmin, Downloader downloader,
-			DigestVerifier verifier)
-			throws Exception {
+		DigestVerifier verifier) throws Exception {
 		this.executor = executor;
 		this.packageAdmin = packageAdmin;
 		this.downloader = downloader;
@@ -134,7 +135,8 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 
 		ConfigDTO currentConfig = store.read();
 
-		ConfigDTO nextConfig = downloader.download(configUrl, ConfigDTO.class).getValue();
+		ConfigDTO nextConfig = downloader.download(configUrl, ConfigDTO.class)
+			.getValue();
 
 		Phase phase = update(nextConfig.bundles);
 		if (phase == Phase.OK) {
@@ -203,7 +205,7 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 			} catch (Exception e) {
 				e.printStackTrace();
 				state = State.RETRY_WAIT;
-				Thread.sleep(10000 * (retry + 1));
+				Thread.sleep(10000L * (retry + 1));
 			}
 		}
 		return phase;
@@ -225,22 +227,21 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 	}
 
 	private List<Void> sync(List<Promise<Void>> list) throws InvocationTargetException, InterruptedException {
-		return Promises.all(list).getValue();
+		return Promises.all(list)
+			.getValue();
 	}
 
 	private List<Promise<Void>> forEach(List<BundleAction> actions,
-			Function<? super BundleAction, ? extends Promise<Void>> mapper) {
-		return actions
-				.stream()
-				.map(mapper)
-				.collect(Collectors.toList());
+		Function<? super BundleAction, ? extends Promise<Void>> mapper) {
+		return actions.stream()
+			.map(mapper)
+			.collect(Collectors.toList());
 	}
 
 	private List<BundleAction> compare(List<BundleRefDTO> bundles) throws IOException {
 		List<BundleAction> actions = new ArrayList<>();
-		Map<String, BundleRefDTO> index = bundles
-				.stream()
-				.collect(Collectors.toMap(brf -> brf.location, x -> x));
+		Map<String, BundleRefDTO> index = bundles.stream()
+			.collect(Collectors.toMap(brf -> brf.location, x -> x));
 
 		for (Bundle bundle : context.getBundles()) {
 
@@ -315,8 +316,7 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 			return Promises.resolved(null);
 		}
 
-		void commit() throws Exception {
-		}
+		void commit() throws Exception {}
 
 		Promise<Void> start() {
 			return Promises.resolved(null);
@@ -352,18 +352,19 @@ class UpdateAgentImpl implements UpdateAgent, Runnable {
 
 		@Override
 		void commit() throws Exception {
-			InputStream inputStream = result.getValue();
+			try (InputStream inputStream = result.getValue()) {
 
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			inputStream = new DigestInputStream(inputStream, md);
+				MessageDigest md = MessageDigest.getInstance("SHA-256");
+				DigestInputStream inputStream2 = new DigestInputStream(inputStream, md);
 
-			bundle = doAction(inputStream);
+				bundle = doAction(inputStream2);
 
-			if (!Arrays.equals(md.digest(), ref.digest)) {
-				bundle.uninstall();
-				throw new IllegalArgumentException("Invalid digest " + ref + " is " + Arrays.toString(ref.digest));
+				if (!Arrays.equals(md.digest(), ref.digest)) {
+					bundle.uninstall();
+					throw new IllegalArgumentException("Invalid digest " + ref + " is " + Arrays.toString(ref.digest));
+				}
+				verifier.updateDigest(bundle, ref.digest);
 			}
-			verifier.updateDigest(bundle, ref.digest);
 		}
 
 		protected Bundle doAction(InputStream inputStream) throws BundleException {

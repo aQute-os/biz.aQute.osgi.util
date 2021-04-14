@@ -854,7 +854,7 @@ public class Builtin {
 				if (isPrintable(c)) {
 					return c.toString();
 				}
-				return String.format("\\u04X", (char) c);
+				return String.format("\\u%04X", (char) c);
 			});
 		}
 

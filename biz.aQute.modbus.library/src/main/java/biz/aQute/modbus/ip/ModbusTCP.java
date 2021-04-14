@@ -75,7 +75,7 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 				InputStream in = channel.getInputStream();
 				OutputStream out = channel.getOutputStream();
 				serve(in, out);
-				logger.info("Closing client {}");
+				logger.info("Closing client {}", channel.getRemoteSocketAddress());
 			} catch (SocketTimeoutException se) {
 				// ignore
 			} catch (Throwable t) {
