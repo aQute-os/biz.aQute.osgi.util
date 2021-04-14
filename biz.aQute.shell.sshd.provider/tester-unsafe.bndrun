@@ -1,8 +1,8 @@
 
 -runproperties \
-    configurator.initial='{ "biz.aQute.authenticator.unsafe":{ "userid":"unsafe", "password":"unsafe"}}', \
-    biz.aQute.gogo.console=true
-    
+    configurator.initial='{ ":configurator:version" : "1", ":configurator:symbolic-name":"sn", "biz.aQute.shell.sshd.insecure":{ "user": "unsafe", ".password":"unsafe", "port":2222}}',\
+	biz.aQute.gogo.console=true
+
 -runsystempackages: sun.misc
 -runpath: slf4j.api, slf4j.simple
 -runrequires: \
@@ -11,7 +11,8 @@
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.http.jetty)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.configadmin)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)',\
-	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)'
+	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)',\
+	bnd.identity;id='org.apache.felix.configurator'
 -runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
 -runee: JavaSE-1.8
 -runbundles: \
@@ -31,4 +32,6 @@
 	org.apache.felix.inventory;version='[1.0.4,1.0.5)',\
 	org.apache.felix.webconsole;version='[4.3.8,4.3.9)',\
 	org.apache.felix.webconsole.plugins.ds;version='[2.1.0,2.1.1)',\
-	org.apache.felix.metatype;version='[1.2.2,1.2.3)'
+	org.apache.felix.metatype;version='[1.2.2,1.2.3)',\
+	org.osgi.service.component;version='[1.4.0,1.4.1)',\
+	org.apache.felix.configurator;version='[1.0.8,1.0.9)'
