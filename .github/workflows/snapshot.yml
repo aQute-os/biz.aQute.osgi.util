@@ -32,13 +32,14 @@ jobs:
           path: |
             */target/reports/
       - name: SNAPSHOT Release
-        uses: softprops/action-gh-release@v1
+        uses: sondreb/action-release@master
         with:
-          tag_name: SNAPSHOT
-          prerelease: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: "README.md"
+          folder: "${{github.workspace}}/biz.aQute.api/target/"
           draft: true
-          files: |
-            biz.aQute.api/target/*.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: true
+          body: 'SNAPSHOT'
+          name: "Draft Release"
+          tag: SNAPSHOT
 
