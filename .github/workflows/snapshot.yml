@@ -3,7 +3,6 @@ name: release
 on:
   push:
     branches: ["master"]
-    tags: [ 'v*-SNAPSHOT']
 
 env:
   LC_ALL: en_US.UTF-8
@@ -33,13 +32,16 @@ jobs:
           path: |
             */target/reports/
       - name: SNAPSHOT Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
+        uses: sondreb/action-release@3636b9da46d078e0be1b1f6269b2b4cf7081b3e6
         with:
-          prerelease: true
-          draft: false
-          files: |
-            biz.aQute.api/target/*.jar
+          prerelease:   true
+          draft:        true
+          token:        ${{ secrets.GITHUB_TOKEN }}
+          files:        "README.md"
+          folder:       "${{github.workspace}}/biz.aQute.api/target/"
+          body:         'SNAPSHOT'
+          name:         "SNAPSHOT Release"
+          tag:          SNAPSHOT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
