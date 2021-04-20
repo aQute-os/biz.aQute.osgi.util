@@ -399,7 +399,7 @@ public class PDU {
 	}
 
 	public PDU putI32(int relPosition, int v) {
-		int high = (0xFFFF_0000 & v) >> 16, low = (0x0000_FFFF & v);
+		int high = 0xFFFF & (v >> 16), low = (0xFFFF & v);
 
 		if (bigWordEndian) {
 			putU16(relPosition, high);
