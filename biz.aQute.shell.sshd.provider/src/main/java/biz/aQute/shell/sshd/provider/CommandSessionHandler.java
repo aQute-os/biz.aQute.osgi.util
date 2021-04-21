@@ -75,11 +75,11 @@ class CommandSessionHandler implements Closeable, Runnable {
 			}
 			return null;
 		});
-		
+
 		session.execute("addcommand context ${.context}");
 		session.execute("addcommand context ${.context} (${.context} class)");
 		session.execute("addcommand system ${.system}");
-		
+
 		this.thread.setDaemon(true);
 		this.thread.start();
 	}
@@ -93,26 +93,28 @@ class CommandSessionHandler implements Closeable, Runnable {
 					if (line == null)
 						return;
 					boolean wasnl=false;
-					if ( console.echo )
-						console.write(NEWLINE);
+					if ( console.echo ) {
+						console.writeln();
+					}
 					if (!Strings.trim(line).isEmpty()) {
 						try {
 							Object execute = execute(line);
 							if (execute != null) {
-								char[] s = session.format(execute, Converter.INSPECT).toString().toCharArray();
-								wasnl = fixupLF(wasnl, s);
+								String s = session.format(execute, Converter.INSPECT).toString();
+								console.write(s);
+								wasnl = s.endsWith("\n");
 							}
 						} catch (Exception e) {
 							session.put("exception", e);
 							if ( e.getMessage() == null || e.getMessage().trim().isEmpty())
 								console.write(e.getClass().getName());
-							else 
+							else
 								console.write(e.getMessage());
-							console.write(NEWLINE);
+							console.writeln();
 							wasnl=true;
 						}
 						if (!wasnl)
-							console.write(NEWLINE);
+							console.writeln();
 					}
 					console.flush();
 				} catch (EOFException e) {
@@ -130,29 +132,6 @@ class CommandSessionHandler implements Closeable, Runnable {
 			session.close();
 			AbstractGogoSshd.logger.info("quiting thread");
 		}
-	}
-
-	private boolean fixupLF(boolean wasnl, char[] s) throws IOException {
-		int start=0;
-		for ( int i=0; i<s.length; i++) {
-			char ch = s[i];
-			switch(ch) {
-			case '\n':
-				console.writer.write(s,start,i-start);
-				console.writer.write(NEWLINE);
-				console.writer.flush();
-				wasnl=true;
-				start = i+1;
-				break;
-			case '\r':
-				break;
-				
-			default:
-				wasnl=false;
-			}
-		}
-		console.writer.write(s,start,s.length-start);
-		return wasnl;
 	}
 
 	protected Object execute(String line) throws Exception {

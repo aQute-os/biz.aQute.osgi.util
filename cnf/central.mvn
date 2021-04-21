@@ -136,7 +136,6 @@ org.osgi:org.osgi.util.tracker:1.5.2
 org.osgi:org.osgi.util.xml:1.0.1
 org.osgi:osgi.annotation:7.0.0
 org.osgi:osgi.core:7.0.0
-org.osgi:osgi.enroute.base.api:2.1.0
 org.osgi:osgi.enroute.webconsole.xray.provider:2.1.0
 org.slf4j:slf4j-api:1.7.30
 org.slf4j:slf4j-simple:1.7.30

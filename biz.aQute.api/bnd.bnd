@@ -7,6 +7,7 @@
 	org.osgi.util.promise,\
 	org.osgi.namespace.implementation,\
 	org.osgi.annotation.bundle,\
-	org.osgi.dto
+	org.osgi.dto,\
+	org.apache.felix.http.servlet-api
 
 -sub: *.bnd

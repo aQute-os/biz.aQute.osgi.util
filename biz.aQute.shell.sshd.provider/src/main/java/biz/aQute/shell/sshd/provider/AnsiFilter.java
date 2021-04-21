@@ -258,7 +258,7 @@ public class AnsiFilter {
 			i++;
 
 		column(start+i+1);
-		
+
 		String current = buffer.toString();
 		writer.write(current, i, current.length() - i);
 		if (this.current.length() > current.length())
@@ -310,6 +310,11 @@ public class AnsiFilter {
 
 	public void setNoEcho() {
 		echo = false;
+	}
+
+	public void writeln() throws IOException {
+		writer.write("\r\n");
+		writer.flush();
 	}
 
 }

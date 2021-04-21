@@ -32,3 +32,4 @@
 	org.apache.felix.webconsole;version='[4.3.8,4.3.9)',\
 	org.apache.felix.webconsole.plugins.ds;version='[2.1.0,2.1.1)',\
 	org.apache.felix.metatype;version='[1.2.2,1.2.3)'
+-resolve: beforelaunch
