@@ -24,5 +24,8 @@ Export-Package: \
 
 -testpath: \
     biz.aQute.launchpad,\
+    slf4j.api, \
+    slf4j.simple,\
+    osgi.core,\
 	biz.aQute.wrapper.junit;version=4.12, \
 	biz.aQute.wrapper.hamcrest;version=1.3

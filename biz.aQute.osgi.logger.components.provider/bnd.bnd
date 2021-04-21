@@ -5,7 +5,7 @@
 -buildpath: \
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
-	org.osgi.service.log,\
+	org.osgi.service.log;version=1.4,\
 	org.osgi.framework,\
 	org.apache.felix.gogo.runtime,\
 	org.osgi.service.metatype.annotations,\

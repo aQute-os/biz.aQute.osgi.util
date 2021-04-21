@@ -18,9 +18,9 @@ Export-Package: org.osgi.service.log
 	slf4j.api;version=1.7.30,\
 	osgi.annotation,\
 	org.osgi.framework,\
-	org.osgi.service.log,\
+	org.osgi.service.log;version=1.4,\
 	org.osgi.util.tracker
-	
+
 -testpath: \
     org.json;version='1.0.0',\
     biz.aQute.wrapper.junit, \
