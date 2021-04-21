@@ -16,8 +16,11 @@ Export-Package: \
 -includeresource: {readme.md}
 
 -buildpath: \
-    aQute.libg, \
-	osgi.enroute.base.api;version=2.0
+	aQute.libg,\
+	org.osgi.service.cm,\
+	org.osgi.service.metatype.annotations,\
+	org.osgi.framework,\
+	osgi.annotation
 
 -testpath: \
     biz.aQute.launchpad,\

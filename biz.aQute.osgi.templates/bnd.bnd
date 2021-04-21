@@ -1,7 +1,8 @@
 -sources:               false
 src:                    src/main/java
 -workingset             base
--buildpath:             osgi.enroute.base.api; version=1.7
+-buildpath: \
+	org.osgi.service.metatype.annotations
 -privatepackage:        biz.aQute.osgi.templates
 -resourceonly:          true
 -includeresource:       src/main/resources
@@ -31,7 +32,7 @@ provider-template:\
         help=provider/help.xml;\
         engine=mustache; \
         metaType=OSGI-INF/metatype/biz.aQute.osgi.templates.provider.xml
-        
+
 Provide-Capability: \
     ${api-template}, \
     ${provider-template}

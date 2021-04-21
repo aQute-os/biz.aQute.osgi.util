@@ -16,9 +16,10 @@ Private-Package: \
 -includeresource: {readme.md}
 
 -buildpath: \
-	osgi.enroute.base.api;version=2.1, \
-	aQute.libg, \
-	osgi.core
+	aQute.libg,\
+	osgi.core,\
+	org.osgi.util.promise,\
+    org.osgi.util.function
 
 -testpath: \
 	biz.aQute.wrapper.junit;version=4.12, \

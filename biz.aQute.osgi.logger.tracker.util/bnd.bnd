@@ -1,5 +1,7 @@
 -buildpath: \
-    osgi.enroute.base.api;version=2.0, \
-    osgi.annotation;version=7, \
-    aQute.libg
-    
+	osgi.annotation;version=7,\
+	aQute.libg,\
+	org.osgi.service.log;version=1.3,\
+	slf4j.api,\
+	org.osgi.framework,\
+	org.osgi.util.tracker
