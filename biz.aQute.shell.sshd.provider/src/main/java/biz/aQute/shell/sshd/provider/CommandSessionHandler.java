@@ -90,8 +90,10 @@ class CommandSessionHandler implements Closeable, Runnable {
 				try {
 
 					String line = console.readline(getPrompt());
-					if (line == null)
+					if (line == null) {
+						callback.onExit(0);
 						return;
+					}
 					boolean wasnl=false;
 					if ( console.echo ) {
 						console.writeln();
