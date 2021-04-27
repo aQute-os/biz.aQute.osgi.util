@@ -34,6 +34,7 @@ import org.apache.felix.service.command.Parameter;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 import aQute.lib.converter.Converter;
 import aQute.lib.fileset.FileSet;
@@ -403,7 +404,6 @@ public class Builtin {
 		return found;
 	}
 
-
 	@Descriptor("Map each element")
 	public List<Object> each(CommandSession session,
 	//@formatter:off
@@ -746,6 +746,116 @@ public class Builtin {
 
 		return result;
 
+	}
+
+	@Descriptor("Add a service to the variables. You can then use this service to invoke its methods as commands. This service is not tracked so there  is a checked out copy thatt can disappear")
+	public Object service(String service) throws Exception {
+		ServiceReference<?>[] refs = context.getServiceReferences((String) null, "(objectClass=*" + service + ")");
+		if (refs == null) {
+			System.out.println("No such service");
+			return null;
+		}
+
+		if (refs.length > 1) {
+			System.out.println("Multiple services");
+			return null;
+		}
+
+		ServiceReference<?> ref = refs[0];
+
+		return context.getService(ref);
+	}
+
+	@Descriptor("repeat a command until a key is hit")
+	public void repeat(
+	//@formatter:off
+
+		CommandSession	session,
+
+		@Descriptor("Repeat period in seconds, must be > 0. Default is 1")
+		@Parameter(absentValue = "1", names = {"-p","--period"} )
+		int period,
+
+		@Descriptor("Update screen with the result.")
+		@Parameter(absentValue = "false", presentValue="true", names = {"-u","--update"} )
+		boolean update,
+
+		String ... args
+		//@formatter:on
+	) throws Exception {
+		String line = Stream.of(args)
+			.collect(Collectors.joining(" "));
+
+		while (true) {
+			if (update)
+				cls(session);
+
+			Object execute = session.execute(line);
+
+			String format = session.format(execute, org.apache.felix.service.command.Converter.INSPECT)
+				.toString();
+			session.getConsole()
+				.println(format);
+			session.getConsole()
+				.flush();
+
+			if (anykey(session, period) != 0)
+				return;
+		}
+
+	}
+
+	@Descriptor("Show the amount of free memory")
+	public long freeMemory(
+		//@formatter:off
+		@Descriptor("Run a gc first")
+		@Parameter(absentValue = "false", presentValue="true", names = {"-g","--gc"} )
+		boolean gc
+		//@formatter:on
+		) {
+		if ( gc )
+			System.gc();
+
+		return Runtime.getRuntime()
+			.freeMemory();
+	}
+
+	@Descriptor("Return a key that is hit")
+	public int anykey(
+	//@formatter:off
+
+		CommandSession	session,
+
+		@Descriptor("Repeat period in seconds, must be > 0. Default is 1")
+		@Parameter(absentValue = "1", names = {"-p","--period"} )
+		int period
+
+		//@formatter:on
+
+	) throws IOException, InterruptedException {
+
+		long deadline = System.currentTimeMillis() + period * 1000;
+		while (System.currentTimeMillis() < deadline) {
+			if (session.getKeyboard()
+				.available() > 0) {
+				return session.getKeyboard()
+					.read();
+			}
+			Thread.sleep(100);
+		}
+		return 0;
+	}
+
+	@Descriptor("Clear the screen")
+	public void cls(CommandSession session) {
+		session.getConsole()
+			.append("\u001B[2J")
+			.flush();
+	}
+
+	@Descriptor("Provide a null value")
+	public Object _null() {
+		return null;
 	}
 
 	private void source0(CommandSession session, boolean xtrace, String script) throws Exception {
