@@ -86,11 +86,14 @@ public class Table implements Cell {
 	 */
 	@Override
 	public int width() {
+		if (rows == 0 || cols == 0)
+			return 2;
+
 		int w = 0;
 		for (int c = 0; c < cols; c++) {
 			w += width(c) - 1; // remove right border width because we overlap
 		}
-		return w + 1; // add right border
+		return Math.max(w, 0) + 1; // add right border
 	}
 
 	/**
@@ -98,13 +101,16 @@ public class Table implements Cell {
 	 */
 	@Override
 	public int height() {
+		if (rows == 0 || cols == 0)
+			return 2;
+
 		int h = 0;
 		for (int r = 0; r < rows; r++) {
 			int height = height(r);
 			if (height > 0)
 				h += height - 1;// remove bottom border width because we overlap
 		}
-		return h + 1; // add bottom border
+		return Math.max(h, 0) + 1; // add right border
 	}
 
 	public void set(int r, int c, Object label) {

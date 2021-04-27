@@ -219,6 +219,9 @@ public class Canvas {
 	}
 
 	public Canvas box(int x, int y, int w, int h, Style style) {
+		if (w == 0 || h == 0) {
+			return this;
+		}
 		bounds(x, y);
 		w--;
 		h--;

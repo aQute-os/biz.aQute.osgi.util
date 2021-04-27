@@ -10,6 +10,15 @@ import biz.aQute.gogo.commands.dtoformatter.Table;
 public class TableTest {
 
     @Test
+	public void testTableWithEmptyValue() {
+		Table table = new Table(1, 0, 0);
+		int w = table.width();
+		int h = table.height();
+		table.render();
+
+	}
+
+	@Test
     public void testUnfilledTable() {
         Table t = new Table(1, 1, 0);
         assertEquals("" + "┌─┐\n" + "│ │\n" + "└─┘\n" + "", t.toString());
