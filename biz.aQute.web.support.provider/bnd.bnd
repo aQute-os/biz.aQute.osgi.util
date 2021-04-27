@@ -1,0 +1,23 @@
+#
+# biz.aQute.web.support.provider PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.osgi.framework,\
+	org.osgi.service.log,\
+	aQute.libg,\
+	org.osgi.namespace.extender,\
+	org.apache.felix.http.servlet-api,\
+	org.osgi.service.http.whiteboard,\
+	slf4j.api,\
+	org.osgi.util.tracker,\
+	biz.aQute.api.servlet
+	
+
+-testpath: \
+	biz.aQute.wrapper.junit, \
+	biz.aQute.wrapper.hamcrest, \
+	org.assertj.core
+
