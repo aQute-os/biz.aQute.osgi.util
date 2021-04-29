@@ -1,1 +1,3 @@
--includepackage: biz.aQute.scheduler.api
+-includepackage:\
+  biz.aQute.scheduler.api,\
+  biz.aQute.scheduler.api.annotation

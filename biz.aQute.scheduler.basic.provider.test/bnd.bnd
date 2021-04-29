@@ -1,0 +1,10 @@
+Test-Cases: ${classes;CONCRETE;NAMED;*Test}
+
+-buildpath: \
+	biz.aQute.api.scheduler;version=latest,\
+	biz.aQute.wrapper.junit,\
+	biz.aQute.api.scheduler,\
+	org.osgi.util.promise,\
+	org.osgi.framework
+	
+-privatepackage: biz.aQute.scheduler.basic.provider.test

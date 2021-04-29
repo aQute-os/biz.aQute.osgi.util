@@ -1,0 +1,11 @@
+
+Private-Package: biz.aQute.scheduler.basic.provider.example
+
+-buildpath: \
+	osgi.annotation;version='7.0',\
+	biz.aQute.scheduler.basic.provider;version=latest,\
+	slf4j.api,\
+	org.osgi.service.component.annotations,\
+	biz.aQute.api.scheduler
+
+

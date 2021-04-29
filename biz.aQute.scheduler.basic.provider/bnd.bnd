@@ -6,8 +6,10 @@
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
 	slf4j.api,\
-	biz.aQute.api.scheduler,\
-	org.osgi.util.promise
+	biz.aQute.api.scheduler;version=latest,\
+	org.osgi.util.converter,\
+	org.osgi.util.promise;version='1.1',\
+	org.osgi.util.function
 	
 
 -testpath: \

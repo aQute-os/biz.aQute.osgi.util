@@ -8,6 +8,8 @@
 	org.osgi.namespace.implementation,\
 	org.osgi.annotation.bundle,\
 	org.osgi.dto,\
-	org.apache.felix.http.servlet-api
+	org.apache.felix.http.servlet-api,\
+	org.osgi.service.component.annotations,\
+	org.osgi.util.function
 
 -sub: *.bnd

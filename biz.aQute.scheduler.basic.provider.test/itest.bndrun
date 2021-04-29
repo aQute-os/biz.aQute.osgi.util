@@ -1,0 +1,24 @@
+-runfw: org.apache.felix.framework
+-runee: JavaSE-1.8
+
+
+
+-runrequires: \
+	bnd.identity;id='biz.aQute.api.scheduler',\
+	bnd.identity;id='biz.aQute.scheduler.basic.provider',\
+	bnd.identity;id='biz.aQute.scheduler.basic.provider.test',\
+	bnd.identity;id='slf4j.api',\
+	bnd.identity;id='slf4j.simple'
+
+-runbundles: \
+	biz.aQute.api.scheduler;version=snapshot,\
+	biz.aQute.scheduler.basic.provider;version=snapshot,\
+	biz.aQute.scheduler.basic.provider.test;version=snapshot,\
+	biz.aQute.wrapper.hamcrest;version=snapshot,\
+	biz.aQute.wrapper.junit;version=snapshot,\
+	org.apache.felix.converter;version='[1.0.4,1.0.5)',\
+	org.apache.felix.scr;version='[2.1.16,2.1.17)',\
+	org.osgi.util.function;version='[1.1.0,1.1.1)',\
+	org.osgi.util.promise;version='[1.1.1,1.1.2)',\
+	slf4j.api;version='[1.7.30,1.7.31)',\
+	slf4j.simple;version='[1.7.30,1.7.31)'
