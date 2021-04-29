@@ -1,9 +1,11 @@
 package biz.aQute.scheduler.basic.provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -20,10 +22,10 @@ public class SchedulerImplTest {
 	SchedulerImpl				impl		= new SchedulerImpl(cs);
 
 	@After
-	public void after() {
+	public void after() throws InterruptedException {
 		impl.deactivate();
 		assertThat(impl.tasks).isEmpty();
-		assertThat(cs.scheduler.shutdownNow()).isEmpty();
+		Awaitility.await().until( ()->cs.scheduler.shutdownNow().size()==0);
 		cs.deactivate();
 		assertThat(cs.scheduler.isShutdown());
 	}
@@ -73,8 +75,7 @@ public class SchedulerImplTest {
 					thread.set(Thread.currentThread());
 					cdl.await();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 			}, "execute");
 
@@ -133,5 +134,20 @@ public class SchedulerImplTest {
 		} finally {
 			impl.deactivate();
 		}
+	}
+
+	@Test
+	public void testCron() throws Exception {
+		long now = System.currentTimeMillis();
+
+		Semaphore s = new Semaphore(0);
+		Task schedule = impl.schedule(() -> {
+			System.out.println("release");
+			s.release();
+		}, "0/2 * * * * *", "test1");
+		s.acquire(3);
+		schedule.cancel();
+		long diff = (System.currentTimeMillis() - now + 500) / 1000;
+		assertTrue(diff >= 5 && diff <= 6);
 	}
 }

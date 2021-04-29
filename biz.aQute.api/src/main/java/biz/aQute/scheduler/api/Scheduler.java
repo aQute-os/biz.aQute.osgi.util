@@ -58,4 +58,20 @@ public interface Scheduler extends Executor {
 	 *
 	 */
 	Task deamon(RunnableWithException r, boolean manage, String name);
+
+	/**
+	 * Schedule a runnable to be executed for the give cron expression (See
+	 * {@link CronJob}). Every time when the cronExpression matches the current
+	 * time, the runnable will be run. The method returns a closeable that can
+	 * be used to stop scheduling. This variation does not take an environment
+	 * object.
+	 *
+	 * @param r The Runnable to run
+	 * @param name The name
+	 * @param cronExpression A Cron Expression
+	 * @return A closeable to terminate the schedule
+	 * @throws Exception
+	 */
+	Task schedule(RunnableWithException r, String cronExpression, String name) throws Exception;
+
 }
