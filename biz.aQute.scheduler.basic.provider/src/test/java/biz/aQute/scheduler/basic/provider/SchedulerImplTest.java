@@ -18,7 +18,7 @@ import biz.aQute.scheduler.api.Task;
 
 public class SchedulerImplTest {
 	private static final int	MAX_WAIT	= 10000;
-	CentralScheduler			cs			= new CentralScheduler();
+	CentralScheduler			cs			= new CentralScheduler(null);
 	SchedulerImpl				impl		= new SchedulerImpl(cs);
 
 	@After
@@ -142,13 +142,40 @@ public class SchedulerImplTest {
 
 		Semaphore s = new Semaphore(0);
 		Task schedule = impl.schedule(() -> {
-			System.out.println("release");
 			s.release();
 		}, "0/2 * * * * *", "test1");
 		s.acquire(3);
 		schedule.cancel();
 		long diff = (System.currentTimeMillis() - now + 500) / 1000;
 		assertTrue(diff >= 5 && diff <= 6);
+	}
+
+	@Test
+	public void testCronReboot() throws Exception {
+		long now = System.currentTimeMillis();
+
+		Semaphore s = new Semaphore(0);
+		Task schedule = impl.schedule(() -> {
+			s.release();
+		}, "@reboot", "test1");
+		s.acquire(1);
+		schedule.cancel();
+		long diff = (System.currentTimeMillis() - now + 500) / 1000;
+		assertTrue(diff <= 1);
+	}
+
+	@Test
+	public void testCronSecondly() throws Exception {
+		long now = System.currentTimeMillis();
+
+		Semaphore s = new Semaphore(0);
+		Task schedule = impl.schedule(() -> {
+			s.release();
+		}, "@secondly", "test1");
+		s.acquire(2);
+		schedule.cancel();
+		long diff = (System.currentTimeMillis() - now + 500) / 1000;
+		assertTrue(diff >= 1 && diff <= 3);
 	}
 
 

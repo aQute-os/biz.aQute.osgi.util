@@ -6,9 +6,6 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalField;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,7 +90,6 @@ class CronAdjuster implements TemporalAdjuster {
 	final Field					dayOfWeek;
 	final Field					year;
 	final Field					fields[];
-	final Map<String, String>	map;
 	final boolean				reboot;
 
 	/*
@@ -101,10 +97,7 @@ class CronAdjuster implements TemporalAdjuster {
 	 */
 	public CronAdjuster(String specification) {
 
-		String entries[] = specification.split("(\n|\r)+");
-		map = doEnv(entries);
-
-		String expression = entries[entries.length - 1].trim();
+		String expression = specification.trim();
 
 		reboot = expression.equals("@reboot");
 
@@ -136,30 +129,6 @@ class CronAdjuster implements TemporalAdjuster {
 		};
 	}
 
-	private Map<String, String> doEnv(String[] entries) {
-		Map<String, String> map = new HashMap<String, String>();
-		if (entries.length > 1) {
-			for (int i = 0; i < entries.length - 1; i++) {
-
-				if (entries[i].startsWith("#") || entries[i].isEmpty())
-					continue;
-
-				int n = entries[i].indexOf('=');
-				if (n >= 0) {
-					String key = entries[i].substring(0, n)
-						.trim();
-					String value = entries[i].substring(n + 1)
-						.trim();
-					map.put(key, value);
-				} else {
-					map.put(entries[i].trim(), Boolean.TRUE.toString());
-				}
-			}
-			return map;
-		} else
-			return Collections.emptyMap();
-	}
-
 	/**
 	 * <pre>
 	 * 	&#64;yearly (or @annually)	Run once a year at midnight on the morning of January 1	0 0 1 1 *
@@ -188,6 +157,12 @@ class CronAdjuster implements TemporalAdjuster {
 
 			case "@hourly" :
 				return "4 0 * * * ?";
+
+			case "@minutely" :
+				return "* 0 * * * *";
+
+			case "@secondly" :
+				return "* * * * * *";
 
 			case "@reboot" :
 				return "0 0 0 1 1 ? 1900";
@@ -519,10 +494,6 @@ class CronAdjuster implements TemporalAdjuster {
 			return a;
 
 		return (temporal) -> a.matches(temporal) && b.matches(temporal);
-	}
-
-	public Map<String, String> getEnv() {
-		return map;
 	}
 
 	public boolean isReboot() {

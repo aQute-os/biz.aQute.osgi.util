@@ -1,15 +1,9 @@
 package biz.aQute.scheduler.basic.provider;
 
-import java.io.IOException;
-import java.time.Clock;
 import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
+import java.time.temporal.TemporalAdjuster;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
@@ -20,16 +14,12 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aQute.lib.converter.Converter;
-import biz.aQute.scheduler.api.CronJob;
 import biz.aQute.scheduler.api.Scheduler;
 import biz.aQute.scheduler.api.Task;
 
@@ -39,12 +29,10 @@ import biz.aQute.scheduler.api.Task;
  */
 @Component(scope = ServiceScope.PROTOTYPE)
 public class SchedulerImpl implements Executor, Scheduler {
-	final List<Cron>		crons	= new ArrayList<>();
 	final Logger			logger	= LoggerFactory.getLogger(SchedulerImpl.class);
 	final Set<Task>			tasks	= Collections.synchronizedSet(new HashSet<>());
 	final CentralScheduler	scheduler;
 	final Object			lock	= new Object();
-	Clock					clock	= Clock.systemDefaultZone();
 
 	class TaskImpl implements Runnable, Task {
 		final RunnableWithException	runnable;
@@ -197,84 +185,14 @@ public class SchedulerImpl implements Executor, Scheduler {
 		TaskImpl task = new TaskImpl(job, name, false, false);
 		CronAdjuster cron = new CronAdjuster(cronExpression);
 
-		schedule(task, cron, cron.isReboot() ? 1 : nextDelay(cron));
+		scheduler.schedule(task, cron, cron.isReboot() ? 1 : scheduler.nextDelay(cron));
 		tasks.add(task);
 		return task;
 	}
 
-	private void schedule(TaskImpl task, CronAdjuster cron, long delay) {
-		synchronized (task) {
-			if (task.canceled) {
-				return;
-			}
-			ScheduledFuture<?> schedule = scheduler.scheduler.schedule(() -> {
-				System.out.println("tick");
-				task.run();
-				schedule(task, cron, nextDelay(cron));
-			}, delay, TimeUnit.MILLISECONDS);
-			task.cancel = () -> schedule.cancel(true);
-		}
-	}
-
-	private long nextDelay(CronAdjuster cron) {
-		ZonedDateTime now = ZonedDateTime.now(clock);
-		ZonedDateTime next = now.with(cron);
-		long delay = next.toInstant()
-				.toEpochMilli() - System.currentTimeMillis();
-		if (delay < 1)
-			delay = 1;
-		System.out.println("delay " + delay);
-		return delay;
-	}
-
-	class Cron {
-
-		CronJob	target;
-		Task	schedule;
-
-		Cron(CronJob target, String cronExpression, String name) throws Exception {
-			this.target = target;
-			this.schedule = schedule(target::run, cronExpression, name);
-		}
-
-		void close() throws IOException {
-			schedule.cancel();
-		}
-	}
-
-	@Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MULTIPLE)
-	void addSchedule(CronJob s, Map<String, Object> map) throws Exception {
-		String name = Converter.cnv(String.class, map.get(CronJob.NAME));
-		String[] schedules = Converter.cnv(String[].class, map.get(CronJob.CRON));
-		if (schedules == null || schedules.length == 0)
-			return;
-
-		if (name == null) {
-			name = "unknown " + Instant.now();
-		}
-
-		synchronized (crons) {
-			for (String schedule : schedules) {
-				try {
-					Cron cron = new Cron(s, schedule, name);
-					crons.add(cron);
-				} catch (Exception e) {
-					logger.error("Invalid  cron expression " + schedule + " from " + map, e);
-				}
-			}
-		}
-	}
-
-	void removeSchedule(CronJob s) {
-		synchronized (crons) {
-			for (Iterator<Cron> cron = crons.iterator(); cron.hasNext();) {
-				Cron c = cron.next();
-				if (c.target == s) {
-					cron.remove();
-					c.schedule.cancel();
-				}
-			}
-		}
+	@Override
+	public TemporalAdjuster getCronAdjuster(String cronExpression) {
+		return new CronAdjuster(cronExpression);
 	}
 
 }
