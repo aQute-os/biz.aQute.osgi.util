@@ -1,6 +1,7 @@
 package biz.aQute.scheduler.basic.provider;
 
 import java.time.Instant;
+import java.time.temporal.TemporalAdjuster;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,15 +40,18 @@ public class SchedulerImpl implements Executor, Scheduler {
 		Runnable					cancel;
 		Thread						thread;
 		final boolean				manage;
+		final boolean				repeat;
+		public boolean				canceled;
 
-		TaskImpl(RunnableWithException runnable, String name, boolean manage) {
+		TaskImpl(RunnableWithException runnable, String name, boolean manage, boolean repeat) {
 			this.manage = manage;
+			this.repeat = repeat;
 			this.runnable = runnable::run;
 			this.name = name;
 		}
 
 		TaskImpl(Runnable runnable, String name, boolean manage) {
-			this((RunnableWithException) runnable::run, name, manage);
+			this((RunnableWithException) runnable::run, name, manage, false);
 		}
 
 		@Override
@@ -57,11 +61,14 @@ public class SchedulerImpl implements Executor, Scheduler {
 			}
 			String old = thread.getName();
 			try {
-				boolean logged=false;
+				boolean logged = false;
 				while (!thread.isInterrupted())
 					try {
 						thread.setName(name);
 						runnable.run();
+						if (!repeat) {
+							return;
+						}
 					} catch (Exception e) {
 						if (!manage) {
 							return;
@@ -75,6 +82,9 @@ public class SchedulerImpl implements Executor, Scheduler {
 						} catch (InterruptedException e1) {
 							thread.interrupt();
 							logger.info("managed task {} interrupted", name);
+							return;
+						}
+						if (!repeat) {
 							return;
 						}
 					}
@@ -92,6 +102,7 @@ public class SchedulerImpl implements Executor, Scheduler {
 			if (cancel != null)
 				cancel.run();
 			synchronized (lock) {
+				canceled = true;
 				if (tasks.remove(this)) {
 					if (thread == null) {
 						return false;
@@ -158,7 +169,7 @@ public class SchedulerImpl implements Executor, Scheduler {
 
 	@Override
 	public Task deamon(RunnableWithException r, boolean manage, String name) {
-		TaskImpl task = new TaskImpl(r, name, manage);
+		TaskImpl task = new TaskImpl(r, name, manage, false);
 		Thread thread = new Thread(task, name);
 		thread.start();
 		return task;
@@ -167,6 +178,21 @@ public class SchedulerImpl implements Executor, Scheduler {
 	@Override
 	public void execute(Runnable command) {
 		execute(command, Instant.now().toString());
+	}
+
+	@Override
+	public Task schedule(RunnableWithException job, String cronExpression, String name) throws Exception {
+		TaskImpl task = new TaskImpl(job, name, false, false);
+		CronAdjuster cron = new CronAdjuster(cronExpression);
+
+		scheduler.schedule(task, cron, cron.isReboot() ? 1 : scheduler.nextDelay(cron));
+		tasks.add(task);
+		return task;
+	}
+
+	@Override
+	public TemporalAdjuster getCronAdjuster(String cronExpression) {
+		return new CronAdjuster(cronExpression);
 	}
 
 }

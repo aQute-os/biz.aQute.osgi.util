@@ -7,12 +7,19 @@
 	org.osgi.service.component.annotations,\
 	slf4j.api,\
 	biz.aQute.api.scheduler,\
-	org.osgi.util.promise
-	
+	org.osgi.util.promise,\
+	aQute.libg,\
+	org.osgi.service.metatype.annotations
+
 
 -testpath: \
 	biz.aQute.wrapper.junit,\
 	biz.aQute.wrapper.hamcrest,\
 	org.assertj.core,\
-	org.awaitility
+	org.awaitility,\
+	biz.aQute.launchpad,\
+	osgi.core, \
+	slf4j.api, \
+	slf4j.simple
 
+-conditionalpackage: aQute.lib*
