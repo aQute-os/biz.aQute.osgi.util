@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.log.LogEntry;
 import org.osgi.service.log.LogLevel;
 import org.osgi.service.log.LogReaderService;
-import org.osgi.service.log.Logger;
 import org.osgi.service.log.admin.LoggerAdmin;
 import org.osgi.service.log.admin.LoggerContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -162,56 +161,145 @@ public class LoggerAdminCommands implements Closeable {
 			});
 	}
 
+	/**
+	 * TAIL
+	 */
 	@Descriptor("Continuously show the log messages")
-	public void tail(CommandSession s, @Descriptor("The minimum log level (DEBUG,INFO,WARN,ERROR)")
-	LogLevel level) throws IOException, InterruptedException {
-		LogTail lt = sessions.get(s);
+	public void tail(
+	//@formatter:off
+
+		CommandSession s,
+
+		@Descriptor("Filter the message with a glob")
+		@Parameter(absentValue="*", names= {"-f", "--filter"})
+		String filter,
+
+		@Descriptor("Number of times the filter must match")
+		@Parameter(absentValue="1", names= {"-c", "--count"})
+		int count,
+
+
+		@Descriptor("The minimum log level (DEBUG,INFO,WARN,ERROR)")
+		LogLevel level
+
+		//@formatter:on
+	) throws IOException, InterruptedException {
+
+		LogTail lt = sessions.remove(s);
 		if (lt == null) {
-			getLogReaderService().ifPresent(service -> sessions.put(s, new LogTail(s, service, level)));
+			getLogReaderService().ifPresent(service -> sessions.put(s, new LogTail(s, service, level, filter, count)));
 		} else {
-			sessions.remove(s);
 			lt.close();
 		}
 	}
 
 	@Descriptor("Continuously show all the log messages")
-	public void tail(CommandSession s) throws IOException, InterruptedException {
-		tail(s, LogLevel.DEBUG);
+	public void tail(
+	//@formatter:off
+		CommandSession s,
+		@Parameter( absentValue="false", presentValue="true",names={"-d","--debug"})
+		boolean debug,
+		@Parameter( absentValue="false", presentValue="true",names={"-i","--info"})
+		boolean info,
+		@Parameter( absentValue="false", presentValue="true",names={"-w","--warning"})
+		boolean warning
+		//@formatter:on
+	) throws IOException, InterruptedException {
+
+		LogLevel level = LogLevel.DEBUG;
+		if (info)
+			level = LogLevel.INFO;
+		if (warning)
+			level = LogLevel.WARN;
+		tail(s, "*", 1, level);
 	}
 
-	@Descriptor("Add a logger prefix to the context of the given bundle")
-	public Map<String, LogLevel> addlevel(@Descriptor("The logger context bundle")
-	Bundle b, @Descriptor("The name of the logger prefix or ROOT for all")
-	String name, @Descriptor("The log level to set (DEBUG,INFO,WARN,ERROR)")
-	LogLevel level) throws InterruptedException {
-		return add(b.getSymbolicName(), name, level);
+	/**
+	 * TAIL
+	 */
+	@Descriptor("Continuously show the log messages")
+	public void tailclear(
+	//@formatter:off
+
+		CommandSession s
+
+		//@formatter:on
+	) throws IOException, InterruptedException {
+
+		LogTail lt = sessions.remove(s);
+		if (lt != null) {
+			lt.close();
+		}
 	}
 
-	@Descriptor("Remove a log level from the given bundle")
-	public Map<String, LogLevel> rmlevel(@Descriptor("The logger context bundle")
-	Bundle b, @Descriptor("The name of the logger prefix or ROOT for all")
-	String name) throws InterruptedException {
-		return rm(b.getSymbolicName(), name);
+	@Descriptor("Add a log level for a logger name prefix for a specific bundle")
+	public Map<String, LogLevel> addlevel(
+	//@formatter:off
 
+		@Descriptor("The logger context bundle")
+		Bundle b,
+
+		@Descriptor("The name of the logger prefix or ROOT for all")
+		String name,
+
+		@Descriptor("The log level to set (DEBUG,INFO,WARN,ERROR)")
+		LogLevel level
+
+		//@formatter:on
+	) throws InterruptedException {
+		return add(b, name, level);
 	}
 
-	@Descriptor("Add a log name prefix to the root logger")
-	public Map<String, LogLevel> addlevel(@Descriptor("The logger name prefix")
-	String name, @Descriptor("The log level to set (DEBUG,INFO,WARN,ERROR)")
-	LogLevel level) throws InterruptedException {
-		return add(ROOT_LOGGER_NAME, name, level);
+	@Descriptor("Add a log level of a logger name prefix")
+	public Map<String, LogLevel> addlevel(
+	//@formatter:off
+
+		@Descriptor("The name of the logger prefix or ROOT for all")
+		String name,
+
+		@Descriptor("The log level to set (DEBUG,INFO,WARN,ERROR)")
+		LogLevel level
+
+		//@formatter:on
+	) throws InterruptedException {
+		return add(null, name, level);
 	}
 
-	@Descriptor("Remove a log level from the root context")
-	public Map<String, LogLevel> rmlevel(String name) throws InterruptedException {
-		return rm(ROOT_LOGGER_NAME, name);
+	@Descriptor("Remove the log level of a logger name prefix for a specific bundle")
+	public Map<String, LogLevel> rmlevel(
+	//@formatter:off
+
+		@Descriptor("The logger context bundle")
+		Bundle b,
+
+		@Descriptor("The name of the logger prefix or ROOT for all")
+		String name
+		//@formatter:on
+	) throws InterruptedException {
+		return rm(b, name);
 	}
 
-	@Descriptor("Show the levels for a given bundle")
-	public Map<String, LogLevel> levels(@Descriptor("The logger context bundle")
-	Bundle b) throws InterruptedException {
+	@Descriptor("Remove a log level for a logger name prefix")
+	public Map<String, LogLevel> rmlevel(
+	//@formatter:off
+		@Descriptor("The name of the logger prefix or ROOT for all")
+		String name
+		//@formatter:on
+	) throws InterruptedException {
+		return rm(null, name);
+	}
+
+	@Descriptor("Show the log levels for a given bundle")
+	public Map<String, LogLevel> levels(
+	//@formatter:off
+
+		@Descriptor("The logger context bundle")
+		Bundle b
+
+		//@formatter:on
+	) throws InterruptedException {
 		return getLoggerAdmin().map(lAdmin -> {
-			LoggerContext loggerContext = lAdmin.getLoggerContext(b.getSymbolicName());
+			LoggerContext loggerContext = getLoggerContext(b, lAdmin);
 			if (loggerContext.isEmpty())
 				loggerContext = lAdmin.getLoggerContext(null);
 
@@ -231,7 +319,7 @@ public class LoggerAdminCommands implements Closeable {
 			map.put(ROOT_LOGGER_NAME, lAdmin.getLoggerContext(null)
 				.getLogLevels());
 			for (Bundle b : context.getBundles()) {
-				LoggerContext lctx = lAdmin.getLoggerContext(b.getSymbolicName());
+				LoggerContext lctx = getLoggerContext(b, lAdmin);
 				if (lctx.isEmpty())
 					continue;
 
@@ -253,7 +341,7 @@ public class LoggerAdminCommands implements Closeable {
 		return getLoggerAdmin().map(lAdmin -> {
 			try {
 				return lAdmin.getLoggerContext(null)
-					.getEffectiveLogLevel(null)
+					.getEffectiveLogLevel("")
 					.toString();
 			} catch (Exception e0) {
 				e0.printStackTrace();
@@ -271,10 +359,11 @@ public class LoggerAdminCommands implements Closeable {
 	LogLevel level) throws InterruptedException {
 
 		return getLoggerAdmin().map(lAdmin -> {
-			Map<String, LogLevel> map = new HashMap<>();
-			map.put(Logger.ROOT_LOGGER_NAME, level);
-			lAdmin.getLoggerContext(null)
-				.setLogLevels(map);
+
+			LoggerContext rootContext = lAdmin.getLoggerContext(null);
+			Map<String, LogLevel> map = rootContext.getLogLevels();
+			map.put(ROOT_LOGGER_NAME, level);
+			rootContext.setLogLevels(map);
 			try {
 				return defaultlevel();
 			} catch (InterruptedException e) {
@@ -288,7 +377,40 @@ public class LoggerAdminCommands implements Closeable {
 			});
 	}
 
-	private Map<String, LogLevel> rm(String ctx, String name) throws InterruptedException {
+	@Descriptor("Get the level for a name")
+	public String level(
+	//@formatter:off
+
+		@Descriptor("A name for a logger")
+		String name
+
+		//@formatter:off
+		) throws InterruptedException {
+		return getLoggerAdmin().map( lAdmin -> {
+			LoggerContext loggerContext = getLoggerContext( null, lAdmin);
+			return loggerContext.getEffectiveLogLevel(name).toString();
+		}).orElse( null);
+	}
+
+	@Descriptor("Get the level for a name")
+	public String level(
+		//@formatter:off
+
+		@Descriptor("The bundle ")
+		Bundle b,
+
+		@Descriptor("A name for a logger")
+		String name
+
+		//@formatter:off
+		) throws InterruptedException {
+		return getLoggerAdmin().map( lAdmin -> {
+			LoggerContext loggerContext = getLoggerContext( b, lAdmin);
+			return loggerContext.getEffectiveLogLevel(name).toString();
+		}).orElse( null);
+	}
+
+	private Map<String, LogLevel> rm(Bundle ctx, String name) throws InterruptedException {
 
 		return getLoggerAdmin().map(lAdmin -> {
 			LoggerContext loggerContext = getLoggerContext(ctx, lAdmin);
@@ -304,10 +426,11 @@ public class LoggerAdminCommands implements Closeable {
 			});
 	}
 
-	private Map<String, LogLevel> add(String ctx, String name, LogLevel level) throws InterruptedException {
+	private Map<String, LogLevel> add(Bundle b, String name, LogLevel level) throws InterruptedException {
 
 		return getLoggerAdmin().map(lAdmin -> {
-			LoggerContext loggerContext = getLoggerContext(ctx, lAdmin);
+
+			LoggerContext loggerContext = getLoggerContext(b, lAdmin);
 			Map<String, LogLevel> logLevels = loggerContext.getLogLevels();
 			logLevels.put(name, level);
 			loggerContext.setLogLevels(logLevels);
@@ -319,35 +442,75 @@ public class LoggerAdminCommands implements Closeable {
 			});
 	}
 
-	private LoggerContext getLoggerContext(String ctx, LoggerAdmin lAdmin) {
-		return lAdmin.getLoggerContext(ROOT_LOGGER_NAME.equals(ctx) ? null : ctx);
+	private LoggerContext getLoggerContext(Bundle b, LoggerAdmin lAdmin) {
+		if ( b == null) {
+			return lAdmin.getLoggerContext(null);
+		}
+		StringBuilder sb = new StringBuilder(b.getSymbolicName());
+		sb.append("|").append(b.getVersion()).append("|").append(b.getLocation());
+		return lAdmin.getLoggerContext(sb.toString());
 	}
 
 	@Descriptor("Create an SLF4J debug entry (for testing)")
-	public void slf4jdebug(@Descriptor("The message to log")
-	Object message) {
-		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
+	public void slf4jdebug(
+		//@formatter:off
+		@Parameter(absentValue="LoggerAdminCommands", names= {"-n", "--name"})
+		@Descriptor("The name of the logger")
+		String name,
+
+		@Descriptor("The message to log")
+		Object message
+		//formatter:on
+	) {
+		org.slf4j.Logger logger = LoggerFactory.getLogger(name);
 		logger.debug("{}", message);
 	}
 
 	@Descriptor("Create an SLF4J warn entry")
-	public void slf4jwarn(@Descriptor("The message to log")
-	Object message) {
-		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
+	public void slf4jwarn(
+		//@formatter:off
+		@Parameter(absentValue="LoggerAdminCommands", names= {"-n", "--name"})
+		@Descriptor("The name of the logger")
+		String name,
+
+		@Descriptor("The message to log")
+		Object message
+		//formatter:on
+		) {
+		org.slf4j.Logger logger = LoggerFactory.getLogger(name);
 		logger.warn("{}", message);
 	}
 
 	@Descriptor("Create an SLF4J info entry")
-	public void slf4jinfo(@Descriptor("The message to log")
-	Object message) {
-		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
+	public void slf4jinfo(
+		//@formatter:off
+		@Parameter(absentValue="LoggerAdminCommands", names= {"-n", "--name"})
+		@Descriptor("The name of the logger")
+		String name,
+
+		@Descriptor("The message to log")
+		Object message
+		//formatter:on
+
+		) {
+		org.slf4j.Logger logger = LoggerFactory.getLogger(name);
 		logger.info("{}", message);
 	}
 
 	@Descriptor("Create an SLF4J error entry")
-	public void slf4jerror(@Descriptor("The message to log")
-	Object message) {
-		org.slf4j.Logger logger = LoggerFactory.getLogger(LoggerAdminCommands.class);
+	public void slf4jerror(
+		//@formatter:off
+		@Parameter(absentValue="LoggerAdminCommands", names= {"-n", "--name"})
+		@Descriptor("The name of the logger")
+		String name,
+
+		@Descriptor("The message to log")
+		Object message
+		//formatter:on
+
+
+		) {
+		org.slf4j.Logger logger = LoggerFactory.getLogger(name);
 		logger.error("{}", message);
 	}
 }
