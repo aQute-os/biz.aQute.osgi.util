@@ -123,7 +123,8 @@ class CommandSessionHandler implements Closeable, Runnable {
 					// ignore
 					return;
 				} catch (Throwable e) {
-					callback.onExit(0, e.toString() + ": exiting");
+					// ignore
+					return;
 				}
 		} finally {
 			try {
