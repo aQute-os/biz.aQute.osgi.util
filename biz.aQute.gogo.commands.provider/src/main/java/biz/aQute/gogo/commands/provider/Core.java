@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -190,22 +191,67 @@ public class Core {
 		}
 	}
 
+	enum Sort {
+		id,
+		bsn,
+		level,
+		time
+	}
+
 	@Descriptor("List all current bundles")
 	public List<Bundle> lb(
 	//@formatter:off
 
+		@Descriptor("show only the not active bundles")
 		@Parameter(absentValue="false", presentValue="true", names= {"-n", "--notactive"})
 		boolean notactive,
+
+		@Descriptor("sort by: id | bsn | time | level. Default is an ascending sort")
+		@Parameter(absentValue="id", names= {"-s", "--sort"})
+		Sort sort,
+
+		@Descriptor("sort in descending order (the default is ascending)")
+		@Parameter(absentValue="false", presentValue="true", names= {"-d", "--descending"})
+		boolean descending,
 
 		Glob... matches
 
 
 		//@formatter:on
 	) {
+		Comparator<Bundle> cmp;
+		if ( sort == null)
+			sort = Sort.id;
+
+		switch(sort) {
+			default :
+			case id:
+				cmp = (a,b) -> Long.compare( a.getBundleId(), b.getBundleId());
+				break;
+
+			case bsn :
+				cmp = (a, b) -> a.getSymbolicName()
+					.compareTo(b.getSymbolicName());
+				break;
+
+			case level :
+				cmp = (a, b) -> Integer.compare(startlevel(a).getStartLevel(), startlevel(b).getStartLevel());
+				break;
+
+			case time :
+				cmp = (a, b) -> Long.compare(a.getLastModified(), b.getLastModified());
+				break;
+		}
+		if (descending) {
+			Comparator<Bundle> old = cmp;
+			cmp = (a, b) -> old.compare(b, a);
+		}
+
 
 		return Arrays.asList(context.getBundles())
 			.stream()
 			.filter(k -> !notactive || in(k.getState(), ~Bundle.ACTIVE))
+			.sorted(cmp)
 			.filter(k -> any(matches, k.getSymbolicName()))
 			.collect(Collectors.toList());
 	}
@@ -365,7 +411,7 @@ public class Core {
 		FrameworkWiring fw = context.getBundle(0L)
 			.adapt(FrameworkWiring.class);
 		fw.resolveBundles(bs);
-		return lb(false).stream()
+		return lb(false, null, false).stream()
 			.filter(b -> (b.getState() & Bundle.UNINSTALLED + Bundle.INSTALLED) != 0)
 			.collect(Collectors.toList());
 	}

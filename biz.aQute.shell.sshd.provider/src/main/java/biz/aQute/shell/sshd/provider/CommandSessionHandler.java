@@ -1,7 +1,6 @@
 package biz.aQute.shell.sshd.provider;
 
 import java.io.Closeable;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -119,9 +118,6 @@ class CommandSessionHandler implements Closeable, Runnable {
 							console.writeln();
 					}
 					console.flush();
-				} catch (EOFException e) {
-					// ignore
-					return;
 				} catch (Throwable e) {
 					// ignore
 					return;
