@@ -468,7 +468,7 @@ public class DTOFormatter implements ObjectFormatter {
 			Table table = new Table(list.size(), 1, 0);
 			int r = 0;
 			for (Object o : list) {
-				Cell c = part(o, null, formatter);
+				Cell c = line(o, null, formatter);
 				table.set(r, 0, c);
 				r++;
 			}
