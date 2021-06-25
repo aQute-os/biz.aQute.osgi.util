@@ -72,13 +72,15 @@ public class MqttCentral {
 
 						// TODO persistence
 						MqttConnectOptions options = new MqttConnectOptions();
-
 						if (config.username() != null && config.password() != null) {
 							options.setUserName(config.username());
 							options.setPassword(config.password().toCharArray());
 						}
 
-						options.setAutomaticReconnect(true);
+						options.setKeepAliveInterval( config.keepAliveInSecs());
+						options.setConnectionTimeout( config.connectionTimeOutInSecs());
+						options.setAutomaticReconnect(config.automaticReconnect());
+						options.setMaxReconnectDelay(config.maxReconnectDelaySec()*1000);
 						options.setCleanSession(false);
 						client.connect(options);
 						System.out.println("connected " + client.isConnected() + " " + client.getCurrentServerURI());
