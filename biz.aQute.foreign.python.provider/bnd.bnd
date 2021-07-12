@@ -1,0 +1,25 @@
+-buildpath: \
+	org.osgi.service.component.annotations,\
+	org.osgi.util.tracker,\
+	org.osgi.framework,\
+	aQute.libg,\
+	biz.aQute.api.scheduler,\
+	biz.aQute.api.python,\
+	slf4j.api,\
+	org.osgi.annotation.bundle,\
+	osgi.annotation,\
+	org.apache.felix.gogo.runtime,\
+	org.osgi.dto,\
+	biz.aQute.api.kpi
+	
+-testpath: \
+	biz.aQute.launchpad,\
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	osgi.core,\
+    slf4j.simple,\
+	org.assertj.core,\
+	biz.aQute.osgi.configuration.util
+	
+    
+-conditionalpackage: aQute.*
