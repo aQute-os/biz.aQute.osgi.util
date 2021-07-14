@@ -21,7 +21,7 @@ import biz.aQute.foreign.python.configuration.Configuration;
 
 @ProvideForeignPython
 @GogoCommand(scope = "python", function="python")
-@Component(immediate = true, service = Object.class)
+@Component(immediate = true, service = Object.class, name = Configuration.PID)
 public class PythonAdmin implements BundleTrackerCustomizer<PythonApp> {
 	final BundleTracker<PythonApp>	bundles;
 	final String					python;
