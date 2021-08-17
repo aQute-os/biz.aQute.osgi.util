@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -101,13 +102,18 @@ public class Activator implements BundleActivator {
 							return " { " + from.toString() + " } ";
 						return "a Function";
 					}
-					return formatter.format(from, level, (o, l, f) -> {
+					CharSequence formatted = formatter.format(from, level, (o, l, f) -> {
 						try {
 							return backup.format(o, l, null);
 						} catch (Exception e) {
-							throw Exceptions.duck(e);
+							return Objects.toString(o);
 						}
 					});
+
+					if (formatted != null) {
+						return formatted;
+					}
+					return formatted;
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw Exceptions.duck(e);

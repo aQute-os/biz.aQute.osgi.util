@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -379,6 +380,9 @@ public class DTOFormatter implements ObjectFormatter {
 				DTODescription descriptor = getDescriptor(o.getClass());
 				if (descriptor == null) {
 					CharSequence string = formatter.format(o, ObjectFormatter.PART, formatter);
+					if (string == null) {
+						string = Objects.toString(o);
+					}
 					try {
 
 						if (string.length() > 50) {
@@ -468,7 +472,7 @@ public class DTOFormatter implements ObjectFormatter {
 			Table table = new Table(list.size(), 1, 0);
 			int r = 0;
 			for (Object o : list) {
-				Cell c = line(o, null, formatter);
+				Cell c = cell(o, this);
 				table.set(r, 0, c);
 				r++;
 			}

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.Test;
+import org.osgi.dto.DTO;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.dto.BundleDTO;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -16,6 +17,15 @@ import biz.aQute.gogo.commands.dtoformatter.ObjectFormatter;
 public class DTOFormatterTest {
 	DTOFormatter			formatter	= setup();
 	ComponentDescriptionDTO	dto			= createComponentDescriptionDTO();
+
+	public static class Foo extends DTO {
+		public String field = "field";
+	}
+	@Test
+	public void testListUnknown() {
+
+		System.out.println(formatter.format(Arrays.asList(new Foo()), ObjectFormatter.INSPECT, (o, l, f) -> "" + o));
+	}
 
 	@Test
 	public void testComponentDescriptionDTOPart() {
