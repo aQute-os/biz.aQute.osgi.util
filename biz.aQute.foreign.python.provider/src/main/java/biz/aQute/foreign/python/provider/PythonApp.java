@@ -35,8 +35,9 @@ class PythonApp extends Thread {
 
 	public PythonApp(Bundle bundle, String python, CommandProcessor gogo, long restartDelay) throws IOException {
 		super("Python " + bundle);
+
 		this.bundle = bundle;
-		this.python = python;
+		this.python = System.getProperty("biz.aQute.python.command", python);
 		this.gogo = gogo;
 		this.restartDelay = restartDelay;
 		this.storage = bundle.getDataFile("python");
@@ -60,6 +61,8 @@ class PythonApp extends Thread {
 				URL url = entries.nextElement();
 				URI entry = url.toURI().normalize();
 				String relativized = base.relativize(entry).getPath();
+				if (relativized.endsWith("/"))
+					continue;
 				File file = IO.getFile(storage, relativized);
 				file.getParentFile().mkdirs();
 				IO.copy(url, file);
@@ -136,8 +139,8 @@ class PythonApp extends Thread {
 		if (gogodto != null) {
 			stale = System.currentTimeMillis() - gogodto.lasttime;
 		}
-		return "PythonApp [bundle=" + bundle + ", storage=" + storage + ", version=" + version + ", stale ms="
-				+ stale + "]";
+		return "PythonApp [bundle=" + bundle + ", storage=" + storage + ", version=" + version.getName() + ", stale ms="
+			+ stale + ", result=" + result + "]";
 	}
 
 }

@@ -32,8 +32,11 @@ public class PythonTest {
 	CommandProcessor gogo;
 
 	ConfigSetter<Configuration> cf = new ConfigSetter<>(Configuration.class);
+
+
 	/*
-	 * See if a forever loop is properly terminated
+	 * See if a forever loop is properly terminated. Also test that a directory
+	 * copy works fine.
 	 */
 	@Test
 	public void testForever() throws Exception {
@@ -44,7 +47,14 @@ public class PythonTest {
 			lp.register(PythonAdmin.class, admin);
 			assertThat(admin.python()).isEmpty();
 
-			Bundle start = lp.bundle().includeResource("python/app.py", "resources/forever.py", false, false).start();
+			Bundle start = lp.bundle()
+				.includeResource("python/app.py", "resources/forever.py", false, false)
+				.includeResource("python/foo", "resources", false, false) // to
+																			// test
+																			// copying
+																			// a
+																			// directory
+				.start();
 			assertThat(admin.python()).isNotEmpty();
 
 			Thread.sleep(1000);

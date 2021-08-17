@@ -68,6 +68,9 @@ The Python Admin has a PID of `biz.aQute.foreign.python` can be configured with 
 * `python` – The path to the appropriate Python command
 * `restartDelay` – Number of milliseconds to delay between restarts
 
+For testing purposes, the Python command path can also be set with the system property `biz.aQute.python.command`.
+
+
 ## Gogo
 
 There is a `python:python` gogo command to see the running Python apps.
@@ -79,4 +82,4 @@ There is a `python:python` gogo command to see the running Python apps.
   * python version
   * if need to be restarted when exists
 * Watchdog command to restart the python code when it no longer calls a command
-* 
+* Restart command for a specific app
