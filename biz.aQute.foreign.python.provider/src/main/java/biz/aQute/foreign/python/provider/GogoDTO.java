@@ -74,7 +74,8 @@ public class GogoDTO extends Thread implements AutoCloseable {
 			char ch = in.readChar();
 			if (ch == '\n')
 				return sb.toString();
-			sb.append(ch);
+			if (ch != '\r')
+				sb.append(ch);
 		}
 	}
 
