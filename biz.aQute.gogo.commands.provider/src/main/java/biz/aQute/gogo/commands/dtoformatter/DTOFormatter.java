@@ -21,10 +21,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.dto.DTO;
+
 import aQute.lib.exceptions.Exceptions;
 import aQute.libg.glob.Glob;
 import aQute.libg.parameters.Attributes;
 import aQute.libg.parameters.ParameterMap;
+import biz.aQute.dtos.api.PrimaryKey;
 
 public class DTOFormatter implements ObjectFormatter {
 	private static final Cell			NULL_CELL	= Table.EMPTY;
@@ -319,6 +322,7 @@ public class DTOFormatter implements ObjectFormatter {
 	/*********************************************************************************************/
 
 	private Cell inspect(Object object, DTODescription descriptor, ObjectFormatter formatter) {
+
 		Table table = new Table(descriptor.inspect.items.size(), 2, 0);
 		int row = 0;
 
@@ -472,7 +476,7 @@ public class DTOFormatter implements ObjectFormatter {
 			Table table = new Table(list.size(), 1, 0);
 			int r = 0;
 			for (Object o : list) {
-				Cell c = cell(o, this);
+				Cell c = cell(o, ObjectFormatter.LINE, this);
 				table.set(r, 0, c);
 				r++;
 			}
@@ -581,33 +585,143 @@ public class DTOFormatter implements ObjectFormatter {
 			o = ((Wrapper) o).whatever;
 		}
 
+		Cell c = cell(o, level, formatter);
+
+		return toString(c);
+	}
+
+	Cell cell(Object o, int level, ObjectFormatter formatter) {
+
 		if (o == null)
-			return null;
+			return new StringCell("null", null);
 
 		if (isSpecial(o)) {
-			return toString(cell(o, formatter));
+			return cell(o, formatter);
 		}
 
 		DTODescription descriptor = getDescriptor(o.getClass());
-		if (descriptor == null)
-			return null;
+		if (descriptor == null) {
+			if (!(o instanceof DTO)) {
+				return null;
+			}
+			try {
+				switch (level) {
+					case ObjectFormatter.INSPECT :
+						return inspect(o, formatter);
+
+					case ObjectFormatter.LINE :
+						return line(o, formatter);
+
+					case ObjectFormatter.PART :
+						return part(o, formatter);
+
+					default :
+						return null;
+				}
+			} catch (Exception e) {
+				// TODO LOG
+				return null;
+			}
+		}
 
 		switch (level) {
 			case ObjectFormatter.INSPECT :
-				return toString(inspect(o, descriptor, formatter));
+				return inspect(o, descriptor, formatter);
 
 			case ObjectFormatter.LINE :
-				return toString(line(o, descriptor, formatter));
+				return line(o, descriptor, formatter);
 
 			case ObjectFormatter.PART :
-				return toString(part(o, descriptor, formatter));
+				return part(o, descriptor, formatter);
 
 			default :
 				return null;
 		}
 	}
 
+	final static String[] IDNAMES = {
+		"id", "key", "name", "title"
+	};
+
+	private Cell part(Object o, ObjectFormatter formatter) throws Exception {
+		Field primary = null;
+		int priority = IDNAMES.length;
+
+		for (Field f : o.getClass()
+			.getFields()) {
+			if (isDTOField(f))
+				continue;
+
+			PrimaryKey annotation = f.getAnnotation(PrimaryKey.class);
+			if (annotation != null) {
+				priority = 0;
+				primary = f;
+				break;
+			}
+
+			for (int i = 0; i < priority; i++) {
+				if (IDNAMES[i].equalsIgnoreCase(f.getName())) {
+					priority = i;
+					primary = f;
+				}
+			}
+		}
+		if (primary != null) {
+			Object v = primary.get(o);
+			return cell(v, PART, formatter);
+		}
+		return null;
+	}
+
+	private Cell line(Object o, ObjectFormatter formatter) throws IllegalAccessException {
+		Map<String, Cell> form = getCells(o, formatter, ObjectFormatter.PART);
+		Table table = new Table(1, form.size(), 0);
+		int c = 0;
+		for (Entry<String, Cell> e : form.entrySet()) {
+			table.set(0, c++, e.getValue());
+		}
+
+		return table;
+	}
+
+	private Cell inspect(Object o, ObjectFormatter formatter) throws Exception {
+		Map<String, Cell> form = getCells(o, formatter, ObjectFormatter.LINE);
+
+		Table table = new Table(form.size(), 2, 0);
+		int r = 0;
+		for (Entry<String, Cell> e : form.entrySet()) {
+			table.set(r, 0, new StringCell(e.getKey(), e.getKey()));
+			table.set(r++, 1, e.getValue());
+		}
+
+		return table;
+	}
+
+	private Map<String, Cell> getCells(Object o, ObjectFormatter formatter, int level) throws IllegalAccessException {
+		Map<String, Cell> form = new TreeMap<>();
+		for (Field f : o.getClass()
+			.getFields()) {
+			if (!isDTOField(f))
+				continue;
+
+			Object value = f.get(o);
+			Cell cell = cell(value, level, formatter);
+			if (cell == null) {
+				cell = new StringCell(Objects.toString(value), value);
+			}
+			form.put(f.getName(), cell);
+		}
+		return form;
+	}
+
+	private boolean isDTOField(Field f) {
+		return Modifier.isStatic(f.getModifiers()) || f.isSynthetic() || !f.isAccessible() || f.isEnumConstant();
+	}
+
 	private CharSequence toString(Cell cell) {
+		if (cell == null)
+			return null;
+
 		Canvas render = cell.render(cell.width(), cell.height());
 		if (!boxes)
 			render = render.removeBoxes();

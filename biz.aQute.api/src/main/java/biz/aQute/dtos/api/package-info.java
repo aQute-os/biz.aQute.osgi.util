@@ -1,4 +1,4 @@
-@Version("1.0.0")
+@Version("1.1.0")
 @org.osgi.annotation.bundle.Export
 package biz.aQute.dtos.api;
 

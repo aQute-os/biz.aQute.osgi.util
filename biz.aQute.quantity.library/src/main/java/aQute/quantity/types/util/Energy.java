@@ -4,7 +4,7 @@ import aQute.quantity.base.util.BaseQuantity;
 import aQute.quantity.base.util.Unit;
 import aQute.quantity.base.util.UnitInfo;
 
-@UnitInfo(unit = "J",symbol="W",  dimension = "Energy", symbolForDimension = "")
+@UnitInfo(unit = "J",symbol="E",  dimension = "Energy", symbolForDimension = "")
 public class Energy extends BaseQuantity<Energy> {
 	private static final long	serialVersionUID	= 1L;
 	private static Unit			unit			= new Unit(Energy.class,	Mass.DIMe1, Length.DIMe1, Time.DIMe_2);

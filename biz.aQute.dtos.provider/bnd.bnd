@@ -4,7 +4,7 @@
 
 -conditionalpackage: aQute.lib*
 
--includepackage     biz.aQute.dtos.api
+-includepackage     biz.aQute.dtos.provider, biz.aQute.dtos.api
 -buildpath: \
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
@@ -12,7 +12,9 @@
 	aQute.libg,\
 	biz.aQute.api.dtos,\
 	biz.aQute.result,\
-	slf4j.api
+	slf4j.api,\
+	osgi.core,\
+	org.apache.felix.gogo.runtime
 
 
 -testpath: \
@@ -21,3 +23,6 @@
 	org.assertj.core,\
 	org.osgi.framework
 
+Import-Package: \
+	org.apache.felix.service.command;'resolution:'=optional,\
+	*

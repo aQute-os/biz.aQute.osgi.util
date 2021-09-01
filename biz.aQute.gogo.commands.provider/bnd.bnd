@@ -15,7 +15,8 @@ DynamicImport-Package   *
 	osgi.core,\
 	org.osgi.service.component,\
 	org.osgi.service.jaxrs,\
-	org.osgi.service.http.whiteboard
+	org.osgi.service.http.whiteboard,\
+	biz.aQute.api.dtos
 	
 -conditionalpackage: aQute.lib*
 

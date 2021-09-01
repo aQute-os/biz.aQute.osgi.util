@@ -45,6 +45,27 @@ public class DTOFormatterTest {
 		System.out.println(formatter.format(Arrays.asList(dto), ObjectFormatter.LINE, (o, l, f) -> "" + o));
 	}
 
+	public static class RawDTO extends DTO {
+		public String	id		= "id";
+		public long[]	values	= new long[] {
+			1, 23, 4
+		};
+		public RawDTO[]	children;
+	}
+
+	@Test
+	public void testRawDTO() {
+		RawDTO parent = new RawDTO();
+		RawDTO x = new RawDTO();
+		x.children = new RawDTO[] {
+			new RawDTO()
+		};
+		parent.children = new RawDTO[] {
+			new RawDTO(), new RawDTO(), x
+		};
+		System.out.println(formatter.format(parent, ObjectFormatter.INSPECT, (o, l, f) -> "" + o));
+	}
+
 	@Test
 	public void testComponentDescriptionDTOInspect() {
 
