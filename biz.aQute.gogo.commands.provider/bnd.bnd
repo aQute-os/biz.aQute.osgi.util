@@ -48,6 +48,7 @@ DynamicImport-Package   *
 
 Import-Package: \
 	org.osgi.service.log;'resolution:'=optional,\
+	biz.aQute.dtos.api;'resolution:'=optional,\
 	org.osgi.service.log.admin;'resolution:'=optional,\
 	org.osgi.service.component.runtime;'resolution:'=optional,\
 	org.osgi.service.component.runtime.dto;'resolution:'=optional,\
