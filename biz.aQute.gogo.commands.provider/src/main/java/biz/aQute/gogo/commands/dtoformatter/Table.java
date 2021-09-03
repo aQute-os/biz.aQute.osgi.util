@@ -118,7 +118,7 @@ public class Table implements Cell {
 	}
 
 	public void set(int r, int c, Cell table) {
-		if (table.width() == 0 || table.height() == 0)
+		if (table == null || table.width() == 0 || table.height() == 0)
 			table = Table.EMPTY;
 
 		cells[r][c] = table;
