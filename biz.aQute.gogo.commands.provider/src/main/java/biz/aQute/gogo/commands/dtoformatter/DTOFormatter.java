@@ -477,6 +477,10 @@ public class DTOFormatter implements ObjectFormatter {
 			int r = 0;
 			for (Object o : list) {
 				Cell c = cell(o, ObjectFormatter.LINE, formatter);
+				if (c == null) {
+					c = new StringCell(formatter.format(o, ObjectFormatter.LINE, null)
+						.toString(), o);
+				}
 				table.set(r, 0, c);
 				r++;
 			}
@@ -602,8 +606,7 @@ public class DTOFormatter implements ObjectFormatter {
 		DTODescription descriptor = getDescriptor(o.getClass());
 		if (descriptor == null) {
 			if (!(o instanceof DTO)) {
-				CharSequence format = formatter.format(o, level, formatter);
-				return new StringCell(format.toString(), o);
+				return null;
 			}
 			try {
 				switch (level) {
