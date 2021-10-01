@@ -26,7 +26,7 @@ public class TopicImpl<T> implements Topic<T> {
 	private byte[] toJson(T data) {
 		try {
 			ByteBufferOutputStream bbos = new ByteBufferOutputStream();
-			MqttCentral.codec.enc().to(bbos).put(data).flush();
+			MqttCentral.codec.enc().writeDefaults().to(bbos).put(data).flush();
 			return bbos.toByteArray();
 		} catch (Exception e) {
 			throw Exceptions.duck(e);

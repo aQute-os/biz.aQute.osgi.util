@@ -67,6 +67,8 @@ public class MqttCentral {
 
 			try {
 				MqttClient client = new MqttClient(uri.toString(), clientId, new MemoryPersistence());
+				client.setTimeToWait(config.timeToWait());
+				
 				while (true) {
 					try {
 
@@ -147,6 +149,12 @@ public class MqttCentral {
 				client = promiseFactory.submit(() -> new Client(uri, config));
 				clients.put(uri, client);
 			}
+			client.onFailure( e -> {
+				synchronized (lock) {
+					clients.remove(uri);
+				}				
+				log.warn("failed connection to {}: {}", uri, e, e);
+			});
 
 			return client.map(c -> c.client);
 		}
