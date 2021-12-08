@@ -1,5 +1,5 @@
 baseline.version:       1.7.0
-base.version:           1.8.0
+base.version:           1.8.1
 
 # To release, remove the -SNAPSHOT
 -pom:                   version=${base.version}
