@@ -1,4 +1,4 @@
-base.version        1.3
+hamcrest.version        1.3
 
 # only release on change
 -releaserepo:
@@ -6,15 +6,15 @@ base.version        1.3
 Bundle-License:     http://opensource.org/licenses/BSD-2-Clause
 Bundle-Copyright:   Copyright 2012- hamcrest.org
 Bundle-DocURL:      http://hamcrest.org/JavaHamcrest/
-Bundle-Description: Hamcrest ${base.version}. Matchers that can be combined to create flexible expressions of intent
+Bundle-Description: Hamcrest ${hamcrest.version}. Matchers that can be combined to create flexible expressions of intent
 
--exportcontents:     *;version=${base.version}
+-exportcontents:     *;version=${hamcrest.version}
 
 Import-Package:     *;resolution:=optional
 
 -buildpath: \
-    org.hamcrest:hamcrest-all;version=${base.version}
+    org.hamcrest:hamcrest-all;version=${hamcrest.version}
 
 -includeresource: \
-    @${repo;org.hamcrest:hamcrest-all;${base.version}}, \
-    OSGI-OPT/src=@${repo;org.hamcrest:hamcrest-all:jar:sources}
+    @${repo;org.hamcrest:hamcrest-all;${hamcrest.version}}, \
+    OSGI-OPT/src=@${repo;org.hamcrest:hamcrest-all:jar:sources;${hamcrest.version}}

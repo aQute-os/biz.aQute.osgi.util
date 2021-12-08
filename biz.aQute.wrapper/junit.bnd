@@ -1,22 +1,22 @@
-base.version:   4.13.1
+junit.version:   4.13.1
 
 # only release on change
 -releaserepo:
 
 Bundle-Description: \
-    JUnit ${base.version} is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks. \
+    JUnit ${junit.version} is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks. \
     This bundle wraps JUnit as is and exports all packages with the bundle version since JUnit has not understood package versioning, \
     nor semantic versioning.
 Bundle-License:     http://opensource.org/licenses/EPL-1.0
 
 -includeresource: \
-    @${repo;junit:junit;${base.version}}, \
+    @${repo;junit:junit;${junit.version}}, \
     OSGI-OPT/src=@${repo;junit:junit:jar:sources}
 
--exportcontents: *;version=${base.version}
+-exportcontents: *;version=${junit.version}
 
 Import-Package:\
     org.hamcrest.*;version=1.3.0, *
 
 -buildpath: \
-    junit:junit;version=${base.version}
+    junit:junit;version=${junit.version}
