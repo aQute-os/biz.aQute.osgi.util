@@ -1,7 +1,9 @@
-biz.aQute.bnd:aQute.libg:5.1.0
-biz.aQute.bnd:biz.aQute.bnd.runtime.snapshot:5.1.0
-biz.aQute.bnd:biz.aQute.bndlib:5.0.0
-biz.aQute.bnd:biz.aQute.launchpad:5.0.0
+biz.aQute.bnd:aQute.libg:6.1.0
+biz.aQute.bnd:biz.aQute.bnd.runtime.snapshot:6.1.0
+biz.aQute.bnd:biz.aQute.bndlib:6.1.0
+biz.aQute.bnd:biz.aQute.repository:6.1.0
+biz.aQute.bnd:biz.aQute.launchpad:6.1.0
+biz.aQute.bnd:biz.aQute.bnd.util:6.1.0
 com.h2database:h2:1.4.198
 com.vladsch.flexmark:flexmark-osgi:0.62.2
 com.vladsch.flexmark:flexmark-pdf-converter:0.62.2

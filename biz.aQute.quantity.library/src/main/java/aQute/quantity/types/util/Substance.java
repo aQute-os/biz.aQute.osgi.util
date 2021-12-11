@@ -2,8 +2,8 @@ package aQute.quantity.types.util;
 
 import aQute.quantity.base.util.BaseQuantity;
 import aQute.quantity.base.util.Unit;
-import aQute.quantity.base.util.UnitInfo;
 import aQute.quantity.base.util.Unit.Dimension;
+import aQute.quantity.base.util.UnitInfo;
 
 @UnitInfo(unit = "mol", symbol="n", dimension = "Amount of substance", symbolForDimension = "N")
 public class Substance extends BaseQuantity<Substance> {

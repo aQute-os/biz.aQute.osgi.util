@@ -1,5 +1,6 @@
 package biz.aQute.web.server.config;
 
+import biz.aQute.servlet.api.ConditionalServlet;
 
 public @interface ConditionalServletConfig {
 	/**

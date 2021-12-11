@@ -12,6 +12,7 @@
 	org.apache.felix.gogo.runtime,\
 	org.apache.felix.inventory,\
 	org.apache.felix.gogo.shell,\
-	org.osgi.framework
+	org.osgi.framework,\
+	org.osgi.resource
     
 	

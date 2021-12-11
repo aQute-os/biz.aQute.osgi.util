@@ -12,7 +12,6 @@ import org.osgi.service.log.LogEntry;
 import org.osgi.service.log.LogLevel;
 import org.osgi.service.log.LogReaderService;
 
-
 import aQute.lib.io.ByteBufferOutputStream;
 import biz.aQute.osgi.logger.components.config.ConsoleLoggerConfiguration;
 

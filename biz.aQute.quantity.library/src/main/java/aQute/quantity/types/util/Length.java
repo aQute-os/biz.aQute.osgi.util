@@ -2,8 +2,8 @@ package aQute.quantity.types.util;
 
 import aQute.quantity.base.util.BaseQuantity;
 import aQute.quantity.base.util.Unit;
-import aQute.quantity.base.util.UnitInfo;
 import aQute.quantity.base.util.Unit.Dimension;
+import aQute.quantity.base.util.UnitInfo;
 
 @UnitInfo(unit = "m", symbol = "l", dimension = "Length", symbolForDimension = "L", description = "The one-dimensional extent of an object")
 public class Length extends BaseQuantity<Length> {

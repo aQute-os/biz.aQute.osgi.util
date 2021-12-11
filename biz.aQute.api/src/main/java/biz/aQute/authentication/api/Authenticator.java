@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+import biz.aQute.authorization.api.Authority;
+
 /**
  * An authenticator is a service that can provide an authenticated id.
  * <p>

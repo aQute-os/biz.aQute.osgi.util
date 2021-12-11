@@ -2,8 +2,8 @@ package aQute.quantity.types.util;
 
 import aQute.quantity.base.util.BaseQuantity;
 import aQute.quantity.base.util.Unit;
-import aQute.quantity.base.util.UnitInfo;
 import aQute.quantity.base.util.Unit.Dimension;
+import aQute.quantity.base.util.UnitInfo;
 
 /**
  * The candela (/kænˈdɛlə/ or /kænˈdiːlə/; symbol: cd) is the SI base unit of

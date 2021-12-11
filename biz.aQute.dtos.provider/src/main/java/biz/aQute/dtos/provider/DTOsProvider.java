@@ -21,8 +21,10 @@ import java.util.regex.Pattern;
 
 import org.osgi.dto.DTO;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import aQute.lib.exceptions.Exceptions;
+import aQute.bnd.exceptions.Exceptions;
 import aQute.lib.json.Decoder;
 import aQute.lib.json.Encoder;
 import aQute.lib.json.JSONCodec;
@@ -30,9 +32,6 @@ import biz.aQute.dtos.api.DTOs;
 import biz.aQute.dtos.api.IDTO;
 import biz.aQute.dtos.api.TypeReference;
 import biz.aQute.result.Result;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class provides utility functions for DTOs

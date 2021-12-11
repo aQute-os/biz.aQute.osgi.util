@@ -42,8 +42,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
+import aQute.bnd.exceptions.Exceptions;
 import aQute.lib.converter.Converter;
-import aQute.lib.exceptions.Exceptions;
 import aQute.lib.justif.Justif;
 import aQute.libg.glob.Glob;
 import biz.aQute.gogo.commands.dtoformatter.DTOFormatter;

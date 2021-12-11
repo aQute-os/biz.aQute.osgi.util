@@ -15,7 +15,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.util.promise.Promise;
 
-import aQute.lib.exceptions.Exceptions;
+import aQute.bnd.exceptions.Exceptions;
 import biz.aQute.broker.api.Broker;
 import biz.aQute.broker.api.Subscriber;
 import biz.aQute.broker.api.Topic;
