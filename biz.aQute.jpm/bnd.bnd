@@ -1,0 +1,58 @@
+Bundle-Description: jpm is Just another Package Manager for Java. It satisfies the envy of \
+    Java developers of Ruby (with their Gems), Perl (with its cpan), and Python (with its pips). jpm makes \
+    it very easy to install Java applications on MacOS, Linux, and PC. Any jar that has a main \
+    method can easily be installed through this program from the command line.
+
+Bundle-Developers: \
+    pkriens; \
+        email=Peter.Kriens@aQute.biz; \
+        name="Peter Kriens"; \
+        organization=aQute; \
+        organizationUrl=http://bndtools.org; \
+        roles="architect,developer"; \
+        timezone=1
+
+Bundle-DocURL:                  http://bndtools.org
+Bundle-License:                 http://www.opensource.org/licenses/apache2.0.php; \
+			                        description="${Bundle-Copyright}"; \
+			                        link=LICENSE
+Bundle-Vendor:                  aQute SARL
+
+
+JPM-Command:                    jpm
+Main-Class:                     aQute.jpm.main.Main
+
+-buildpath: \
+	aQute.libg,\
+	biz.aQute.bndlib,\
+	slf4j.api,\
+	jar/WinRun4J-0.4.5.jar;version=file,\
+	biz.aQute.repository;version=latest,\
+	org.osgi.dto,\
+	org.osgi.framework,\
+	biz.aQute.api.result,\
+	org.osgi.util.promise,\
+	org.osgi.util.function,\
+	biz.aQute.bnd.util;version=latest,\
+	biz.aQute.bndlib,\
+	biz.aQute.bnd.util,\
+    biz.aQute.repository;version=latest
+
+-testpath: \
+    biz.aQute.wrapper.junit, \
+    biz.aQute.wrapper.hamcrest
+    
+-conditionalpackage: \
+    aQute.*,\
+    biz.aQute.*, \
+    org.boris.winrun4j.*,\
+    org.slf4j.*, \
+    org.osgi.*
+
+-digests: MD5, SHA1
+
+-includeresource: NOTICE
+
+-sources: false
+
+Import-Package: *
