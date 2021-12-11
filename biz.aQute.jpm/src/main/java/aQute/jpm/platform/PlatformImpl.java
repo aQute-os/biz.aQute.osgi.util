@@ -3,7 +3,11 @@ package aQute.jpm.platform;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import org.osgi.framework.Version;
+import org.osgi.framework.VersionRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,6 +144,30 @@ public abstract class PlatformImpl implements Platform {
 				return option;
 		}
 		return null;
+	}
+
+	public JVM selectVM(String jvmVersionRange) throws Exception {
+		SortedSet<JVM> vMs = getVMs();
+		if (vMs == null || vMs.isEmpty())
+			return null;
+
+		if (jvmVersionRange == null)
+			return vMs.first();
+
+		VersionRange range = new VersionRange(jvmVersionRange);
+		for (JVM jvm : vMs) {
+			Version version = new Version(jvm.platformVersion);
+			if (range.includes(version)) {
+				return jvm;
+			}
+		}
+		return null;
+	}
+
+	public SortedSet<JVM> getVMs() throws Exception {
+		TreeSet<JVM> set = new TreeSet<>(JVM.comparator);
+		getVMs(set);
+		return set;
 	}
 
 }

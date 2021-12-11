@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,7 +36,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.osgi.framework.Version;
-import org.osgi.framework.VersionRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +50,6 @@ import aQute.jpm.api.JPM;
 import aQute.jpm.api.JVM;
 import aQute.jpm.platform.PlatformImpl;
 import aQute.lib.base64.Base64;
-import aQute.lib.collections.ExtList;
 import aQute.lib.converter.Converter;
 import aQute.lib.filter.Filter;
 import aQute.lib.io.IO;
@@ -431,21 +428,7 @@ public class JustAnotherPackageManager implements JPM {
 
 	@Override
 	public SortedSet<JVM> getVMs() throws Exception {
-		TreeSet<JVM> set = new TreeSet<>(JVM.comparator);
-		String list = settings.get(JPM_VMS_EXTRA);
-		if (list != null) {
-			ExtList<String> elist = new ExtList<>(list.split("\\s*,\\s*"));
-			for (String dir : elist) {
-				File f = new File(dir);
-				JVM jvm = getPlatform().getJVM(f);
-				if (jvm == null) {
-					logger.debug("extra VM not usable: %s", elist);
-				} else
-					set.add(jvm);
-			}
-		}
-		getPlatform().getVMs(set);
-		return set;
+		return platform.getVMs();
 	}
 
 	@Override
@@ -733,21 +716,7 @@ public class JustAnotherPackageManager implements JPM {
 
 	@Override
 	public JVM selectVM(String jvmVersionRange) throws Exception {
-		SortedSet<JVM> vMs = getVMs();
-		if (vMs == null || vMs.isEmpty())
-			return null;
-
-		if (jvmVersionRange == null)
-			return vMs.first();
-
-		VersionRange range = new VersionRange(jvmVersionRange);
-		for (JVM jvm : vMs) {
-			Version version = new Version(jvm.platformVersion);
-			if (range.includes(version)) {
-				return jvm;
-			}
-		}
-		return null;
+		return platform.selectVM(jvmVersionRange);
 	}
 
 	private void storeData(File dataFile, Object o) throws Exception {

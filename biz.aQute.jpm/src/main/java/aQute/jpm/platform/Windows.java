@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aQute.bnd.version.Version;
-import aQute.bnd.version.VersionRange;
 import aQute.jpm.api.CommandData;
 import aQute.jpm.api.JVM;
 import aQute.lib.io.IO;
@@ -49,7 +47,7 @@ class Windows extends PlatformImpl {
 
 	Windows(File cache) {
 		super(cache);
-		misc = new File(cache, "windows");
+		misc = new File(cache, "misc");
 	}
 
 	@Override
@@ -120,18 +118,16 @@ class Windows extends PlatformImpl {
 				for (int i = 0; i < parts.length; i++)
 					pw.printf("vmarg.%d=%s%n", i + 1, parts[i]);
 			}
-
+			
 			if (data.java != null) {
 				pw.printf("vm.location=%s%n", data.java);
 			} else {
-				if (data.range != null) {
-					VersionRange range = new VersionRange(data.range);
-					Version low = range.getLow();
-					Version high = range.getHigh();
-					pw.printf("vm.version.min=%s%n", low);
-					if (high.getMajor() < 100)
-						pw.printf("vm.version.max=%s%n", high);
-				}
+				File javahome =new File(jvm.javahome);
+				File jvmdll =  IO.getFile(javahome, "bin/server/jvm.dll");
+				if ( !jvmdll.isFile())
+					throw new IllegalArgumentException("no jvm.dll found in " + jvm.javahome);
+				logger.debug("found jvm.dll  {}",jvmdll);
+				pw.printf("vm.location=%s%n", jvmdll.getAbsolutePath());
 			}
 			Map<String, String> map2 = new HashMap<>(map);
 			map2.putIfAbsent("log.level", "error");
@@ -184,11 +180,14 @@ class Windows extends PlatformImpl {
 
 	@Override
 	public void init() throws Exception {
+		super.init();
 		IO.mkdirs(misc);
 		if (IS64) {
+			logger.debug("copying 64");
 			IO.copy(getClass().getResourceAsStream("windows/winrun4jc64.exe"), new File(misc, "winrun4jc.exe"));
 			IO.copy(getClass().getResourceAsStream("windows/winrun4j64.exe"), new File(misc, "winrun4j.exe"));
 		} else {
+			logger.debug("copying 32");
 			IO.copy(getClass().getResourceAsStream("windows/winrun4j.exe"), new File(misc, "winrun4j.exe"));
 			IO.copy(getClass().getResourceAsStream("windows/winrun4jc.exe"), new File(misc, "winrun4jc.exe"));
 		}

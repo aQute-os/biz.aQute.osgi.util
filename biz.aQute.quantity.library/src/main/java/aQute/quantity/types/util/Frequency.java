@@ -55,7 +55,7 @@ public class Frequency extends DerivedQuantity<Frequency> {
 		return Length.from(v.value / value);
 	}
 
-	public Length 𝛌(Velocity v) {
+	public Length length(Velocity v) {
 		return Length.from(v.value / value);
 	}
 
