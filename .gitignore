@@ -27,3 +27,8 @@ target/
 hs_err_pid*
 /.metadata/
 biz.aQute.protoc.test/errors
+gradle.properties
+gradle/wrapper/gradle-wrapper.properties
+gradlew
+gradlew.bat
+settings.gradle
