@@ -1,4 +1,4 @@
-name: release
+name: snapshot
 
 on:
   push:
@@ -26,7 +26,10 @@ jobs:
         uses: pkriens/setup-jpm@v1.0.0
       - name: Build
         shell: bash
-        run: ./gradlew --parallel release
+        run: |
+           jpm install -f biz.aQute.bnd:biz.aQute.bnd:6.2.0-SNAPSHOT
+           bnd buildtool
+           ./gradlew --parallel release
       - name: save-tests
         uses: actions/upload-artifact@v2
         with:
