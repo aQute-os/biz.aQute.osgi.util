@@ -116,7 +116,11 @@ public abstract class PlatformImpl implements Platform {
 			jvm.vendor = cleanup(releaseProps.getProperty("IMPLEMENTOR"));
 			jvm.javahome = vmdir.getCanonicalPath();
 			jvm.version = cleanup(releaseProps.getProperty("JAVA_VERSION"));
-			jvm.platformVersion = MavenVersion.cleanupVersion(jvm.version);
+			Version v = new Version(MavenVersion.cleanupVersion(jvm.version));
+			if ( v.getMajor()>7){
+				v = new Version(1,v.getMajor(), v.getMinor()*100+v.getMicro(), v.getQualifier());
+			}
+			jvm.platformVersion=v.toString();
 			jvm.modules = cleanup(releaseProps.getProperty("MODULES"));
 			jvm.os_arch = cleanup(releaseProps.getProperty("OS_ARCH"));
 			jvm.os_name = cleanup(releaseProps.getProperty("OS_NAME"));

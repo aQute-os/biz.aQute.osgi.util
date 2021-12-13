@@ -123,7 +123,8 @@ class Windows extends PlatformImpl {
 				pw.printf("vm.location=%s%n", data.java);
 			} else {
 				File javahome =new File(jvm.javahome);
-				File jvmdll =  IO.getFile(javahome, "bin/server/jvm.dll");
+				
+				File jvmdll =  IO.getFile(javahome, "jre/bin/server/jvm.dll");
 				if ( !jvmdll.isFile())
 					throw new IllegalArgumentException("no jvm.dll found in " + jvm.javahome);
 				logger.debug("found jvm.dll  {}",jvmdll);

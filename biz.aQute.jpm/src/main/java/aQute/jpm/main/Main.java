@@ -640,7 +640,7 @@ public class Main extends ReporterAdapter {
 		SortedSet<JVM> vms = jpm.getVMs();
 
 		for (JVM jvm : vms) {
-			out.printf("%-30s %12s  %-20s %-10s %s\n", jvm.name, jvm.version, jvm.vendor, jvm.os_arch, jvm.javahome);
+			out.printf("%-30s %12s (%12s)  %-20s %-10s %s\n", jvm.name, jvm.version, jvm.platformVersion, jvm.vendor, jvm.os_arch, jvm.javahome);
 		}
 
 	}
