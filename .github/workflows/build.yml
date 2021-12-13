@@ -21,6 +21,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name:  install gradle
+        uses: pkriens/setup-jpm@v1.0.0
       - name: Build
         shell: bash
         run: ./gradlew --parallel build
