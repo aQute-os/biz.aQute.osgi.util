@@ -31,14 +31,15 @@ public class AnsiFilter {
 	final String			term;
 	final List<String>		history	= new ArrayList<>();
 	final boolean			ansi;
-	int						where	= 0;
+	int						where	= -1;
 	StringBuilder			buffer;
 	int						cursor	= 0;
 	int						start	= 0;
 	String					current	= "";
+	StringBuilder			input;
 	boolean					hex;
-	boolean					cr=true;
-	boolean					echo=true;
+	boolean					cr		= true;
+	boolean					echo	= true;
 
 	public AnsiFilter(int w, int h, InputStream in, OutputStream out, String term, Charset charset) {
 		this.w = w;
@@ -78,6 +79,7 @@ public class AnsiFilter {
 			writer.flush();
 			start = prompt.length();
 			buffer = new StringBuilder();
+			input = new StringBuilder();
 			current = "";
 			cursor = 0;
 
@@ -89,7 +91,6 @@ public class AnsiFilter {
 				if (hex) {
 					System.err.printf("%02X ", c);
 				}
-
 				switch (c) {
 				case '\n': // enter;
 				case '\r': // enter;
@@ -107,6 +108,9 @@ public class AnsiFilter {
 					}
 					if (current.trim().length() > 0)
 						history.add(0, current);
+
+					where = -1;
+					input = new StringBuilder();
 					return current;
 
 				case 0x01:
@@ -120,7 +124,9 @@ public class AnsiFilter {
 
 				case 0x03:
 					buffer.setLength(0);
+					input.setLength(0);
 					cursor = 0;
+					where = -1;
 					rewrite();
 					break;
 
@@ -136,9 +142,13 @@ public class AnsiFilter {
 				case BS:
 					if (cursor > 0) {
 						buffer.delete(cursor - 1, cursor);
+						if (where == -1) {
+							input.delete(cursor - 1, cursor);
+						}
 						cursor--;
 						rewrite();
 					}
+
 					break;
 
 				case ESCAPE:
@@ -148,6 +158,9 @@ public class AnsiFilter {
 				default:
 					if (Character.isJavaIdentifierPart(c) || (c >= 0x20 && c < 0x7F)) {
 						buffer.insert(cursor, (char) c);
+						if (where == -1) {
+							input.insert(cursor, (char) c);
+						}
 						cursor++;
 						rewrite();
 					}
@@ -189,21 +202,27 @@ public class AnsiFilter {
 				}
 				break;
 			case 'A':// up
-				if (where < history.size()) {
-					buffer = new StringBuilder(history.get(where));
+				if (where < (history.size() - 1)) {
 					where++;
+					buffer = new StringBuilder(history.get(where));
 					cursor = buffer.length();
 					rewrite();
 				}
 				break;
 
 			case 'B': // down
-				if (where > 0) {
+
+				if (where > -1) {
 					where--;
-					buffer = new StringBuilder(history.get(where));
-					cursor = buffer.length();
-					rewrite();
 				}
+				if (where >= 0) {
+					buffer = new StringBuilder(history.get(where));
+				}
+				if (where == -1) {
+					buffer = new StringBuilder(this.input);
+				}
+				cursor = buffer.length();
+				rewrite();
 				break;
 
 			case '3':
@@ -257,7 +276,7 @@ public class AnsiFilter {
 		while (i < this.current.length() && i < buffer.length() && this.current.charAt(i) == this.buffer.charAt(i))
 			i++;
 
-		column(start+i+1);
+		column(start + i + 1);
 
 		String current = buffer.toString();
 		writer.write(current, i, current.length() - i);
@@ -273,7 +292,7 @@ public class AnsiFilter {
 	}
 
 	private void column(int i) throws IOException {
-		write("\u001B["+i+"G");
+		write("\u001B[" + i + "G");
 	}
 
 	private void eraseEOL() throws IOException {
