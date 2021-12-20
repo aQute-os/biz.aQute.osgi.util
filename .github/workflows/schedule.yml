@@ -22,7 +22,7 @@ jobs:
           java-version: 1.8
       - name:  install gradle
         uses: pkriens/setup-jpm@v1.0.0
-     - name: Build
+      - name: Build
         shell: bash
         run: |
            jpm install -f biz.aQute.bnd:biz.aQute.bnd:6.2.0-SNAPSHOT
