@@ -23,9 +23,12 @@ jobs:
           java-version: 1.8
       - name:  install gradle
         uses: pkriens/setup-jpm@v1.0.0
-      - name: Build
+     - name: Build
         shell: bash
-        run: ./gradlew --parallel build
+        run: |
+           jpm install -f biz.aQute.bnd:biz.aQute.bnd:6.2.0-SNAPSHOT
+           bnd buildtool -f
+           ./gradlew --parallel build
       - name: save-tests
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
