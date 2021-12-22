@@ -251,7 +251,7 @@ public abstract class ApplicationProtocol {
 		}
 		int l = registers.close();
 		if (l > MAXIMUM_ADU_LENGTH - 2)
-			return Response.illegalDataValue("Too many coils for packet " + length);
+			return Response.illegalDataValue("Too many registers for packet " + length);
 
 		return Response.OK;
 	}
