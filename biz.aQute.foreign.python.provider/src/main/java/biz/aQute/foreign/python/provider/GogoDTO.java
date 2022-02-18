@@ -20,11 +20,12 @@ public class GogoDTO extends Thread implements AutoCloseable {
 	final CommandSession		session;
 	final ByteArrayOutputStream	outputBuffer	= new ByteArrayOutputStream();
 	volatile long				lasttime;
+	final ByteArrayOutputStream	err				= new ByteArrayOutputStream();
 
 	public GogoDTO(CommandProcessor processor) {
 		in = new Exchange("fromPython");
 		out = new Exchange("toPyton");
-		this.session = processor.createSession(in, outputBuffer, System.err);
+		this.session = processor.createSession(in, outputBuffer, err);
 	}
 
 	public static class ResultDTO extends DTO {
@@ -47,12 +48,18 @@ public class GogoDTO extends Thread implements AutoCloseable {
 				ResultDTO result = new ResultDTO();
 				try {
 					result.value = session.execute(line);
+					byte[] bufferedErr = err.toByteArray();
+					System.err.write(bufferedErr);
+					err.reset();
 				} catch (Exception e) {
 					result.error = e.getMessage();
 				}
 				result.console = new String(outputBuffer.toByteArray(), StandardCharsets.UTF_8);
 				outputBuffer.reset();
-				codec.enc().to(out).put(result).flush();
+				codec.enc()
+					.to(out)
+					.put(result)
+					.flush();
 				out.append("\r\n");
 			}
 		} catch (IOException e) {
