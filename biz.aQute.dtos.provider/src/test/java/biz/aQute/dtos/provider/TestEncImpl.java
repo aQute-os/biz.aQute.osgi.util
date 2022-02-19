@@ -13,7 +13,9 @@ import junit.framework.TestCase;
 public class TestEncImpl extends TestCase {
 
 	private static final String		EXPECTED_ENCODED_CONTENT		= "{\"id\":999,\"symbolicName\":\"com.example.test\"}";
-	private static final String		EXPECTED_PRETTY_ENCODED_CONTENT	= "{\n\t\"id\":999,\n\t\"symbolicName\":\"com.example.test\"\n}";
+	private static final String		EXPECTED_PRETTY_ENCODED_CONTENT	= "{\n"
+			+ "	\"id\":999,\"symbolicName\":\"com.example.test\"\n"
+			+ "}";
 
 	private static final BundleDTO	bundleDTO						= new BundleDTO();
 	static {

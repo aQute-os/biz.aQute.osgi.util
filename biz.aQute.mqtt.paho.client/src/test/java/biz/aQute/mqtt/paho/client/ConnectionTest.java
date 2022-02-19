@@ -17,6 +17,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import aQute.lib.io.IO;
@@ -93,7 +94,7 @@ public class ConnectionTest {
 			System.out.println("port : " + mqttBroker.getPort() + " " + p.getPort());
 			assertThat(facade.client.getValue().isConnected()).isTrue();
 
-			Thread.sleep(6000);
+			Thread.sleep(2000);
 
 			facade.client.getValue().setCallback(new MqttCallback() {
 
@@ -115,7 +116,7 @@ public class ConnectionTest {
 			});
 			Thread.sleep(2000);
 			p.enable(false);
-			Thread.sleep(10000);
+			Thread.sleep(2000);
 			p.enable(true);
 			Awaitility.await().atMost(30, TimeUnit.SECONDS).until( done::get);
 
@@ -145,7 +146,7 @@ public class ConnectionTest {
 				try {
 					while (!isInterrupted())
 						try {
-							Thread.sleep(4000);
+							Thread.sleep(500);
 							System.out.println("sending " + n);
 							topic.publish("Hello " + n++);
 						} catch (Exception e) {

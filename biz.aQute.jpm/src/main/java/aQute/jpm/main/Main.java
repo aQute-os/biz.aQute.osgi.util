@@ -27,13 +27,13 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.impl.Level;
 import org.slf4j.impl.StaticLoggerBinder;
 
-import aQute.bnd.exceptions.Exceptions;
 import aQute.jpm.api.CommandData;
 import aQute.jpm.api.JPM;
 import aQute.jpm.api.JVM;
 import aQute.jpm.lib.JustAnotherPackageManager;
 import aQute.jpm.platform.PlatformImpl;
 import aQute.lib.collections.ExtList;
+import aQute.lib.exceptions.Exceptions;
 import aQute.lib.getopt.Arguments;
 import aQute.lib.getopt.CommandLine;
 import aQute.lib.getopt.Description;

@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 import org.osgi.dto.DTO;
 
-import aQute.bnd.exceptions.Exceptions;
+import aQute.lib.exceptions.Exceptions;
 import aQute.libg.glob.Glob;
 import aQute.libg.parameters.Attributes;
 import aQute.libg.parameters.ParameterMap;

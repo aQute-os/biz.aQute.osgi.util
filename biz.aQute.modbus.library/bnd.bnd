@@ -3,7 +3,7 @@
 #
 
 -buildpath: \
-    biz.aQute.result,\
+	biz.aQute.result,\
 	osgi.annotation,\
 	org.osgi.service.component.annotations,\
 	slf4j.api;version='1.7.30',\

@@ -2,7 +2,6 @@
 # biz.aQute.osgi.configuration.util DEFAULTS
 #
 
-Bundle-Version:					1.0.0.${tstamp}
 Bundle-Description: 				\
 	Implements a Configuration Helper to set the properties in a type \
 	safe way.

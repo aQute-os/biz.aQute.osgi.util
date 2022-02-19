@@ -26,7 +26,7 @@ public class PythonAdmin implements BundleTrackerCustomizer<PythonApp> {
 	final BundleTracker<PythonApp>	bundles;
 	final String					python;
 	final CommandProcessor			gogo;
-	final long restartDelay;
+	long							restartDelay;
 
 	@Activate
 	public PythonAdmin(BundleContext context, Configuration config, @Reference CommandProcessor cp) {

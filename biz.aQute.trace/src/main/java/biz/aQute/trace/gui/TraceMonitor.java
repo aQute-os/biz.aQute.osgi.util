@@ -13,7 +13,7 @@ import org.apache.felix.service.command.Descriptor;
 import org.apache.felix.service.command.annotations.GogoCommand;
 import org.osgi.service.component.annotations.Component;
 
-import aQute.bnd.exceptions.Exceptions;
+import aQute.lib.exceptions.Exceptions;
 import aQute.lib.io.IO;
 import aQute.lib.json.JSONCodec;
 import aQute.lib.justif.Justif;

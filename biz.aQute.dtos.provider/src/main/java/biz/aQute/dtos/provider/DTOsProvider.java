@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aQute.bnd.exceptions.Exceptions;
+import aQute.lib.exceptions.Exceptions;
 import aQute.lib.json.Decoder;
 import aQute.lib.json.Encoder;
 import aQute.lib.json.JSONCodec;

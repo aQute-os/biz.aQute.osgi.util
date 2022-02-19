@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 
-import aQute.bnd.exceptions.Exceptions;
+import aQute.lib.exceptions.Exceptions;
 import aQute.lib.io.IO;
 import biz.aQute.gogo.commands.dtoformatter.DTOFormatter;
 

@@ -39,7 +39,6 @@ import org.osgi.framework.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aQute.bnd.exceptions.Exceptions;
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.OSGiHeader;
 import aQute.bnd.header.Parameters;
@@ -51,6 +50,7 @@ import aQute.jpm.api.JVM;
 import aQute.jpm.platform.PlatformImpl;
 import aQute.lib.base64.Base64;
 import aQute.lib.converter.Converter;
+import aQute.lib.exceptions.Exceptions;
 import aQute.lib.filter.Filter;
 import aQute.lib.io.IO;
 import aQute.lib.json.JSONCodec;

@@ -33,9 +33,7 @@ Main-Class:                     aQute.jpm.main.Main
 	biz.aQute.api.result,\
 	org.osgi.util.promise,\
 	org.osgi.util.function,\
-	biz.aQute.bnd.util;version=latest,\
 	biz.aQute.bndlib,\
-	biz.aQute.bnd.util,\
     biz.aQute.repository;version=latest
 
 -testpath: \

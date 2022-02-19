@@ -10,8 +10,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Formatter;
 
-import aQute.bnd.exceptions.Exceptions;
 import aQute.lib.converter.Converter;
+import aQute.lib.exceptions.Exceptions;
 
 public class PDU {
 

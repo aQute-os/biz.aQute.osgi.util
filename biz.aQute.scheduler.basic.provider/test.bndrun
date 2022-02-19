@@ -3,7 +3,6 @@
 -runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
 -runee: JavaSE-1.8
 -runbundles: \
-	aQute.libg;version='[5.1.0,5.1.1)',\
 	biz.aQute.api.scheduler;version=snapshot,\
 	biz.aQute.scheduler.basic.provider;version=snapshot,\
 	org.apache.felix.scr;version='[2.1.16,2.1.17)',\

@@ -3,7 +3,7 @@ package biz.aQute.mqtt.paho.client;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
-import aQute.bnd.exceptions.Exceptions;
+import aQute.lib.exceptions.Exceptions;
 import aQute.lib.io.ByteBufferOutputStream;
 import biz.aQute.broker.api.Topic;
 

@@ -6,6 +6,8 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.felix.service.command.CommandProcessor;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 
@@ -16,23 +18,31 @@ import biz.aQute.foreign.python.configuration.Configuration;
 import biz.aQute.osgi.configuration.util.ConfigSetter;
 
 public class PythonTest {
-	static LaunchpadBuilder	builder = new LaunchpadBuilder().runfw("org.apache.felix.framework").gogo().bundles("org.apache.felix.scr, org.osgi.util.promise, org.osgi.util.function");
+	static LaunchpadBuilder builder = new LaunchpadBuilder().runfw("org.apache.felix.framework")
+		.bundles(
+			"org.apache.felix.gogo.runtime,org.apache.felix.gogo.command,org.apache.felix.scr, org.osgi.util.promise, org.osgi.util.function");
 
+	@After
+	@Before
+	public void delay() throws InterruptedException {
+		Thread.sleep(1000);
+	}
 
 	@Test
 	public void testSimple() throws Exception {
-		try (Launchpad lp = builder.debug().gogo().create()) {
-			lp.bundle().includeResource("python/app.py", "resources/hello.py", false, false).start();
+		try (Launchpad lp = builder.debug()
+			.create()) {
+			lp.bundle()
+				.includeResource("python/app.py", "resources/hello.py", false, false)
+				.start();
 			Thread.sleep(1000);
 		}
 	}
 
-
 	@Service
-	CommandProcessor gogo;
+	CommandProcessor			gogo;
 
-	ConfigSetter<Configuration> cf = new ConfigSetter<>(Configuration.class);
-
+	ConfigSetter<Configuration>	cf	= new ConfigSetter<>(Configuration.class);
 
 	/*
 	 * See if a forever loop is properly terminated. Also test that a directory
@@ -41,9 +51,11 @@ public class PythonTest {
 	@Test
 	public void testForever() throws Exception {
 
-		try (Launchpad lp = builder.debug().create().inject(this)) {
+		try (Launchpad lp = builder.debug()
+			.create()
+			.inject(this)) {
 
-			PythonAdmin  admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
+			PythonAdmin admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
 			lp.register(PythonAdmin.class, admin);
 			assertThat(admin.python()).isEmpty();
 
@@ -59,7 +71,8 @@ public class PythonTest {
 
 			Thread.sleep(1000);
 			assertThat(admin.python()).isNotEmpty();
-			PythonApp pythonApp = admin.python().get(0);
+			PythonApp pythonApp = admin.python()
+				.get(0);
 			assertThat(pythonApp.restarts).isEqualTo(0);
 			start.stop();
 			assertThat(admin.python()).isEmpty();
@@ -83,35 +96,48 @@ public class PythonTest {
 
 	@Test
 	public void testGogo() throws Exception {
-		try (Launchpad lp = builder.debug().create().inject(this)) {
+		try (Launchpad lp = builder.debug()
+			.create()
+			.inject(this)) {
 
-			PythonAdmin  admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
+			PythonAdmin admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
 			lp.register(PythonAdmin.class, admin);
 
-			lp.register(Object.class, new GogoCommand(), CommandProcessor.COMMAND_SCOPE, "scope", CommandProcessor.COMMAND_FUNCTION, new String[]{"test"});
-			lp.bundle().includeResource("python/app.py", "resources/gogo.py", false, false).start();
+			lp.register(Object.class, new GogoCommand(), CommandProcessor.COMMAND_SCOPE, "scope",
+				CommandProcessor.COMMAND_FUNCTION, new String[] {
+					"test"
+				});
+			lp.bundle()
+				.includeResource("python/app.py", "resources/gogo.py", false, false)
+				.start();
 
-			assertThat(commandCalled.tryAcquire(1,TimeUnit.SECONDS)).isTrue();
+			assertThat(commandCalled.tryAcquire(20, TimeUnit.SECONDS)).isTrue();
 		}
 	}
 
 	@Test
 	public void testUpdate() throws Exception {
-		try (Launchpad lp = builder.debug().gogo().create().inject(this)) {
+		try (Launchpad lp = builder.debug()
+			.create()
+			.inject(this)) {
 
-			PythonAdmin  admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
+			PythonAdmin admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
 			lp.register(PythonAdmin.class, admin);
 
-			Bundle b = lp.bundle().includeResource("python/app.py", "resources/hello.py", false, false).install();
+			Bundle b = lp.bundle()
+				.includeResource("python/app.py", "resources/hello.py", false, false)
+				.install();
 			b.start();
-			PythonApp pythonApp = admin.python().get(0);
+			PythonApp pythonApp = admin.python()
+				.get(0);
 			assertThat(pythonApp.copied).isTrue();
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 			b.stop();
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 			assertThat(admin.python()).isEmpty();
 			b.start();
-			pythonApp = admin.python().get(0);
+			pythonApp = admin.python()
+				.get(0);
 			assertThat(pythonApp.copied).isFalse();
 		}
 	}
@@ -119,17 +145,25 @@ public class PythonTest {
 	@Test
 	public void testRestart() throws Exception {
 		ConfigSetter<Configuration> cf = new ConfigSetter<>(Configuration.class);
-		cf.set(cf.delegate().restartDelay()).to(1000L);
+		cf.set(cf.delegate()
+			.restartDelay())
+			.to(5000L);
 
-		try (Launchpad lp = builder.debug().gogo().create().inject(this)) {
+		try (Launchpad lp = builder.debug()
+			.create()
+			.inject(this)) {
 
-			PythonAdmin  admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
+			PythonAdmin admin = new PythonAdmin(lp.getBundleContext(), cf.delegate(), gogo);
+			admin.restartDelay = 400;
 			lp.register(PythonAdmin.class, admin);
 
-			Bundle b = lp.bundle().includeResource("python/app.py", "resources/error.py", false, false).install();
+			Bundle b = lp.bundle()
+				.includeResource("python/app.py", "resources/error.py", false, false)
+				.install();
 			b.start();
 			Thread.sleep(3000);
-			PythonApp pythonApp = admin.python().get(0);
+			PythonApp pythonApp = admin.python()
+				.get(0);
 			assertThat(pythonApp.restarts).isGreaterThan(1);
 			System.out.println(pythonApp.result);
 			assertThat(pythonApp.result).isNotEqualTo(0);
