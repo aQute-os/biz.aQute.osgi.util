@@ -69,6 +69,7 @@ public class ConnectionTest {
 		System.out.println("level set: " + targetLevel.getName());
 	}
 
+	@Ignore
 	@Test
 	public void simpleTest() throws Exception {
 		Closeable c = setUpSender();

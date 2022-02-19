@@ -2,6 +2,7 @@ package biz.aQute.osgi.jna.support.test;
 
 import java.util.concurrent.CountDownLatch;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
@@ -22,6 +23,7 @@ public class NativeCodeTest {
 	@Service
 	PackageAdmin			packageAdmin;
 
+	@Ignore
 	@Test
 	public void test() throws Exception {
 
