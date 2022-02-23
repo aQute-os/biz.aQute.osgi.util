@@ -25,6 +25,6 @@ jobs:
       - name: Build
         shell: bash
         run: |
-           jpm install -f biz.aQute.bnd:biz.aQute.bnd:6.2.0
+           jpm install -f biz.aQute.bnd:biz.aQute.bnd:6.3.0-SNAPSHOT
            bnd buildtool -f
            ./gradlew --parallel --info build
