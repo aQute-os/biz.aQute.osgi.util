@@ -17,25 +17,32 @@ public class ExchangeTest {
 	@Test
 	public void testBlockOutput() throws IOException, InterruptedException {
 		try (Exchange e = new Exchange("test");) {
+			System.out.println("creating buffer that is one less the buffer size ");
 			byte[] data = new byte[e.buffer.length - 1];
 			for (int i = 0; i < data.length; i++) {
 				data[i] = (byte) ('0' + (i % 10));
 			}
 			String s = new String(data, StandardCharsets.US_ASCII);
 			e.append(s);
+			System.out.println("Now send 1 character that fills up our buffer. So blocking next");
 			e.append('X');
 			CompletableFuture<Void> f = bg(() -> {
-				System.out.println("blocking on append");
+				System.out.println("blocking on append now");
 				e.append('Y');
 				System.out.println("finished blocking on append");
 			});
 			Thread.sleep(100);
+			System.out.println("We should have no freespace");
 			assertThat(e.freespace).isEqualTo(0);
+			System.out.println("And our background should not be finished");
 			assertThat(f.isDone()).isFalse();
 
+			System.out.println("Reading this will release the background");
 			e.read();
 			Thread.sleep(100);
+			System.out.println("But it will append its char, so freespace should still be 0");
 			assertThat(e.freespace).isEqualTo(0);
+			System.out.println("But our bg is released");
 			assertThat(f.isDone()).isTrue();
 		}
 	}
@@ -43,18 +50,25 @@ public class ExchangeTest {
 	@Test
 	public void testBlockInput() throws IOException, InterruptedException {
 		try (Exchange e = new Exchange("test");) {
+
+			System.out.println("Block on input of a single character");
 			CompletableFuture<Void> f = bg(() -> {
 				System.out.println("blocking on read");
 				e.read();
 				System.out.println("finished blocking on read");
 			});
 			Thread.sleep(100);
+			System.out.println("We should have the full buffer available");
 			assertThat(e.freespace).isEqualTo(e.buffer.length);
+			System.out.println("And still blocking");
 			assertThat(f.isDone()).isFalse();
 
+			System.out.println("Sending one character, releasing the bg");
 			e.append('X');
 			Thread.sleep(100);
+			System.out.println("Still full buffer because ew read the character");
 			assertThat(e.freespace).isEqualTo(e.buffer.length);
+			System.out.println("But the bg is released");
 			assertThat(f.isDone()).isTrue();
 		}
 	}
