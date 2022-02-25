@@ -7,11 +7,13 @@ import java.io.InterruptedIOException;
 public class Exchange extends InputStream implements Appendable {
 	final static int	MASK		= 0x1FFF;
 	char				buffer[]	= new char[MASK + 1];
-	int					available	= buffer.length;
+	int					freespace	= buffer.length;
 	int					in, out;
 	int					count		= 0;
 	int					codepoint;
 	final String		name;
+	int					readBlocks;
+	int					writeBlocks;
 
 	public Exchange(String name) {
 		this.name = name;
@@ -31,14 +33,17 @@ public class Exchange extends InputStream implements Appendable {
 
 	@Override
 	public synchronized Appendable append(char c) throws IOException {
-		while (available == 0) {
+		while (freespace == 0) {
 			try {
-				wait();
+				writeBlocks++;
+				wait(1000);
 			} catch (InterruptedException e) {
 				throw new InterruptedIOException();
 			}
 		}
-		available--;
+		if (freespace == buffer.length)
+			notifyAll();
+		freespace--;
 		buffer[in] = c;
 		in = (in + 1) & MASK;
 		notifyAll();
@@ -46,16 +51,19 @@ public class Exchange extends InputStream implements Appendable {
 	}
 
 	public synchronized char readChar() throws InterruptedIOException {
-		while (in == out) {
+		while (freespace == buffer.length) {
 			try {
-				wait();
+				readBlocks++;
+				wait(1000);
 			} catch (InterruptedException e) {
 				throw new InterruptedIOException();
 			}
 		}
+		if (freespace == 0)
+			notifyAll();
 		char c = buffer[out];
 		out = (out + 1) & MASK;
-		available++;
+		freespace++;
 		return c;
 	}
 
@@ -89,16 +97,16 @@ public class Exchange extends InputStream implements Appendable {
 
 	@Override
 	public synchronized int available() {
-		return available;
+		return freespace;
 	}
 
 	@Override
 	public synchronized String toString() {
 		StringBuilder sb = new StringBuilder(name).append(": ");
-		int i=out;
-		while ( i!=out) {
+		int i = out;
+		while (i != out) {
 			sb.append(buffer[i]);
-			i = (i+1) & MASK;
+			i = (i + 1) & MASK;
 		}
 		return sb.toString();
 	}
