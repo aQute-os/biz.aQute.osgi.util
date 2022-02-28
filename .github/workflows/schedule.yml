@@ -27,4 +27,4 @@ jobs:
         run: |
            jpm install -f biz.aQute.bnd:biz.aQute.bnd:6.3.0-SNAPSHOT
            bnd buildtool -f
-           ./gradlew --parallel --info build
+           ./gradlew --info build
