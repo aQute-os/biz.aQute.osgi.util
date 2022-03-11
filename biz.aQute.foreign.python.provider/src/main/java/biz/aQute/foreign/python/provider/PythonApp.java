@@ -93,7 +93,9 @@ class PythonApp extends Thread {
 
 					gogo.start();
 					command.setUseThreadForInput(true);
-					result = command.execute(gogo.getStdin(), gogo.getStdout(), System.err);
+					LineBreakingStream stderr = new LineBreakingStream(System.err);
+					result = command.execute(gogo.getStdin(), gogo.getStdout(), stderr);
+					stderr.flush();
 					if (closed) {
 						logger.debug("executed {} result {}", this, result);
 						return;

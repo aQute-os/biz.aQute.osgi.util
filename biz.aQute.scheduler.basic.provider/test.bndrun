@@ -5,6 +5,6 @@
 -runbundles: \
 	biz.aQute.api.scheduler;version=snapshot,\
 	biz.aQute.scheduler.basic.provider;version=snapshot,\
-	org.apache.felix.scr;version='[2.1.16,2.1.17)',\
 	org.osgi.util.function;version='[1.1.0,1.1.1)',\
-	org.osgi.util.promise;version='[1.1.1,1.1.2)'
+	org.osgi.util.promise;version='[1.1.1,1.1.2)',\
+	org.apache.felix.scr;version='[2.1.30,2.1.31)'

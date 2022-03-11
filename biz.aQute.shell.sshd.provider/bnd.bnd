@@ -16,7 +16,6 @@ Bundle-Description: \
 	org.osgi.service.component.annotations,\
 	org.apache.sshd.osgi;version='2.5.1',\
 	slf4j.api,\
-	slf4j.simple,\
 	aQute.libg;version='5.0.0',\
 	org.apache.felix.gogo.runtime,\
 	org.osgi.service.metatype.annotations,\
@@ -26,6 +25,7 @@ Bundle-Description: \
 	
 
 -testpath: \
+    slf4j.simple,\
 	biz.aQute.wrapper.junit,\
 	biz.aQute.wrapper.hamcrest,\
 	org.assertj.core,\

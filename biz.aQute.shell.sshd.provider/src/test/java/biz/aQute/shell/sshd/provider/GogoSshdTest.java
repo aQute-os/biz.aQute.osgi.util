@@ -36,14 +36,14 @@ import biz.aQute.shell.sshd.config.SshdConfig;
 
 public class GogoSshdTest {
 
-	final static LaunchpadBuilder	builder	= new LaunchpadBuilder().bndrun("tester.bndrun");
+	final static LaunchpadBuilder	builder	= new LaunchpadBuilder().bndrun("tester.bndrun").bundles("org.apache.felix.gogo.runtime").debug();
 
 	@Service
 	CommandProcessor				cp;
 	
 	@Test
 	public void testSecurity() throws Exception {
-		try (Launchpad lp = builder.bundles("org.apache.felix.gogo.runtime").create().inject(this)) {
+		try (Launchpad lp = builder.create().report().inject(this)) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("passwords", true);
 			map.put("permission", "gogo.command:(lsb|bundles)");

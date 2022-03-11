@@ -31,9 +31,9 @@ org.apache.felix:org.apache.felix.http.servlet-api:1.1.2
 org.apache.felix:org.apache.felix.http.servlet-api:1.1.2
 org.apache.felix:org.apache.felix.inventory:1.0.4
 org.apache.felix:org.apache.felix.log.extension:1.0.0
-org.apache.felix:org.apache.felix.log:1.2.0
+org.apache.felix:org.apache.felix.log:1.2.4
 org.apache.felix:org.apache.felix.metatype:1.2.2
-org.apache.felix:org.apache.felix.scr:2.1.16
+org.apache.felix:org.apache.felix.scr:2.1.30
 org.apache.felix:org.apache.felix.shell.remote:1.1.2
 org.apache.felix:org.apache.felix.threaddump:1.0.0
 org.apache.felix:org.apache.felix.webconsole.plugins.ds:2.1.0
