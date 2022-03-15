@@ -46,6 +46,31 @@ public class LogForwarderTest {
 	}
 
 	@Test
+	public void testFormatterWithObjectThatThrowsNPEOnHashCode() {
+		class Idiot {
+			@Override
+			public int hashCode() {
+				throw new NullPointerException();
+			}
+
+			@Override
+			public boolean equals(Object o) {
+				return this == o;
+			}
+
+			@Override
+			public String toString() {
+				return "42";
+			}
+		}
+		String s = Facade.print(new Object[] {
+			new Idiot()
+		}, null)
+			.toString();
+		assertThat(s).isEqualTo("[42]");
+	}
+
+	@Test
 	public void testFormatterCycles() {
 		Set<Object> visited = new HashSet<>();
 		Object[] array = new Object[10];

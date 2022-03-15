@@ -1,7 +1,9 @@
 package biz.aQute.osgi.logger.forwarder;
 
 import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -237,13 +239,15 @@ final class Facade extends MarkerIgnoringBase {
 			.isArray())
 			return in;
 
-		HashSet<Object> visited = new HashSet<>();
-		return print(in, visited);
+		return print(in, null);
 	}
 
 	static Object print(Object object, Set<Object> visited) {
 		if (object == null)
 			return null;
+
+		if (visited == null)
+			visited = Collections.newSetFromMap(new IdentityHashMap<>());
 
 		if (!visited.add(object))
 			return "cycle : " + object;
