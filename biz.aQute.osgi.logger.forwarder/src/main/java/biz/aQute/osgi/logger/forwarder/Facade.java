@@ -46,6 +46,8 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void debug(String format, Object... arguments) {
+		if (!delegate.isDebugEnabled())
+			return;
 		if (fixupArguments(arguments)) {
 			delegate.debug(format);
 		} else {
@@ -55,26 +57,36 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void debug(String message) {
+		if (!delegate.isDebugEnabled())
+			return;
 		delegate.debug(message);
 	}
 
 	@Override
 	public void debug(String format, Object argument) {
+		if (!delegate.isDebugEnabled())
+			return;
 		delegate.debug(format, fixup(argument));
 	}
 
 	@Override
 	public void debug(String message, Throwable t) {
+		if (!delegate.isDebugEnabled())
+			return;
 		delegate.debug(message, t);
 	}
 
 	@Override
 	public void debug(String format, Object a, Object b) {
+		if (!delegate.isDebugEnabled())
+			return;
 		delegate.debug(format, fixup(a), fixup(b));
 	}
 
 	@Override
 	public void error(String format, Object... arguments) {
+		if (!delegate.isErrorEnabled())
+			return;
 		if (fixupArguments(arguments)) {
 			delegate.error(format);
 		} else {
@@ -84,26 +96,36 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void error(String message) {
+		if (!delegate.isErrorEnabled())
+			return;
 		delegate.error(message);
 	}
 
 	@Override
 	public void error(String format, Object argument) {
+		if (!delegate.isErrorEnabled())
+			return;
 		delegate.error(format, fixup(argument));
 	}
 
 	@Override
 	public void error(String message, Throwable t) {
+		if (!delegate.isErrorEnabled())
+			return;
 		delegate.error(message, t);
 	}
 
 	@Override
 	public void error(String format, Object a, Object b) {
+		if (!delegate.isErrorEnabled())
+			return;
 		delegate.error(format, fixup(a), fixup(b));
 	}
 
 	@Override
 	public void info(String format, Object... arguments) {
+		if (!delegate.isInfoEnabled())
+			return;
 		if (fixupArguments(arguments)) {
 			delegate.info(format);
 		} else {
@@ -113,26 +135,36 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void info(String message) {
+		if (!delegate.isInfoEnabled())
+			return;
 		delegate.info(message);
 	}
 
 	@Override
 	public void info(String format, Object argument) {
+		if (!delegate.isInfoEnabled())
+			return;
 		delegate.info(format, fixup(argument));
 	}
 
 	@Override
 	public void info(String message, Throwable t) {
+		if (!delegate.isInfoEnabled())
+			return;
 		delegate.info(message, t);
 	}
 
 	@Override
 	public void info(String format, Object a, Object b) {
+		if (!delegate.isInfoEnabled())
+			return;
 		delegate.info(format, fixup(a), fixup(b));
 	}
 
 	@Override
 	public void warn(String format, Object... arguments) {
+		if (!delegate.isWarnEnabled())
+			return;
 		if (fixupArguments(arguments)) {
 			delegate.warn(format);
 		} else {
@@ -142,26 +174,36 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void warn(String message) {
+		if (!delegate.isWarnEnabled())
+			return;
 		delegate.warn(message);
 	}
 
 	@Override
 	public void warn(String format, Object argument) {
+		if (!delegate.isWarnEnabled())
+			return;
 		delegate.warn(format, fixup(argument));
 	}
 
 	@Override
 	public void warn(String message, Throwable t) {
+		if (!delegate.isWarnEnabled())
+			return;
 		delegate.warn(message, t);
 	}
 
 	@Override
 	public void warn(String format, Object a, Object b) {
+		if (!delegate.isWarnEnabled())
+			return;
 		delegate.warn(format, fixup(a), fixup(b));
 	}
 
 	@Override
 	public void trace(String format, Object... arguments) {
+		if (!delegate.isTraceEnabled())
+			return;
 		if (fixupArguments(arguments)) {
 			delegate.trace(format);
 		} else {
@@ -171,21 +213,29 @@ final class Facade extends MarkerIgnoringBase {
 
 	@Override
 	public void trace(String message) {
+		if (!delegate.isTraceEnabled())
+			return;
 		delegate.trace(message);
 	}
 
 	@Override
 	public void trace(String format, Object argument) {
+		if (!delegate.isTraceEnabled())
+			return;
 		delegate.trace(format, fixup(argument));
 	}
 
 	@Override
 	public void trace(String message, Throwable t) {
+		if (!delegate.isTraceEnabled())
+			return;
 		delegate.trace(message, t);
 	}
 
 	@Override
 	public void trace(String format, Object a, Object b) {
+		if (!delegate.isTraceEnabled())
+			return;
 		delegate.trace(format, fixup(a), fixup(b));
 	}
 
