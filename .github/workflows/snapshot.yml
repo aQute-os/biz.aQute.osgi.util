@@ -29,7 +29,7 @@ jobs:
         run: |
            jpm install -f biz.aQute.bnd:biz.aQute.bnd:6.2.0-SNAPSHOT
            bnd buildtool -f
-           ./gradlew --parallel --info build release
+           ./gradlew --info build release
       - name: save-tests
         uses: actions/upload-artifact@v2
         with:
