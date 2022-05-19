@@ -15,6 +15,46 @@ import aQute.lib.io.IO;
 public class ExchangeTest {
 
 	@Test
+	public void testAvailable() throws IOException, InterruptedException {
+		try (Exchange e = new Exchange("test");) {
+			assertThat(e.available()).isEqualTo(0);
+			CompletableFuture<Void> f = bg(() -> {
+				System.out.println("append A");
+				e.append('A');
+				System.out.println("append B");
+				e.append('B');
+				System.out.println("done");
+			});
+
+			System.out.println("wait until 2 chars inserted");
+			while (e.available() != 2) {
+				System.out.println(e.available());
+				Thread.sleep(10);
+			}
+
+			assertThat(e.read()).isEqualTo('A');
+			assertThat(e.read()).isEqualTo('B');
+
+			CompletableFuture<Void> ff = bg(() -> {
+				System.out.println("append A's");
+				for (int i = 0; i < e.buffer.length + 1; i++) {
+					e.append('A');
+				}
+				System.out.println("done append A's");
+			});
+			Thread.sleep(100);
+			System.out.println("we should have the full buffer available");
+			assertThat(e.available()).isEqualTo(e.buffer.length);
+
+			System.out.println("we wrote 1 char more, so if we read one, we should still have the buffer full");
+			e.read();
+			Thread.sleep(100);
+			assertThat(e.available()).isEqualTo(e.buffer.length);
+		}
+
+	}
+
+	@Test
 	public void testBlockOutput() throws IOException, InterruptedException {
 		try (Exchange e = new Exchange("test");) {
 			System.out.println("creating buffer that is one less the buffer size ");
@@ -34,6 +74,7 @@ public class ExchangeTest {
 			Thread.sleep(100);
 			System.out.println("We should have no freespace");
 			assertThat(e.freespace).isEqualTo(0);
+			assertThat(e.available() == e.buffer.length);
 			System.out.println("And our background should not be finished");
 			assertThat(f.isDone()).isFalse();
 

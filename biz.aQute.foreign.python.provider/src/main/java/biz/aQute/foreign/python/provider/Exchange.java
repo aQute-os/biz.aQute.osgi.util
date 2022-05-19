@@ -97,7 +97,7 @@ public class Exchange extends InputStream implements Appendable {
 
 	@Override
 	public synchronized int available() {
-		return freespace;
+		return buffer.length - freespace;
 	}
 
 	@Override
