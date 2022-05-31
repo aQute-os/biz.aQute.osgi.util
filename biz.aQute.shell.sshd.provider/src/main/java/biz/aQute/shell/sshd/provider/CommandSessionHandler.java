@@ -19,6 +19,7 @@ import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
 import org.osgi.framework.BundleContext;
 
+import aQute.lib.io.IO;
 import aQute.lib.strings.Strings;
 
 class CommandSessionHandler implements Closeable, Runnable {
@@ -164,6 +165,7 @@ class CommandSessionHandler implements Closeable, Runnable {
 	public void close() throws IOException {
 		if (quit.getAndSet(true) == false) {
 			thread.interrupt();
+			IO.close(console);
 			try {
 				thread.join(5000);
 			} catch (InterruptedException e) {

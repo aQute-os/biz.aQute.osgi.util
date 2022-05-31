@@ -15,7 +15,7 @@ import java.util.Optional;
 import aQute.lib.io.IO;
 import aQute.libg.glob.Glob;
 
-public class AnsiFilter {
+public class AnsiFilter implements AutoCloseable {
 	final static byte[]		crlf	= new byte[] { 10, 13 };
 
 	static final int		BS		= 0x08;
@@ -336,4 +336,9 @@ public class AnsiFilter {
 		writer.flush();
 	}
 
+	public void close() throws Exception {
+		IO.close(in);
+		IO.close(out);
+	}
+	
 }

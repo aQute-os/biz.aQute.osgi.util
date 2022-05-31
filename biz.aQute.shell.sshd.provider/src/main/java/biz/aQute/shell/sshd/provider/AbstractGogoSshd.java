@@ -13,7 +13,6 @@ import org.apache.sshd.server.channel.ChannelSession;
 import org.apache.sshd.server.command.Command;
 import org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Deactivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,7 +99,6 @@ abstract class AbstractGogoSshd {
 		};
 	}
 
-	@Deactivate
 	void deactivate() throws IOException {
 		sshd.stop(true);
 		sshd.close();

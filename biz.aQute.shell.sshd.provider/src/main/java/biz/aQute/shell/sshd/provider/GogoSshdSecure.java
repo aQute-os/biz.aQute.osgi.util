@@ -18,6 +18,7 @@ import org.apache.sshd.server.session.ServerSession;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -56,6 +57,11 @@ public class GogoSshdSecure extends AbstractGogoSshd {
 		}
 		sshd.setPublickeyAuthenticator(this::authenticate);
 		open();
+	}
+
+	@Deactivate
+	void deactivate() throws IOException {
+		super.deactivate();
 	}
 
 	@Override
