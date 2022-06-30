@@ -15,6 +15,53 @@ import aQute.lib.io.IO;
 public class ExchangeTest {
 
 	@Test
+	public void testUnderflow() throws IOException {
+		try (Exchange e = new Exchange("test");) {
+			for (int i = 0; i < 65537; i++)
+				try {
+					testUtf8Encoding(e, 0, 0);
+				} catch (AssertionError ee) {
+					System.out.println("i=" + i);
+					throw ee;
+				}
+		}
+
+	}
+
+	@Test
+	public void testEncoding() throws IOException {
+		try (Exchange e = new Exchange("test");) {
+
+			testUtf8Encoding(e, 0, 0);
+			testUtf8Encoding(e, 0x1F, 0x1F);
+			testUtf8Encoding(e, 0x7F, 0x7F);
+			testUtf8Encoding(e, 0x80, 0xC2, 0x80);
+			testUtf8Encoding(e, 0x81, 0xC2, 0x81);
+			testUtf8Encoding(e, 0x9F, 0xC2, 0x9F);
+			testUtf8Encoding(e, 0x7FF, 0xDF, 0xBF);
+			testUtf8Encoding(e, 0x800, 0xE0, 0xA0, 0x80);
+			testUtf8Encoding(e, 0x801, 0xE0, 0xA0, 0x81);
+			testUtf8Encoding(e, 0x20AC, 0xE2, 0x82, 0xAC);
+			testUtf8Encoding(e, 0xD7FF, 0xED, 0x9F, 0xBF);
+			testUtf8Encoding(e, 0xE000, 0xEE, 0x80, 0x80);
+			testUtf8Encoding(e, 0xF8FF, 0xEF, 0xA3, 0xBF);
+			testUtf8Encoding(e, 0xF8FF, 0xEF, 0xA3, 0xBF);
+			testUtf8Encoding(e, 0xFFFE, 0xEF, 0xBF, 0xBE);
+			testUtf8Encoding(e, 0xFFFF, 0xEF, 0xBF, 0xBF);
+		}
+	}
+
+	private void testUtf8Encoding(Exchange e, int c, int... enc) throws IOException {
+		e.append((char) c);
+		for (int i = 0; i < enc.length; i++) {
+			int v = e.read();
+			assertThat(v).isEqualTo(enc[i]);
+		}
+		assertThat(e.count).isEqualTo((short) 0);
+
+	}
+
+	@Test
 	public void testAvailable() throws IOException, InterruptedException {
 		try (Exchange e = new Exchange("test");) {
 			assertThat(e.available()).isEqualTo(0);

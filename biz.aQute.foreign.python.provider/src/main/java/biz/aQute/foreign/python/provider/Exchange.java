@@ -9,7 +9,7 @@ public class Exchange extends InputStream implements Appendable {
 	char				buffer[]	= new char[MASK + 1];
 	int					freespace	= buffer.length;
 	int					in, out;
-	int					count		= 0;
+	short				count		= 0;
 	int					codepoint;
 	final String		name;
 	int					readBlocks;
@@ -69,7 +69,8 @@ public class Exchange extends InputStream implements Appendable {
 
 	@Override
 	public int read() throws IOException {
-		if (count-- > 0) {
+		if (count > 0) {
+			count--;
 			int r = codepoint >> (count * 6);
 			r &= 0b0011_1111;
 			r |= 0b1000_0000;
