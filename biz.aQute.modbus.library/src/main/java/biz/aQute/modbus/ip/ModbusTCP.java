@@ -75,7 +75,7 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 				InputStream in = channel.getInputStream();
 				OutputStream out = channel.getOutputStream();
 				serve(in, out);
-				logger.info("Closing client {}", channel.getRemoteSocketAddress());
+				logger.debug("Closing client {}", channel.getRemoteSocketAddress());
 			} catch (SocketTimeoutException se) {
 				// ignore
 			} catch (Throwable t) {
@@ -84,7 +84,7 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 				logger.warn("socket connection {} failed with: {} ", this, t);
 				t.printStackTrace();
 			} finally {
-				logger.info("socket connection {} closed ", this);
+				logger.debug("socket connection {} closed ", this);
 				clients.remove(this);
 				IO.close(channel);
 			}
@@ -95,7 +95,7 @@ public class ModbusTCP extends MessagingProtocol implements Closeable {
 
 				int read = in.read();
 				if (read < 0) {
-					logger.info("read -1, quit");
+					logger.trace("read -1, quit");
 					throw new EOFException();
 				}
 				pdu.putU8(read);
