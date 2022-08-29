@@ -25,8 +25,7 @@ import aQute.launchpad.Launchpad;
 import aQute.launchpad.LaunchpadBuilder;
 import aQute.launchpad.Service;
 import biz.aQute.aggregate.api.Aggregate;
-import biz.aQute.aggregate.provider.AggregateState.TrackedService;
-import biz.aQute.aggregate.provider.AggregateState.TrackedService.ActualTypeRegistration;
+import biz.aQute.aggregate.provider.TrackedService.ActualTypeRegistration;
 
 @SuppressWarnings("unused")
 public class AggregateCounterTest {
@@ -101,10 +100,13 @@ public class AggregateCounterTest {
 			TrackedService trackedAggIF = aggregateState.trackedServices.get(IF.class);
 			assertThat(trackedAggIF).isNotNull();
 
+
 			System.out.println("Check we have a client, not satisfied, requires 1, and no discovered");
-			assertThat(trackedAggIF.registrations.size()).isEqualTo(1);
-			assertThat(trackedAggIF.satisfied).isFalse();
-			assertThat(trackedAggIF.required).isEqualTo(1);
+			assertThat(trackedAggIF.registrations).hasSize(1);
+			ActualTypeRegistration ar = trackedAggIF.registrations.get(AggIF1.class);
+			assertThat(ar.satisfied).isFalse();
+			assertThat(ar.localAdjust).isZero();
+			assertThat(trackedAggIF.requiredByBundles).isEqualTo(1);
 			assertThat(trackedAggIF.discovered).isEqualTo(0);
 
 			System.out.println("Register a enabled component. require=2, discover=1");
@@ -113,8 +115,9 @@ public class AggregateCounterTest {
 			await().until(() -> trackedAggIF.discovered == 1);
 			System.out.println("Still have only one client");
 			assertThat(trackedAggIF.registrations.size()).isEqualTo(1);
-			assertThat(trackedAggIF.satisfied).isFalse();
-			assertThat(trackedAggIF.required).isEqualTo(2);
+			ActualTypeRegistration ar2 = trackedAggIF.registrations.get(AggIF1.class);
+			assertThat(ar2.satisfied).isFalse();
+			assertThat(trackedAggIF.requiredByBundles).isEqualTo(2);
 
 			System.out.println("Register an IF and check if it is picked up");
 			A1 a1 = new A1();
@@ -144,9 +147,9 @@ public class AggregateCounterTest {
 			await().until(() -> lp.getBundleContext().getServiceReference(AggIF1.class) == null);
 
 			System.out.println("Remove the A1 bundle that offer 1 instance, so should become happy again");
-			assertThat(trackedAggIF.required).isEqualTo(2);
+			assertThat(trackedAggIF.requiredByBundles).isEqualTo(2);
 			a1bundle.uninstall();
-			await().until(() -> trackedAggIF.required == 1);
+			await().until(() -> trackedAggIF.requiredByBundles == 1);
 
 			await().until(() -> lp.getBundleContext().getServiceReference(AggIF1.class) != null);
 
@@ -185,7 +188,7 @@ public class AggregateCounterTest {
 			Bundle b = lp.component(AggReq2.class);
 
 			TrackedService trackIF = aggregateState.trackedServices.get(IF.class);
-			assertThat(trackIF.required).isEqualTo(1);
+			assertThat(trackIF.requiredByBundles).isEqualTo(1);
 			assertThat(trackIF.discovered).isZero();
 			await().until(() -> trackIF.registrations.get(AggIF1.class).clients.size() == 2);
 
@@ -235,7 +238,7 @@ public class AggregateCounterTest {
 			Bundle b = lp.component(AggReq3.class);
 
 			TrackedService trackIF = aggregateState.trackedServices.get(IF.class);
-			assertThat(trackIF.required).isEqualTo(1);
+			assertThat(trackIF.requiredByBundles).isEqualTo(1);
 			assertThat(trackIF.discovered).isZero();
 			await().until(() -> trackIF.registrations.get(AggIF1.class).clients.size() == 1);
 			await().until(() -> trackIF.registrations.get(AggIF2.class).clients.size() == 1);
@@ -319,7 +322,14 @@ public class AggregateCounterTest {
 			Bundle req = lp.component(AggReq4.class);
 
 			TrackedService trackIF = aggregateState.trackedServices.get(IF.class);
-			await().until(() -> trackIF.required == 11);
+			assertThat(trackIF.adjust).isEqualTo(10);
+			await().until(() -> trackIF.requiredByBundles == 1);
+
+			await().until(() -> trackIF.registrations.get(AggIF4.class) != null);
+			ActualTypeRegistration atr = trackIF.registrations.get(AggIF4.class);
+			assertThat(atr).isNotNull();
+			assertThat(atr.localAdjust).isZero();
+			assertThat(trackIF.adjust).isEqualTo(10);
 
 			ac.close();
 
@@ -354,7 +364,7 @@ public class AggregateCounterTest {
 			Bundle req = lp.component(AggReq4.class);
 
 			TrackedService trackIF = aggregateState.trackedServices.get(IF.class);
-			await().until(() -> trackIF.required == 3);
+			await().until(() -> trackIF.requiredByBundles == 3);
 
 			CountDownLatch cl = new CountDownLatch(100);
 			Random random = new Random();
@@ -372,7 +382,7 @@ public class AggregateCounterTest {
 						} catch (InterruptedException e) {
 							return;
 						}
-					
+
 					cl.countDown();
 				});
 			}
@@ -384,4 +394,42 @@ public class AggregateCounterTest {
 		}
 
 	}
+
+	@Aggregate(value = IF.class, adjust = -1)
+	interface AggIF6 {}
+
+	@Component(immediate = true)
+	public static class AggReq6 {
+		@Reference
+		AggIF6 iff;
+	}
+
+	@Test
+	public void testLocalAdjust() throws Exception {
+		try (Launchpad lp = builder.create()) {
+			AggregateCounter ac = new AggregateCounter(lp.getBundleContext());
+			AggregateState aggregateState = ac.state;
+			ServiceRegistration<AggregateCounter> register = lp.register(AggregateCounter.class, ac);
+
+			Bundle a1bundle = lp.component(A1.class);
+
+			Bundle req = lp.component(AggReq6.class);
+
+			TrackedService trackIF = aggregateState.trackedServices.get(IF.class);
+			assertThat(trackIF).isNotNull();
+			await().until(() -> trackIF.registrations.get(AggIF6.class) != null);
+
+			ActualTypeRegistration atr = trackIF.registrations.get(AggIF6.class);
+			assertThat(atr).isNotNull();
+			assertThat(atr.localAdjust).isEqualTo(-1);
+			assertThat(trackIF.adjust).isEqualTo(0);
+			assertThat(atr.isSatisfied()).isTrue();
+			await().until(() -> atr.reg != null);
+
+			ac.close();
+
+		}
+
+	}
+
 }
