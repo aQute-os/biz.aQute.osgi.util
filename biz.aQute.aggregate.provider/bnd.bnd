@@ -1,0 +1,25 @@
+#
+# biz.aQute.component.condition.provider PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	osgi.core,\
+	org.osgi.service.component,\
+	aQute.libg,\
+	org.osgi.util.converter,\
+	org.osgi.util.promise,\
+	org.osgi.util.function,\
+	biz.aQute.api.aggregate
+	
+
+-testpath: \
+	biz.aQute.launchpad,\
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	slf4j.api,\
+	slf4j.simple,\
+	org.assertj.core,\
+	org.awaitility
