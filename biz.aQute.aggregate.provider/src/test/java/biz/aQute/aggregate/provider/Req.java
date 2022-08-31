@@ -11,12 +11,12 @@ public class Req {
 	IF[] list;
 
 
-	@Aggregate(IF.class)
+	@Aggregate
 	interface AgIF {
-		
+
 	}
 
 	interface AgIF1 extends Iterable<IF>{
-		
+
 	}
 }

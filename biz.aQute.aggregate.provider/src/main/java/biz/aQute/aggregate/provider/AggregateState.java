@@ -10,31 +10,72 @@ import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.hooks.service.ListenerHook.ListenerInfo;
+import org.osgi.framework.BundleEvent;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.BundleTracker;
 
+import biz.aQute.aggregate.provider.FrameworkStartedDetector.Reason;
+import biz.aQute.aggregate.provider.TrackedBundle.ServiceInfo;
+
+/**
+ * A component that will analyze the active bundles for how many services they
+ * will register and finds special services that are an Iterable over these
+ * services.
+ */
 @SuppressWarnings({
 	"rawtypes", "unchecked"
 })
-class AggregateState implements AutoCloseable {
+@Component(property = "condition=true", service = AggregateState.class)
+public class AggregateState {
 
 	final BundleContext					context;
+	final BundleTracker<AutoCloseable>	tracker;
 	final Map<Class, TrackedService>	trackedServices	= new HashMap<Class, TrackedService>();
 	final List<TrackedBundle>			bundles			= new CopyOnWriteArrayList<>();
 	final ScheduledExecutorService		executor		= Executors.newSingleThreadScheduledExecutor();
+	final FrameworkStartedDetector		fsd;
+	final InitClose						opentracker		= new InitClose(this::init, true);
+	volatile boolean					inited;
+	boolean								closed;
 
-	volatile boolean					closed			= false;
-
-	AggregateState(BundleContext context) {
+	@Activate
+	public AggregateState(BundleContext context) {
 		this.context = context;
+		this.fsd = new FrameworkStartedDetector(context);
+		this.tracker = new BundleTracker<AutoCloseable>(context, Bundle.ACTIVE, null) {
+			@Override
+			public AutoCloseable addingBundle(Bundle bundle, BundleEvent event) {
+				return add(bundle);
+			}
+
+			@Override
+			public void removedBundle(Bundle bundle, BundleEvent event, AutoCloseable tb) {
+				AggregateState.close(tb);
+			}
+
+		};
+		executor.execute(opentracker);
 	}
 
-	@Override
-	public void close() throws Exception {
+	AutoCloseable init() {
+		Reason reason = fsd.waitForStart();
+		if (reason == Reason.INTERRUPTED)
+			return () -> {};
+
+		tracker.open();
+		inited = true;
+		System.out.println("tracker open, seen all bundles");
+		return () -> tracker.close();
+	}
+
+	@Deactivate
+	void close() throws Exception {
 		synchronized (this) {
-			if (closed)
-				return;
 			closed = true;
 		}
+		close(opentracker);
 		trackedServices.values()
 			.forEach(TrackedService::close);
 		executor.shutdown();
@@ -42,47 +83,62 @@ class AggregateState implements AutoCloseable {
 	}
 
 	synchronized AutoCloseable add(Bundle bundle) {
+		if (closed)
+			return null;
+
 		TrackedBundle trackedBundle = TrackedBundle.create(bundle);
 		if (trackedBundle == null)
 			return null;
 		bundles.add(trackedBundle);
-		trackedServices.values()
-			.forEach(ts -> ts.add(trackedBundle));
+
+		for (ServiceInfo info : trackedBundle.infos.values()) {
+			TrackedService trackedService = trackedServices.computeIfAbsent(info.serviceType,
+				st -> new TrackedService(this, st));
+
+			trackedService.add(info);
+		}
 		return () -> remove(trackedBundle);
 	}
 
-	private synchronized void remove(TrackedBundle tb) {
-		bundles.remove(tb);
-		trackedServices.values()
-			.forEach(ts -> ts.remove(tb));
-	}
+	private synchronized void remove(TrackedBundle trackedBundle) {
+		if (closed)
+			return;
 
-	synchronized AutoCloseable add(ListenerInfo li) {
-		TrackedListener tl = TrackedListener.create(li);
-		if (tl == null)
-			return null;
-
-		TrackedService trackedService = trackedServices.computeIfAbsent(tl.serviceType,
-			x -> new TrackedService(this, x));
-		trackedService.add(tl);
-		return () -> {
-			synchronized (this) {
-				if (trackedService.remove(tl)) {
-					trackedServices.remove(trackedService.serviceType);
-				}
-
+		bundles.remove(trackedBundle);
+		for (ServiceInfo info : trackedBundle.infos.values()) {
+			TrackedService trackedService = trackedServices.get(info.serviceType);
+			if (trackedService.remove(info)) {
+				TrackedService removed = trackedServices.remove(trackedService.serviceType);
+				removed.close();
 			}
-		};
+		}
 	}
 
-	synchronized void schedule(Runnable run, long delay) {
-		if (delay == 0)
-			executor.execute(run);
-		else
-			executor.schedule(run, delay, TimeUnit.MILLISECONDS);
+	void schedule(Runnable run, long delay) {
+		synchronized (this) {
+			if (!closed) {
+				if (delay == 0)
+					executor.execute(run);
+				else
+					executor.schedule(run, delay, TimeUnit.MILLISECONDS);
+				return;
+			}
+		}
+		run.run();
 	}
 
-	public boolean holdsLock() {
+	boolean holdsLock() {
 		return Thread.holdsLock(this);
 	}
+
+	static void close(AutoCloseable tb) {
+		try {
+			if (tb != null)
+				tb.close();
+		} catch (Exception e) {
+			// ignore
+		}
+
+	}
+
 }

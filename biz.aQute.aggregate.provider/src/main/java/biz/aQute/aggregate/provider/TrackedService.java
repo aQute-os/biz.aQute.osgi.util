@@ -1,12 +1,7 @@
 package biz.aQute.aggregate.provider;
 
-import java.lang.reflect.Proxy;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.framework.ServiceReference;
@@ -14,70 +9,91 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
 import biz.aQute.aggregate.api.Aggregate;
+import biz.aQute.aggregate.api.AggregateConstants;
+import biz.aQute.aggregate.provider.TrackedBundle.ServiceInfo;
 
 @SuppressWarnings({
 	"rawtypes", "unchecked"
 })
 class TrackedService {
 
-	final Class									serviceType;
-	final Set<TrackedBundle>					usedOffers			= new HashSet<>();
-	final Map<Class, ActualTypeRegistration>	registrations		= new HashMap<>();
-	final ServiceTracker						tracker;
 	final AggregateState						state;
+	final Class									serviceType;
+	final Map<Class, ActualTypeRegistration>	actualTypes	= new HashMap<>();
+	final ServiceTracker						tracker;
 	final int									adjust;
+	final int									override;
 
-	int											discovered			= 0;
-	int											requiredByBundles	= 0;
+	int											discovered	= 0;
+	int											promised	= 0;
 
 	class ActualTypeRegistration {
-		final Class					actualType;
-		final Aggregate				annotation;
-		final List<TrackedListener>	clients		= new ArrayList<>();
-		final AtomicBoolean			changed		= new AtomicBoolean(true);
-		final int					localAdjust;
-		boolean						satisfied	= false;
-		ServiceRegistration			reg;
+		final Class			actualType;
+		final Aggregate		annotation;
+		final AtomicBoolean	changed		= new AtomicBoolean(true);
+		final int			localAdjust;
+		final int			localOverride;
+		boolean				satisfied	= false;
+		int					clients		= 0;
+
+		ActualTypeFactory	reg;
 
 		ActualTypeRegistration(Class actualType) {
 			this.actualType = actualType;
 			this.annotation = (Aggregate) actualType.getAnnotation(Aggregate.class);
-			this.localAdjust = annotation != null ? annotation.adjust() + adjust : 0;
+
+			int localAdjust = annotation != null ? annotation.adjust() : 0;
+			int localOverride = annotation != null ? annotation.override() : -1;
+			this.localAdjust = Integer.getInteger(AggregateConstants.PREFIX_TO_ADJUST + actualType.getName(),
+				localAdjust);
+			this.localOverride = Integer.getInteger(AggregateConstants.PREFIX_TO_OVERRIDE + actualType.getName(),
+				localOverride);
 		}
 
 		private void register() {
 
-			if (reg != null)
-				return;
-
 			synchronized (state) {
 				if (state.closed)
+					return;
+				if (reg != null)
 					return;
 			}
 
 			System.out.println("registering " + actualType);
 			try {
-				Object instance = getInstance(actualType);
-				ServiceRegistration reg = state.context.registerService(actualType, instance, null);
+				ActualTypeFactory instance = new ActualTypeFactory(this, state, serviceType);
+				ServiceRegistration reg = state.context.registerService(actualType.getName(), instance, null);
 				synchronized (state) {
-					this.reg = reg;
 					if (!state.closed) {
+						instance.reg = reg;
+						this.reg = instance;
 						return;
 					}
-					// oops, closed in the mean time
+					System.out.println("oops, got closed in the mean time");
 				}
-				unregister();
+				instance.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
+		@Override
+		public String toString() {
+			return "ActualTypeRegistration[actualType=" + actualType.getSimpleName() + ", localAdjust=" + localAdjust
+				+ ", satisfied=" + satisfied + ", clients=" + clients + ", reg=" + (reg != null) + "]";
+		}
+
 		private void unregister() {
-			if (reg == null)
-				return;
-			reg.unregister();
-			reg = null;
+			ActualTypeFactory reg;
+			synchronized (state) {
+				if (this.reg == null)
+					return;
+
+				reg = this.reg;
+				this.reg = null;
+			}
 			System.out.println("unregistering " + actualType);
+			reg.close();
 		}
 
 		// serialized on scheduler single thread
@@ -107,11 +123,19 @@ class TrackedService {
 		}
 
 		boolean isSatisfied() {
-			return discovered >= requiredByBundles + adjust + localAdjust;
+			if (localOverride >= 0)
+				return discovered >= localOverride;
+
+			if (override >= 0)
+				return discovered >= override;
+
+			return discovered >= promised + adjust + localAdjust;
 		}
 
 		void refresh() {
 			assert state.holdsLock();
+			if (state.closed)
+				return;
 			boolean satisfied = isSatisfied();
 			if (satisfied == this.satisfied)
 				return;
@@ -119,23 +143,20 @@ class TrackedService {
 			state.schedule(this::update, satisfied ? 500 : 0);
 		}
 
-		private Object getInstance(Class actual) throws InstantiationException, IllegalAccessException {
-			Object instance;
-			if (actual.isInterface()) {
-				instance = Proxy.newProxyInstance(actual.getClassLoader(), new Class[] {
-					actual
-				}, (p, m, a) -> {
-					throw new UnsupportedOperationException(
-						"This was registered as an indication of the aggregate state for " + serviceType
-							+ ". It does not support any impl.");
-				});
-			} else
-				instance = actual.newInstance();
-			return instance;
+		public void close() {
+			ActualTypeFactory reg;
+			synchronized (state) {
+				if (this.reg != null) {
+					reg = this.reg;
+					this.reg = null;
+				} else
+					return;
+			}
+			reg.close();
 		}
 
-		public void close() {
-			state.schedule(this::unregister, 0);
+		AggregateState state() {
+			return state;
 		}
 	}
 
@@ -144,7 +165,8 @@ class TrackedService {
 		this.state = state;
 		this.serviceType = serviceType;
 
-		this.adjust = Integer.getInteger("aggregate." + serviceType.getName(), 0);
+		this.override = Integer.getInteger(AggregateConstants.PREFIX_TO_OVERRIDE + serviceType.getName(), -1);
+		this.adjust = Integer.getInteger(AggregateConstants.PREFIX_TO_ADJUST + serviceType.getName(), 0);
 		this.tracker = new ServiceTracker(state.context, this.serviceType, null) {
 			@Override
 			public Object addingService(ServiceReference reference) {
@@ -163,62 +185,64 @@ class TrackedService {
 				}
 			}
 		};
-		this.state.bundles.forEach(this::add);
 		this.tracker.open();
 	}
 
-	void add(TrackedListener ts) {
+	void add(ServiceInfo info) {
 		assert state.holdsLock();
-		ActualTypeRegistration atr = registrations.computeIfAbsent(ts.actualType, ActualTypeRegistration::new);
-		atr.clients.add(ts);
-		atr.refresh();
-	}
-
-	boolean remove(TrackedListener ts) {
-		assert state.holdsLock();
-		ActualTypeRegistration atr = registrations.get(ts.actualType);
-		atr.clients.remove(ts);
-		if (atr.clients.isEmpty()) {
-			registrations.remove(ts.actualType);
-			atr.close();
-			return registrations.isEmpty();
-		} else
-			return false;
-	}
-
-	void add(TrackedBundle tb) {
-		assert state.holdsLock();
-		int n = tb.getOfferedServices(serviceType);
+		boolean refresh = false;
+		int n = info.promised;
 		if (n > 0) {
-			usedOffers.add(tb);
-			requiredByBundles += n;
+			promised += n;
+			refresh = true;
+		}
+
+		for (Class actualType : info.actualTypes) {
+			ActualTypeRegistration atr = actualTypes.computeIfAbsent(actualType, ActualTypeRegistration::new);
+			atr.clients++;
+			refresh = true;
+		}
+
+		if (refresh) {
 			refresh();
 		}
 	}
 
-	void remove(TrackedBundle tb) {
+	boolean remove(ServiceInfo info) {
 		assert state.holdsLock();
-		if (usedOffers.remove(tb)) {
-			requiredByBundles -= tb.getOfferedServices(serviceType);
+
+		for (Class actualType : info.actualTypes) {
+			ActualTypeRegistration atr = actualTypes.get(actualType);
+			atr.clients--;
+			if (atr.clients == 0) {
+				actualTypes.remove(actualType);
+				atr.close();
+			}
+
+		}
+		if (info.promised != 0) {
+			this.promised -= info.promised;
 			refresh();
 		}
+
+		return actualTypes.isEmpty() && this.promised == 0;
 	}
 
 	private void refresh() {
 		assert state.holdsLock();
-		registrations.values()
+		actualTypes.values()
 			.forEach(r -> r.refresh());
 	}
 
 	void close() {
-		registrations.values()
+		actualTypes.values()
 			.forEach(ActualTypeRegistration::close);
 	}
 
 	@Override
 	public String toString() {
-		return "TrackedService [serviceType=" + serviceType + ", clients=" + registrations.size() + ", registrations="
-			+ registrations.size() + ", discovered=" + discovered + ", required=" + requiredByBundles + "]";
+		return "TrackedService [serviceType=" + serviceType.getName() + ", actual=" + actualTypes.values()
+			+ ", discovered=" + discovered + ", promised=" + promised + ", adjust=" + adjust + "]";
 	}
 
 }
