@@ -12,8 +12,12 @@
 	org.osgi.util.promise,\
 	org.osgi.util.function,\
 	biz.aQute.api.aggregate,\
-	org.apache.felix.gogo.runtime
-	
+	org.apache.felix.gogo.runtime,\
+	biz.aQute.osgi.diverse.util,\
+	org.osgi.namespace.implementation,\
+	slf4j.api
+
+-conditionalpackage: aQute.lib*	
 
 -testpath: \
 	biz.aQute.launchpad,\

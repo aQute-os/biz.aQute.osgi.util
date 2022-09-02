@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -24,10 +25,17 @@ import aQute.launchpad.LaunchpadBuilder;
 import aQute.launchpad.Service;
 import biz.aQute.aggregate.api.Aggregate;
 import biz.aQute.aggregate.api.AggregateConstants;
-import biz.aQute.aggregate.provider.TrackedService.ActualTypeRegistration;
+import biz.aQute.aggregate.api.AggregateSettings;
+import biz.aQute.aggregate.provider.TrackedService.ActualType;
+import biz.aQute.aggregate.provider.TrackedService.BundleInfo;
 
 @SuppressWarnings("unused")
 public class AggregateStateTest {
+
+	static {
+		System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "debug");
+	}
+
 	static LaunchpadBuilder					builder	= new LaunchpadBuilder().nostart()
 		.bndrun("test.bndrun")
 		.set(Constants.FRAMEWORK_BEGINNING_STARTLEVEL, "2");
@@ -41,8 +49,6 @@ public class AggregateStateTest {
 	@Service
 	ServiceComponentRuntime scr;
 
-	interface IF {}
-
 	@Component(enabled = false)
 	public static class A1 implements IF {
 
@@ -53,8 +59,7 @@ public class AggregateStateTest {
 
 	}
 
-	@Aggregate
-	interface AggIF1 extends Iterable<IF> {}
+	interface AggIF1 extends Aggregate<IF> {}
 
 	@Component(immediate = true)
 	public static class AggReq1 {
@@ -97,14 +102,14 @@ public class AggregateStateTest {
 			await().until(() -> aggregateState.inited);
 
 			System.out.println("Check that we've seen the bundles");
-			assertThat(aggregateState.bundles).hasSize(7);
+			assertThat(aggregateState.bundles).isNotEmpty();
 
 			TrackedService trackedService = aggregateState.trackedServices.get(IF.class);
 			assertNotNull(trackedService);
 
-			assertThat(trackedService.promised).isEqualTo(2);
-			assertThat(trackedService.discovered).isEqualTo(0);
-			assertThat(trackedService.adjust).isEqualTo(0);
+			assertThat(trackedService.bundleInfos.size()).isEqualTo(2);
+			assertThat(trackedService.satisfied()
+				.size()).isEqualTo(0);
 			assertThat(trackedService.actualTypes).isEmpty();
 
 			System.out.println("Register our whiteboard server, will add a demand");
@@ -112,30 +117,36 @@ public class AggregateStateTest {
 
 			await().until(() -> trackedService.actualTypes.size() == 1);
 
-			ActualTypeRegistration ar = trackedService.actualTypes.get(AggIF1.class);
+			ActualType ar = trackedService.actualTypes.get(AggIF1.class);
 			assertThat(ar.satisfied).isFalse();
-			assertThat(ar.localAdjust).isZero();
-			assertThat(trackedService.promised).isEqualTo(2);
-			assertThat(trackedService.discovered).isEqualTo(0);
+			assertThat(trackedService.bundleInfos.size()).isEqualTo(2);
+			assertThat(trackedService.satisfied()
+				.size()).isEqualTo(0);
 
 			System.out.println("Register a enabled component. will promise 1 and provide 1");
 			Bundle b3 = lp.component(A2.class);
 
 			System.out.println("wait until we see this service");
-			await().until(() -> trackedService.discovered == 1);
+			await().until(() -> trackedService.satisfied()
+				.size() == 1);
 			assertThat(trackedService.actualTypes.size()).isEqualTo(1);
-			assertThat(ar.satisfied).isFalse();
-			assertThat(trackedService.promised).isEqualTo(3);
-			assertThat(trackedService.discovered).isEqualTo(1);
+			assertThat(ar.isSatisfied()).isFalse();
+			assertThat(trackedService.bundleInfos.size()).isEqualTo(3);
+			assertThat(trackedService.satisfied()
+				.size()).isEqualTo(1);
 
-			System.out.println("Register an IF and check if it is picked up");
+			System.out.println("Register the IF promised by b1 and check if it is picked up");
 			A1 a = new A1();
-			ServiceRegistration<IF> ra1 = lp.register(IF.class, a);
-			await().until(() -> trackedService.discovered == 2);
+			ServiceRegistration<IF> ra1 = b1.getBundleContext()
+				.registerService(IF.class, a, null);
+			await().until(() -> trackedService.satisfied()
+				.size() == 2);
 
-			System.out.println("Register another IF and check if it is picked up, which should satisfy");
-			ServiceRegistration<IF> ra2 = lp.register(IF.class, a);
-			await().until(() -> trackedService.discovered == 3);
+			System.out.println("Register the IF for b2 and check if it is picked up, which should satisfy");
+			ServiceRegistration<IF> ra2 = b2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			await().until(() -> trackedService.satisfied()
+				.size() == 3);
 			await().until(() -> ar.satisfied);
 
 			System.out.println("Wait for the registration");
@@ -155,20 +166,20 @@ public class AggregateStateTest {
 			}
 			assertThat(n).isEqualTo(3);
 
-			System.out.println("Register an extra service, no changes");
-			ServiceRegistration<IF> ra_extra = lp.register(IF.class, a);
+			System.out.println(
+				"Register an extra rogue service. No changes but we now have a dynamically discovered bundleinfo");
+			ServiceRegistration<IF> rogue = lp.register(IF.class, a);
 
-			await().until(() -> trackedService.discovered == 4);
+			await().until(() -> trackedService.bundleInfos.size() == 4);
+
 			assertThat(lp.getBundleContext()
 				.getServiceReference(AggIF1.class)).isNotNull();
 
-			System.out.println("Unregister the extra service, should make no difference");
-			ra_extra.unregister();
-			await().until(() -> trackedService.discovered == 3);
-			await().until(() -> lp.getBundleContext()
-				.getServiceReference(AggIF1.class) != null);
-			assertThat(ar.satisfied).isTrue();
-			assertThat(ar.reg).isNotNull();
+			System.out
+				.println("Unregister the extra service, should purge the BI but make no difference for our requirer");
+			rogue.unregister();
+			await().until(() -> trackedService.bundleInfos.size() == 3);
+			assertThat(ar.isSatisfied()).isTrue();
 
 			n = 0;
 			for (IF x : ref1.get().iff) {
@@ -176,6 +187,7 @@ public class AggregateStateTest {
 				n++;
 			}
 			assertThat(n).isEqualTo(3);
+
 			ActualTypeFactory remember = ar.reg;
 			assertThat(remember.trackers).isNotEmpty();
 			ServiceTracker st = ar.reg.trackers.values()
@@ -184,7 +196,7 @@ public class AggregateStateTest {
 
 			System.out.println("Remove a service, the actualType will become dissatisfied");
 			ra1.unregister();
-			await().until(() -> trackedService.discovered == 2);
+			await().until(() -> !ar.isSatisfied());
 			await().until(() -> lp.getBundleContext()
 				.getServiceReference(AggIF1.class) == null);
 
@@ -194,9 +206,9 @@ public class AggregateStateTest {
 			assertThat(st.getTrackingCount()).isEqualTo(-1);
 
 			System.out.println("Remove the A1 bundle that offer 1 instance, so should become happy again");
-			assertThat(trackedService.promised).isEqualTo(3);
+			assertThat(trackedService.bundleInfos.size()).isEqualTo(3);
 			b1.uninstall();
-			await().until(() -> trackedService.promised == 2);
+			await().until(() -> trackedService.bundleInfos.size() == 2);
 			await().until(() -> ar.satisfied);
 
 			await().until(() -> lp.getBundleContext()
@@ -212,13 +224,14 @@ public class AggregateStateTest {
 			System.out.println("Uninstall the white board service & the promised bundles, should clean up");
 			aggreq.uninstall();
 			await().until(() -> trackedService.actualTypes.isEmpty());
-			assertThat(trackedService.promised).isEqualTo(2);
-			assertThat(trackedService.discovered).isEqualTo(2);
+			assertThat(trackedService.bundleInfos.size()).isEqualTo(2);
+			assertThat(trackedService.satisfied()
+				.size()).isEqualTo(2);
 			assertThat(lp.getBundleContext()
 				.getServiceReference(AggIF1.class)).isNull();
 
 			b3.uninstall();
-			await().until(() -> trackedService.promised == 1);
+			await().until(() -> trackedService.bundleInfos.size() == 1);
 			b2.stop();
 
 			System.out.println("Check that no services are tracked & the services is unregistered");
@@ -252,21 +265,26 @@ public class AggregateStateTest {
 				"Register a disabled component so we can check it picks up offers from prior registered bundles");
 			Bundle b1 = lp.component(A1.class);
 
-			System.out.println("Register 2 different components that share the same actual type");
-			Bundle a = lp.component(AggReq1.class);
-			Bundle b = lp.component(AggReq2.class);
-
 			System.out.println("check if we picked it all up correctly");
 			await().until(() -> state.trackedServices.get(IF.class) != null);
 			TrackedService ts = state.trackedServices.get(IF.class);
 			assertThat(ts).isNotNull();
-			assertThat(ts.discovered).isEqualTo(0);
-			assertThat(ts.promised).isEqualTo(1);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
+			assertThat(ts.bundleInfos.size()).isEqualTo(1);
+			assertThat(ts.actualTypes.size()).isEqualTo(0);
+
+			System.out.println("Register 2 different components that share the same actual type");
+			Bundle a = lp.component(AggReq1.class);
+
 			assertThat(ts.actualTypes.size()).isEqualTo(1);
 
-			ActualTypeRegistration atr = ts.actualTypes.get(AggIF1.class);
+			ActualType atr = ts.actualTypes.get(AggIF1.class);
 			assertThat(atr).isNotNull();
-			assertThat(atr.clients).isEqualTo(2);
+			assertThat(atr.clients).isEqualTo(1);
+
+			Bundle b = lp.component(AggReq2.class);
+			assertThat(ts.actualTypes.size()).isEqualTo(1);
 
 			System.out.println("Lets satisfy it");
 			ServiceRegistration<IF> a1 = b1.getBundleContext()
@@ -287,7 +305,7 @@ public class AggregateStateTest {
 
 			System.out.println("remove the last requirerer");
 			a.uninstall();
-			assertThat(ts.promised).isEqualTo(1);
+			assertThat(ts.bundleInfos.size()).isEqualTo(1);
 			assertThat(atr.clients).isEqualTo(0);
 			assertThat(atr.satisfied).isTrue();
 			await().until(() -> atr.reg == null);
@@ -299,7 +317,7 @@ public class AggregateStateTest {
 		}
 	}
 
-	interface AggIF3 extends Iterable<IF> {}
+	interface AggIF3 extends Aggregate<IF> {}
 
 	final static AtomicReference<AggReq3> ref3 = new AtomicReference<>();
 
@@ -331,12 +349,13 @@ public class AggregateStateTest {
 			System.out.println("check if we picked it all up correctly");
 			TrackedService ts = state.trackedServices.get(IF.class);
 			assertThat(ts).isNotNull();
-			assertThat(ts.discovered).isEqualTo(0);
-			assertThat(ts.promised).isEqualTo(1);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
+			assertThat(ts.bundleInfos.size()).isEqualTo(1);
 			assertThat(ts.actualTypes.size()).isEqualTo(2);
 
-			ActualTypeRegistration atr1 = ts.actualTypes.get(AggIF1.class);
-			ActualTypeRegistration atr3 = ts.actualTypes.get(AggIF3.class);
+			ActualType atr1 = ts.actualTypes.get(AggIF1.class);
+			ActualType atr3 = ts.actualTypes.get(AggIF3.class);
 
 			assertThat(atr1).isNotNull();
 			assertThat(atr1.clients).isEqualTo(1);
@@ -369,7 +388,7 @@ public class AggregateStateTest {
 			System.out.println("remove the last requirerer");
 			r3.uninstall();
 
-			assertThat(ts.promised).isEqualTo(1);
+			assertThat(ts.bundleInfos.size()).isEqualTo(1);
 			await().until(() -> atr3.reg == null);
 
 			b1.uninstall();
@@ -379,155 +398,51 @@ public class AggregateStateTest {
 		}
 	}
 
-	@Aggregate(adjust = 1)
-	public interface AggIF4 extends Iterable<IF> {}
-
-	@Component
-	public static class AggReq4 {
-
-		@Reference
-		AggIF4 iff;
-	}
-
 	@Test
-	public void testAnnotationAdjust() throws Exception {
-		try (Launchpad lp = builder.create()) {
-			AggregateState state = new AggregateState(lp.getBundleContext());
-			ServiceRegistration<AggregateState> register = lp.register(AggregateState.class, state);
-			lp.start();
-			System.out.println(
-				"Register a disabled component so we can check it picks up offers from prior registered bundles");
-			Bundle falsePromise = lp.component(A1.class);
-
-			Bundle req = lp.component(AggReq4.class);
-
-			TrackedService ts = state.trackedServices.get(IF.class);
-			assertNotNull(ts);
-			assertThat(ts.promised).isEqualTo(1);
-
-			ActualTypeRegistration atr4 = ts.actualTypes.get(AggIF4.class);
-			assertThat(atr4).isNotNull();
-
-			assertThat(atr4.clients).isEqualTo(1);
-			assertThat(atr4.localAdjust).isEqualTo(1);
-
-			falsePromise.getBundleContext()
-				.registerService(IF.class, new A1(), null);
-
-			Thread.sleep(100);
-			assertThat(atr4.isSatisfied()).isFalse();
-			assertThat(ts.discovered).isEqualTo(1);
-
-			ServiceRegistration<IF> last = falsePromise.getBundleContext()
-				.registerService(IF.class, new A1(), null);
-			assertThat(atr4.isSatisfied()).isTrue();
-			assertThat(ts.discovered).isEqualTo(2);
-
-			await().until(() -> atr4.reg != null);
-
-			last.unregister();
-			assertThat(atr4.isSatisfied()).isFalse();
-			assertThat(ts.discovered).isEqualTo(1);
-
-			state.close();
-
-		}
-
-	}
-
-	@Test
-	public void testGlobalAdjust() throws Exception {
-		String key = AggregateConstants.PREFIX_TO_ADJUST + IF.class.getName();
-		try (Launchpad lp = builder.create()) {
-			System.setProperty(key, "2");
-			AggregateState state = new AggregateState(lp.getBundleContext());
-			ServiceRegistration<AggregateState> register = lp.register(AggregateState.class, state);
-			lp.start();
-			System.out.println(
-				"Register a disabled component so we can check it picks up offers from prior registered bundles");
-			Bundle falsePromise = lp.component(A1.class);
-
-			System.out.println("register a requirer");
-			Bundle req = lp.component(AggReq1.class);
-
-			TrackedService ts = state.trackedServices.get(IF.class);
-			assertThat(ts.promised).isEqualTo(1);
-
-			System.out.println("verify we have picked up the global adjust");
-
-			assertThat(ts.override).isEqualTo(-1);
-			assertThat(ts.adjust).isEqualTo(2);
-			assertThat(ts.discovered).isEqualTo(0);
-			assertThat(ts.actualTypes).hasSize(1);
-			ActualTypeRegistration atr = ts.actualTypes.get(AggIF1.class);
-			assertThat(atr).isNotNull();
-			assertThat(atr.isSatisfied()).isFalse();
-			assertThat(atr.localAdjust).isEqualTo(0);
-			assertThat(atr.localOverride).isEqualTo(-1);
-
-			System.out.println("register 2 services, should not satisfy");
-			ServiceRegistration<IF> s1 = lp.register(IF.class, new A1());
-			ServiceRegistration<IF> s2 = lp.register(IF.class, new A1());
-
-			await().until(() -> ts.discovered == 2);
-			assertThat(atr.isSatisfied()).isFalse();
-
-			ServiceRegistration<IF> s3 = lp.register(IF.class, new A1());
-			await().until(() -> ts.discovered == 3);
-			assertThat(atr.isSatisfied()).isTrue();
-			await().until(() -> atr.reg != null);
-
-			state.close();
-
-		} finally {
-			System.getProperties()
-				.remove(key);
-		}
-
-	}
-
-	@Test
-	public void testGlobalActualTypeOverride() throws Exception {
+	public void testActualTypeOverride() throws Exception {
 		String override = AggregateConstants.PREFIX_TO_OVERRIDE + AggIF1.class.getName();
-		String adjust = AggregateConstants.PREFIX_TO_ADJUST + AggIF1.class.getName();
 		try (Launchpad lp = builder.create()) {
 			System.setProperty(override, "2");
-			System.setProperty(adjust, "1000");
 			AggregateState state = new AggregateState(lp.getBundleContext());
 			ServiceRegistration<AggregateState> register = lp.register(AggregateState.class, state);
 			lp.start();
 			System.out.println(
 				"Register a disabled component so we can check it picks up offers from prior registered bundles");
 			Bundle falsePromise = lp.component(A1.class);
+			Bundle empty = lp.bundle()
+				.start();
 
 			System.out.println("register a requirer");
 			Bundle req = lp.component(AggReq1.class);
 
 			TrackedService ts = state.trackedServices.get(IF.class);
-			assertThat(ts.promised).isEqualTo(1);
+			assertThat(ts.bundleInfos.size()).isEqualTo(1);
 
 			System.out.println("verify we have picked up the global adjust");
 
-			assertThat(ts.promised).isEqualTo(1);
-			assertThat(ts.adjust).isEqualTo(0);
+			assertThat(ts.bundleInfos.size()).isEqualTo(1);
 			assertThat(ts.override).isEqualTo(-1);
-			assertThat(ts.discovered).isEqualTo(0);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
 			assertThat(ts.actualTypes).hasSize(1);
-			ActualTypeRegistration atr = ts.actualTypes.get(AggIF1.class);
+			ActualType atr = ts.actualTypes.get(AggIF1.class);
 			assertThat(atr).isNotNull();
-			assertThat(atr.localAdjust).isEqualTo(1000);
 			assertThat(atr.localOverride).isEqualTo(2);
 			assertThat(atr.isSatisfied()).isFalse();
 
 			System.out.println("register 2 services, should satisfy");
-			ServiceRegistration<IF> s1 = lp.register(IF.class, new A1());
-			ServiceRegistration<IF> s2 = lp.register(IF.class, new A1());
+			ServiceRegistration<IF> s1 = falsePromise.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			ServiceRegistration<IF> s2 = empty.getBundleContext()
+				.registerService(IF.class, new A1(), null);
 
-			await().until(() -> ts.discovered == 2);
+			await().until(() -> ts.satisfied()
+				.size() == 2);
 			assertThat(atr.isSatisfied()).isTrue();
 
 			ServiceRegistration<IF> s3 = lp.register(IF.class, new A1());
-			await().until(() -> ts.discovered == 3);
+			await().until(() -> ts.satisfied()
+				.size() == 3);
 			assertThat(atr.isSatisfied()).isTrue();
 			await().until(() -> atr.reg != null);
 
@@ -536,8 +451,53 @@ public class AggregateStateTest {
 		} finally {
 			System.getProperties()
 				.remove(override);
+		}
+
+	}
+
+	@Test
+	public void testServiceTypeTypeOverride() throws Exception {
+		String override = AggregateConstants.PREFIX_TO_OVERRIDE + IF.class.getName();
+		try (Launchpad lp = builder.create()) {
+			System.setProperty(override, "2");
+			AggregateState state = new AggregateState(lp.getBundleContext());
+			ServiceRegistration<AggregateState> register = lp.register(AggregateState.class, state);
+			lp.start();
+
+			System.out.println("register a requirer");
+			Bundle req = lp.component(AggReq1.class);
+
+			TrackedService ts = state.trackedServices.get(IF.class);
+			assertThat(ts).isNotNull();
+			assertThat(ts.bundleInfos.size()).isEqualTo(0);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
+			assertThat(ts.registeredServices).isEqualTo(0);
+			assertThat(ts.override).isEqualTo(2);
+
+			ActualType atr = ts.actualTypes.get(AggIF1.class);
+			assertThat(atr).isNotNull();
+
+			assertThat(atr.localOverride).isEqualTo(-1);
+			assertThat(atr.isSatisfied()).isFalse();
+
+			lp.register(IF.class, new A1());
+			assertThat(ts.registeredServices).isEqualTo(1);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(atr.isSatisfied()).isFalse();
+
+			lp.register(IF.class, new A1());
+			assertThat(ts.registeredServices).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(atr.isSatisfied()).isTrue();
+
+			state.close();
+
+		} finally {
 			System.getProperties()
-				.remove(adjust);
+				.remove(override);
 		}
 
 	}
@@ -559,7 +519,16 @@ public class AggregateStateTest {
 				.start();
 
 			TrackedService ts = state.trackedServices.get(IF.class);
-			assertThat(ts.promised).isEqualTo(3 + 1);
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+
+			BundleInfo falsePromiseInfo = ts.bundleInfos.get(falsePromise);
+			assertThat(falsePromiseInfo.actual).isEqualTo(0);
+			assertThat(falsePromiseInfo.max).isEqualTo(1);
+
+			BundleInfo aggrPromise3Info = ts.bundleInfos.get(aggrPromise3);
+			assertThat(aggrPromise3Info.actual).isEqualTo(0);
+			assertThat(aggrPromise3Info.max).isEqualTo(3);
+
 			assertThat(ts.actualTypes).isEmpty();
 
 			System.out.println("add an actualType");
@@ -570,12 +539,342 @@ public class AggregateStateTest {
 						+ AggIF1.class.getName() + "," + AggIF1.class.getName() + "\"")
 				.start();
 
-			assertThat(ts.promised).isEqualTo(3 + 1);
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
 			assertThat(ts.actualTypes.size()).isEqualTo(1);
 
-			ActualTypeRegistration atr = ts.actualTypes.get(AggIF1.class);
+			ActualType atr = ts.actualTypes.get(AggIF1.class);
 			assertThat(atr.clients).isEqualTo(2);
 
+			aggIF1.stop();
+			assertThat(atr.clients).isEqualTo(0);
+
+			state.close();
+
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testBundleCanOnlyRegisterSingleService() throws Exception {
+		try (Launchpad lp = builder.create()) {
+			AggregateState state = new AggregateState(lp.getBundleContext());
+			ServiceRegistration<AggregateState> register = lp.register(AggregateState.class, state);
+			lp.start();
+			System.out.println(
+				"Register a disabled component so we can check it picks up offers from prior registered bundles");
+
+			Bundle p1 = lp.component(A1.class);
+
+			TrackedService ts = state.trackedServices.get(IF.class);
+			assertThat(ts.bundleInfos.size()).isEqualTo(1);
+			assertThat(ts.actualTypes).isEmpty();
+
+			Bundle e1 = lp.bundle()
+				.start();
+			Bundle e2 = lp.bundle()
+				.start();
+
+			Bundle r = lp.component(AggReq1.class);
+			assertThat(ts.actualTypes.size()).isEqualTo(1);
+
+			ActualType at = ts.actualTypes.get(AggIF1.class);
+
+			List<ServiceRegistration<?>> regs = new ArrayList<>();
+			for (int i = 0; i < 100; i++) {
+				ServiceRegistration<IF> registerService = p1.getBundleContext()
+					.registerService(IF.class, new A1(), null);
+				regs.add(registerService);
+			}
+			assertThat(at.isSatisfied()).isTrue();
+			ServiceRegistration<?> remove = regs.remove(0);
+			remove.unregister();
+			assertThat(at.isSatisfied()).isFalse();
+
+			ServiceRegistration<IF> registerService = p1.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+
+			assertThat(at.isSatisfied()).isTrue();
+
+			state.close();
+
+		}
+
+	}
+
+	@AggregateSettings(override = 5)
+	interface AggIF4 extends Aggregate<IF> {}
+
+	final static AtomicReference<AggReq4> ref4 = new AtomicReference<>();
+
+	@Component
+	public static class AggReq4 {
+
+		{
+			ref4.set(this);
+		}
+
+		@Reference
+		AggIF4 iff;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testOverrideWithAnnotation() throws Exception {
+		try (Launchpad lp = builder.create()) {
+			AggregateState state = new AggregateState(lp.getBundleContext());
+			ServiceRegistration<AggregateState> register = lp.register(AggregateState.class, state);
+			lp.start();
+
+			System.out.println("Promise 1 bundle");
+			Bundle p1 = lp.component(A1.class);
+			Bundle p2 = lp.component(A1.class);
+
+			TrackedService ts = state.trackedServices.get(IF.class);
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
+			assertThat(ts.registeredServices).isEqualTo(0);
+			assertThat(ts.actualTypes).isEmpty();
+
+			Bundle r1 = lp.component(AggReq1.class);
+			Bundle r4 = lp.component(AggReq4.class);
+
+			assertThat(ts.actualTypes.size()).isEqualTo(2);
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
+			assertThat(ts.registeredServices).isEqualTo(0);
+
+			ActualType atr1 = ts.actualTypes.get(AggIF1.class);
+			ActualType atr4 = ts.actualTypes.get(AggIF4.class);
+
+			assertThat(atr1.clients).isEqualTo(1);
+			assertThat(atr4.clients).isEqualTo(1);
+
+			assertThat(atr1.localOverride).isEqualTo(-1);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr1.localOverride).isEqualTo(-1);
+			assertThat(atr1.isSatisfied()).isFalse();
+
+			ServiceRegistration reg1 = p1.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.registeredServices).isEqualTo(1);
+
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg2 = p1.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.registeredServices).isEqualTo(2);
+
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg3 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(3);
+
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg4 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(4);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg5 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(5);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			ServiceRegistration reg6 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(6);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			ServiceRegistration reg7 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(7);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			System.out.println(
+				"unregister reg1 from p1. Since we registered 2(max), this becomes unsatisfied for bundles but override is happy");
+			reg1.unregister();
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.registeredServices).isEqualTo(6);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			System.out.println(
+				"unregister reg2 from p1. Since we registered 2(max), this remains unsatisfied for bundles but override stays happy");
+			reg2.unregister();
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.registeredServices).isEqualTo(5);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			reg7.unregister();
+
+			assertThat(ts.registeredServices).isEqualTo(4);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isFalse();
+			state.close();
+
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testLocalOverrideWithSystemProperty() throws Exception {
+		try (Launchpad lp = builder.create()) {
+			AggregateState state = new AggregateState(lp.getBundleContext());
+			ServiceRegistration<AggregateState> register = lp.register(AggregateState.class, state);
+			lp.start();
+
+			System.out.println("Promise 1 bundle");
+			Bundle p1 = lp.component(A1.class);
+			Bundle p2 = lp.component(A1.class);
+
+			TrackedService ts = state.trackedServices.get(IF.class);
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
+			assertThat(ts.registeredServices).isEqualTo(0);
+			assertThat(ts.actualTypes).isEmpty();
+
+			Bundle r1 = lp.component(AggReq1.class);
+			Bundle r4 = lp.component(AggReq4.class);
+
+			assertThat(ts.actualTypes.size()).isEqualTo(2);
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(0);
+			assertThat(ts.registeredServices).isEqualTo(0);
+
+			ActualType atr1 = ts.actualTypes.get(AggIF1.class);
+			ActualType atr4 = ts.actualTypes.get(AggIF4.class);
+
+			assertThat(atr1.clients).isEqualTo(1);
+			assertThat(atr4.clients).isEqualTo(1);
+
+			assertThat(atr1.localOverride).isEqualTo(-1);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr1.localOverride).isEqualTo(-1);
+			assertThat(atr1.isSatisfied()).isFalse();
+
+			ServiceRegistration reg1 = p1.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.registeredServices).isEqualTo(1);
+
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg2 = p1.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.registeredServices).isEqualTo(2);
+
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg3 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+
+			assertThat(ts.bundleInfos.size()).isEqualTo(2);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(3);
+
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg4 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(4);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isFalse();
+
+			ServiceRegistration reg5 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(5);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			ServiceRegistration reg6 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(6);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			ServiceRegistration reg7 = p2.getBundleContext()
+				.registerService(IF.class, new A1(), null);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(2);
+			assertThat(ts.registeredServices).isEqualTo(7);
+			assertThat(atr1.isSatisfied()).isTrue();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			reg1.unregister();
+			assertThat(ts.registeredServices).isEqualTo(6);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			reg2.unregister();
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.satisfied()
+				.size()).isEqualTo(1);
+			assertThat(ts.registeredServices).isEqualTo(5);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isTrue();
+
+			reg7.unregister();
+			assertThat(ts.registeredServices).isEqualTo(4);
+			assertThat(atr1.isSatisfied()).isFalse();
+			assertThat(atr4.isSatisfied()).isFalse();
 			state.close();
 
 		}

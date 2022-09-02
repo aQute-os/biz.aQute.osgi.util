@@ -1,4 +1,4 @@
-package biz.aQute.aggregate.provider;
+package biz.aQute.osgi.concurrency.util;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  * This object is a {@link Runnable} and can therefore be passed to an Executor
  * to run in the background. Once in the background, the initialization will be
  * started (if not yet closed). Normally after the init lambda returns, the
- * state will become active until this object is closed.
+ * state will become ACTIVE until this object is closed.
  * <p>
  *
  * <pre>
@@ -55,21 +55,29 @@ public class InitClose implements AutoCloseable, Runnable {
 	State							state	= State.INITIAL;
 
 	enum State {
-		INITIAL,
-		BUSY,
-		SYNCING_CLOSE,
-		ACTIVE,
-		CLOSED,
-		ERRORED;
+		INITIAL, BUSY, SYNCING_CLOSE, ACTIVE, CLOSED, ERRORED;
 	}
 
 	/**
-	 * Create an InitClose
+	 * Create an InitClose. After creating, this object is generally submitted
+	 * to an executor to run in the background where it will run the init
+	 * lambda. It can be closed any time and the resource returned from the init
+	 * lambda will be properly closed in all different race conditions.
+	 * <p>
+	 * This object is the lock for the state machine changes. State changes are
+	 * guaranteed to happen inside this lock. Both the init and the close are
+	 * done outside the lock.
+	 * <p>
+	 * There is an option to wait for the closing of the resource: syncClose.
+	 * Sometimes resources are singletons and it is important to have properly
+	 * shut them down to ensure that a new version would not run into a problem.
+	 * For example, if the resource uses a socket on a fixed port, it is
+	 * mandatory that the init & close cannot overlap. However, if the resource
+	 * is not a singleton, it is more efficient to close it on the thread.
 	 *
-	 * @param init the initialization function
-	 * @param syncClose true indicates that close will with for initialization &
-	 *            its close to finish before it has started. Otherwise this is
-	 *            done in the background
+	 * @param init
+	 *            the initialization function
+	 * @param syncClose if true, wait for the close to finish on the close call
 	 */
 	public InitClose(Supplier<AutoCloseable> init, boolean syncClose) {
 		Objects.requireNonNull(init, "init");
@@ -83,77 +91,60 @@ public class InitClose implements AutoCloseable, Runnable {
 	@Override
 	public void run() {
 		start();
+
 		AutoCloseable c;
 		try {
 			c = init.get();
 		} catch (Exception e) {
 			throw error("exception in the initialization " + e);
 		}
+
 		if (c == null)
 			throw error("expected a non null value");
+
 		set(c);
 	}
 
-	/*
-	 * Start event.
-	 */
 	synchronized void start() {
 		switch (state) {
-			case INITIAL :
-				this.state = State.BUSY;
-				this.thread = Thread.currentThread();
-				return;
+		case INITIAL:
+			this.state = State.BUSY;
+			this.thread = Thread.currentThread();
+			return;
 
-			case ERRORED :
-			case CLOSED :
-				// ignore, we got closed before we got in the background
-				// thread
-				return;
+		case ERRORED:
+		case CLOSED:
+			return;
 
-			default :
-				throw error("unknown state");
+		default:
+			throw error("unknown state");
 		}
 	}
 
 	void set(AutoCloseable c) {
 		synchronized (this) {
 			switch (state) {
-				case BUSY :
-					this.result = c;
-					this.thread = null;
-					this.state = State.ACTIVE;
-					return;
+			case BUSY:
+				this.result = c;
+				this.thread = null;
+				this.state = State.ACTIVE;
+				return;
 
-				case SYNCING_CLOSE :
-					this.result = null;
-					this.thread = null;
-					break; // <-------------- close it
+			case SYNCING_CLOSE:
+				this.result = null;
+				this.thread = null;
+				break; // <-------------- close it
 
-				case ERRORED :
-				case CLOSED :
-					break; // <-------------- close it
+			case ERRORED:
+			case CLOSED:
+				break; // <-------------- close it
 
-				default :
-					throw error("unexpected state");
+			default:
+				throw error("unexpected state");
 			}
 		}
 		close(c);
-		synchronized (this) {
-			switch (state) {
-				case SYNCING_CLOSE :
-					this.state = State.CLOSED;
-					notifyAll();
-					return;
-
-				case ERRORED :
-				case CLOSED :
-					return;
-
-				default :
-					throw error("unexpected state");
-			}
-		}
-
+		terminate();
 	}
 
 	@Override
@@ -162,48 +153,54 @@ public class InitClose implements AutoCloseable, Runnable {
 		synchronized (this) {
 			switch (state) {
 
-				case ACTIVE :
-					c = result;
-					result = null;
-					if (syncClose) {
-						state = State.SYNCING_CLOSE;
-					} else
-						state = State.CLOSED;
-					break; // <----------------
+			case ACTIVE:
+				c = result;
+				result = null;
+				if (syncClose) {
+					state = State.SYNCING_CLOSE;
+				} else
+					state = State.CLOSED;
+				break; // <---------------- close it
 
-				case BUSY :
-					if (syncClose) {
-						state = State.SYNCING_CLOSE;
-						thread.interrupt();
-						while (state == State.SYNCING_CLOSE)
-							wait();
-					} else {
-						thread.interrupt();
-						state = State.CLOSED;
-					}
-					return;
+			case BUSY:
+				if (syncClose) {
+					state = State.SYNCING_CLOSE;
+					thread.interrupt();
+					while (state == State.SYNCING_CLOSE)
+						wait();
+				} else {
+					thread.interrupt();
+					thread = null;
+					state = State.CLOSED;
+				}
+				return;
 
-				case ERRORED :
-				case CLOSED :
-					return;
+			case ERRORED:
+			case CLOSED:
+				return;
 
-				default :
-					throw error("unexpected state");
+			default:
+				throw error("unexpected state");
 			}
 		}
 		close(c);
+		terminate();
+	}
+
+	void terminate() {
 		synchronized (this) {
 			switch (state) {
-				case SYNCING_CLOSE :
-					state = State.CLOSED;
-					return;
+			case SYNCING_CLOSE:
+				state = State.CLOSED;
+				notifyAll();
+				return;
 
-				case ERRORED :
-				case CLOSED :
-					return;
+			case ERRORED:
+			case CLOSED:
+				return;
 
-				default :
-					throw error("unknown state");
+			default:
+				throw error("unknown state");
 			}
 		}
 	}
@@ -219,7 +216,7 @@ public class InitClose implements AutoCloseable, Runnable {
 		}
 	}
 
-	private IllegalStateException error(String string) {
+	synchronized IllegalStateException error(String string) {
 		this.message = string;
 		this.state = State.ERRORED;
 		return new IllegalStateException(string);

@@ -35,4 +35,14 @@ public interface AggregateConstants {
 	 * services. The suffix must be a service type name.
 	 */
 	String	PREFIX_TO_ADJUST				= "aggregate.adjust.";
+
+	/**
+	 * Implementation name
+	 */
+	String	IMPLEMENTATION_NAME				= "biz.aQute.aggregate";
+
+	/**
+	 * Implementation name
+	 */
+	String	API_VERSION						= "1.0";
 }

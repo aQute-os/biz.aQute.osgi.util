@@ -1,4 +1,4 @@
-package biz.aQute.aggregate.provider;
+package biz.aQute.osgi.concurrency.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -13,7 +13,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 
 import aQute.lib.exceptions.RunnableWithException;
-import biz.aQute.aggregate.provider.InitClose.State;
+import biz.aQute.osgi.concurrency.util.InitClose.State;
 
 public class InitCloseTest {
 	static ExecutorService es = Executors.newCachedThreadPool();

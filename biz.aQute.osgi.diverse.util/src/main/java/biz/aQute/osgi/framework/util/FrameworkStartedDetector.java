@@ -1,4 +1,4 @@
-package biz.aQute.aggregate.provider;
+package biz.aQute.osgi.framework.util;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

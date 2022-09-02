@@ -16,20 +16,27 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.BundleTracker;
 
-import biz.aQute.aggregate.provider.FrameworkStartedDetector.Reason;
+import biz.aQute.aggregate.api.Aggregate;
+import biz.aQute.aggregate.api.AggregateImplementation;
 import biz.aQute.aggregate.provider.TrackedBundle.ServiceInfo;
+import biz.aQute.hlogger.util.HLogger;
+import biz.aQute.osgi.concurrency.util.InitClose;
+import biz.aQute.osgi.framework.util.FrameworkStartedDetector;
+import biz.aQute.osgi.framework.util.FrameworkStartedDetector.Reason;
 
 /**
  * A component that will analyze the active bundles for how many services they
- * will register and finds special services that are an Iterable over these
+ * will register and finds special services that are an Aggregate<S> over these
  * services.
  */
 @SuppressWarnings({
 	"rawtypes", "unchecked"
 })
 @Component(property = "condition=true", service = AggregateState.class)
+@AggregateImplementation
 public class AggregateState {
-
+	final static Class					ARCHETYPE		= Aggregate.class;
+	final static HLogger				logger			= HLogger.root(AggregateState.class.getSimpleName());
 	final BundleContext					context;
 	final BundleTracker<AutoCloseable>	tracker;
 	final Map<Class, TrackedService>	trackedServices	= new HashMap<Class, TrackedService>();
@@ -60,13 +67,17 @@ public class AggregateState {
 	}
 
 	AutoCloseable init() {
+		logger.debug("starting initialization");
 		Reason reason = fsd.waitForStart();
-		if (reason == Reason.INTERRUPTED)
+		if (reason == Reason.INTERRUPTED) {
+			logger.debug("interrupted");
 			return () -> {};
+		}
+		logger.debug("framework started with %s", reason);
 
 		tracker.open();
 		inited = true;
-		System.out.println("tracker open, seen all bundles");
+		logger.debug("tracker opened");
 		return () -> tracker.close();
 	}
 
@@ -75,27 +86,31 @@ public class AggregateState {
 		synchronized (this) {
 			closed = true;
 		}
+		logger.debug("closing");
 		close(opentracker);
 		trackedServices.values()
 			.forEach(TrackedService::close);
 		executor.shutdown();
 		executor.awaitTermination(10, TimeUnit.SECONDS);
+		logger.debug("closed");
 	}
 
 	synchronized AutoCloseable add(Bundle bundle) {
-		if (closed)
+		if (closed) {
 			return null;
+		}
 
 		TrackedBundle trackedBundle = TrackedBundle.create(bundle);
 		if (trackedBundle == null)
 			return null;
 		bundles.add(trackedBundle);
+		trackedBundle.logger.debug("started");
 
 		for (ServiceInfo info : trackedBundle.infos.values()) {
 			TrackedService trackedService = trackedServices.computeIfAbsent(info.serviceType,
 				st -> new TrackedService(this, st));
 
-			trackedService.add(info);
+			trackedService.add(bundle, info);
 		}
 		return () -> remove(trackedBundle);
 	}
@@ -105,16 +120,20 @@ public class AggregateState {
 			return;
 
 		bundles.remove(trackedBundle);
+		trackedBundle.logger.debug("stopped");
 		for (ServiceInfo info : trackedBundle.infos.values()) {
 			TrackedService trackedService = trackedServices.get(info.serviceType);
-			if (trackedService.remove(info)) {
+			if (trackedService.remove(trackedBundle.bundle, info)) {
+				logger.debug("purging %s", trackedService);
 				TrackedService removed = trackedServices.remove(trackedService.serviceType);
 				removed.close();
 			}
 		}
+		trackedBundle.close();
 	}
 
 	void schedule(Runnable run, long delay) {
+		logger.debug("scheduled");
 		synchronized (this) {
 			if (!closed) {
 				if (delay == 0)
@@ -124,7 +143,7 @@ public class AggregateState {
 				return;
 			}
 		}
-		run.run();
+		assert false : "should not schedule stuff after close";
 	}
 
 	boolean holdsLock() {

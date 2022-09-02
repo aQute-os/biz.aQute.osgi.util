@@ -1,4 +1,4 @@
-package biz.aQute.aggregate.provider;
+package biz.aQute.osgi.framework.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,11 +16,10 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.startlevel.BundleStartLevel;
-import org.osgi.framework.startlevel.FrameworkStartLevel;
 
 import aQute.launchpad.Launchpad;
 import aQute.launchpad.LaunchpadBuilder;
-import biz.aQute.aggregate.provider.FrameworkStartedDetector.Reason;
+import biz.aQute.osgi.framework.util.FrameworkStartedDetector.Reason;
 
 public class FrameworkStartedDetectorTest {
 	static ExecutorService es = Executors.newCachedThreadPool();
@@ -55,10 +54,6 @@ public class FrameworkStartedDetectorTest {
 		try (Launchpad lp = builder.nostart()
 			.set(Constants.FRAMEWORK_BEGINNING_STARTLEVEL, "51")
 			.create()) {
-			FrameworkStartLevel fwsl = lp.getBundleContext()
-				.getBundle(0L)
-				.adapt(FrameworkStartLevel.class);
-
 
 			FrameworkStartedDetector fsd = new FrameworkStartedDetector(lp.getBundleContext());
 			CountDownLatch cl = new CountDownLatch(1);
@@ -106,7 +101,7 @@ public class FrameworkStartedDetectorTest {
 
 			System.out.println("fw started");
 
-			Bundle b1 = lp.bundle()
+			lp.bundle()
 				.header("Aggregate", "foo=1")
 				.bundleActivator(Act.class)
 				.start();
@@ -140,7 +135,7 @@ public class FrameworkStartedDetectorTest {
 
 			System.out.println("fw started");
 
-			Bundle b1 = lp.bundle()
+			lp.bundle()
 				.header("Aggregate", "foo=1")
 				.bundleActivator(Act.class)
 				.start();

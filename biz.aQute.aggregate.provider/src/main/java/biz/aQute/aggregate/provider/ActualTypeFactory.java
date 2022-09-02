@@ -11,7 +11,7 @@ import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
-import biz.aQute.aggregate.provider.TrackedService.ActualTypeRegistration;
+import biz.aQute.aggregate.provider.TrackedService.ActualType;
 
 /**
  * A Service Factory that will lazily create a ServiceTracker to track the
@@ -22,14 +22,14 @@ import biz.aQute.aggregate.provider.TrackedService.ActualTypeRegistration;
 	"rawtypes", "unchecked"
 })
 class ActualTypeFactory implements ServiceFactory {
-	final ActualTypeRegistration		atr;
+	final ActualType					atr;
 	final Map<Bundle, ServiceTracker>	trackers	= new HashMap<>();
 	final Class							serviceType;
 	final AggregateState				state;
 	ServiceRegistration					reg;
 	boolean								closed;
 
-	ActualTypeFactory(ActualTypeRegistration registration, AggregateState state, Class serviceType) {
+	ActualTypeFactory(ActualType registration, AggregateState state, Class serviceType) {
 		this.atr = registration;
 		this.state = state;
 		this.serviceType = serviceType;
@@ -47,7 +47,7 @@ class ActualTypeFactory implements ServiceFactory {
 			if (m.getDeclaringClass() == Object.class) {
 				return m.invoke(ActualTypeFactory.this, a);
 			}
-			if (Iterable.class.isAssignableFrom(m.getDeclaringClass())) {
+			if (Collection.class.isAssignableFrom(m.getDeclaringClass())) {
 				ServiceTracker tracker = getTracked(bundle);
 				Collection values;
 				if (tracker == null)
@@ -57,6 +57,7 @@ class ActualTypeFactory implements ServiceFactory {
 						.values();
 				return m.invoke(values, a);
 			}
+			atr.logger.error("invalid invocation for method %s", m);
 			throw new UnsupportedOperationException("This was registered as an indication of the aggregate state for "
 				+ serviceType + ". It does not support any impl.");
 		});
@@ -75,6 +76,7 @@ class ActualTypeFactory implements ServiceFactory {
 			tracker = new ServiceTracker(bundle.getBundleContext(), serviceType, null);
 			trackers.put(bundle, tracker);
 		}
+		atr.logger.debug("opening tracker for bundle [%s]", bundle.getBundleId());
 		tracker.open();
 		return tracker;
 	}
@@ -87,6 +89,7 @@ class ActualTypeFactory implements ServiceFactory {
 			if (remove == null)
 				return;
 		}
+		atr.logger.debug("closing tracker for bundle [%s]", bundle);
 		remove.close();
 	}
 
@@ -96,6 +99,7 @@ class ActualTypeFactory implements ServiceFactory {
 				return;
 			closed = true;
 		}
+		atr.logger.debug("closing service factory");
 		reg.unregister();
 		assert trackers.isEmpty();
 	}

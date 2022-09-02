@@ -1,0 +1,14 @@
+-buildpath: \
+	osgi.core,\
+	osgi.annotation,\
+	org.osgi.namespace.implementation,\
+	slf4j.api
+-testpath: \
+	org.assertj.core,\
+	biz.aQute.wrapper.junit,\
+    biz.aQute.wrapper.hamcrest,\
+	biz.aQute.launchpad,\
+	org.awaitility,\
+	slf4j.api,\
+	slf4j.simple,\
+	aQute.libg
