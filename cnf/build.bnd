@@ -84,5 +84,5 @@ usr = ${env;REPOSITORY_USERNAME;}
 -buildtool: \
     gradle; \
         version=7.3.0; \
-        bnd_version=6.1.0; \
+        bnd_version=6.4.0-SNAPSHOT; \
         bnd_snapshots=https://bndtools.jfrog.io/bndtools/libs-snapshot-local
