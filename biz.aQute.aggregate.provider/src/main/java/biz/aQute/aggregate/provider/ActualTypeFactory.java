@@ -1,9 +1,11 @@
 package biz.aQute.aggregate.provider;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.Bundle;
@@ -11,6 +13,7 @@ import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
+import biz.aQute.aggregate.api.Aggregate;
 import biz.aQute.aggregate.provider.TrackedService.ActualType;
 
 /**
@@ -23,11 +26,12 @@ import biz.aQute.aggregate.provider.TrackedService.ActualType;
 })
 class ActualTypeFactory implements ServiceFactory {
 	final ActualType					atr;
-	final Map<Bundle, ServiceTracker>	trackers	= new HashMap<>();
+	final Map<Bundle, ServiceTracker>	trackers		= new HashMap<>();
 	final Class							serviceType;
 	final AggregateState				state;
 	ServiceRegistration					reg;
 	boolean								closed;
+	Method								GET_SERVICES	= null;
 
 	ActualTypeFactory(ActualType registration, AggregateState state, Class serviceType) {
 		this.atr = registration;
@@ -47,21 +51,30 @@ class ActualTypeFactory implements ServiceFactory {
 			if (m.getDeclaringClass() == Object.class) {
 				return m.invoke(ActualTypeFactory.this, a);
 			}
-			if (Collection.class.isAssignableFrom(m.getDeclaringClass())) {
+			if (m == GET_SERVICES || isGetServices(m)) {
 				ServiceTracker tracker = getTracked(bundle);
-				Collection values;
+				List values;
 				if (tracker == null)
 					values = Collections.emptyList();
 				else
-					values = tracker.getTracked()
-						.values();
-				return m.invoke(values, a);
+					values = new ArrayList(tracker.getTracked()
+						.values());
+				return values;
 			}
 			atr.logger.error("invalid invocation for method %s", m);
 			throw new UnsupportedOperationException("This was registered as an indication of the aggregate state for "
 				+ serviceType + ". It does not support any impl.");
 		});
 		return instance;
+	}
+
+	private synchronized boolean isGetServices(Method m) {
+		if (m.getDeclaringClass() == Aggregate.class && m.getName()
+			.equals("getServices") && m.getReturnType() == List.class && m.getParameterCount() == 0) {
+			GET_SERVICES = m;
+			return true;
+		}
+		return false;
 	}
 
 	private ServiceTracker getTracked(Bundle bundle) {

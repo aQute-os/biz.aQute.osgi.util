@@ -160,7 +160,7 @@ public class AggregateStateTest {
 			assertThat(aggReq1.list).hasSize(3);
 
 			int n = 0;
-			for (IF x : ref1.get().iff) {
+			for (IF x : ref1.get().iff.getServices()) {
 				assertThat(x).isNotNull();
 				n++;
 			}
@@ -182,7 +182,7 @@ public class AggregateStateTest {
 			assertThat(ar.isSatisfied()).isTrue();
 
 			n = 0;
-			for (IF x : ref1.get().iff) {
+			for (IF x : ref1.get().iff.getServices()) {
 				assertThat(x).isNotNull();
 				n++;
 			}
@@ -215,7 +215,7 @@ public class AggregateStateTest {
 				.getServiceReference(AggIF1.class) != null);
 
 			n = 0;
-			for (IF x : ref1.get().iff) {
+			for (IF x : ref1.get().iff.getServices()) {
 				assertThat(x).isNotNull();
 				n++;
 			}
