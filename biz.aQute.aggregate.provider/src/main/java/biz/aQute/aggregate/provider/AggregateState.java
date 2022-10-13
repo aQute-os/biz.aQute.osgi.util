@@ -32,7 +32,7 @@ import biz.aQute.osgi.framework.util.FrameworkStartedDetector.Reason;
 @SuppressWarnings({
 	"rawtypes", "unchecked"
 })
-@Component(property = "condition=true", service = AggregateState.class)
+@Component(property = "condition=true", service = AggregateState.class, immediate = true)
 @AggregateImplementation
 public class AggregateState {
 	final static Class					ARCHETYPE		= Aggregate.class;

@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
@@ -23,15 +25,15 @@ import biz.aQute.hlogger.util.HLogger;
 })
 class TrackedService {
 
-	final AggregateState			state;
-	final HLogger					logger;
-	final Map<Class, ActualType>	actualTypes			= new HashMap<>();
-	final Map<Bundle, BundleInfo>	bundleInfos			= new HashMap<>();
-	final Class						serviceType;
+	final AggregateState									state;
+	final HLogger											logger;
+	final Map<Class, ActualType>							actualTypes			= new HashMap<>();
+	final Map<Bundle, BundleInfo>							bundleInfos			= new HashMap<>();
+	final Class												serviceType;
 	final ServiceTracker<Object, ServiceReference<Object>>	tracker;
-	final int						override;
+	final int												override;
 
-	int								registeredServices	= 0;
+	int														registeredServices	= 0;
 
 	class BundleInfo {
 		final Bundle				bundle;
@@ -116,7 +118,9 @@ class TrackedService {
 			logger.debug("registering %s", actualType);
 			try {
 				ActualTypeFactory instance = new ActualTypeFactory(this, state, serviceType);
-				ServiceRegistration reg = state.context.registerService(actualType.getName(), instance, null);
+				Bundle bundle = FrameworkUtil.getBundle(actualType);
+				BundleContext context = bundle == null ? state.context : bundle.getBundleContext();
+				ServiceRegistration reg = context.registerService(actualType.getName(), instance, null);
 				synchronized (state) {
 					instance.reg = reg;
 					if (!state.closed) {

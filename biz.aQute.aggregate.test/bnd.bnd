@@ -1,0 +1,24 @@
+#
+# biz.aQute.aggregate.test PROVIDER BUNDLE
+#
+
+-buildpath: \
+	osgi.annotation,\
+	org.osgi.service.component.annotations,\
+	org.osgi.framework,\
+	org.osgi.resource,\
+	slf4j.api,\
+	biz.aQute.api.aggregate,\
+    biz.aQute.osgi.diverse.util;version=snapshot
+
+-testpath: \
+	biz.aQute.wrapper.junit,\
+	biz.aQute.wrapper.hamcrest,\
+	org.assertj.core,\
+	biz.aQute.launchpad,\
+	org.osgi.util.tracker,\
+    org.osgi.dto,\
+	org.awaitility,\
+	slf4j.simple
+
+-sub: *.bnd
