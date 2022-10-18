@@ -145,13 +145,11 @@ public class FrameworkStartedDetector {
 
 	void bundleChanged(BundleEvent event) {
 		lastModified = System.nanoTime();
-		System.out.println("got a new time");
 	}
 
 	void frameworkEvent(FrameworkEvent event) {
 		switch (event.getType()) {
 			case FrameworkEvent.STARTED :
-				System.out.println("got STARTED from fw");
 				started.countDown();
 				break;
 		}
