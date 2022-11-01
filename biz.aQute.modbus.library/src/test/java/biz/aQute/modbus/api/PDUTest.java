@@ -25,11 +25,18 @@ public class PDUTest {
 
 	@Test
 	public void testFlip() {
-		for (boolean forByte : new boolean[] { false, true }) {
-			for (boolean forWord : new boolean[] { false, true }) {
-				PDU pdu = new PDU.Builder().bigByteEndian(forByte).bigWordEndian(forWord).size(100).offset(10)
-						.capacity(20)
-						.build();
+		for (boolean forByte : new boolean[] {
+			false, true
+		}) {
+			for (boolean forWord : new boolean[] {
+				false, true
+			}) {
+				PDU pdu = new PDU.Builder().bigByteEndian(forByte)
+					.bigWordEndian(forWord)
+					.size(100)
+					.offset(10)
+					.capacity(20)
+					.build();
 				pdu.putU8(0);
 				assertThat(pdu.position()).isEqualTo(1);
 				assertThat(pdu.absPosition).isEqualTo(11);
@@ -58,13 +65,22 @@ public class PDUTest {
 
 	@Test
 	public void testSignsGetFixed() {
-		for (int offset : new int[] { 10, 0, 3 }) {
+		for (int offset : new int[] {
+			10, 0, 3
+		}) {
 			System.out.println("offset " + offset);
-			for (boolean forByte : new boolean[] { false, true }) {
-				for (boolean forWord : new boolean[] { false, true }) {
+			for (boolean forByte : new boolean[] {
+				false, true
+			}) {
+				for (boolean forWord : new boolean[] {
+					false, true
+				}) {
 
-					PDU pdu = new PDU.Builder().bigByteEndian(forByte).bigWordEndian(forWord).size(100).offset(offset)
-							.build();
+					PDU pdu = new PDU.Builder().bigByteEndian(forByte)
+						.bigWordEndian(forWord)
+						.size(100)
+						.offset(offset)
+						.build();
 
 					pdu.putU8(255);
 					assertThat(pdu.position()).isEqualTo(1);
@@ -121,10 +137,17 @@ public class PDUTest {
 
 	@Test
 	public void testSignsPutFixed() {
-		for (boolean forByte : new boolean[] { false, true }) {
-			for (boolean forWord : new boolean[] { false, true }) {
+		for (boolean forByte : new boolean[] {
+			false, true
+		}) {
+			for (boolean forWord : new boolean[] {
+				false, true
+			}) {
 
-				PDU pdu = new PDU.Builder().bigByteEndian(forByte).bigWordEndian(forWord).size(100).build();
+				PDU pdu = new PDU.Builder().bigByteEndian(forByte)
+					.bigWordEndian(forWord)
+					.size(100)
+					.build();
 
 				pdu.putU8(0, 255);
 				assertThat(pdu.getU8()).isEqualTo(255);
@@ -225,7 +248,12 @@ public class PDUTest {
 
 	@Test
 	public void testCopyConstructor() {
-		PDU pdu = new PDU.Builder().bigByteEndian(true).bigWordEndian(true).offset(12).capacity(15).size(20).build();
+		PDU pdu = new PDU.Builder().bigByteEndian(true)
+			.bigWordEndian(true)
+			.offset(12)
+			.capacity(15)
+			.size(20)
+			.build();
 		pdu.putU16(0x0102);
 		PDU copy = pdu.duplicate();
 
@@ -247,7 +275,10 @@ public class PDUTest {
 		assertThat(b.bits()).isEqualTo(30);
 		assertThat(b.byteWidth()).isEqualTo(4);
 
-		b.put(false).put(true).put(false).put(true);
+		b.put(false)
+			.put(true)
+			.put(false)
+			.put(true);
 
 		b.put(16, true);
 
@@ -268,7 +299,10 @@ public class PDUTest {
 		assertThat(b.bits()).isEqualTo(30);
 		assertThat(b.byteWidth()).isEqualTo(4);
 
-		b.put(false).put(true).put(false).put(true);
+		b.put(false)
+			.put(true)
+			.put(false)
+			.put(true);
 
 		b.put(16, true);
 
@@ -301,6 +335,82 @@ public class PDUTest {
 		pdu.seal();
 
 		assertThatThrownBy(pdu::seal).isInstanceOf(IllegalStateException.class);
+	}
+
+	@Test
+	public void testGet() {
+		PDU pdu = new PDU(100);
+		pdu.putU32(0xFF00FF00L);
+		byte[] bs = pdu.seal()
+			.get();
+		assertThat(bs.length).isEqualTo(4);
+		assertThat(bs[0]).isEqualTo((byte) -1);
+		assertThat(bs[1]).isEqualTo((byte) 0);
+		assertThat(bs[2]).isEqualTo((byte) -1);
+		assertThat(bs[3]).isEqualTo((byte) 0);
+
+		int i8 = pdu.getI8();
+		assertThat(i8).isEqualTo(-1);
+		bs = pdu.get();
+		assertThat(bs.length).isEqualTo(3);
+		assertThat(bs[0]).isEqualTo((byte) 0);
+		assertThat(bs[1]).isEqualTo((byte) -1);
+		assertThat(bs[2]).isEqualTo((byte) 0);
+
+		bs = pdu.get(1, 1);
+		assertThat(bs.length).isEqualTo(1);
+		assertThat(bs[0]).isEqualTo((byte) 0);
+	}
+
+	@Test
+	public void testCopy() {
+		PDU p1 = new PDU(100);
+		p1.putU32(0xFF00FF00L);
+
+		PDU p2 = new PDU(100);
+		p2.putU8(1);
+
+		p2.copy(p1, 1, 2);
+		assertThat(p2.position()).isEqualTo(3);
+
+		byte[] bs = p2.seal()
+			.get();
+		assertThat(bs.length).isEqualTo(3);
+		assertThat(bs[0]).isEqualTo((byte) 1);
+		assertThat(bs[1]).isEqualTo((byte) 0);
+		assertThat(bs[2]).isEqualTo((byte) -1);
+
+		PDU pdu = new PDU(100);
+		pdu.copy(p1.seal());
+		assertThat(pdu.limit()).isEqualTo(4);
+		assertThat(pdu.get()).isEqualTo(p1.get());
+
+	}
+
+	@Test
+	public void testSlice() {
+		PDU p1 = new PDU.Builder().bigByteEndian(false)
+			.bigWordEndian(false)
+			.size(100)
+			.build();
+		p1.putU32(0x01020304);
+		byte[] bs = p1.seal()
+			.get();
+
+		assertThat(bs.length).isEqualTo(4);
+		assertThat(bs[0]).isEqualTo((byte) 4);
+		assertThat(bs[1]).isEqualTo((byte) 3);
+		assertThat(bs[2]).isEqualTo((byte) 2);
+		assertThat(bs[3]).isEqualTo((byte) 1);
+
+		p1.getU16();
+		PDU p2 = p1.slice();
+		assertThat(p2.bigByteEndian).isEqualTo(false);
+		assertThat(p2.bigWordEndian).isEqualTo(false);
+
+		assertThat(p2.position()).isEqualTo(0);
+		assertThat(p2.limit()).isEqualTo(2);
+		assertThat(p2.getU16()).isEqualTo(0x0102);
 	}
 
 }

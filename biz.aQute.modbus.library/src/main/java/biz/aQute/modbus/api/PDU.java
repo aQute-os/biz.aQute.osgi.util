@@ -1035,4 +1035,34 @@ public class PDU {
 		return new Builder().size(size);
 	}
 
+	public byte[] get() {
+		return get(position(), limit() - position());
+	}
+
+	public byte[] get(int position, int length) {
+		assert length >= 0;
+		byte[] data = new byte[length];
+		for (int i = 0; i < length; i++)
+			data[i] = (byte) getU8(position + i);
+
+		return data;
+	}
+
+	public void copy(PDU p1) {
+		copy(p1, p1.position(), p1.limit() - p1.position());
+	}
+
+	public void copy(PDU pdu, int position, int length) {
+		assert length >= 0;
+		for (int i = 0; i < length; i++) {
+			putU8(pdu.getU8(position + i));
+		}
+	}
+
+	public PDU slice() {
+		byte[] data = get();
+		return new PDU(data, 0, data.length, bigByteEndian, bigWordEndian);
+	}
+
+
 }
