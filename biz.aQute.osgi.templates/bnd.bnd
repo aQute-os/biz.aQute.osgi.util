@@ -2,7 +2,9 @@
 src:                    src/main/java
 -workingset             base
 -buildpath: \
-	org.osgi.service.metatype.annotations
+	org.osgi.service.metatype.annotations, \
+    org.osgi.annotation.bundle
+    
 -privatepackage:        biz.aQute.osgi.templates
 -resourceonly:          true
 -includeresource:       src/main/resources
