@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import org.awaitility.Awaitility;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -81,9 +82,9 @@ public class SchedulerBundleTest {
 			assertThat(service).isNotPresent();
 
 			System.out.println("Wait for 3 seconds to see if the cron job is activated");
-			active = TestCleanup.present.tryAcquire(1, 3000, TimeUnit.MILLISECONDS);
-			assertFalse(active);
-
+			Thread.sleep(3000);
+			assertThat(TestCleanup.present.availablePermits()).isEqualTo(0);
+			System.out.println("done");
 		}
 	}
 }
