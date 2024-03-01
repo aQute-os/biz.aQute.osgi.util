@@ -27,6 +27,17 @@ import aQute.bnd.exceptions.Exceptions;
 import aQute.lib.io.IO;
 import biz.aQute.gogo.commands.dtoformatter.DTOFormatter;
 
+@org.osgi.annotation.bundle.Capability(
+    namespace = "org.apache.felix.gogo",
+    name = "command.implementation",
+    version = "1.0.0"
+)
+@org.osgi.annotation.bundle.Requirement(
+    effective = "active",
+    namespace = "org.apache.felix.gogo",
+    name = "runtime.implementation",
+    version = "1.0.0"
+)
 public class Activator implements BundleActivator {
 
 	final Set<Closeable>	closeables	= new HashSet<>();
