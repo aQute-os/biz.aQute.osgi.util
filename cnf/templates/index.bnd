@@ -1,0 +1,6 @@
+repo  = aQute-os/biz.aQute.osgi.util
+-workspace-templates \
+    ${place}/cnf/templates; \
+        name=OSGi Utils; \
+        description="Utilties designed to work well with OSGi. From MQTT, Python, Kibana, SSH, JNA, ..."
+

@@ -1,0 +1,9 @@
+biz.aQute.osgi.util.version=1.10.0
+
+-plugin.biz.aQute.osgi.util \
+        aQute.bnd.repository.maven.provider.MavenBndRepository;\
+        name                = "biz.aQute.osgi.util";\
+        releaseUrl          ='https://repo.maven.apache.org/maven2,https://jcenter.bintray.com/';\
+        snapshotUrl         ='https://oss.sonatype.org/content/repositories/snapshots/,https://bndtools.jfrog.io/bndtools/update';\
+        readOnly            =true; \
+        index               = ${.}/biz.aQute.osgi.util.mvn

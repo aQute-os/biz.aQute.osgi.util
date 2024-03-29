@@ -1,0 +1,3 @@
+-tool \
+    index.bnd;ignore=true, \
+    *
