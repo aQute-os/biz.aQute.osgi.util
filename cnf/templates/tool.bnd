@@ -1,3 +1,3 @@
 -tool \
-    index.bnd;ignore=true, \
+    index.bnd;skip=true, \
     *
