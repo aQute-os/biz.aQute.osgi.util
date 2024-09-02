@@ -8,7 +8,7 @@
 	bnd.identity;id='org.apache.felix.log',\
 	bnd.identity;id='org.apache.felix.http.jetty',\
 	bnd.identity;id='biz.aQute.gogo.commands.provider.test'
--runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
 -runee: JavaSE-1.8
 -runbundles: \
 	biz.aQute.gogo.commands.provider;version=snapshot,\

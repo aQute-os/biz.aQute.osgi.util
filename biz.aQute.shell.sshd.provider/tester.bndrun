@@ -13,7 +13,7 @@
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)',\
 	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.log)'
--runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
 -runee: JavaSE-1.8
 -runbundles: \
 	biz.aQute.shell.sshd.provider;version=snapshot,\

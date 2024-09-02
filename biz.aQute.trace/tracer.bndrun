@@ -11,8 +11,8 @@
 x=    aQute.trace.extra= \
         org.apache.felix.scr.impl.inject.methods.ActivateMethod:doFindMethod:DS, \
         
-//-runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
--runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+//-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
 
 
 -runsystempackages: sun.misc

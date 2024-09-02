@@ -1,6 +1,6 @@
 -runpath: slf4j.simple, slf4j.api
 -resolve: cache
--runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
 -runee: JavaSE-1.8
 -runrequires: \
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.scr)',\

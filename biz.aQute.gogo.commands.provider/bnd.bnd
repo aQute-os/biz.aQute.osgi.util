@@ -33,7 +33,7 @@ DynamicImport-Package   *
 	osgi.identity;filter:='(osgi.identity=biz.aQute.gogo.commands.provider)'
 -runpath: biz.aQute.osgi.logger.forwarder
 
--runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
 -runbundles: \
 	org.apache.felix.gogo.command;version='[1.1.0,1.1.1)',\
 	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\

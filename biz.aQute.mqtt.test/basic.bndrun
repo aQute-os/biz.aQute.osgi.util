@@ -4,7 +4,7 @@
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.configadmin)'
 
 -runpath: slf4j.api, slf4j.simple
--runfw: org.apache.felix.framework;version='[6.0.2,6.0.2]'
+-runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
 -runee: JavaSE-1.8
 -runbundles: \
 	biz.aQute.api.broker;version=snapshot,\
@@ -13,5 +13,6 @@
 	org.osgi.util.function;version='[1.1.0,1.1.1)',\
 	org.osgi.util.promise;version='[1.1.1,1.1.2)',\
 	org.apache.felix.configadmin;version='[1.9.12,1.9.13)',\
-	org.apache.felix.scr;version='[2.1.30,2.1.31)'
+	org.apache.felix.scr;version='[2.1.30,2.1.31)',\
+	com.h2database;version='[1.4.198,1.4.199)'
 -resolve: auto
