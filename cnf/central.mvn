@@ -150,7 +150,7 @@ net.java.dev.jna:jna:4.5.2
 org.apache.sshd:sshd-osgi:2.5.1
 
 org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5
-io.moquette:moquette-broker:0.14
+io.moquette:moquette-broker:0.15
 io.netty:netty-all:4.1.58.Final
 
 org.apache.aries.rsa:org.apache.aries.rsa.core:1.16.0
