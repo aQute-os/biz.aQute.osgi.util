@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.junit.Test;
 
-import aQute.lib.exceptions.RunnableWithException;
+import aQute.bnd.exceptions.RunnableWithException;
 import aQute.lib.io.IO;
 
 public class ExchangeTest {

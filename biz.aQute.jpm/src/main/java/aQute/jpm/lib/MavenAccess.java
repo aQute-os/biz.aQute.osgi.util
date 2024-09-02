@@ -10,7 +10,7 @@ import org.osgi.util.promise.Promise;
 import org.osgi.util.promise.PromiseFactory;
 
 import aQute.bnd.http.HttpClient;
-import aQute.lib.exceptions.Exceptions;
+import aQute.bnd.exceptions.Exceptions;
 import aQute.lib.io.IO;
 import aQute.maven.api.Archive;
 import aQute.maven.api.Program;
