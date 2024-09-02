@@ -35,7 +35,7 @@ import aQute.osgi.conditionaltarget.api.ConditionalTarget;
 @RunWith(LaunchpadRunner.class)
 public class ConditionalTargetTest {
 
-	static LaunchpadBuilder builder = new LaunchpadBuilder().runfw("org.apache.felix.framework;version=6")
+	static LaunchpadBuilder builder = new LaunchpadBuilder().runfw("org.apache.felix.framework;version=7")
 			.bundles(
 					"org.osgi.util.promise, org.osgi.util.function, org.apache.felix.scr,org.apache.felix.log,org.apache.felix.configadmin, slf4j.api, slf4j.simple, org.assertj.core, org.awaitility, osgi.enroute.hamcrest.wrapper")
 			.debug();
