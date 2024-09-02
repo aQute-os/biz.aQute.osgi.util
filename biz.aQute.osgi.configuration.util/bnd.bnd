@@ -10,7 +10,9 @@ Export-Package: \
 	biz.aQute.osgi.configuration.util,\
 	org.osgi.service.metatype.annotations
 
--conditionalpackage: aQute.lib*
+-conditionalpackage: \
+					aQute.lib*,\
+					aQute.bnd.exceptions
 
 -includeresource: {readme.md}
 

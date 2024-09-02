@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import aQute.lib.exceptions.RunnableWithException;
+import aQute.bnd.exceptions.RunnableWithException;
 import biz.aQute.osgi.concurrency.util.InitClose.State;
 
 public class InitCloseTest {

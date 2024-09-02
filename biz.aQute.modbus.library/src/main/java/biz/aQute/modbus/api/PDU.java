@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Formatter;
 
 import aQute.lib.converter.Converter;
-import aQute.lib.exceptions.Exceptions;
+import aQute.bnd.exceptions.Exceptions;
 
 public class PDU {
 
