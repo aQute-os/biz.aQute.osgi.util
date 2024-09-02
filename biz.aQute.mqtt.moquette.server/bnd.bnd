@@ -18,7 +18,7 @@
 	slf4j.simple
 
 -includeresource @${repo;io.moquette:moquette-broker}
--exportcontents io.moquette.broker;io.moquette.broker.config;io.moquette.interception;version=0.14.0
+-exportcontents io.moquette.broker;io.moquette.broker.config;io.moquette.interception;version=0.15.0
 -conditionalpackage: *
 Import-Package: \
 	com.bugsnag;'resolution:'=optional,\
