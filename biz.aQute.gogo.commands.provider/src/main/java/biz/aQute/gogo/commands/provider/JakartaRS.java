@@ -8,29 +8,29 @@ import java.util.stream.Collectors;
 import org.apache.felix.service.command.Descriptor;
 import org.apache.felix.service.command.Parameter;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.jaxrs.runtime.JaxrsServiceRuntime;
-import org.osgi.service.jaxrs.runtime.dto.ApplicationDTO;
-import org.osgi.service.jaxrs.runtime.dto.ExtensionDTO;
-import org.osgi.service.jaxrs.runtime.dto.FailedApplicationDTO;
-import org.osgi.service.jaxrs.runtime.dto.FailedExtensionDTO;
-import org.osgi.service.jaxrs.runtime.dto.FailedResourceDTO;
-import org.osgi.service.jaxrs.runtime.dto.ResourceDTO;
-import org.osgi.service.jaxrs.runtime.dto.ResourceMethodInfoDTO;
-import org.osgi.service.jaxrs.runtime.dto.RuntimeDTO;
+import org.osgi.service.jakartars.runtime.JakartarsServiceRuntime;
+import org.osgi.service.jakartars.runtime.dto.ApplicationDTO;
+import org.osgi.service.jakartars.runtime.dto.ExtensionDTO;
+import org.osgi.service.jakartars.runtime.dto.FailedApplicationDTO;
+import org.osgi.service.jakartars.runtime.dto.FailedExtensionDTO;
+import org.osgi.service.jakartars.runtime.dto.FailedResourceDTO;
+import org.osgi.service.jakartars.runtime.dto.ResourceDTO;
+import org.osgi.service.jakartars.runtime.dto.ResourceMethodInfoDTO;
+import org.osgi.service.jakartars.runtime.dto.RuntimeDTO;
 import org.osgi.util.tracker.ServiceTracker;
 
 import biz.aQute.gogo.commands.dtoformatter.DTOFormatter;
 
-public class JaxRS {
+public class JakartaRS {
 
-	final ServiceTracker<JaxrsServiceRuntime, JaxrsServiceRuntime>	tracker;
+	final ServiceTracker<JakartarsServiceRuntime, JakartarsServiceRuntime>	tracker;
 	final BundleContext												context;
 
-	public JaxRS(BundleContext context, DTOFormatter formatter) {
+	public JakartaRS(BundleContext context, DTOFormatter formatter) {
 		this.context = context;
 		dtos(formatter);
 		// dtos(formatter);
-		tracker = new ServiceTracker<>(context, JaxrsServiceRuntime.class, null);
+		tracker = new ServiceTracker<>(context, JakartarsServiceRuntime.class, null);
 		tracker.open();
 	}
 
@@ -101,34 +101,34 @@ public class JaxRS {
 
 	}
 
-	private List<JaxrsServiceRuntime> serviceRuntimes() {
+	private List<JakartarsServiceRuntime> serviceRuntimes() {
 
-		return Arrays.asList((JaxrsServiceRuntime[]) tracker.getServices());
+		return Arrays.asList((JakartarsServiceRuntime[]) tracker.getServices());
 	}
 
-	private JaxrsServiceRuntime serviceRuntime() {
+	private JakartarsServiceRuntime serviceRuntime() {
 
 		return tracker.getService();
 	}
 
-	@Descriptor("Show the RuntimeDTO of the JaxrsServiceRuntime")
-	public List<RuntimeDTO> jaxrsruntimes() throws InterruptedException {
+	@Descriptor("Show the RuntimeDTO of the JakartarsServiceRuntime")
+	public List<org.osgi.service.jakartars.runtime.dto.RuntimeDTO> jakartarsruntimes() throws InterruptedException {
 
 		return serviceRuntimes().stream()
-			.map(JaxrsServiceRuntime::getRuntimeDTO)
+			.map(JakartarsServiceRuntime::getRuntimeDTO)
 			.collect(Collectors.toList());
 	}
 
-	@Descriptor("Show the RuntimeDTO of the JaxrsServiceRuntime")
-	public RuntimeDTO jaxrsruntime(@Descriptor("service.id")
+	@Descriptor("Show the RuntimeDTO of the JakartarsServiceRuntime")
+	public RuntimeDTO jakartarsruntime(@Descriptor("service.id")
 	@Parameter(absentValue = "-1", names = "-s")
 	long service_id) throws InterruptedException {
 
-		return runtime(service_id).map(JaxrsServiceRuntime::getRuntimeDTO)
+		return runtime(service_id).map(JakartarsServiceRuntime::getRuntimeDTO)
 			.orElse(null);
 	}
 
-	private Optional<JaxrsServiceRuntime> runtime(long service_id) {
+	private Optional<JakartarsServiceRuntime> runtime(long service_id) {
 
 		if (service_id < 0) {
 			return Optional.ofNullable(serviceRuntime());
@@ -138,7 +138,7 @@ public class JaxRS {
 			.findAny();
 	}
 
-	private static boolean runtimeHasServiceId(JaxrsServiceRuntime runtime, long service_id) {
+	private static boolean runtimeHasServiceId(JakartarsServiceRuntime runtime, long service_id) {
 
 		return service_id == runtime.getRuntimeDTO().serviceDTO.id;
 	}

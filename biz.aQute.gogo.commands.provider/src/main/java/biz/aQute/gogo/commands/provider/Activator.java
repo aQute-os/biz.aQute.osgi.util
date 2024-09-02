@@ -48,6 +48,7 @@ public class Activator implements BundleActivator {
 		register(LoggerAdminCommands.class);
 		register(HTTP.class);
 		register(JaxRS.class);
+		register(JakartaRS.class);
 	}
 
 	private void registerConverter(BundleContext context) {
