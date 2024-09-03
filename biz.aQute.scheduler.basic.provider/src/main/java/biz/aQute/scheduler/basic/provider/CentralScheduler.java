@@ -15,6 +15,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.osgi.annotation.bundle.Capability;
+import org.osgi.namespace.implementation.ImplementationNamespace;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -25,12 +27,14 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.metatype.annotations.Designate;
+import org.osgi.util.converter.Converter;
+import org.osgi.util.converter.Converters;
 import org.osgi.util.promise.Promise;
 import org.osgi.util.promise.PromiseFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aQute.lib.converter.Converter;
+import biz.aQute.scheduler.api.Constants;
 import biz.aQute.scheduler.api.CronJob;
 import biz.aQute.scheduler.api.Task;
 import biz.aQute.scheduler.basic.config.SchedulerConfig;
@@ -48,19 +52,31 @@ import biz.aQute.scheduler.basic.provider.SchedulerImpl.TaskImpl;
 			configurationPolicy = 	ConfigurationPolicy.OPTIONAL,
 			name 				= 	SchedulerConfig.PID
 )
+@Capability(
+			namespace			= ImplementationNamespace.IMPLEMENTATION_NAMESPACE,
+			name				= Constants.SPECIFICATION_NAME,
+			version				= Constants.SPECIFICATION_VERSION
+)
 //@formatter:on
 public class CentralScheduler {
-	final List<Cron>				crons			= new ArrayList<>();
+	
+	final List<ScheduledCronJob>	scheduledCrons	= new ArrayList<>();
 	final static Logger				logger			= LoggerFactory.getLogger(SchedulerImpl.class);
+	final static Converter			converter		= Converters.standardConverter();
 	final ScheduledExecutorService	scheduler;
 	final PromiseFactory			factory;
 	Clock							clock			= Clock.systemDefaultZone();
-	long							shutdownTimeout	= 5000;
+	long							shutdownTimeoutSoft;
+	long							shutdownTimeoutHard;
 	final SchedulerImpl				frameworkTasks	= new SchedulerImpl(this);
 
 	@Activate
 	public CentralScheduler(SchedulerConfig config) {
-		scheduler = Executors.newScheduledThreadPool(50);
+		int corePoolSize = config == null ? SchedulerConfig.COREPOOLSIZE_DEFAUL : config.corePoolSize();
+		shutdownTimeoutSoft = config == null ? SchedulerConfig.SHUTDOWNTIMEOUT_SOFT_DEFAUL : config.shutdownTimeoutSoft();
+		shutdownTimeoutHard = config == null ? SchedulerConfig.SHUTDOWNTIMEOUT_HARD_DEFAUL : config.shutdownTimeoutHard();
+
+		scheduler = Executors.newScheduledThreadPool(corePoolSize);
 		factory = new PromiseFactory(scheduler);
 		modified(config);
 	}
@@ -88,10 +104,11 @@ public class CentralScheduler {
 		frameworkTasks.deactivate();
 		scheduler.shutdown();
 		try {
-			if (scheduler.awaitTermination(500, TimeUnit.MILLISECONDS))
+			if (scheduler.awaitTermination(shutdownTimeoutSoft, TimeUnit.MILLISECONDS)) {
 				return;
+			}
 			logger.info("waiting for scheduler to shutdown");
-			scheduler.awaitTermination(shutdownTimeout, TimeUnit.MILLISECONDS);
+			scheduler.awaitTermination(shutdownTimeoutHard, TimeUnit.MILLISECONDS);
 			if (!scheduler.isTerminated()) {
 				logger.info("forcing shutdown");
 				List<Runnable> shutdownNow = scheduler.shutdownNow();
@@ -123,14 +140,14 @@ public class CentralScheduler {
 		});
 	}
 
-	class Cron {
+	class ScheduledCronJob {
 
-		CronJob	target;
+		CronJob	innerCrobJob;
 		Task	schedule;
 
-		Cron(CronJob target, String cronExpression, String name) throws Exception {
-			this.target = target;
-			this.schedule = frameworkTasks.schedule(target::run, cronExpression, name);
+		ScheduledCronJob(CronJob cronJob, String cronExpression, String name) throws Exception {
+			this.innerCrobJob = cronJob;
+			this.schedule = frameworkTasks.schedule(this.innerCrobJob::run, cronExpression, name);
 		}
 
 		void close() throws IOException {
@@ -162,21 +179,34 @@ public class CentralScheduler {
 	}
 
 	@Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MULTIPLE)
-	void addSchedule(CronJob s, Map<String, Object> map) throws Exception {
-		String name = Converter.cnv(String.class, map.get(CronJob.NAME));
-		String[] schedules = Converter.cnv(String[].class, map.get(CronJob.CRON));
-		if (schedules == null || schedules.length == 0)
-			return;
+	void addSchedule(CronJob cronJob, Map<String, Object> map) throws Exception {
+		String name = converter.convert(map.get(Constants.SERVICE_PROPERTY_CRONJOB_NAME)).to(String.class);
+		String nameOld = converter.convert(map.get(CronJob.NAME)).to(String.class);
+
+		String[] schedules = converter.convert(map.get(Constants.SERVICE_PROPERTY_CRONJOB_CRON)).to(String[].class);
+		String[] schedulesOld = converter.convert(map.get(CronJob.CRON)).to(String[].class);
+
+		if (schedules == null || schedules.length == 0) {
+			if (schedulesOld == null || schedulesOld.length == 0) {
+				return;
+			}
+			schedules = schedulesOld;
+		}
+		
 
 		if (name == null) {
-			name = "unknown " + Instant.now();
+			if (nameOld == null) {
+				name = Constants.CRONJOB_NAME_DEFAULT + " " + Instant.now();
+			}else {
+				name = nameOld;
+			}
 		}
 
-		synchronized (crons) {
+		synchronized (scheduledCrons) {
 			for (String schedule : schedules) {
 				try {
-					Cron cron = new Cron(s, schedule, name);
-					crons.add(cron);
+					ScheduledCronJob cron = new ScheduledCronJob(cronJob, schedule, name);
+					scheduledCrons.add(cron);
 				} catch (Exception e) {
 					logger.error("Invalid  cron expression " + schedule + " from " + map, e);
 				}
@@ -184,13 +214,13 @@ public class CentralScheduler {
 		}
 	}
 
-	void removeSchedule(CronJob s) {
-		synchronized (crons) {
-			for (Iterator<Cron> cron = crons.iterator(); cron.hasNext();) {
-				Cron c = cron.next();
-				if (c.target == s) {
-					cron.remove();
-					c.schedule.cancel();
+	void removeSchedule(CronJob cronJobToRemove) {
+		synchronized (scheduledCrons) {
+			for (Iterator<ScheduledCronJob> scheduledCronsIterator = scheduledCrons.iterator(); scheduledCronsIterator.hasNext();) {
+				ScheduledCronJob scheduledCronJob = scheduledCronsIterator.next();
+				if (scheduledCronJob.innerCrobJob == cronJobToRemove) {
+					scheduledCronsIterator.remove();
+					scheduledCronJob.schedule.cancel();
 				}
 			}
 		}

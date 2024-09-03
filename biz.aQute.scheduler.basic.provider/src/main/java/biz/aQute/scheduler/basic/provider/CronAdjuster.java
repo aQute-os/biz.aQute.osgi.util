@@ -9,6 +9,8 @@ import java.time.temporal.TemporalField;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import biz.aQute.scheduler.api.Constants;
+
 /**
  * This class creates a Temporal Adjuster that takes a temporal and adjust it to
  * the next deadline based on a cron specification.
@@ -142,29 +144,29 @@ class CronAdjuster implements TemporalAdjuster {
 
 	private String preDeclared(String expression) {
 		switch (expression) {
-			case "@annually" :
-			case "@yearly" :
+			case Constants.CRON_EXPRESSION_ANNUALLY :
+			case Constants.CRON_EXPRESSION_YEARLY :
 				return "0 0 0 1 1 *";
 
-			case "@monthly" :
+			case Constants.CRON_EXPRESSION_MONTHLY :
 				return "1 0 0 1 * *";
 
-			case "@weekly" :
+			case Constants.CRON_EXPRESSION_WEEKLY :
 				return "2 0 0 ? * MON";
 
-			case "@daily" :
+			case Constants.CRON_EXPRESSION_DAYLY :
 				return "3 0 0 * * ?";
 
-			case "@hourly" :
+			case Constants.CRON_EXPRESSION_HOURLY :
 				return "4 0 * * * ?";
 
-			case "@minutely" :
+			case Constants.CRON_EXPRESSION_MINUTLY :
 				return "* 0 * * * *";
 
-			case "@secondly" :
+			case Constants.CRON_EXPRESSION_SECUNDLY:
 				return "* * * * * *";
 
-			case "@reboot" :
+			case Constants.CRON_EXPRESSION_REBOOT :
 				return "0 0 0 1 1 ? 1900";
 
 			default :

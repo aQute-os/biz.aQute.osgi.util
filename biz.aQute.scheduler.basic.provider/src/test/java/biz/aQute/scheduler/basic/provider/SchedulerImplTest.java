@@ -97,7 +97,7 @@ public class SchedulerImplTest {
 		AtomicReference<Thread> thread = new AtomicReference<>();
 
 		try {
-			cs.shutdownTimeout = 100;
+			cs.shutdownTimeoutHard = 100;
 
 			impl.execute(() -> {
 				try {

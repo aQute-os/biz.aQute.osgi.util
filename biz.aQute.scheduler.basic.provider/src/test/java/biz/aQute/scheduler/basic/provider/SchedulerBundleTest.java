@@ -1,14 +1,12 @@
 package biz.aQute.scheduler.basic.provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import org.awaitility.Awaitility;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -16,10 +14,20 @@ import org.osgi.service.component.annotations.Component;
 import aQute.launchpad.Launchpad;
 import aQute.launchpad.LaunchpadBuilder;
 import biz.aQute.scheduler.api.CronJob;
+import biz.aQute.scheduler.api.Constants;
 
 public class SchedulerBundleTest {
 	static LaunchpadBuilder	builder	= new LaunchpadBuilder().bndrun("test.bndrun");
 
+	@Component(property = Constants.SERVICE_PROPERTY_CRONJOB_CRON+"=@reboot")
+	public static class TestRebootServiceNewServiceProp implements CronJob {
+		static Semaphore		present	= new Semaphore(0);
+
+		@Override
+		public void run() throws Exception {
+			present.release();
+		}
+	}
 
 	@Component(property = "cron=@reboot")
 	public static class TestRebootService implements CronJob {
@@ -44,7 +52,7 @@ public class SchedulerBundleTest {
 	}
 
 	@Test
-	public void testAnnotation() throws Exception {
+	public void testOldServiceProperty() throws Exception {
 		try (Launchpad lp = builder.create()) {
 			TestRebootService.present.drainPermits();
 			lp.bundle().addResource(TestRebootService.class).start();
@@ -52,6 +60,19 @@ public class SchedulerBundleTest {
 			assertThat(service).isPresent();
 
 			boolean found = TestRebootService.present.tryAcquire(1, 5000, TimeUnit.MILLISECONDS);
+			assertTrue(found);
+		}
+	}
+	
+	@Test
+	public void testNewServiceProperty() throws Exception {
+		try (Launchpad lp = builder.create()) {
+			TestRebootServiceNewServiceProp.present.drainPermits();
+			lp.bundle().addResource(TestRebootServiceNewServiceProp.class).start();
+			Optional<CronJob> service = lp.getService(CronJob.class);
+			assertThat(service).isPresent();
+
+			boolean found = TestRebootServiceNewServiceProp.present.tryAcquire(1, 5000, TimeUnit.MILLISECONDS);
 			assertTrue(found);
 		}
 	}

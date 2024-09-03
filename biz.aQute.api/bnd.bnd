@@ -10,6 +10,7 @@
 	org.osgi.dto,\
 	org.apache.felix.http.servlet-api,\
 	org.osgi.service.component.annotations,\
-	org.osgi.namespace.extender
+	org.osgi.namespace.extender,\
+	org.osgi.service.metatype.annotations
 
 -sub: *.bnd

@@ -11,7 +11,7 @@ package biz.aQute.scheduler.api;
  * chronos.
  * <p>
  * The Unix Cron defines a syntax that is used by the Cron service. A user
- * should register a Cron service with the {@value CronJob#CRON} property. The
+ * should register a Cron service with the {@value Constants#SERVICE_PROPERTY_CRONJOB_CRON} property. The
  * value is according to the {link http://en.wikipedia.org/wiki/Cron}.
  * <p>
  *
@@ -77,8 +77,15 @@ public interface CronJob {
 	/**
 	 * The service property that specifies the cron schedule. The type is
 	 * String+.
+	 * @deprecated use {@link Constants#SERVICE_PROPERTY_CRONJOB_CRON} "cronjob.cron";
 	 */
+	@Deprecated
 	String	CRON	= "cron";
+	
+	/**
+	 * @deprecated use {@link Constants#SERVICE_PROPERTY_CRONJOB_NAME} "cronjob.name";
+	 */
+	@Deprecated
 	String	NAME	= "name";
 
 	/**
