@@ -1,5 +1,6 @@
 package biz.aQute.scheduler.api;
 
+import java.time.Duration;
 import java.time.temporal.TemporalAdjuster;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
@@ -21,12 +22,41 @@ public interface Scheduler extends Executor {
 	 * Schedule a runnable to run periodically at a fixed rate. The schedule can
 	 * be canceled by the returned task.
 	 *
+	 * @param runnable
+	 *            the task to run
+	 * @param name
+	 *            The name of the task
+	 * @param fixedRateInMs
+	 * 			  The fixed rate in milliseconds.
+	 *
+	 */
+	Task periodic(Runnable runnable, long fixedRateInMs, String name);
+
+	/**
+	 * Schedule a runnable to run periodically at a fixed rate. The schedule can
+	 * be canceled by the returned task.
+	 *
+	 * @param runnable
+	 *            the task to run
+	 * @param name
+	 *            The name of the task
+	 * @param fixedRate
+	 * 			  The fixed rate in milliseconds.
+	 *
+	 */
+	Task periodic(Runnable runnable, Duration fixedRate, String name);
+	/**
+	 * Schedule a runnable to run after a certain time. The schedule can be
+	 * canceled by the returned task if it was not yet canceled.
+	 *
 	 * @param name
 	 *            The name of the task
 	 * @param runnable
 	 *            the task to run
+	 * @param afterMs
+	 *            time in ms after the run is scheduled.
 	 */
-	Task periodic(Runnable runnable, long ms, String name);
+	Task after(Runnable runnable, long afterMs, String name);
 
 	/**
 	 * Schedule a runnable to run after a certain time. The schedule can be
@@ -36,8 +66,10 @@ public interface Scheduler extends Executor {
 	 *            The name of the task
 	 * @param runnable
 	 *            the task to run
+	 * @param after
+	 *            duration after the run is scheduled.
 	 */
-	Task after(Runnable runnable, long ms, String name);
+	Task after(Runnable runnable, Duration after, String name);
 
 	/**
 	 * Executes a task in the background, intended for short term tasks
@@ -69,7 +101,7 @@ public interface Scheduler extends Executor {
 
 	/**
 	 * Schedule a runnable to be executed for the give cron expression (See
-	 * {@link CronJob}). Every time when the cronExpression matches the current
+	 * {@link CronExpression#expression()}). Every time when the cronExpression matches the current
 	 * time, the runnable will be run. The method returns a closeable that can
 	 * be used to stop scheduling. This variation does not take an environment
 	 * object.
@@ -96,7 +128,7 @@ public interface Scheduler extends Executor {
 	 * 	ZonedDateTime next = now.with(cron);
 	 * </pre>
 	 *
-	 * @param cronExpression a Cron expression as specified in {@link CronJob}
+	 * @param cronExpression a Cron expression as specified in {@link CronExpression#expression()}
 	 * @return a Temporal Adjuster based on a cron expression
 	 */
 	TemporalAdjuster getCronAdjuster(String cronExpression);

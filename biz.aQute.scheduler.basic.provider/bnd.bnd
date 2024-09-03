@@ -8,8 +8,9 @@
 	slf4j.api,\
 	biz.aQute.api.scheduler,\
 	org.osgi.util.promise,\
-	aQute.libg,\
-	org.osgi.service.metatype.annotations
+	org.osgi.service.metatype.annotations,\
+	org.osgi.util.converter,\
+	org.osgi.namespace.implementation
 
 
 -testpath: \
@@ -18,8 +19,8 @@
 	org.assertj.core,\
 	org.awaitility,\
 	biz.aQute.launchpad,\
+	aQute.libg,\
 	osgi.core, \
-	slf4j.api, \
+	org.osgi.util.function,\
+	slf4j.api,\
 	slf4j.simple
-
--conditionalpackage: aQute.lib*

@@ -1,5 +1,6 @@
 package biz.aQute.scheduler.basic.provider;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.TemporalAdjuster;
 import java.util.Collections;
@@ -127,8 +128,14 @@ public class SchedulerImpl implements Executor, Scheduler {
 
 	@Override
 	public Task periodic(Runnable runnable, long ms, String name) {
+		return periodic(runnable, Duration.ofMillis(ms), name);
+	}
+	
+	@Override
+	public Task periodic(Runnable runnable, Duration duration, String name) {
 		TaskImpl task = new TaskImpl(runnable, name, false);
-		ScheduledFuture<?> future = scheduler.scheduler.scheduleAtFixedRate(task, ms, ms, TimeUnit.MILLISECONDS);
+		long nanos = duration.toNanos();
+		ScheduledFuture<?> future = scheduler.scheduler.scheduleAtFixedRate(task, nanos, nanos, TimeUnit.NANOSECONDS);
 		task.cancel = () -> future.cancel(true);
 		tasks.add(task);
 		return task;
@@ -136,8 +143,15 @@ public class SchedulerImpl implements Executor, Scheduler {
 
 	@Override
 	public Task after(Runnable runnable, long ms, String name) {
+		return after(runnable, Duration.ofMillis(ms), name);
+	}
+	
+	@Override
+	public Task after(Runnable runnable, Duration duration, String name) {
 		TaskImpl task = new TaskImpl(runnable, name, false);
-		ScheduledFuture<?> future = scheduler.scheduler.schedule(task, ms, TimeUnit.MILLISECONDS);
+		long nanos = duration.toNanos();
+
+		ScheduledFuture<?> future = scheduler.scheduler.schedule(task, nanos, TimeUnit.NANOSECONDS);
 		task.cancel = () -> future.cancel(true);
 		tasks.add(task);
 		return task;
