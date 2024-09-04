@@ -10,6 +10,7 @@ import org.apache.felix.service.command.Parameter;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.jakartars.runtime.JakartarsServiceRuntime;
 import org.osgi.service.jakartars.runtime.dto.ApplicationDTO;
+import org.osgi.service.jakartars.runtime.dto.DTOConstants;
 import org.osgi.service.jakartars.runtime.dto.ExtensionDTO;
 import org.osgi.service.jakartars.runtime.dto.FailedApplicationDTO;
 import org.osgi.service.jakartars.runtime.dto.FailedExtensionDTO;
@@ -48,6 +49,7 @@ public class JakartaRS {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -64,6 +66,7 @@ public class JakartaRS {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -80,6 +83,7 @@ public class JakartaRS {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -141,6 +145,28 @@ public class JakartaRS {
 	private static boolean runtimeHasServiceId(JakartarsServiceRuntime runtime, long service_id) {
 
 		return service_id == runtime.getRuntimeDTO().serviceDTO.id;
+	}
+
+	private String failedReason(int failureReason) {
+
+		switch (failureReason) {
+			case DTOConstants.FAILURE_REASON_UNKNOWN :
+				return "UNKNOWN";
+			case DTOConstants.FAILURE_REASON_SHADOWED_BY_OTHER_SERVICE :
+				return "FAILURE_REASON_UNKNOWN";
+			case DTOConstants.FAILURE_REASON_SERVICE_NOT_GETTABLE :
+				return "SERVICE_NOT_GETTABLE";
+			case DTOConstants.FAILURE_REASON_VALIDATION_FAILED :
+				return "VALIDATION_FAILED";
+			case DTOConstants.FAILURE_REASON_REQUIRED_EXTENSIONS_UNAVAILABLE :
+				return "REQUIRED_EXTENSIONS_UNAVAILABLE";
+			case DTOConstants.FAILURE_REASON_DUPLICATE_NAME :
+				return "DUPLICATE_NAME";
+			case DTOConstants.FAILURE_REASON_REQUIRED_APPLICATION_UNAVAILABLE :
+				return "REQUIRED_APPLICATION_UNAVAILABLE";
+			default :
+				return failureReason + "";
+		}
 	}
 
 }
