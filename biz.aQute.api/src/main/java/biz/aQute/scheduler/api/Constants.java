@@ -19,18 +19,18 @@ public final class Constants {
 	/**
 	 * The service property Prefix for cronjobs
 	 */
-	public static final String SERVICE_PROPERTY_CRONJOB_PREFIX = "cronjob";
+	public static final String SERVICE_PROPERTY_CRONJOB_PREFIX = "cronjob.";
 
 	/**
 	 * The service property that specifies the cron schedule. The type is String+.
 	 */
-	public static final String SERVICE_PROPERTY_CRONJOB_CRON = SERVICE_PROPERTY_CRONJOB_PREFIX+".cron";
+	public static final String SERVICE_PROPERTY_CRONJOB_CRON = SERVICE_PROPERTY_CRONJOB_PREFIX+"cron";
 
 	/**
 	 * The service property that specifies the name of the cron job. The type is
 	 * String.
 	 */
-	public static final String SERVICE_PROPERTY_CRONJOB_NAME = SERVICE_PROPERTY_CRONJOB_PREFIX+".name";
+	public static final String SERVICE_PROPERTY_CRONJOB_NAME = SERVICE_PROPERTY_CRONJOB_PREFIX+"name";
 
 	/**
 	 * Default name of the cron job.
