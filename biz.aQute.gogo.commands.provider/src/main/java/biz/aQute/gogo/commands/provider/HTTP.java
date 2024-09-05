@@ -10,6 +10,7 @@ import org.apache.felix.service.command.Descriptor;
 import org.apache.felix.service.command.Parameter;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
+import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.runtime.dto.ErrorPageDTO;
 import org.osgi.service.http.runtime.dto.FailedErrorPageDTO;
 import org.osgi.service.http.runtime.dto.FailedFilterDTO;
@@ -56,6 +57,7 @@ public class HTTP {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -72,6 +74,7 @@ public class HTTP {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s]", dto.serviceId));
 
@@ -88,6 +91,7 @@ public class HTTP {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -104,6 +108,7 @@ public class HTTP {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s]", dto.serviceId));
 
@@ -120,6 +125,7 @@ public class HTTP {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s]", dto.serviceId));
 
@@ -136,6 +142,7 @@ public class HTTP {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s] %s", dto.serviceId, dto.name));
 
@@ -152,6 +159,7 @@ public class HTTP {
 			.fields("*")
 			.line()
 			.fields("*")
+			.format("failureReason", f -> failedReason(f.failureReason))
 			.part()
 			.as(dto -> String.format("[%s]", dto.serviceId));
 
@@ -244,6 +252,32 @@ public class HTTP {
 		String p = map.get("org.osgi.service.http.port")
 			.toString();
 		return p;
+	}
+
+	private String failedReason(int failureReason) {
+
+		switch (failureReason) {
+			case DTOConstants.FAILURE_REASON_UNKNOWN :
+				return "UNKNOWN";
+			case DTOConstants.FAILURE_REASON_SHADOWED_BY_OTHER_SERVICE :
+				return "FAILURE_REASON_UNKNOWN";
+			case DTOConstants.FAILURE_REASON_SERVICE_NOT_GETTABLE :
+				return "SERVICE_NOT_GETTABLE";
+			case DTOConstants.FAILURE_REASON_VALIDATION_FAILED :
+				return "VALIDATION_FAILED";
+			case DTOConstants.FAILURE_REASON_SERVICE_IN_USE :
+				return "SERVICE_IN_USE";
+			case DTOConstants.FAILURE_REASON_SERVLET_WRITE_TO_LOCATION_DENIED :
+				return "SERVLET_WRITE_TO_LOCATION_DENIED";
+			case DTOConstants.FAILURE_REASON_WHITEBOARD_WRITE_TO_DEFAULT_DENIED :
+				return "WHITEBOARD_WRITE_TO_DEFAULT_DENIED";
+			case DTOConstants.FAILURE_REASON_SERVLET_READ_FROM_DEFAULT_DENIED :
+				return "SERVLET_READ_FROM_DEFAULT_DENIED";
+			case DTOConstants.FAILURE_REASON_WHITEBOARD_WRITE_TO_LOCATION_DENIED :
+				return "WHITEBOARD_WRITE_TO_LOCATION_DENIED";
+			default :
+				return failureReason + "";
+		}
 	}
 
 }
