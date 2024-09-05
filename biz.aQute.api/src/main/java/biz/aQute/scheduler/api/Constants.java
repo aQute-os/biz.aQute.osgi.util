@@ -59,7 +59,7 @@ public final class Constants {
 	/**
 	 * the named cron expression for daily execution.
 	 */
-	public static final String CRON_EXPRESSION_DAYLY = "@daily";
+	public static final String CRON_EXPRESSION_DAILY = "@daily";
 
 	/**
 	 * the named cron expression for hourly execution.
@@ -69,12 +69,12 @@ public final class Constants {
 	/**
 	 * the named cron expression for minutely execution.
 	 */
-	public static final String CRON_EXPRESSION_MINUTLY = "@minutely";
+	public static final String CRON_EXPRESSION_MINUTELY = "@minutely";
 
 	/**
 	 * the named cron expression for secondly execution.
 	 */
-	public static final String CRON_EXPRESSION_SECUNDLY = "@secondly";
+	public static final String CRON_EXPRESSION_SECONDLY = "@secondly";
 
 	/**
 	 * the named cron expression for execution onreboot.

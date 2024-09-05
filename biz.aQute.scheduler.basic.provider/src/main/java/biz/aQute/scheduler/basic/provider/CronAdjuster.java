@@ -154,16 +154,16 @@ class CronAdjuster implements TemporalAdjuster {
 			case Constants.CRON_EXPRESSION_WEEKLY :
 				return "2 0 0 ? * MON";
 
-			case Constants.CRON_EXPRESSION_DAYLY :
+			case Constants.CRON_EXPRESSION_DAILY :
 				return "3 0 0 * * ?";
 
 			case Constants.CRON_EXPRESSION_HOURLY :
 				return "4 0 * * * ?";
 
-			case Constants.CRON_EXPRESSION_MINUTLY :
-				return "* 0 * * * *";
+			case Constants.CRON_EXPRESSION_MINUTELY :
+				return "0 * * * * *";
 
-			case Constants.CRON_EXPRESSION_SECUNDLY:
+			case Constants.CRON_EXPRESSION_SECONDLY:
 				return "* * * * * *";
 
 			case Constants.CRON_EXPRESSION_REBOOT :
